@@ -1,0 +1,28 @@
+extend type Query {
+  node(id: ID!): Node
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  startCursor: String
+}
+
+enum SortDirection {
+  # Specifies an ascending order for a given `sortBy` argument.
+  ASC
+
+  # Specifies an descending order for a given `sortBy` argument.
+  DESC
+}

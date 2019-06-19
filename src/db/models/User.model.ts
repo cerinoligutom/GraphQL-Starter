@@ -6,7 +6,7 @@ export class User extends BaseModel {
 
   username!: string;
   firstName!: string;
-  middleName?: string;
+  middleName?: string | null;
   lastName!: string;
   email!: string;
   hash!: string;

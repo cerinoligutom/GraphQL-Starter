@@ -12,6 +12,7 @@ import { ping as pingPostgresDatabase } from './db/knex-config';
 
 import express from 'express';
 import { initRoutes } from './routes';
+import { initApolloGraphqlServer } from './graphql';
 
 const app = express();
 
@@ -30,10 +31,12 @@ const startApp = async () => {
 
   initRoutes(app);
 
+  initApolloGraphqlServer(app);
+
   app.use(errorMiddleware());
 
-  app.listen(env.port, env.host, () => {
-    console.info(`Server is now up @ ${env.host}:${env.port}`);
+  app.listen(env.port, () => {
+    console.info(`Server is now up @ ${env.port}`);
   });
 };
 startApp();

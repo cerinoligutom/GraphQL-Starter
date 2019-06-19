@@ -33,4 +33,4 @@ services:
 
 volumes:
   postgres-data:
-    external: true # https://github.com/docker/for-win/issues/445#issuecomment-405185621
+    # external: true # https://github.com/docker/for-win/issues/445#issuecomment-405185621

@@ -1,0 +1,25 @@
+extend type Query {
+  users(first: Int = 25, before: String, after: String, sortBy: UserSort): UserConnection!
+}
+
+type UserConnection {
+  edges: [UserEdge]
+  nodes: [User]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type UserEdge {
+  cursor: String!
+  node: User
+}
+
+input UserSort {
+  field: UserSortField!
+  direction: SortDirection!
+}
+
+enum UserSortField {
+  CREATED_AT
+  UPDATED_AT
+}

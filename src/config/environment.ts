@@ -1,9 +1,15 @@
+import { config as configDotEnv } from 'dotenv';
+configDotEnv();
+
+import { IJwtOptions, jwtOptions } from './jwt-options';
+
 interface IEnvironmentConfig {
   [key: string]: {
     environment: string;
-    host: string;
     port: number;
     isProduction: boolean;
+
+    jwt: IJwtOptions;
 
     db: {
       host: string | undefined;
@@ -20,9 +26,10 @@ const isProduction = process.env.NODE_ENV === 'production';
 const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
   PRODUCTION: {
     isProduction,
-    environment: 'PRODUCTION',
-    host: '0.0.0.0',
-    port: 9200,
+    environment: 'Production',
+    port: 8080,
+
+    jwt: jwtOptions,
 
     db: {
       database: process.env.PG_PROD_DATABASE,
@@ -35,9 +42,10 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
 
   STAGING: {
     isProduction,
-    environment: 'STAGING',
-    host: '0.0.0.0',
-    port: 9200,
+    environment: 'Staging',
+    port: 8080,
+
+    jwt: jwtOptions,
 
     db: {
       database: process.env.PG_STAGING_DATABASE,
@@ -50,9 +58,10 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
 
   TEST: {
     isProduction: false,
-    environment: 'TEST',
-    host: '0.0.0.0',
-    port: 9200,
+    environment: 'Test',
+    port: 8080,
+
+    jwt: jwtOptions,
 
     db: {
       database: process.env.PG_TEST_DATABASE,
@@ -65,12 +74,13 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
 
   LOCAL: {
     isProduction: false,
-    environment: 'LOCAL',
-    host: '0.0.0.0',
-    port: 9200,
+    environment: 'Local',
+    port: 8080,
+
+    jwt: jwtOptions,
 
     db: {
-      database: process.env.PG_LOCAL_DATABASE || 'app',
+      database: process.env.PG_LOCAL_DATABASE || 'db',
       host: process.env.PG_LOCAL_HOST || 'db', // 'db' is the service name of the postgres container
       password: process.env.PG_LOCAL_PASSWORD || 'password',
       user: process.env.PG_LOCAL_USER || 'postgres',

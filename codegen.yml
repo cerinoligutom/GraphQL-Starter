@@ -1,0 +1,18 @@
+overwrite: true
+schema: "./src/graphql/typeDefs/*.graphql"
+documents: null
+require:
+  - ts-node/register
+generates:
+  ./types/graphql-resolvers.d.ts:
+    config:
+      contextType: "../src/graphql/index#IGraphQLContext"
+      enumValues:
+        UserSortField: "../src/graphql/enums/user-sort-field.enum#UserSortField"
+        SortDirection: "../src/graphql/enums/sort-direction.enum#SortDirection"
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"

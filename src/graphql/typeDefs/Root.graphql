@@ -1,0 +1,7 @@
+type Query {
+  _dummy: String @deprecated
+}
+
+type Mutation {
+  _dummy: String @deprecated
+}

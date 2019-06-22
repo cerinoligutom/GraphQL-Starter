@@ -1,7 +1,8 @@
 import * as Knex from 'knex';
 import { bcryptUtil } from '@app/utils';
 import { User } from '../models';
-import { TableNames } from '../table-names';
+
+const TABLE_NAME = 'users';
 
 // tslint:disable-next-line: no-any
 export async function seed(knex: Knex): Promise<any> {
@@ -18,7 +19,7 @@ export async function seed(knex: Knex): Promise<any> {
     email: 'superadmin@app.com',
   } as User;
 
-  const query = knex(TableNames.Users).insert([superadmin]);
+  const query = knex(TABLE_NAME).insert([superadmin]);
 
   return knex.raw('? ON CONFLICT DO NOTHING', [query]);
 }

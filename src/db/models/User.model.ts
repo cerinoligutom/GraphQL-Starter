@@ -1,8 +1,7 @@
 import { BaseModel } from './common/BaseModel';
-import { TableNames } from '../table-names';
 
 export class User extends BaseModel {
-  static tableName = TableNames.Users;
+  static tableName = 'users';
 
   username!: string;
   firstName!: string;

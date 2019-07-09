@@ -1,7 +1,7 @@
 import * as Knex from 'knex';
 import { addTimeStamps } from '../helpers/addTimeStamps';
 
-const TABLE_NAME = 'users;'
+const TABLE_NAME = 'users'
 
 // tslint:disable-next-line: no-any
 export async function up(knex: Knex): Promise<any> {

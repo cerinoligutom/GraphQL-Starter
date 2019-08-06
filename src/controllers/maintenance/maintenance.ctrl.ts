@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { ping as pingPostgresDatabase } from '../../db/knex-config';
+import { ping as pingPostgresDatabase } from '../../db/knex';
 
 const healthCheck: RequestHandler = async (req, res) => {
   // tslint:disable-next-line: no-any

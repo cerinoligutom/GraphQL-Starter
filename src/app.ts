@@ -8,7 +8,7 @@ import { env } from '@app/config/environment';
 
 import { errorMiddleware } from '@app/middleware';
 
-import { ping as pingPostgresDatabase } from './db/knex-config';
+import { ping as pingPostgresDatabase } from './db/knex';
 
 import express from 'express';
 import { initRoutes } from './routes';

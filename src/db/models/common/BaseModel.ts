@@ -1,5 +1,5 @@
 import Objection, { compose, QueryBuilder } from 'objection';
-import knex from '../../knex-config';
+import knex from '../../knex';
 import base64url from 'base64url';
 
 // Attach knex to objection model

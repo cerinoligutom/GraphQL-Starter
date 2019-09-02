@@ -3,7 +3,7 @@ import { SortDirection } from '../src/graphql/enums/sort-direction.enum';
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { IGraphQLContext } from '../src/graphql/index';
 export type Maybe<T> = T | null;
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -43,7 +43,6 @@ export type MutationLoginArgs = {
 };
 
 export type Node = {
-  __typename?: 'Node';
   id: Scalars['ID'];
 };
 
@@ -67,7 +66,7 @@ export type QueryNodeArgs = {
 };
 
 export type QueryUsersArgs = {
-  first: Scalars['Int'];
+  first?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
   sortBy?: Maybe<UserSort>;
@@ -86,6 +85,8 @@ export type RegisterPayload = {
   __typename?: 'RegisterPayload';
   success: Scalars['Boolean'];
 };
+
+export { SortDirection };
 
 export type User = Node & {
   __typename?: 'User';
@@ -119,6 +120,10 @@ export type UserSort = {
   direction: SortDirection;
 };
 
+export { UserSortField };
+
+export type ResolverTypeWrapper<T> = Promise<T> | T;
+
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
@@ -149,14 +154,23 @@ export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   info: GraphQLResolveInfo,
 ) => TResult | Promise<TResult>;
 
-export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
-  subscribe: SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs>;
-  resolve?: SubscriptionResolveFn<TResult, TParent, TContext, TArgs>;
+export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
 }
 
-export type SubscriptionResolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
-  | ((...args: any[]) => SubscriptionResolverObject<TResult, TParent, TContext, TArgs>)
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>;
+  resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
+}
+
+export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+  | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
+
+export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+  | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   parent: TParent,
@@ -176,6 +190,31 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  Query: ResolverTypeWrapper<{}>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Node: ResolverTypeWrapper<Node>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  UserSort: UserSort;
+  UserSortField: UserSortField;
+  SortDirection: SortDirection;
+  UserConnection: ResolverTypeWrapper<UserConnection>;
+  UserEdge: ResolverTypeWrapper<UserEdge>;
+  User: ResolverTypeWrapper<User>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  PageInfo: ResolverTypeWrapper<PageInfo>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  RegisterInput: RegisterInput;
+  RegisterPayload: ResolverTypeWrapper<RegisterPayload>;
+  LoginInput: LoginInput;
+  LoginPayload: ResolverTypeWrapper<LoginPayload>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
+  Time: ResolverTypeWrapper<Scalars['Time']>;
+};
+
+/** Mapping between all available schema types and the resolvers parents */
+export type ResolversParentTypes = {
   Query: {};
   ID: Scalars['ID'];
   Node: Node;
@@ -207,36 +246,51 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
   name: 'DateTime';
 }
 
-export type LoginPayloadResolvers<ContextType = IGraphQLContext, ParentType = ResolversTypes['LoginPayload']> = {
+export type LoginPayloadResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends ResolversParentTypes['LoginPayload'] = ResolversParentTypes['LoginPayload']
+> = {
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };
 
-export type MutationResolvers<ContextType = IGraphQLContext, ParentType = ResolversTypes['Mutation']> = {
-  register?: Resolver<Maybe<ResolversTypes['RegisterPayload']>, ParentType, ContextType, MutationRegisterArgs>;
-  login?: Resolver<Maybe<ResolversTypes['LoginPayload']>, ParentType, ContextType, MutationLoginArgs>;
+export type MutationResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
+> = {
+  register?: Resolver<Maybe<ResolversTypes['RegisterPayload']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>;
+  login?: Resolver<Maybe<ResolversTypes['LoginPayload']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>;
   _dummy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };
 
-export type NodeResolvers<ContextType = IGraphQLContext, ParentType = ResolversTypes['Node']> = {
+export type NodeResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
   __resolveType: TypeResolveFn<'User', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 };
 
-export type PageInfoResolvers<ContextType = IGraphQLContext, ParentType = ResolversTypes['PageInfo']> = {
+export type PageInfoResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']
+> = {
   endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   hasPreviousPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   startCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };
 
-export type QueryResolvers<ContextType = IGraphQLContext, ParentType = ResolversTypes['Query']> = {
-  node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, QueryNodeArgs>;
+export type QueryResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
+> = {
+  node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id'>>;
   _dummy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, QueryUsersArgs>;
+  users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersArgs, 'first'>>;
 };
 
-export type RegisterPayloadResolvers<ContextType = IGraphQLContext, ParentType = ResolversTypes['RegisterPayload']> = {
+export type RegisterPayloadResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends ResolversParentTypes['RegisterPayload'] = ResolversParentTypes['RegisterPayload']
+> = {
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 };
 
@@ -244,7 +298,7 @@ export interface TimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Time';
 }
 
-export type UserResolvers<ContextType = IGraphQLContext, ParentType = ResolversTypes['User']> = {
+export type UserResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   middleName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -256,14 +310,20 @@ export type UserResolvers<ContextType = IGraphQLContext, ParentType = ResolversT
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
 };
 
-export type UserConnectionResolvers<ContextType = IGraphQLContext, ParentType = ResolversTypes['UserConnection']> = {
+export type UserConnectionResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection']
+> = {
   edges?: Resolver<Maybe<Array<Maybe<ResolversTypes['UserEdge']>>>, ParentType, ContextType>;
   nodes?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
   pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
   totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 
-export type UserEdgeResolvers<ContextType = IGraphQLContext, ParentType = ResolversTypes['UserEdge']> = {
+export type UserEdgeResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends ResolversParentTypes['UserEdge'] = ResolversParentTypes['UserEdge']
+> = {
   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   node?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
 };

@@ -1,5 +1,5 @@
-import { UserSortField } from '../src/graphql/enums/user-sort-field.enum';
-import { SortDirection } from '../src/graphql/enums/sort-direction.enum';
+import { UserSortField } from '../src/graphql/enums/index';
+import { SortDirection } from '../src/graphql/enums/index';
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { IGraphQLContext } from '../src/graphql/index';
 export type Maybe<T> = T | null;

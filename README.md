@@ -51,7 +51,7 @@ docker-compose up
 
 ---
 
-If the docker compose have successfully bootstrapped all services successfully, you should be able to access its corresponding services:
+If docker compose have successfully bootstrapped all services successfully, you should be able to access its corresponding services:
 
 **GraphQL Endpoint**
 
@@ -63,19 +63,19 @@ If the docker compose have successfully bootstrapped all services successfully, 
 
 Credentials:
 
-| Field | Value | Notes |
-| - | - | - |
-| System | PostgreSQL | `docker-compose.yml` config is using Postgres as the SQL Database so we pick PostgreSQL here |
-| Server | db | Service name in `docker-compose.yml` file for our Database service is named `db` |
-| Username | postgres | Default username is `postgres` |
-| Password | password | As defined in the `docker-compose.yml` config |
-| Database | db | As defined in the `docker-compose.yml` config |
+| Field    | Value      | Notes                                                                                        |
+| -------- | ---------- | -------------------------------------------------------------------------------------------- |
+| System   | PostgreSQL | `docker-compose.yml` config is using Postgres as the SQL Database so we pick PostgreSQL here |
+| Server   | db         | Service name in `docker-compose.yml` file for our Database service is named `db`             |
+| Username | postgres   | Default username is `postgres`                                                               |
+| Password | password   | As defined in the `docker-compose.yml` config                                                |
+| Database | db         | As defined in the `docker-compose.yml` config                                                |
 
 **Node Express REST Health Check endpoint**
 
 [http://localhost:8080/api/v1/maintenance/health-check](http://localhost:8080/api/v1/maintenance/health-check)
 
-**Note:** If you prefer a different port, container name, or anything environment related. Just modify the `docker-compose.yml` file and adjust to your setup needs.
+**Note:** If you prefer a different port, container name, or anything docker environment related. Just modify the `docker-compose.yml` file and adjust to your setup needs.
 
 ## Project Structure
 
@@ -131,31 +131,32 @@ Credentials:
 ## List of Packages
 
 **Dependencies**
-| Package | Description |
-| ------- | ----------- |
-| apollo-server-express | Apollo GraphQL for Express. |
-| base64url | Convert strings to base64 url-safe strings. |
-| bcryptjs | Library for hashing and salting user passwords. |
-| compression | NodeJS compression middleware. |
-| cors | NodeJS cors middleware. |
-| compression | NodeJS compression middleware. |
-| dataloader | Facebook Dataloader for batching and caching GraphQL requests. |
-| dotenv | Loads environment variables from `.env` file. |
-| express | NodeJS web framework. |
-| graphql | GraphQL core library. |
-| graphql-depth-limit | GraphQL depth limit middleware. |
-| graphql-iso-date | GraphQL ISO Date scalars. |
-| graphql-middleware | GraphQL Middlewares made easy. |
-| graphql-shield | GraphQL Server permissions as another layer of abstraction. |
-| helmet | NodeJS helmet middleware. |
-| jsonwebtoken | JWT library. |
-| knex | SQL Query Builder. |
-| merge-graphql-schemas | GraphQL Schema utilities. |
-| objection | ObjectionJS SQL ORM. |
-| pg | Node Postgres client. |
-| ts-node | TypeScript Node environment. |
-| typescript | TypeScript compiler. |
-| yup | Schema validator. |
+
+| Package               | Description                                                    |
+| --------------------- | -------------------------------------------------------------- |
+| apollo-server-express | Apollo GraphQL for Express.                                    |
+| base64url             | Convert strings to base64 url-safe strings.                    |
+| bcryptjs              | Library for hashing and salting user passwords.                |
+| compression           | NodeJS compression middleware.                                 |
+| cors                  | NodeJS cors middleware.                                        |
+| compression           | NodeJS compression middleware.                                 |
+| dataloader            | Facebook Dataloader for batching and caching GraphQL requests. |
+| dotenv                | Loads environment variables from `.env` file.                  |
+| express               | NodeJS web framework.                                          |
+| graphql               | GraphQL core library.                                          |
+| graphql-depth-limit   | GraphQL depth limit middleware.                                |
+| graphql-iso-date      | GraphQL ISO Date scalars.                                      |
+| graphql-middleware    | GraphQL Middlewares made easy.                                 |
+| graphql-shield        | GraphQL Server permissions as another layer of abstraction.    |
+| helmet                | NodeJS helmet middleware.                                      |
+| jsonwebtoken          | JWT library.                                                   |
+| knex                  | SQL Query Builder.                                             |
+| merge-graphql-schemas | GraphQL Schema utilities.                                      |
+| objection             | ObjectionJS SQL ORM.                                           |
+| pg                    | Node Postgres client.                                          |
+| ts-node               | TypeScript Node environment.                                   |
+| typescript            | TypeScript compiler.                                           |
+| yup                   | Schema validator.                                              |
 
 **Dev Dependencies**
 

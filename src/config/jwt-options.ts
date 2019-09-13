@@ -11,9 +11,3 @@ export const jwtOptions: IJwtOptions = {
   secretKey: process.env.JWT_SECRET || 'jw+s3cr3+',
   expiresIn: '7d',
 };
-
-// Remove `secretKey` property and code block below
-// if your keys are asymmetrically signed.
-if (!jwtOptions.secretKey) {
-  throw new Error('JWT Secret Key not provided in environment config.');
-}

@@ -21,6 +21,7 @@ const config: Config = {
   seeds: {
     directory: './src/db/seeds',
   },
+  debug: env.db.debug,
 };
 
 export default config; // For application use

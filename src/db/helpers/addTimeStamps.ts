@@ -18,7 +18,7 @@ export const addTimeStamps = async (knex: Knex, tableName: string) => {
         $$ language 'plpgsql';
 
         CREATE TRIGGER update_${tableName}_updated_at
-        BEFORE UPDATE ON ${tableName}
+        BEFORE UPDATE ON "${tableName}"
         FOR EACH ROW
         EXECUTE PROCEDURE update_modified_column();
       `);

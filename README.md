@@ -62,6 +62,7 @@ If the docker compose have successfully bootstrapped all services successfully, 
 [http://localhost:8888/](http://localhost:8888/)
 
 Credentials:
+
 | Field | Value | Notes |
 | - | - | - |
 | System | PostgreSQL | `docker-compose.yml` config is using Postgres as the SQL Database so we pick PostgreSQL here |

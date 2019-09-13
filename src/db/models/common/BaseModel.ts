@@ -130,10 +130,6 @@ export class BaseModel extends EnhancedModel {
   private static decodeCursor(cursor: string) {
     return cursor.split('.').map(cursorValue => JSON.parse(base64url.decode(cursorValue)));
   }
-
-  id!: string;
-  createdAt!: Date;
-  updatedAt!: Date;
 }
 
 interface IObjectionQueryBuilderContext {

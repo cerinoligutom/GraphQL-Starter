@@ -199,6 +199,7 @@ Credentials:
 ## Future Plans
 
 - GraphQL File upload resolver and example
+- Subscriptions
 - Testing
 - CircleCI
 

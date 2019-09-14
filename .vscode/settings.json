@@ -1,3 +1,14 @@
 {
-  "cSpell.words": ["codegen", "dataloader", "dataloaders", "dockerignore", "gitignore", "graphql", "npmrc", "prettierrc"]
+  "cSpell.words": [
+    "codegen",
+    "dataloader",
+    "dataloaders",
+    "dockerignore",
+    "gitignore",
+    "graphql",
+    "maxsize",
+    "npmrc",
+    "prettierrc",
+    "printf"
+  ]
 }

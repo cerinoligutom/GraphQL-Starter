@@ -26,6 +26,8 @@ A boilerplate for Node Express and Apollo GraphQL with TypeScript APIs.
 - PostgreSQL Database
 - Adminer for managing DB Database
 - Pre-commit hook for auto formatting files with Husky and Prettier
+- Logging
+- Input schema validation on GraphQL resolvers via GraphQL Shield and Yup
 
 ## Prerequisites
 
@@ -112,6 +114,10 @@ Credentials:
 | **src/routes**/`<api-version>`/`<router-name>`.routes.ts                         | Node Express Router files.                                                                                                                                                                                            |
 | **src/routes**/index.ts                                                          | Node Express Routes initialization.                                                                                                                                                                                   |
 | **src/utils**/`<utility-name>`.util.ts                                           | Utility files.                                                                                                                                                                                                        |
+| **src/utils**/asyncHandler.util.ts                                               | Async wrapper for Node Express middlewares/controllers.                                                                                                                                                               |
+| **src/utils**/bcrypt.util.ts                                                     | Utility for generating salt/hash and verifying passwords.                                                                                                                                                             |
+| **src/utils**/jwt.util.ts                                                        | Utility for JWT verification and generation.                                                                                                                                                                          |
+| **src/utils**/logger.util.ts                                                     | Logging utility. Make sure to use the `logger` function if you want logs go to the `logs/*.log`.                                                                                                                      |
 | **src/app.ts**                                                                   | Main application file.                                                                                                                                                                                                |
 | **types**/graphql-resolvers.d.ts                                                 | Auto generated types and interfaces by GraphQL Code Generator based on GraphQL Schema files defined at `src/graphql/typeDefs`.                                                                                        |
 | .dockerignore                                                                    | Folder and files ignored by docker usage.                                                                                                                                                                             |
@@ -158,10 +164,12 @@ Credentials:
 | knex                   | SQL Query Builder.                                                    |
 | lodash                 | A utility library for working with arrays, numbers, objects, strings. |
 | merge-graphql-schemas  | GraphQL Schema utilities.                                             |
+| morgan                 | NodeJS HTTP request logger middleware.                                |
 | objection              | ObjectionJS SQL ORM.                                                  |
 | pg                     | Node Postgres client.                                                 |
 | ts-node                | TypeScript Node environment.                                          |
 | typescript             | TypeScript compiler.                                                  |
+| winston                | Logging library.                                                      |
 | yup                    | Schema validator.                                                     |
 
 **Dev Dependencies**
@@ -186,7 +194,6 @@ Credentials:
 
 ## Future Plans
 
-- Logging
 - GraphQL File upload resolver and example
 - Testing
 - CircleCI

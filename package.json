@@ -58,6 +58,7 @@
     "@types/helmet": "0.0.44",
     "@types/jsonwebtoken": "^8.3.3",
     "@types/lodash": "^4.14.138",
+    "@types/morgan": "^1.7.37",
     "@types/node": "^12.7.5",
     "concurrently": "^4.1.2",
     "husky": "^3.0.5",
@@ -91,10 +92,12 @@
     "knex": "^0.19.4",
     "lodash": "^4.17.15",
     "merge-graphql-schemas": "^1.7.0",
+    "morgan": "^1.9.1",
     "objection": "^1.6.9",
     "pg": "^7.12.1",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.3",
+    "winston": "^3.2.1",
     "yup": "^0.27.0"
   }
 }

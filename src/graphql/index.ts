@@ -5,7 +5,7 @@ import { schema } from './schema';
 import { initLoaders } from '../graphql-dataloaders';
 import { env } from '@app/config/environment';
 import * as services from '@app/core/services';
-import { jwtUtil } from '@app/utils';
+import { jwtUtil, logger } from '@app/utils';
 
 export interface IGraphQLContext {
   userId: string | null;
@@ -30,11 +30,11 @@ export const initApolloGraphqlServer = (app: Express) => {
       return graphqlContext;
     },
     validationRules: [depthLimit(10)],
-
     formatError: err => {
       // https://www.apollographql.com/docs/apollo-server/features/errors.html#Masking-and-logging-errors
 
       // Log error to server's console
+      logger.error(err);
       console.error(err);
 
       // Do not send the exception object to the client

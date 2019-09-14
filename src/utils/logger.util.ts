@@ -1,10 +1,18 @@
 import { createLogger, transports, format } from 'winston';
 
-const logFormat = format.combine(
+const logFormat = format.combine(format.timestamp(), format.json());
+
+const consoleLogFormat = format.combine(
   format.timestamp(),
-  format.printf(info => `${info.timestamp} ${info.level} ${info.message}`),
-  format.json(),
-  format.colorize(),
+  format.printf(info => {
+    const header = `${info.level.toLocaleUpperCase()} - ${info.timestamp}`;
+    const footer = '-'.repeat(header.length);
+
+    return `[${header}]\n${info.message}\n[${footer}]`;
+  }),
+  format.colorize({
+    all: true,
+  }),
 );
 
 export const logger = createLogger({
@@ -22,7 +30,10 @@ export const logger = createLogger({
       maxsize: 5242880,
       maxFiles: 5,
     }),
-    new transports.Console(),
+    new transports.Console({
+      format: consoleLogFormat,
+      handleExceptions: true,
+    }),
   ],
   exceptionHandlers: [
     new transports.File({

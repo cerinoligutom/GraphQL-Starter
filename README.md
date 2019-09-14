@@ -136,32 +136,33 @@ Credentials:
 
 **Dependencies**
 
-| Package                | Description                                                    |
-| ---------------------- | -------------------------------------------------------------- |
-| apollo-server-express  | Apollo GraphQL for Express.                                    |
-| base64url              | Convert strings to base64 url-safe strings.                    |
-| bcryptjs               | Library for hashing and salting user passwords.                |
-| compression            | NodeJS compression middleware.                                 |
-| cors                   | NodeJS cors middleware.                                        |
-| compression            | NodeJS compression middleware.                                 |
-| dataloader             | Facebook Dataloader for batching and caching GraphQL requests. |
-| dotenv                 | Loads environment variables from `.env` file.                  |
-| express                | NodeJS web framework.                                          |
-| express-status-monitor | Reports real-time server metrics for express.                  |
-| graphql                | GraphQL core library.                                          |
-| graphql-depth-limit    | GraphQL depth limit middleware.                                |
-| graphql-iso-date       | GraphQL ISO Date scalars.                                      |
-| graphql-middleware     | GraphQL Middlewares made easy.                                 |
-| graphql-shield         | GraphQL Server permissions as another layer of abstraction.    |
-| helmet                 | NodeJS helmet middleware.                                      |
-| jsonwebtoken           | JWT library.                                                   |
-| knex                   | SQL Query Builder.                                             |
-| merge-graphql-schemas  | GraphQL Schema utilities.                                      |
-| objection              | ObjectionJS SQL ORM.                                           |
-| pg                     | Node Postgres client.                                          |
-| ts-node                | TypeScript Node environment.                                   |
-| typescript             | TypeScript compiler.                                           |
-| yup                    | Schema validator.                                              |
+| Package                | Description                                                           |
+| ---------------------- | --------------------------------------------------------------------- |
+| apollo-server-express  | Apollo GraphQL for Express.                                           |
+| base64url              | Convert strings to base64 url-safe strings.                           |
+| bcryptjs               | Library for hashing and salting user passwords.                       |
+| compression            | NodeJS compression middleware.                                        |
+| cors                   | NodeJS cors middleware.                                               |
+| compression            | NodeJS compression middleware.                                        |
+| dataloader             | Facebook Dataloader for batching and caching GraphQL requests.        |
+| dotenv                 | Loads environment variables from `.env` file.                         |
+| express                | NodeJS web framework.                                                 |
+| express-status-monitor | Reports real-time server metrics for express.                         |
+| graphql                | GraphQL core library.                                                 |
+| graphql-depth-limit    | GraphQL depth limit middleware.                                       |
+| graphql-iso-date       | GraphQL ISO Date scalars.                                             |
+| graphql-middleware     | GraphQL Middlewares made easy.                                        |
+| graphql-shield         | GraphQL Server permissions as another layer of abstraction.           |
+| helmet                 | NodeJS helmet middleware.                                             |
+| jsonwebtoken           | JWT library.                                                          |
+| knex                   | SQL Query Builder.                                                    |
+| lodash                 | A utility library for working with arrays, numbers, objects, strings. |
+| merge-graphql-schemas  | GraphQL Schema utilities.                                             |
+| objection              | ObjectionJS SQL ORM.                                                  |
+| pg                     | Node Postgres client.                                                 |
+| ts-node                | TypeScript Node environment.                                          |
+| typescript             | TypeScript compiler.                                                  |
+| yup                    | Schema validator.                                                     |
 
 **Dev Dependencies**
 

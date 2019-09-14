@@ -6,6 +6,6 @@ type User implements Node {
   fullName: String
   username: String
   email: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime
+  updatedAt: DateTime
 }

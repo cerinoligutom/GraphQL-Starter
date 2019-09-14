@@ -75,6 +75,10 @@ Credentials:
 
 [http://localhost:8080/api/v1/maintenance/health-check](http://localhost:8080/api/v1/maintenance/health-check)
 
+**Node Express Status Monitor endpoint**
+
+[http://localhost:8080/status](http://localhost:8080/status)
+
 **Note:** If you prefer a different port, container name, or anything docker environment related. Just modify the `docker-compose.yml` file and adjust to your setup needs.
 
 ## Project Structure
@@ -101,7 +105,7 @@ Credentials:
 | **src/graphql**/schema.ts                                                        | GraphQL Schema/Resolver builder script                                                                                                                                                                                |
 | **src/graphql-dataloaders**/`<dataloader-name>`.dataloader.ts                    | Facebook Dataloader files                                                                                                                                                                                             |
 | **src/graphql-shield**/rules/\*.ts                                               | Custom GraphQL Shield rules                                                                                                                                                                                           |
-| **src/graphql-shield**/yup-validation-scehmas/`<yup-schema-name>`.schema.ts      | Yup schema files for input validation from client                                                                                                                                                                     |
+| **src/graphql-shield**/yup-validation-schemas/`<yup-schema-name>`.schema.ts      | Yup schema files for input validation from client                                                                                                                                                                     |
 | **src/graphql-shield**/index.ts                                                  | GraphQL Shield middleware rules implementation.                                                                                                                                                                       |
 | **src/middleware**/`<middleware-name>`.middleware.ts                             | Node Express Middleware files.                                                                                                                                                                                        |
 | **src/routes**/`<api-version>`/index.ts                                          | Exports all routers for this api version to a single variable to be used by `src/routes/index.ts`.                                                                                                                    |
@@ -132,31 +136,32 @@ Credentials:
 
 **Dependencies**
 
-| Package               | Description                                                    |
-| --------------------- | -------------------------------------------------------------- |
-| apollo-server-express | Apollo GraphQL for Express.                                    |
-| base64url             | Convert strings to base64 url-safe strings.                    |
-| bcryptjs              | Library for hashing and salting user passwords.                |
-| compression           | NodeJS compression middleware.                                 |
-| cors                  | NodeJS cors middleware.                                        |
-| compression           | NodeJS compression middleware.                                 |
-| dataloader            | Facebook Dataloader for batching and caching GraphQL requests. |
-| dotenv                | Loads environment variables from `.env` file.                  |
-| express               | NodeJS web framework.                                          |
-| graphql               | GraphQL core library.                                          |
-| graphql-depth-limit   | GraphQL depth limit middleware.                                |
-| graphql-iso-date      | GraphQL ISO Date scalars.                                      |
-| graphql-middleware    | GraphQL Middlewares made easy.                                 |
-| graphql-shield        | GraphQL Server permissions as another layer of abstraction.    |
-| helmet                | NodeJS helmet middleware.                                      |
-| jsonwebtoken          | JWT library.                                                   |
-| knex                  | SQL Query Builder.                                             |
-| merge-graphql-schemas | GraphQL Schema utilities.                                      |
-| objection             | ObjectionJS SQL ORM.                                           |
-| pg                    | Node Postgres client.                                          |
-| ts-node               | TypeScript Node environment.                                   |
-| typescript            | TypeScript compiler.                                           |
-| yup                   | Schema validator.                                              |
+| Package                | Description                                                    |
+| ---------------------- | -------------------------------------------------------------- |
+| apollo-server-express  | Apollo GraphQL for Express.                                    |
+| base64url              | Convert strings to base64 url-safe strings.                    |
+| bcryptjs               | Library for hashing and salting user passwords.                |
+| compression            | NodeJS compression middleware.                                 |
+| cors                   | NodeJS cors middleware.                                        |
+| compression            | NodeJS compression middleware.                                 |
+| dataloader             | Facebook Dataloader for batching and caching GraphQL requests. |
+| dotenv                 | Loads environment variables from `.env` file.                  |
+| express                | NodeJS web framework.                                          |
+| express-status-monitor | Reports real-time server metrics for express.                  |
+| graphql                | GraphQL core library.                                          |
+| graphql-depth-limit    | GraphQL depth limit middleware.                                |
+| graphql-iso-date       | GraphQL ISO Date scalars.                                      |
+| graphql-middleware     | GraphQL Middlewares made easy.                                 |
+| graphql-shield         | GraphQL Server permissions as another layer of abstraction.    |
+| helmet                 | NodeJS helmet middleware.                                      |
+| jsonwebtoken           | JWT library.                                                   |
+| knex                   | SQL Query Builder.                                             |
+| merge-graphql-schemas  | GraphQL Schema utilities.                                      |
+| objection              | ObjectionJS SQL ORM.                                           |
+| pg                     | Node Postgres client.                                          |
+| ts-node                | TypeScript Node environment.                                   |
+| typescript             | TypeScript compiler.                                           |
+| yup                    | Schema validator.                                              |
 
 **Dev Dependencies**
 
@@ -182,7 +187,8 @@ Credentials:
 
 - Logging
 - GraphQL File upload resolver and example
-- Add express-status-monitor
+- Testing
+- CircleCI
 
 ## Contributing
 

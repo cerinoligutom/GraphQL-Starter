@@ -30,6 +30,7 @@ export const initApolloGraphqlServer = (app: Express) => {
       return graphqlContext;
     },
     validationRules: [depthLimit(10)],
+
     formatError: err => {
       // https://www.apollographql.com/docs/apollo-server/features/errors.html#Masking-and-logging-errors
 
@@ -51,6 +52,14 @@ export const initApolloGraphqlServer = (app: Express) => {
       return err;
     },
     introspection: !env.isProduction,
+    uploads: {
+      // Limits here should be stricter than config for surrounding
+      // infrastructure such as Nginx so errors can be handled elegantly by
+      // graphql-upload:
+      // https://github.com/jaydenseric/graphql-upload#type-uploadoptions
+      maxFileSize: 10000000, // 10 MB
+      maxFiles: 20,
+    },
     engine: {
       apiKey: process.env.ENGINE_API_KEY,
       schemaTag: env.environment,

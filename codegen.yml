@@ -9,6 +9,8 @@ generates:
     config:
       contextType: "../src/graphql/index#IGraphQLContext"
       enumValues: "../src/graphql/enums/index"
+      scalars:
+        Upload: ../src/graphql/resolvers/common/index#FileUpload
     plugins:
       - "typescript"
       - "typescript-resolvers"

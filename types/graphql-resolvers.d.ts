@@ -1,5 +1,6 @@
 import { UserSortField } from '../src/graphql/enums/index';
 import { SortDirection } from '../src/graphql/enums/index';
+import { FileUpload } from '../src/graphql/resolvers/common/index';
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { IGraphQLContext } from '../src/graphql/index';
 export type Maybe<T> = T | null;
@@ -12,8 +13,16 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
+  Upload: FileUpload;
   Date: any;
   Time: any;
+};
+
+export type File = {
+  __typename?: 'File';
+  filename: Scalars['String'];
+  mimetype: Scalars['String'];
+  encoding: Scalars['String'];
 };
 
 export type LoginInput = {
@@ -31,6 +40,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   register?: Maybe<RegisterPayload>;
   login?: Maybe<LoginPayload>;
+  singleUpload: File;
+  multipleUpload: Array<File>;
   _dummy?: Maybe<Scalars['String']>;
 };
 
@@ -40,6 +51,14 @@ export type MutationRegisterArgs = {
 
 export type MutationLoginArgs = {
   input: LoginInput;
+};
+
+export type MutationSingleUploadArgs = {
+  file: Scalars['Upload'];
+};
+
+export type MutationMultipleUploadArgs = {
+  files: Array<Scalars['Upload']>;
 };
 
 export type Node = {
@@ -209,6 +228,8 @@ export type ResolversTypes = {
   RegisterPayload: ResolverTypeWrapper<RegisterPayload>;
   LoginInput: LoginInput;
   LoginPayload: ResolverTypeWrapper<LoginPayload>;
+  Upload: ResolverTypeWrapper<Scalars['Upload']>;
+  File: ResolverTypeWrapper<File>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   Time: ResolverTypeWrapper<Scalars['Time']>;
 };
@@ -234,6 +255,8 @@ export type ResolversParentTypes = {
   RegisterPayload: RegisterPayload;
   LoginInput: LoginInput;
   LoginPayload: LoginPayload;
+  Upload: Scalars['Upload'];
+  File: File;
   Date: Scalars['Date'];
   Time: Scalars['Time'];
 };
@@ -245,6 +268,12 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
 }
+
+export type FileResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
+  filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mimetype?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  encoding?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
 
 export type LoginPayloadResolvers<
   ContextType = IGraphQLContext,
@@ -260,6 +289,8 @@ export type MutationResolvers<
 > = {
   register?: Resolver<Maybe<ResolversTypes['RegisterPayload']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>;
   login?: Resolver<Maybe<ResolversTypes['LoginPayload']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>;
+  singleUpload?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<MutationSingleUploadArgs, 'file'>>;
+  multipleUpload?: Resolver<Array<ResolversTypes['File']>, ParentType, ContextType, RequireFields<MutationMultipleUploadArgs, 'files'>>;
   _dummy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };
 
@@ -298,6 +329,10 @@ export interface TimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Time';
 }
 
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload';
+}
+
 export type UserResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -331,6 +366,7 @@ export type UserEdgeResolvers<
 export type Resolvers<ContextType = IGraphQLContext> = {
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
+  File?: FileResolvers<ContextType>;
   LoginPayload?: LoginPayloadResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Node?: NodeResolvers;
@@ -338,6 +374,7 @@ export type Resolvers<ContextType = IGraphQLContext> = {
   Query?: QueryResolvers<ContextType>;
   RegisterPayload?: RegisterPayloadResolvers<ContextType>;
   Time?: GraphQLScalarType;
+  Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;
   UserEdge?: UserEdgeResolvers<ContextType>;

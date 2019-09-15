@@ -59,6 +59,7 @@
       "@app/core/enums": ["./src/core/enums"],
       "@app/graphql": ["./src/graphql"],
       "@app/graphql/enums": ["./src/graphql/enums"],
+      "@app/graphql/pubsub": ["./src/graphql-pubsub"],
       "@app/yup-schemas": ["./src/graphql-shield/yup-validation-schemas"]
     } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */

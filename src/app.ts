@@ -11,6 +11,7 @@ import { errorMiddleware, httpLogger } from '@app/middleware';
 import { ping as pingPostgresDatabase } from './db/knex';
 
 import express from 'express';
+import { createServer } from 'http';
 import { initRoutes } from './routes';
 import { initApolloGraphqlServer } from './graphql';
 
@@ -33,11 +34,14 @@ const startApp = async () => {
 
   initRoutes(app);
 
-  initApolloGraphqlServer(app);
-
   app.use(errorMiddleware());
+  const apolloServer = initApolloGraphqlServer(app);
 
-  app.listen(env.port, () => {
+  // For the subscription server
+  const httpServer = createServer(app);
+  apolloServer.installSubscriptionHandlers(httpServer);
+
+  httpServer.listen(env.port, () => {
     console.info(`Server is now up @ ${env.port}`);
   });
 };

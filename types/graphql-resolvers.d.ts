@@ -18,6 +18,11 @@ export type Scalars = {
   Time: any;
 };
 
+export type DummySubscriptionPayload = {
+  __typename?: 'DummySubscriptionPayload';
+  dummy?: Maybe<Scalars['String']>;
+};
+
 export type File = {
   __typename?: 'File';
   filename: Scalars['String'];
@@ -106,6 +111,11 @@ export type RegisterPayload = {
 };
 
 export { SortDirection };
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  _dummy?: Maybe<DummySubscriptionPayload>;
+};
 
 export type User = Node & {
   __typename?: 'User';
@@ -230,6 +240,8 @@ export type ResolversTypes = {
   LoginPayload: ResolverTypeWrapper<LoginPayload>;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
   File: ResolverTypeWrapper<File>;
+  Subscription: ResolverTypeWrapper<{}>;
+  DummySubscriptionPayload: ResolverTypeWrapper<DummySubscriptionPayload>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   Time: ResolverTypeWrapper<Scalars['Time']>;
 };
@@ -257,6 +269,8 @@ export type ResolversParentTypes = {
   LoginPayload: LoginPayload;
   Upload: Scalars['Upload'];
   File: File;
+  Subscription: {};
+  DummySubscriptionPayload: DummySubscriptionPayload;
   Date: Scalars['Date'];
   Time: Scalars['Time'];
 };
@@ -268,6 +282,13 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
 }
+
+export type DummySubscriptionPayloadResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends ResolversParentTypes['DummySubscriptionPayload'] = ResolversParentTypes['DummySubscriptionPayload']
+> = {
+  dummy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+};
 
 export type FileResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
   filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -325,6 +346,13 @@ export type RegisterPayloadResolvers<
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 };
 
+export type SubscriptionResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']
+> = {
+  _dummy?: SubscriptionResolver<Maybe<ResolversTypes['DummySubscriptionPayload']>, '_dummy', ParentType, ContextType>;
+};
+
 export interface TimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Time'], any> {
   name: 'Time';
 }
@@ -366,6 +394,7 @@ export type UserEdgeResolvers<
 export type Resolvers<ContextType = IGraphQLContext> = {
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
+  DummySubscriptionPayload?: DummySubscriptionPayloadResolvers<ContextType>;
   File?: FileResolvers<ContextType>;
   LoginPayload?: LoginPayloadResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
@@ -373,6 +402,7 @@ export type Resolvers<ContextType = IGraphQLContext> = {
   PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   RegisterPayload?: RegisterPayloadResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   Time?: GraphQLScalarType;
   Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;

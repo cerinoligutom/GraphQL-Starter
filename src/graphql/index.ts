@@ -16,20 +16,48 @@ export interface IGraphQLContext {
 export const initApolloGraphqlServer = (app: Express) => {
   const server = new ApolloServer({
     schema,
-    context: ({ req }) => {
-      const payload = jwtUtil.validateToken(req.headers.authorization);
-
-      const userId = payload ? payload.userId : null;
-
+    context: ({ req, connection }) => {
       const graphqlContext: IGraphQLContext = {
-        userId,
         services,
+        userId: null,
         loaders: initLoaders(),
       };
+
+      if (connection) {
+        // Subscription Resolver
+
+        // Possibly check connection for metadata.
+
+        // "context" value is the return value of "onConnect()"
+        // in the "subscriptions" property below.
+        const { context } = connection;
+
+        return {
+          ...context,
+          ...graphqlContext,
+        };
+      }
+
+      // Query/Mutation Resolver (check from "req")
+      const payload = jwtUtil.validateToken(req.headers.authorization);
+      const userId = payload ? payload.userId : null;
+      graphqlContext.userId = userId;
 
       return graphqlContext;
     },
     validationRules: [depthLimit(10)],
+    subscriptions: {
+      onConnect: (connectionParams, webSocket) => {
+        // https://www.apollographql.com/docs/graphql-subscriptions/authentication/
+        console.info('connected');
+
+        // The value returned here goes to "connection.context" in "context" property above.
+        return {} as Partial<IGraphQLContext>;
+      },
+      onDisconnect: (webSocket, context) => {
+        console.info('disconnected');
+      },
+    },
     formatError: err => {
       // https://www.apollographql.com/docs/apollo-server/features/errors.html#Masking-and-logging-errors
 
@@ -69,4 +97,6 @@ export const initApolloGraphqlServer = (app: Express) => {
   server.applyMiddleware({
     app,
   });
+
+  return server;
 };

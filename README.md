@@ -1,6 +1,6 @@
 # TypeScript Node Express + Apollo GraphQL Starter
 
-A boilerplate for Node Express and Apollo GraphQL with TypeScript APIs.
+A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 
 ## Table of Contents
 

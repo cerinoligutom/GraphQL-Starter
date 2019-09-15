@@ -14,7 +14,7 @@ export enum PubSubTriggers {
 }
 
 export const pubsub = {
-  asyncIterator: (triggers: PubSubTriggers | PubSubTriggers[]) => _pubsub.asyncIterator(triggers),
+  asyncIterator: <T>(triggers: PubSubTriggers | PubSubTriggers[]) => _pubsub.asyncIterator<T>(triggers),
   // Add your action creators below
   publishTestEvent: publishDummyEvent(_pubsub),
 };

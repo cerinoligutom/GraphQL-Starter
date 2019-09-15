@@ -10,6 +10,7 @@ A boilerplate for Node Express and Apollo GraphQL with TypeScript APIs.
 - [Project Structure](#project-structure)
 - [List of Packages](#list-of-packages)
 - [Future Plans](#future-plans)
+- [Pro Tips](#pro-tips)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -211,6 +212,21 @@ Credentials:
 
 - Testing
 - CircleCI
+
+## Pro Tips
+
+- If you want to rename a field in your GraphQL Schema:
+
+  - **DO NOT** rename first on the GraphQL schema file (`*.graphql`).
+    - Because if you do, the files that references the to-be-renamed field will break and TypeScript will fail to compile.
+    - GraphQL Code Generator only generates what's defined in the schema and overwrites the generated file so the old name that was previously being referenced is now missing.
+  - What you **SHOULD DO** instead is:
+    - Rename first the field in the generated graphql resolver type definition file found at `types/graphql-resolvers.d.ts` then apply the new name in the GraphQL schema file.
+      - Saves your time and sanity.
+
+- When trying to auto import a GraphQL resolver to its respective index barrel (`index.ts` file), you might notice you're not getting code completion when typing the resolver name in the `export default` object. This is normal because your IDE thinks you're typing the key/property name (remember key-value pair). Assuming the resolver variable name is the same as the key/property name, a workaround is to type a dummy name (any single letter) first as the key/property then start typing your resolver name on the value to get code completion then delete the dummy name.
+
+- Use the `paths` property in `tsconfig.json` file to group related functionalities and for [pretty imports](https://stackoverflow.com/questions/43281741/how-to-use-paths-in-tsconfig-json).
 
 ## Contributing
 

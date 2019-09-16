@@ -4,7 +4,7 @@ import { logger } from '@app/utils';
 
 export const errorMiddleware = () => (err: Error, req: Request, res: Response, next: NextFunction) => {
   // Log message error in our server's console
-  logger.error(err);
+  logger.error(`${err}`);
   console.error(err.message);
 
   // All HTTP requests must have a response, so let's send back an error with its status code and message

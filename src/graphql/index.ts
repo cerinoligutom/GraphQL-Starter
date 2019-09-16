@@ -62,7 +62,7 @@ export const initApolloGraphqlServer = (app: Express) => {
       // https://www.apollographql.com/docs/apollo-server/features/errors.html#Masking-and-logging-errors
 
       // Log error to server's console
-      logger.error(err);
+      logger.error(`${err}`);
       console.error(err);
 
       // Do not send the exception object to the client

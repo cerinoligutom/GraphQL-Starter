@@ -61,7 +61,7 @@ docker-compose up
 
 ---
 
-If docker compose have successfully bootstrapped all services successfully, you should be able to access its corresponding services:
+If docker compose have bootstrapped all services successfully, you should be able to access:
 
 **GraphQL Endpoint**
 

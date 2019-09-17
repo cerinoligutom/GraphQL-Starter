@@ -1,13 +1,13 @@
 import { User } from '@app/db/models';
 import { UserSortField } from '@app/graphql/enums';
 
-const getById = async (id: string) => {
+async function getById(id: string) {
   return (await User.query().findById(id)) || null;
-};
+}
 
-const getByIds = async (ids: string[]) => {
+async function getByIds(ids: string[]) {
   return await User.query().findByIds(ids);
-};
+}
 
 interface IUserCursorPaginatedArgs {
   before?: string | null;
@@ -16,7 +16,7 @@ interface IUserCursorPaginatedArgs {
   sortDirection: string;
   sortField: UserSortField;
 }
-const getCursorPaginated = async (args: IUserCursorPaginatedArgs) => {
+async function getCursorPaginated(args: IUserCursorPaginatedArgs) {
   const { before, after, first, sortDirection, sortField } = args;
 
   const query = User.query()
@@ -29,7 +29,7 @@ const getCursorPaginated = async (args: IUserCursorPaginatedArgs) => {
   }
 
   return await User.nextCursorPage(query, after!);
-};
+}
 
 export const userService = {
   getById,

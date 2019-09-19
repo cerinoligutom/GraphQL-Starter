@@ -2,7 +2,7 @@ import { User } from '@app/db/models';
 import { bcryptUtil, jwtUtil } from '@app/utils';
 import { RegisterInput } from 'graphql-resolvers';
 
-const login = async (usernameOrEmail: string, password: string) => {
+async function login(usernameOrEmail: string, password: string) {
   const user = await User.query()
     .where('username', usernameOrEmail)
     .orWhere('email', usernameOrEmail)
@@ -22,20 +22,24 @@ const login = async (usernameOrEmail: string, password: string) => {
   }
 
   throw new Error('Invalid username/email or password');
-};
+}
 
-const register = async (input: RegisterInput) => {
+async function register(input: RegisterInput) {
   const { firstName, middleName, lastName, email, password, username } = input;
 
   const salt = await bcryptUtil.generateSalt();
   const hash = await bcryptUtil.generateHash(password, salt);
 
-  const existingUsername = await User.query().where('username', username).first();
+  const existingUsername = await User.query()
+    .where('username', username)
+    .first();
   if (existingUsername) {
     throw new Error('Username is already taken.');
   }
 
-  const existingEmail = await User.query().where('email', email).first();
+  const existingEmail = await User.query()
+    .where('email', email)
+    .first();
   if (existingEmail) {
     throw new Error('Email is already taken.');
   }
@@ -49,7 +53,7 @@ const register = async (input: RegisterInput) => {
     hash,
     salt,
   } as User);
-};
+}
 
 export const authService = {
   login,

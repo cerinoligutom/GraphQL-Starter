@@ -63,17 +63,15 @@ export const initApolloGraphqlServer = (app: Express) => {
 
       // Log error to server's console
       logger.error(`${err}`);
-      console.error(err);
 
       // Do not send the exception object to the client
       // for 500 errors when in production
       if (env.isProduction) {
         if (err.extensions!.code === 'INTERNAL_SERVER_ERROR') {
-          // TODO:
-          // Log the original error before obscuring it
-
           err.message = 'Oops! Something went wrong.';
-          err.extensions!.exception = null;
+          if (err.extensions && err.extensions.exception) {
+            err.extensions!.exception.stacktrace = undefined;
+          }
         }
       }
 

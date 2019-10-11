@@ -1,5 +1,5 @@
 import { users } from './users.query';
-import { fullName } from './fullname.query';
+import { fullName } from './fullName.query';
 
 export default {
   Query: {

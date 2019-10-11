@@ -9,6 +9,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
 - [List of Packages](#list-of-packages)
+- [Sample Environment File](#sample-environment-file)
 - [Future Plans](#future-plans)
 - [Pro Tips](#pro-tips)
 - [Contributing](#contributing)
@@ -207,6 +208,58 @@ Credentials:
 | tslint                                | TypeScript linter.                                       |
 | tslint-config-airbnb                  | Airbnb TypeScript style guide configuration for TSLint.  |
 | tslint-config-prettier                | Integration for prettier to use rules defined in TSLint. |
+
+## Sample Environment File
+
+You can configure your environments thru a `.env` file. Just simply create a `.env` file in the root folder and paste the sample code below. These environment variables are then consumed by the config file found under **src/config/environment.ts**.
+
+Currently there are 5 environments that are ready:
+
+1. Local
+2. Test
+3. Dev (Remote)
+4. Staging
+5. Production
+
+You can switch between environments by setting `CURRENT_ENVIRONMENT`.
+
+```
+CURRENT_ENVIRONMENT=LOCAL
+
+JWT_ISSUER=
+JWT_AUDIENCE=
+JWT_SECRET=
+
+PG_LOCAL_APP_PORT=
+PG_LOCAL_DATABASE=
+PG_LOCAL_HOST=
+PG_LOCAL_PASSWORD=
+PG_LOCAL_USER=
+
+PG_TEST_APP_PORT=
+PG_TEST_DATABASE=
+PG_TEST_HOST=
+PG_TEST_PASSWORD=
+PG_TEST_USER=
+
+PG_DEV_APP_PORT=
+PG_DEV_DATABASE=
+PG_DEV_HOST=
+PG_DEV_PASSWORD=
+PG_DEV_USER=
+
+PG_STAGING_APP_PORT=
+PG_STAGING_DATABASE=
+PG_STAGING_HOST=
+PG_STAGING_PASSWORD=
+PG_STAGING_USER=
+
+PG_PROD_APP_PORT=
+PG_PROD_DATABASE=
+PG_PROD_HOST=
+PG_PROD_PASSWORD=
+PG_PROD_USER=
+```
 
 ## Future Plans
 

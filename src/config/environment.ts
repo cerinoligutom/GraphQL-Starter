@@ -21,13 +21,22 @@ interface IEnvironmentConfig {
   };
 }
 
+enum EnvironmentOptions {
+  PRODUCTION = 'PRODUCTION',
+  STAGING = 'STAGING',
+  DEV = 'DEV',
+  TEST = 'TEST',
+  LOCAL = 'LOCAL',
+}
+
 const isProduction = process.env.NODE_ENV === 'production';
+const DEFAULT_APP_PORT = 8080;
 
 const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
-  PRODUCTION: {
+  [EnvironmentOptions.PRODUCTION]: {
     isProduction,
-    environment: 'Production',
-    port: 8080,
+    environment: 'production',
+    port: +process.env.PG_PROD_APP_PORT! || DEFAULT_APP_PORT,
 
     jwt: jwtOptions,
 
@@ -40,10 +49,10 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
     },
   },
 
-  STAGING: {
+  [EnvironmentOptions.STAGING]: {
     isProduction,
-    environment: 'Staging',
-    port: 8080,
+    environment: 'staging',
+    port: +process.env.PG_STAGING_APP_PORT! || DEFAULT_APP_PORT,
 
     jwt: jwtOptions,
 
@@ -56,10 +65,26 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
     },
   },
 
-  TEST: {
+  [EnvironmentOptions.DEV]: {
+    isProduction,
+    environment: 'development',
+    port: +process.env.PG_DEV_APP_PORT! || DEFAULT_APP_PORT,
+
+    jwt: jwtOptions,
+
+    db: {
+      database: process.env.PG_DEV_DATABASE,
+      host: process.env.PG_DEV_HOST,
+      password: process.env.PG_DEV_PASSWORD,
+      user: process.env.PG_DEV_USER,
+      debug: true,
+    },
+  },
+
+  [EnvironmentOptions.TEST]: {
     isProduction: false,
-    environment: 'Test',
-    port: 8080,
+    environment: 'test',
+    port: +process.env.PG_TEST_APP_PORT! || DEFAULT_APP_PORT,
 
     jwt: jwtOptions,
 
@@ -72,10 +97,10 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
     },
   },
 
-  LOCAL: {
+  [EnvironmentOptions.LOCAL]: {
     isProduction: false,
-    environment: 'Local',
-    port: 8080,
+    environment: 'local',
+    port: +process.env.PG_LOCAL_APP_PORT! || DEFAULT_APP_PORT,
 
     jwt: jwtOptions,
 
@@ -89,13 +114,10 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
   },
 };
 
-enum EnvironmentOptions {
-  Production = 'PRODUCTION',
-  Staging = 'STAGING',
-  Test = 'TEST',
-  Local = 'LOCAL',
-}
-
-const currentEnvironment = process.env.CURRENT_ENVIRONMENT || EnvironmentOptions.Local;
+const currentEnvironment = process.env.CURRENT_ENVIRONMENT || EnvironmentOptions.LOCAL;
 
 export const env = ENVIRONMENT_CONFIG[currentEnvironment];
+
+console.info(`${'='.repeat(40)}`);
+console.info(`Current Environment: ${env.environment}`);
+console.info(`${'='.repeat(40)}`);

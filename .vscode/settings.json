@@ -9,6 +9,7 @@
     "maxsize",
     "nginx",
     "npmrc",
+    "pgsql",
     "prettierrc",
     "printf",
     "pubsub"

@@ -1,19 +1,9 @@
 import { RequestHandler } from 'express';
-import { ping as pingPostgresDatabase } from '../../db/knex';
+import knex, { ping as pingPostgresDatabase } from '../../db/knex';
+import { logger } from '@app/utils';
 
 const healthCheck: RequestHandler = async (req, res) => {
-  // tslint:disable-next-line: no-any
-  let postgresStatus: any;
-  await pingPostgresDatabase()
-    .then(() => {
-      postgresStatus = 'OK';
-    })
-    .catch(err => {
-      postgresStatus = err;
-    });
-
   const now = new Date();
-
   res.send({
     status: 'OK',
     serverTime: {
@@ -22,10 +12,24 @@ const healthCheck: RequestHandler = async (req, res) => {
       ms: now.getTime(),
       iso: now.toISOString(),
     },
-    postgres: postgresStatus,
   });
+};
+
+const pgsqlDbCheck: RequestHandler = async (req, res) => {
+  try {
+    await pingPostgresDatabase();
+    res.send({
+      status: 'OK',
+    });
+  } catch (err) {
+    logger.error(`${err}`);
+    res.status(503).send({
+      message: err.message,
+    });
+  }
 };
 
 export const maintenanceController = {
   healthCheck,
+  pgsqlDbCheck,
 };

@@ -6,7 +6,7 @@ import helmet from 'helmet';
 
 import { env } from '@app/config/environment';
 
-import { errorMiddleware, httpLogger } from '@app/middleware';
+import { errorMiddleware, httpLogger, expressStatusMonitor } from '@app/middleware';
 
 import { ping as pingPostgresDatabase } from './db/knex';
 
@@ -25,7 +25,7 @@ const startApp = async () => {
     return;
   }
 
-  app.use(require('express-status-monitor')());
+  app.use(expressStatusMonitor());
   app.use(httpLogger);
   app.use(express.json());
   app.use(helmet());

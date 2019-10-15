@@ -11,6 +11,6 @@ export class User extends BaseModel {
   email!: string;
   hash!: string;
   salt!: string;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+  createdAt!: string;
+  updatedAt!: string;
 }

@@ -70,7 +70,7 @@ export const initApolloGraphqlServer = (app: Express) => {
         if (err.extensions!.code === 'INTERNAL_SERVER_ERROR') {
           err.message = 'Oops! Something went wrong.';
           if (err.extensions && err.extensions.exception) {
-            err.extensions!.exception.stacktrace = undefined;
+            err.extensions.exception.stacktrace = undefined;
           }
         }
       }

@@ -1,6 +1,6 @@
-import { MutationResolvers } from 'graphql-resolvers';
+import { GQL_MutationResolvers } from 'graphql-resolvers';
 
-export const multipleUpload: MutationResolvers['multipleUpload'] = async (_, { files }) => {
+export const multipleUpload: GQL_MutationResolvers['multipleUpload'] = async (_, { files }) => {
   const multipleFiles = await Promise.all(
     files.map(async file => {
       const { createReadStream, filename, mimetype, encoding } = await file;

@@ -7,6 +7,7 @@ require:
 generates:
   ./types/graphql-resolvers.d.ts:
     config:
+      typesPrefix: GQL_
       contextType: "../src/graphql/index#IGraphQLContext"
       enumValues: "../src/graphql/enums/index"
       scalars:

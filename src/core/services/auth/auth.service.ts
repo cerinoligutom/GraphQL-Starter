@@ -1,6 +1,6 @@
 import { User } from '@app/db/models';
 import { bcryptUtil, jwtUtil } from '@app/utils';
-import { RegisterInput } from 'graphql-resolvers';
+import { GQL_RegisterInput } from 'graphql-resolvers';
 
 async function login(usernameOrEmail: string, password: string) {
   const user = await User.query()
@@ -24,7 +24,7 @@ async function login(usernameOrEmail: string, password: string) {
   throw new Error('Invalid username/email or password');
 }
 
-async function register(input: RegisterInput) {
+async function register(input: GQL_RegisterInput) {
   const { firstName, middleName, lastName, email, password, username } = input;
 
   const salt = await bcryptUtil.generateSalt();

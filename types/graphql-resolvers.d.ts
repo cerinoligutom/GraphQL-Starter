@@ -7,161 +7,149 @@ export type Maybe<T> = T | null;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string,
-  String: string,
-  Boolean: boolean,
-  Int: number,
-  Float: number,
-  DateTime: any,
-  Upload: FileUpload,
-  Date: any,
-  Time: any,
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  DateTime: any;
+  Upload: FileUpload;
+  Date: any;
+  Time: any;
 };
 
-
-
-export type DummySubscriptionPayload = {
-   __typename?: 'DummySubscriptionPayload',
-  dummy?: Maybe<Scalars['String']>,
+export type GQL_DummySubscriptionPayload = {
+  __typename?: 'DummySubscriptionPayload';
+  dummy?: Maybe<Scalars['String']>;
 };
 
-export type File = {
-   __typename?: 'File',
-  filename: Scalars['String'],
-  mimetype: Scalars['String'],
-  encoding: Scalars['String'],
+export type GQL_File = {
+  __typename?: 'File';
+  filename: Scalars['String'];
+  mimetype: Scalars['String'];
+  encoding: Scalars['String'];
 };
 
-export type LoginInput = {
-  usernameOrEmail: Scalars['String'],
-  password: Scalars['String'],
+export type GQL_LoginInput = {
+  usernameOrEmail: Scalars['String'];
+  password: Scalars['String'];
 };
 
-export type LoginPayload = {
-   __typename?: 'LoginPayload',
-  user?: Maybe<User>,
-  token?: Maybe<Scalars['String']>,
+export type GQL_LoginPayload = {
+  __typename?: 'LoginPayload';
+  user?: Maybe<GQL_User>;
+  token?: Maybe<Scalars['String']>;
 };
 
-export type Mutation = {
-   __typename?: 'Mutation',
-  register?: Maybe<RegisterPayload>,
-  login?: Maybe<LoginPayload>,
-  singleUpload: File,
-  multipleUpload: Array<File>,
-  _dummy?: Maybe<Scalars['String']>,
+export type GQL_Mutation = {
+  __typename?: 'Mutation';
+  register?: Maybe<GQL_RegisterPayload>;
+  login?: Maybe<GQL_LoginPayload>;
+  singleUpload: GQL_File;
+  multipleUpload: Array<GQL_File>;
+  _dummy?: Maybe<Scalars['String']>;
 };
 
-
-export type MutationRegisterArgs = {
-  input: RegisterInput
+export type GQL_MutationRegisterArgs = {
+  input: GQL_RegisterInput;
 };
 
-
-export type MutationLoginArgs = {
-  input: LoginInput
+export type GQL_MutationLoginArgs = {
+  input: GQL_LoginInput;
 };
 
-
-export type MutationSingleUploadArgs = {
-  file: Scalars['Upload']
+export type GQL_MutationSingleUploadArgs = {
+  file: Scalars['Upload'];
 };
 
-
-export type MutationMultipleUploadArgs = {
-  files: Array<Scalars['Upload']>
+export type GQL_MutationMultipleUploadArgs = {
+  files: Array<Scalars['Upload']>;
 };
 
-export type Node = {
-  id: Scalars['ID'],
+export type GQL_Node = {
+  id: Scalars['ID'];
 };
 
-export type PageInfo = {
-   __typename?: 'PageInfo',
-  endCursor?: Maybe<Scalars['String']>,
-  hasNextPage: Scalars['Boolean'],
-  hasPreviousPage: Scalars['Boolean'],
-  startCursor?: Maybe<Scalars['String']>,
+export type GQL_PageInfo = {
+  __typename?: 'PageInfo';
+  endCursor?: Maybe<Scalars['String']>;
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  startCursor?: Maybe<Scalars['String']>;
 };
 
-export type Query = {
-   __typename?: 'Query',
-  node?: Maybe<Node>,
-  _dummy?: Maybe<Scalars['String']>,
-  users: UserConnection,
+export type GQL_Query = {
+  __typename?: 'Query';
+  node?: Maybe<GQL_Node>;
+  _dummy?: Maybe<Scalars['String']>;
+  users: GQL_UserConnection;
 };
 
-
-export type QueryNodeArgs = {
-  id: Scalars['ID']
+export type GQL_QueryNodeArgs = {
+  id: Scalars['ID'];
 };
 
-
-export type QueryUsersArgs = {
-  first?: Maybe<Scalars['Int']>,
-  before?: Maybe<Scalars['String']>,
-  after?: Maybe<Scalars['String']>,
-  sortBy?: Maybe<UserSort>
+export type GQL_QueryUsersArgs = {
+  first?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['String']>;
+  after?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<GQL_UserSort>;
 };
 
-export type RegisterInput = {
-  firstName: Scalars['String'],
-  middleName?: Maybe<Scalars['String']>,
-  lastName: Scalars['String'],
-  username: Scalars['String'],
-  email: Scalars['String'],
-  password: Scalars['String'],
+export type GQL_RegisterInput = {
+  firstName: Scalars['String'];
+  middleName?: Maybe<Scalars['String']>;
+  lastName: Scalars['String'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
-export type RegisterPayload = {
-   __typename?: 'RegisterPayload',
-  success: Scalars['Boolean'],
+export type GQL_RegisterPayload = {
+  __typename?: 'RegisterPayload';
+  success: Scalars['Boolean'];
 };
 
 export { SortDirection };
 
-export type Subscription = {
-   __typename?: 'Subscription',
-  _dummy?: Maybe<DummySubscriptionPayload>,
+export type GQL_Subscription = {
+  __typename?: 'Subscription';
+  _dummy?: Maybe<GQL_DummySubscriptionPayload>;
 };
 
-
-
-export type User = Node & {
-   __typename?: 'User',
-  id: Scalars['ID'],
-  firstName?: Maybe<Scalars['String']>,
-  middleName?: Maybe<Scalars['String']>,
-  lastName?: Maybe<Scalars['String']>,
-  fullName?: Maybe<Scalars['String']>,
-  username?: Maybe<Scalars['String']>,
-  email?: Maybe<Scalars['String']>,
-  createdAt?: Maybe<Scalars['DateTime']>,
-  updatedAt?: Maybe<Scalars['DateTime']>,
+export type GQL_User = GQL_Node & {
+  __typename?: 'User';
+  id: Scalars['ID'];
+  firstName?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type UserConnection = {
-   __typename?: 'UserConnection',
-  edges?: Maybe<Array<Maybe<UserEdge>>>,
-  nodes?: Maybe<Array<Maybe<User>>>,
-  pageInfo: PageInfo,
-  totalCount: Scalars['Int'],
+export type GQL_UserConnection = {
+  __typename?: 'UserConnection';
+  edges?: Maybe<Array<Maybe<GQL_UserEdge>>>;
+  nodes?: Maybe<Array<Maybe<GQL_User>>>;
+  pageInfo: GQL_PageInfo;
+  totalCount: Scalars['Int'];
 };
 
-export type UserEdge = {
-   __typename?: 'UserEdge',
-  cursor: Scalars['String'],
-  node?: Maybe<User>,
+export type GQL_UserEdge = {
+  __typename?: 'UserEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<GQL_User>;
 };
 
-export type UserSort = {
-  field: UserSortField,
-  direction: SortDirection,
+export type GQL_UserSort = {
+  field: UserSortField;
+  direction: SortDirection;
 };
 
 export { UserSortField };
-
-
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -169,9 +157,8 @@ export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => Promise<TResult> | TResult;
-
 
 export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
   fragment: string;
@@ -186,14 +173,14 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => TResult | Promise<TResult>;
 
 export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
@@ -217,7 +204,7 @@ export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TCo
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   parent: TParent,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => Maybe<TTypes>;
 
 export type NextResolverFn<T> = () => Promise<T>;
@@ -227,178 +214,217 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => TResult | Promise<TResult>;
 
 /** Mapping between all available schema types and the resolvers types */
-export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>,
-  ID: ResolverTypeWrapper<Scalars['ID']>,
-  Node: ResolverTypeWrapper<Node>,
-  String: ResolverTypeWrapper<Scalars['String']>,
-  Int: ResolverTypeWrapper<Scalars['Int']>,
-  UserSort: UserSort,
-  UserSortField: UserSortField,
-  SortDirection: SortDirection,
-  UserConnection: ResolverTypeWrapper<UserConnection>,
-  UserEdge: ResolverTypeWrapper<UserEdge>,
-  User: ResolverTypeWrapper<User>,
-  DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
-  PageInfo: ResolverTypeWrapper<PageInfo>,
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
-  Mutation: ResolverTypeWrapper<{}>,
-  RegisterInput: RegisterInput,
-  RegisterPayload: ResolverTypeWrapper<RegisterPayload>,
-  LoginInput: LoginInput,
-  LoginPayload: ResolverTypeWrapper<LoginPayload>,
-  Upload: ResolverTypeWrapper<Scalars['Upload']>,
-  File: ResolverTypeWrapper<File>,
-  Subscription: ResolverTypeWrapper<{}>,
-  DummySubscriptionPayload: ResolverTypeWrapper<DummySubscriptionPayload>,
-  Date: ResolverTypeWrapper<Scalars['Date']>,
-  Time: ResolverTypeWrapper<Scalars['Time']>,
+export type GQL_ResolversTypes = {
+  Query: ResolverTypeWrapper<{}>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Node: ResolverTypeWrapper<GQL_Node>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  UserSort: GQL_UserSort;
+  UserSortField: UserSortField;
+  SortDirection: SortDirection;
+  UserConnection: ResolverTypeWrapper<GQL_UserConnection>;
+  UserEdge: ResolverTypeWrapper<GQL_UserEdge>;
+  User: ResolverTypeWrapper<GQL_User>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  PageInfo: ResolverTypeWrapper<GQL_PageInfo>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  RegisterInput: GQL_RegisterInput;
+  RegisterPayload: ResolverTypeWrapper<GQL_RegisterPayload>;
+  LoginInput: GQL_LoginInput;
+  LoginPayload: ResolverTypeWrapper<GQL_LoginPayload>;
+  Upload: ResolverTypeWrapper<Scalars['Upload']>;
+  File: ResolverTypeWrapper<GQL_File>;
+  Subscription: ResolverTypeWrapper<{}>;
+  DummySubscriptionPayload: ResolverTypeWrapper<GQL_DummySubscriptionPayload>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
+  Time: ResolverTypeWrapper<Scalars['Time']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
-export type ResolversParentTypes = {
-  Query: {},
-  ID: Scalars['ID'],
-  Node: Node,
-  String: Scalars['String'],
-  Int: Scalars['Int'],
-  UserSort: UserSort,
-  UserSortField: UserSortField,
-  SortDirection: SortDirection,
-  UserConnection: UserConnection,
-  UserEdge: UserEdge,
-  User: User,
-  DateTime: Scalars['DateTime'],
-  PageInfo: PageInfo,
-  Boolean: Scalars['Boolean'],
-  Mutation: {},
-  RegisterInput: RegisterInput,
-  RegisterPayload: RegisterPayload,
-  LoginInput: LoginInput,
-  LoginPayload: LoginPayload,
-  Upload: Scalars['Upload'],
-  File: File,
-  Subscription: {},
-  DummySubscriptionPayload: DummySubscriptionPayload,
-  Date: Scalars['Date'],
-  Time: Scalars['Time'],
+export type GQL_ResolversParentTypes = {
+  Query: {};
+  ID: Scalars['ID'];
+  Node: GQL_Node;
+  String: Scalars['String'];
+  Int: Scalars['Int'];
+  UserSort: GQL_UserSort;
+  UserSortField: UserSortField;
+  SortDirection: SortDirection;
+  UserConnection: GQL_UserConnection;
+  UserEdge: GQL_UserEdge;
+  User: GQL_User;
+  DateTime: Scalars['DateTime'];
+  PageInfo: GQL_PageInfo;
+  Boolean: Scalars['Boolean'];
+  Mutation: {};
+  RegisterInput: GQL_RegisterInput;
+  RegisterPayload: GQL_RegisterPayload;
+  LoginInput: GQL_LoginInput;
+  LoginPayload: GQL_LoginPayload;
+  Upload: Scalars['Upload'];
+  File: GQL_File;
+  Subscription: {};
+  DummySubscriptionPayload: GQL_DummySubscriptionPayload;
+  Date: Scalars['Date'];
+  Time: Scalars['Time'];
 };
 
-export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
-  name: 'Date'
+export interface GQL_DateScalarConfig extends GraphQLScalarTypeConfig<GQL_ResolversTypes['Date'], any> {
+  name: 'Date';
 }
 
-export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
-  name: 'DateTime'
+export interface GQL_DateTimeScalarConfig extends GraphQLScalarTypeConfig<GQL_ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
 }
 
-export type DummySubscriptionPayloadResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['DummySubscriptionPayload'] = ResolversParentTypes['DummySubscriptionPayload']> = {
-  dummy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+export type GQL_DummySubscriptionPayloadResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['DummySubscriptionPayload'] = GQL_ResolversParentTypes['DummySubscriptionPayload']
+> = {
+  dummy?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
 };
 
-export type FileResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
-  filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  mimetype?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  encoding?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+export type GQL_FileResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['File'] = GQL_ResolversParentTypes['File']
+> = {
+  filename?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>;
+  mimetype?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>;
+  encoding?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>;
 };
 
-export type LoginPayloadResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['LoginPayload'] = ResolversParentTypes['LoginPayload']> = {
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
-  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+export type GQL_LoginPayloadResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['LoginPayload'] = GQL_ResolversParentTypes['LoginPayload']
+> = {
+  user?: Resolver<Maybe<GQL_ResolversTypes['User']>, ParentType, ContextType>;
+  token?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
 };
 
-export type MutationResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  register?: Resolver<Maybe<ResolversTypes['RegisterPayload']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>,
-  login?: Resolver<Maybe<ResolversTypes['LoginPayload']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>,
-  singleUpload?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<MutationSingleUploadArgs, 'file'>>,
-  multipleUpload?: Resolver<Array<ResolversTypes['File']>, ParentType, ContextType, RequireFields<MutationMultipleUploadArgs, 'files'>>,
-  _dummy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+export type GQL_MutationResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['Mutation'] = GQL_ResolversParentTypes['Mutation']
+> = {
+  register?: Resolver<
+    Maybe<GQL_ResolversTypes['RegisterPayload']>,
+    ParentType,
+    ContextType,
+    RequireFields<GQL_MutationRegisterArgs, 'input'>
+  >;
+  login?: Resolver<Maybe<GQL_ResolversTypes['LoginPayload']>, ParentType, ContextType, RequireFields<GQL_MutationLoginArgs, 'input'>>;
+  singleUpload?: Resolver<GQL_ResolversTypes['File'], ParentType, ContextType, RequireFields<GQL_MutationSingleUploadArgs, 'file'>>;
+  multipleUpload?: Resolver<
+    Array<GQL_ResolversTypes['File']>,
+    ParentType,
+    ContextType,
+    RequireFields<GQL_MutationMultipleUploadArgs, 'files'>
+  >;
+  _dummy?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
 };
 
-export type NodeResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
-  __resolveType: TypeResolveFn<'User', ParentType, ContextType>,
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+export type GQL_NodeResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['Node'] = GQL_ResolversParentTypes['Node']
+> = {
+  __resolveType: TypeResolveFn<'User', ParentType, ContextType>;
+  id?: Resolver<GQL_ResolversTypes['ID'], ParentType, ContextType>;
 };
 
-export type PageInfoResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
-  endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  hasPreviousPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  startCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+export type GQL_PageInfoResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['PageInfo'] = GQL_ResolversParentTypes['PageInfo']
+> = {
+  endCursor?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
+  hasNextPage?: Resolver<GQL_ResolversTypes['Boolean'], ParentType, ContextType>;
+  hasPreviousPage?: Resolver<GQL_ResolversTypes['Boolean'], ParentType, ContextType>;
+  startCursor?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
 };
 
-export type QueryResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id'>>,
-  _dummy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersArgs, 'first'>>,
+export type GQL_QueryResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['Query'] = GQL_ResolversParentTypes['Query']
+> = {
+  node?: Resolver<Maybe<GQL_ResolversTypes['Node']>, ParentType, ContextType, RequireFields<GQL_QueryNodeArgs, 'id'>>;
+  _dummy?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
+  users?: Resolver<GQL_ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<GQL_QueryUsersArgs, 'first'>>;
 };
 
-export type RegisterPayloadResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['RegisterPayload'] = ResolversParentTypes['RegisterPayload']> = {
-  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+export type GQL_RegisterPayloadResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['RegisterPayload'] = GQL_ResolversParentTypes['RegisterPayload']
+> = {
+  success?: Resolver<GQL_ResolversTypes['Boolean'], ParentType, ContextType>;
 };
 
-export type SubscriptionResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
-  _dummy?: SubscriptionResolver<Maybe<ResolversTypes['DummySubscriptionPayload']>, "_dummy", ParentType, ContextType>,
+export type GQL_SubscriptionResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['Subscription'] = GQL_ResolversParentTypes['Subscription']
+> = {
+  _dummy?: SubscriptionResolver<Maybe<GQL_ResolversTypes['DummySubscriptionPayload']>, '_dummy', ParentType, ContextType>;
 };
 
-export interface TimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Time'], any> {
-  name: 'Time'
+export interface GQL_TimeScalarConfig extends GraphQLScalarTypeConfig<GQL_ResolversTypes['Time'], any> {
+  name: 'Time';
 }
 
-export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
-  name: 'Upload'
+export interface GQL_UploadScalarConfig extends GraphQLScalarTypeConfig<GQL_ResolversTypes['Upload'], any> {
+  name: 'Upload';
 }
 
-export type UserResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  middleName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  fullName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>,
-  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>,
+export type GQL_UserResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['User'] = GQL_ResolversParentTypes['User']
+> = {
+  id?: Resolver<GQL_ResolversTypes['ID'], ParentType, ContextType>;
+  firstName?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
+  middleName?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
+  lastName?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
+  fullName?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
+  username?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
+  email?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<GQL_ResolversTypes['DateTime']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<GQL_ResolversTypes['DateTime']>, ParentType, ContextType>;
 };
 
-export type UserConnectionResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection']> = {
-  edges?: Resolver<Maybe<Array<Maybe<ResolversTypes['UserEdge']>>>, ParentType, ContextType>,
-  nodes?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>,
-  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>,
-  totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+export type GQL_UserConnectionResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['UserConnection'] = GQL_ResolversParentTypes['UserConnection']
+> = {
+  edges?: Resolver<Maybe<Array<Maybe<GQL_ResolversTypes['UserEdge']>>>, ParentType, ContextType>;
+  nodes?: Resolver<Maybe<Array<Maybe<GQL_ResolversTypes['User']>>>, ParentType, ContextType>;
+  pageInfo?: Resolver<GQL_ResolversTypes['PageInfo'], ParentType, ContextType>;
+  totalCount?: Resolver<GQL_ResolversTypes['Int'], ParentType, ContextType>;
 };
 
-export type UserEdgeResolvers<ContextType = IGraphQLContext, ParentType extends ResolversParentTypes['UserEdge'] = ResolversParentTypes['UserEdge']> = {
-  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  node?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
+export type GQL_UserEdgeResolvers<
+  ContextType = IGraphQLContext,
+  ParentType extends GQL_ResolversParentTypes['UserEdge'] = GQL_ResolversParentTypes['UserEdge']
+> = {
+  cursor?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<Maybe<GQL_ResolversTypes['User']>, ParentType, ContextType>;
 };
 
-export type Resolvers<ContextType = IGraphQLContext> = {
-  Date?: GraphQLScalarType,
-  DateTime?: GraphQLScalarType,
-  DummySubscriptionPayload?: DummySubscriptionPayloadResolvers<ContextType>,
-  File?: FileResolvers<ContextType>,
-  LoginPayload?: LoginPayloadResolvers<ContextType>,
-  Mutation?: MutationResolvers<ContextType>,
-  Node?: NodeResolvers,
-  PageInfo?: PageInfoResolvers<ContextType>,
-  Query?: QueryResolvers<ContextType>,
-  RegisterPayload?: RegisterPayloadResolvers<ContextType>,
-  Subscription?: SubscriptionResolvers<ContextType>,
-  Time?: GraphQLScalarType,
-  Upload?: GraphQLScalarType,
-  User?: UserResolvers<ContextType>,
-  UserConnection?: UserConnectionResolvers<ContextType>,
-  UserEdge?: UserEdgeResolvers<ContextType>,
+export type GQL_Resolvers<ContextType = IGraphQLContext> = {
+  Date?: GraphQLScalarType;
+  DateTime?: GraphQLScalarType;
+  DummySubscriptionPayload?: GQL_DummySubscriptionPayloadResolvers<ContextType>;
+  File?: GQL_FileResolvers<ContextType>;
+  LoginPayload?: GQL_LoginPayloadResolvers<ContextType>;
+  Mutation?: GQL_MutationResolvers<ContextType>;
+  Node?: GQL_NodeResolvers;
+  PageInfo?: GQL_PageInfoResolvers<ContextType>;
+  Query?: GQL_QueryResolvers<ContextType>;
+  RegisterPayload?: GQL_RegisterPayloadResolvers<ContextType>;
+  Subscription?: GQL_SubscriptionResolvers<ContextType>;
+  Time?: GraphQLScalarType;
+  Upload?: GraphQLScalarType;
+  User?: GQL_UserResolvers<ContextType>;
+  UserConnection?: GQL_UserConnectionResolvers<ContextType>;
+  UserEdge?: GQL_UserEdgeResolvers<ContextType>;
 };
-
-
-/**
- * @deprecated
- * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
-*/
-export type IResolvers<ContextType = IGraphQLContext> = Resolvers<ContextType>;

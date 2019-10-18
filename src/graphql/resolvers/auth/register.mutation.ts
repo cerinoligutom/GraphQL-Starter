@@ -1,7 +1,7 @@
-import { MutationResolvers } from 'graphql-resolvers';
+import { GQL_MutationResolvers } from 'graphql-resolvers';
 import { ValidationError } from 'apollo-server-core';
 
-export const register: MutationResolvers['register'] = async (_, { input }, { services }) => {
+export const register: GQL_MutationResolvers['register'] = async (_, { input }, { services }) => {
   const { authService } = services;
 
   try {

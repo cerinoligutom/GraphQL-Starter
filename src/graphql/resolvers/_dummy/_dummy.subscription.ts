@@ -1,8 +1,8 @@
-import { SubscriptionResolvers, DummySubscriptionPayload } from 'graphql-resolvers';
+import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from 'graphql-resolvers';
 import { pubsub, PubSubTriggers } from '@app/graphql/pubsub';
 
-export const _dummy: SubscriptionResolvers['_dummy'] = {
-  resolve: (value: DummySubscriptionPayload) => {
+export const _dummy: GQL_SubscriptionResolvers['_dummy'] = {
+  resolve: (value: GQL_DummySubscriptionPayload) => {
     // NOTE:
     // The "value" argument here is what gets published, for this example,
     // we're expecting a string to be published so we give it that type

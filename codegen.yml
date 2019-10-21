@@ -8,6 +8,7 @@ generates:
   ./types/graphql-resolvers.d.ts:
     config:
       typesPrefix: GQL_
+      maybeValue: T | null | undefined
       contextType: "../src/graphql/index#IGraphQLContext"
       enumValues: "../src/graphql/enums/index"
       scalars:

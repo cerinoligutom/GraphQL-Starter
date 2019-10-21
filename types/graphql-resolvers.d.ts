@@ -3,7 +3,7 @@ import { SortDirection } from '../src/graphql/enums/index';
 import { FileUpload } from '../src/graphql/resolvers/common/index';
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { IGraphQLContext } from '../src/graphql/index';
-export type Maybe<T> = T | null;
+export type Maybe<T> = T | null | undefined;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {

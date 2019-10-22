@@ -58,6 +58,6 @@ export class User extends BaseModel {
   email!: string;
   hash!: string;
   salt!: string;
-  createdAt!: string;
-  updatedAt!: string;
+  createdAt!: Date;
+  updatedAt!: Date;
 }

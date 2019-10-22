@@ -8,11 +8,12 @@
       "name": "Docker: Attach to Nodemon",
       "type": "node",
       "request": "attach",
-      "localRoot": "${workspaceRoot}/server",
-      "remoteRoot": "/usr/src/app",
+      "localRoot": "${workspaceRoot}/src",
+      "remoteRoot": "/usr/src/app/src",
       "protocol": "inspector",
       "address": "0.0.0.0",
-      "port": 9229
+      "port": 9229,
+      "restart": true
     }
   ]
 }

@@ -285,6 +285,8 @@ PG_PROD_USER=
 
 - Use the `paths` property in `tsconfig.json` file to group related functionalities and for [pretty imports](https://stackoverflow.com/questions/43281741/how-to-use-paths-in-tsconfig-json).
 
+- When trying to debug async functions in VSCode and the breakpoints on the inner lines won't hit, try adding `trace: true` to `launch.json` file.
+
 ## Contributing
 
 If something is unclear, confusing, or needs to be refactored, please let me know. Pull requests are always welcome but do consider the opinionated nature of this project. Please open an issue before submitting a pull request.

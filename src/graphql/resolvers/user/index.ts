@@ -1,11 +1,11 @@
-import { users } from './users.query';
-import { fullName } from './fullName.query';
+import { usersResolver } from './users.query';
+import { fullNameResolver } from './fullName.query';
 
 export default {
   Query: {
-    users,
+    users: usersResolver,
   },
   User: {
-    fullName,
+    fullName: fullNameResolver,
   },
 };

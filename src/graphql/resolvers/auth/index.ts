@@ -1,9 +1,9 @@
-import { login } from './login.mutation';
-import { register } from './register.mutation';
+import { loginResolver } from './login.mutation';
+import { registerResolver } from './register.mutation';
 
 export default {
   Mutation: {
-    login,
-    register,
+    login: loginResolver,
+    register: registerResolver,
   },
 };

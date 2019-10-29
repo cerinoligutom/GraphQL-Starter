@@ -1,15 +1,15 @@
-import { _dummy as _dummyQuery } from './_dummy.query';
-import { _dummy as _dummyMutation } from './_dummy.mutation';
-import { _dummy as _dummySubscription } from './_dummy.subscription';
+import { _dummyResolver as _dummyQueryResolver } from './_dummy.query';
+import { _dummyResolver as _dummyMutationResolver } from './_dummy.mutation';
+import { _dummyResolver as _dummySubscriptionResolver } from './_dummy.subscription';
 
 export default {
   Query: {
-    _dummy: _dummyQuery,
+    _dummy: _dummyQueryResolver,
   },
   Mutation: {
-    _dummy: _dummyMutation,
+    _dummy: _dummyMutationResolver,
   },
   Subscription: {
-    _dummy: _dummySubscription,
+    _dummy: _dummySubscriptionResolver,
   },
 };

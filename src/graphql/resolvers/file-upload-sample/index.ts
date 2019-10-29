@@ -1,9 +1,9 @@
-import { singleUpload } from './singleUpload.mutation';
-import { multipleUpload } from './multipleUpload.mutation';
+import { singleUploadResolver } from './singleUpload.mutation';
+import { multipleUploadResolver } from './multipleUpload.mutation';
 
 export default {
   Mutation: {
-    singleUpload,
-    multipleUpload,
+    singleUpload: singleUploadResolver,
+    multipleUpload: multipleUploadResolver,
   },
 };

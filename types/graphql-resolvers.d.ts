@@ -72,8 +72,11 @@ export type GQL_Node = {
 
 export type GQL_PageInfo = {
   __typename?: 'PageInfo';
+  /** When paginating forwards, the cursor to continue. */
   endCursor?: Maybe<Scalars['String']>;
+  /** When paginating forwards, are there more items? */
   hasNextPage: Scalars['Boolean'];
+  /** When paginating backwards, are there more items? */
   hasPreviousPage: Scalars['Boolean'];
   startCursor?: Maybe<Scalars['String']>;
 };

@@ -1,6 +1,6 @@
 import { GQL_MutationResolvers } from 'graphql-resolvers';
 
-export const singleUpload: GQL_MutationResolvers['singleUpload'] = async (_, { file }) => {
+export const singleUploadResolver: GQL_MutationResolvers['singleUpload'] = async (_, { file }) => {
   const { createReadStream, filename, mimetype, encoding } = await file;
 
   // 1. Validate file metadata.

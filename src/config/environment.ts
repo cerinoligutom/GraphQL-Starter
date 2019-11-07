@@ -32,13 +32,13 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
   [EnvironmentOptions.PRODUCTION]: {
     isProduction,
     environment: EnvironmentOptions.PRODUCTION,
-    port: +process.env.PG_PROD_APP_PORT! || DEFAULT_APP_PORT,
+    port: +process.env.PROD_APP_PORT! || DEFAULT_APP_PORT,
 
     db: {
-      database: process.env.PG_PROD_DATABASE,
-      host: process.env.PG_PROD_HOST,
-      password: process.env.PG_PROD_PASSWORD,
-      user: process.env.PG_PROD_USER,
+      database: process.env.PROD_PG_DATABASE,
+      host: process.env.PROD_PG_HOST,
+      password: process.env.PROD_PG_PASSWORD,
+      user: process.env.PROD_PG_USER,
       debug: false,
     },
   },
@@ -46,13 +46,13 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
   [EnvironmentOptions.STAGING]: {
     isProduction,
     environment: EnvironmentOptions.STAGING,
-    port: +process.env.PG_STAGING_APP_PORT! || DEFAULT_APP_PORT,
+    port: +process.env.STAGING_APP_PORT! || DEFAULT_APP_PORT,
 
     db: {
-      database: process.env.PG_STAGING_DATABASE,
-      host: process.env.PG_STAGING_HOST,
-      password: process.env.PG_STAGING_PASSWORD,
-      user: process.env.PG_STAGING_USER,
+      database: process.env.STAGING_PG_DATABASE,
+      host: process.env.STAGING_PG_HOST,
+      password: process.env.STAGING_PG_PASSWORD,
+      user: process.env.STAGING_PG_USER,
       debug: true,
     },
   },
@@ -60,13 +60,13 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
   [EnvironmentOptions.DEV]: {
     isProduction,
     environment: EnvironmentOptions.DEV,
-    port: +process.env.PG_DEV_APP_PORT! || DEFAULT_APP_PORT,
+    port: +process.env.DEV_APP_PORT! || DEFAULT_APP_PORT,
 
     db: {
-      database: process.env.PG_DEV_DATABASE,
-      host: process.env.PG_DEV_HOST,
-      password: process.env.PG_DEV_PASSWORD,
-      user: process.env.PG_DEV_USER,
+      database: process.env.DEV_PG_DATABASE,
+      host: process.env.DEV_PG_HOST,
+      password: process.env.DEV_PG_PASSWORD,
+      user: process.env.DEV_PG_USER,
       debug: true,
     },
   },
@@ -74,13 +74,13 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
   [EnvironmentOptions.TEST]: {
     isProduction: false,
     environment: EnvironmentOptions.TEST,
-    port: +process.env.PG_TEST_APP_PORT! || DEFAULT_APP_PORT,
+    port: +process.env.TEST_APP_PORT! || DEFAULT_APP_PORT,
 
     db: {
-      database: process.env.PG_TEST_DATABASE,
-      host: process.env.PG_TEST_HOST,
-      password: process.env.PG_TEST_PASSWORD,
-      user: process.env.PG_TEST_USER,
+      database: process.env.TEST_PG_DATABASE,
+      host: process.env.TEST_PG_HOST,
+      password: process.env.TEST_PG_PASSWORD,
+      user: process.env.TEST_PG_USER,
       debug: true,
     },
   },
@@ -88,13 +88,13 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
   [EnvironmentOptions.LOCAL]: {
     isProduction: false,
     environment: EnvironmentOptions.LOCAL,
-    port: +process.env.PG_LOCAL_APP_PORT! || DEFAULT_APP_PORT,
+    port: +process.env.LOCAL_APP_PORT! || DEFAULT_APP_PORT,
 
     db: {
-      database: process.env.PG_LOCAL_DATABASE || 'db',
-      host: process.env.PG_LOCAL_HOST || 'db', // 'db' is the service name of the postgres container
-      password: process.env.PG_LOCAL_PASSWORD || 'password',
-      user: process.env.PG_LOCAL_USER || 'postgres',
+      database: process.env.LOCAL_PG_DATABASE || 'db',
+      host: process.env.LOCAL_PG_HOST || 'db', // 'db' is the service name of the postgres container
+      password: process.env.LOCAL_PG_PASSWORD || 'password',
+      user: process.env.LOCAL_PG_USER || 'postgres',
       debug: true,
     },
   },

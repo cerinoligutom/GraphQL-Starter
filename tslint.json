@@ -13,7 +13,8 @@
     "no-any": true,
     "variable-name": false,
     "member-access": false,
-    "import-name": false
+    "import-name": false,
+    "prefer-array-literal": false
   },
   "rulesDirectory": []
 }

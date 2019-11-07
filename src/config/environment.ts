@@ -8,10 +8,10 @@ interface IEnvironmentConfig {
     isProduction: boolean;
 
     db: {
-      host: string | undefined;
-      user: string | undefined;
-      password: string | undefined;
-      database: string | undefined;
+      host?: string;
+      user?: string;
+      password?: string;
+      database?: string;
       debug: boolean;
     };
   };

@@ -1,15 +1,11 @@
 import { config as configDotEnv } from 'dotenv';
 configDotEnv();
 
-import { IJwtOptions, jwtOptions } from './jwt-options';
-
 interface IEnvironmentConfig {
   [key: string]: {
     environment: string;
     port: number;
     isProduction: boolean;
-
-    jwt: IJwtOptions;
 
     db: {
       host: string | undefined;
@@ -38,8 +34,6 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
     environment: 'production',
     port: +process.env.PG_PROD_APP_PORT! || DEFAULT_APP_PORT,
 
-    jwt: jwtOptions,
-
     db: {
       database: process.env.PG_PROD_DATABASE,
       host: process.env.PG_PROD_HOST,
@@ -53,8 +47,6 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
     isProduction,
     environment: 'staging',
     port: +process.env.PG_STAGING_APP_PORT! || DEFAULT_APP_PORT,
-
-    jwt: jwtOptions,
 
     db: {
       database: process.env.PG_STAGING_DATABASE,
@@ -70,8 +62,6 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
     environment: 'development',
     port: +process.env.PG_DEV_APP_PORT! || DEFAULT_APP_PORT,
 
-    jwt: jwtOptions,
-
     db: {
       database: process.env.PG_DEV_DATABASE,
       host: process.env.PG_DEV_HOST,
@@ -86,8 +76,6 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
     environment: 'test',
     port: +process.env.PG_TEST_APP_PORT! || DEFAULT_APP_PORT,
 
-    jwt: jwtOptions,
-
     db: {
       database: process.env.PG_TEST_DATABASE,
       host: process.env.PG_TEST_HOST,
@@ -101,8 +89,6 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
     isProduction: false,
     environment: 'local',
     port: +process.env.PG_LOCAL_APP_PORT! || DEFAULT_APP_PORT,
-
-    jwt: jwtOptions,
 
     db: {
       database: process.env.PG_LOCAL_DATABASE || 'db',

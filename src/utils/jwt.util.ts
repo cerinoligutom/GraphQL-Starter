@@ -1,11 +1,11 @@
 import jwt, { VerifyOptions, SignOptions } from 'jsonwebtoken';
-import { env } from '@app/config/environment';
+import { jwtOptions } from '@app/config/jwt-options';
 
 export interface IJwtPayload {
   userId: string;
 }
 
-const { issuer, audience, expiresIn, secretKey } = env.jwt;
+const { issuer, audience, expiresIn, secretKey } = jwtOptions;
 
 const signOptions: SignOptions = {
   issuer,

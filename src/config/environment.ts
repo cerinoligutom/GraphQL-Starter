@@ -31,7 +31,7 @@ const DEFAULT_APP_PORT = 8080;
 const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
   [EnvironmentOptions.PRODUCTION]: {
     isProduction,
-    environment: 'production',
+    environment: EnvironmentOptions.PRODUCTION,
     port: +process.env.PG_PROD_APP_PORT! || DEFAULT_APP_PORT,
 
     db: {
@@ -45,7 +45,7 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
 
   [EnvironmentOptions.STAGING]: {
     isProduction,
-    environment: 'staging',
+    environment: EnvironmentOptions.STAGING,
     port: +process.env.PG_STAGING_APP_PORT! || DEFAULT_APP_PORT,
 
     db: {
@@ -59,7 +59,7 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
 
   [EnvironmentOptions.DEV]: {
     isProduction,
-    environment: 'development',
+    environment: EnvironmentOptions.DEV,
     port: +process.env.PG_DEV_APP_PORT! || DEFAULT_APP_PORT,
 
     db: {
@@ -73,7 +73,7 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
 
   [EnvironmentOptions.TEST]: {
     isProduction: false,
-    environment: 'test',
+    environment: EnvironmentOptions.TEST,
     port: +process.env.PG_TEST_APP_PORT! || DEFAULT_APP_PORT,
 
     db: {
@@ -87,7 +87,7 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
 
   [EnvironmentOptions.LOCAL]: {
     isProduction: false,
-    environment: 'local',
+    environment: EnvironmentOptions.LOCAL,
     port: +process.env.PG_LOCAL_APP_PORT! || DEFAULT_APP_PORT,
 
     db: {
@@ -100,7 +100,14 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
   },
 };
 
-const currentEnvironment = process.env.CURRENT_ENVIRONMENT || EnvironmentOptions.LOCAL;
+const currentEnvironment = (process.env.CURRENT_ENVIRONMENT || EnvironmentOptions.LOCAL).toLocaleUpperCase();
+
+const VALID_ENVIRONMENTS = Object.values<string>(EnvironmentOptions);
+if (!VALID_ENVIRONMENTS.includes(currentEnvironment)) {
+  const formattedValidOptions = VALID_ENVIRONMENTS.map((x, i) => `${i + 1}) ${x}`).join('\n');
+  console.error(`"${currentEnvironment}" is not a valid environment option. Valid environments are:\n${formattedValidOptions}`);
+  throw new Error('Invalid environment.');
+}
 
 export const env = ENVIRONMENT_CONFIG[currentEnvironment];
 

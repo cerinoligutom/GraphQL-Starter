@@ -1,9 +1,6 @@
 import { NodeInterface } from './node.interface';
 import { nodeResolver } from './node.query';
-import { FileUpload } from 'graphql-upload';
-
-// Only used as a mapper for GraphQL Code Generator (codegen.yml)
-export type FileUpload = Promise<FileUpload>;
+export { FileUpload } from 'graphql-upload';
 
 export default {
   Node: NodeInterface,

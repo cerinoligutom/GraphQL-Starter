@@ -13,5 +13,6 @@
     "prettierrc",
     "printf",
     "pubsub"
-  ]
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

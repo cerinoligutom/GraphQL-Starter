@@ -287,6 +287,12 @@ PROD_PG_USER=
 
 - When trying to debug async functions in VSCode and the breakpoints on the inner lines won't hit, try adding `trace: true` to `launch.json` file.
 
+- Generated custom scalars by GraphQL Code Generator are given a type of `any`. As with TypeScript, if you can help it, give it a type/interface then map it to GraphQL Code Generator. See `Upload.scalar.ts` (the exported _type_) and `codegen.yml` (_scalars_ section) files. You can [read more here](https://graphql-code-generator.com/docs/plugins/typescript#scalars-scalarsmap). But basically:
+
+  1. You define the type/interface in the corresponding scalar file and export it.
+  2. Then map it to GraphQL Code Generator by adding scalars config in `codegen.yml` such that it points to its corresponding scalar file.
+     - Format is: `<Scalar_Name_in_GQL_Schema>: <path_to_custom_type>#<name_of_type>`
+
 ## Contributing
 
 If something is unclear, confusing, or needs to be refactored, please let me know. Pull requests are always welcome but do consider the opinionated nature of this project. Please open an issue before submitting a pull request.

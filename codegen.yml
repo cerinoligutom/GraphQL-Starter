@@ -12,7 +12,7 @@ generates:
       contextType: "../src/graphql/index#IGraphQLContext"
       enumValues: "../src/graphql/enums/index"
       scalars:
-        Upload: ../src/graphql/resolvers/common/index#FileUpload
+        Upload: ../src/graphql/scalars/Upload.scalar#FileUpload
     plugins:
       - "typescript"
       - "typescript-resolvers"

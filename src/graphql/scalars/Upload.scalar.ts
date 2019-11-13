@@ -5,6 +5,10 @@
  *
  */
 
-import { GraphQLUpload } from 'graphql-upload';
+import { GraphQLUpload, FileUpload as GQL_FileUpload } from 'graphql-upload';
 
 export const Upload = GraphQLUpload;
+
+// Used as mapper for GraphQL Code Generator (see codegen.yml on how this is consumed)
+// Read more @ https://graphql-code-generator.com/docs/plugins/typescript#scalars-scalarsmap
+export type FileUpload = Promise<GQL_FileUpload>;

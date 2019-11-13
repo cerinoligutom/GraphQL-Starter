@@ -1,6 +1,6 @@
 import { UserSortField } from '../src/graphql/enums/index';
 import { SortDirection } from '../src/graphql/enums/index';
-import { FileUpload } from '../src/graphql/resolvers/common/index';
+import { FileUpload } from '../src/graphql/scalars/Upload.scalar';
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { IGraphQLContext } from '../src/graphql/index';
 export type Maybe<T> = T | null | undefined;

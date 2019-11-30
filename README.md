@@ -211,15 +211,17 @@ Credentials:
 
 ## Sample Environment File
 
-You can configure your environments thru a `.env` file. Just simply create a `.env` file in the root folder and paste the sample code below. These environment variables are then consumed by the config file found under **src/config/environment.ts**.
+You can configure your environments thru a `.env` file. Just simply create a `.env` file in the root folder and paste the snippet below. These environment variables are then consumed by the config file found under **src/config/environment.ts**.
 
 Currently there are 5 environments that are ready:
 
-1. Local
-2. Test
-3. Dev (Remote)
-4. Staging
-5. Production
+| `CURRENT_ENVIRONMENT` value | Description          |
+| --------------------------- | -------------------- |
+| PRODUCTION                  | Production           |
+| STAGING                     | Staging              |
+| DEV                         | Development (Remote) |
+| TEST                        | Testing              |
+| LOCAL                       | Local development    |
 
 You can switch between environments by setting `CURRENT_ENVIRONMENT`.
 

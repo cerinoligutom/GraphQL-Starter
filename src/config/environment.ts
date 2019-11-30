@@ -25,8 +25,11 @@ enum EnvironmentOptions {
   LOCAL = 'LOCAL',
 }
 
-const isProduction = process.env.NODE_ENV === 'production';
 const DEFAULT_APP_PORT = 8080;
+
+const currentEnvironment = (process.env.CURRENT_ENVIRONMENT || EnvironmentOptions.LOCAL).toLocaleUpperCase() as EnvironmentOptions;
+const isProduction = [EnvironmentOptions.PRODUCTION, EnvironmentOptions.STAGING].includes(currentEnvironment);
+process.env.NODE_ENV = isProduction ? 'production' : 'development';
 
 const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
   [EnvironmentOptions.PRODUCTION]: {
@@ -99,8 +102,6 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
     },
   },
 };
-
-const currentEnvironment = (process.env.CURRENT_ENVIRONMENT || EnvironmentOptions.LOCAL).toLocaleUpperCase();
 
 const VALID_ENVIRONMENTS = Object.values<string>(EnvironmentOptions);
 if (!VALID_ENVIRONMENTS.includes(currentEnvironment)) {

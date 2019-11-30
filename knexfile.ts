@@ -21,7 +21,9 @@ const config: Config = {
   seeds: {
     directory: './src/db/seeds',
   },
-  debug: env.db.debug,
+
+  // Modify this if you want to see the actual SQL queries executed thru knex
+  debug: false,
 };
 
 export default config; // For application use

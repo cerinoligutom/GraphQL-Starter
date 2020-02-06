@@ -136,14 +136,14 @@ interface IObjectionQueryBuilderContext {
   orderBy?: [
     {
       col: string;
-      dir: string;
+      dir: 'asc' | 'desc' | 'ASC' | 'DESC' | undefined;
     },
   ];
 }
 
 interface ICursorPaginationResult<T> {
   // tslint:disable-next-line: prefer-array-literal
-  edges: Array<IEdge<T>>;
+  edges: IEdge<T>[];
   nodes: T[];
   pageInfo: IPageInfo;
   totalCount: number;

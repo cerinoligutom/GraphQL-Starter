@@ -13,7 +13,7 @@ interface IUserCursorPaginatedArgs {
   before?: string | null;
   after?: string | null;
   first: number;
-  sortDirection: string;
+  sortDirection: 'asc' | 'desc' | 'ASC' | 'DESC' | undefined;
   sortField: UserSortField;
 }
 async function getCursorPaginated(args: IUserCursorPaginatedArgs) {

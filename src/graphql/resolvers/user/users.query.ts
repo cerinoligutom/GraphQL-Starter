@@ -1,4 +1,4 @@
-import { GQL_QueryResolvers } from 'graphql-resolvers';
+import { GQL_QueryResolvers, GQL_UserConnection } from 'graphql-resolvers';
 import { UserSortField, SortDirection } from '@app/graphql/enums';
 
 export const usersResolver: GQL_QueryResolvers['users'] = async (parent, args, { services }) => {

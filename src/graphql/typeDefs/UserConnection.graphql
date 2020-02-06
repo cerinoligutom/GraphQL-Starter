@@ -3,8 +3,8 @@ extend type Query {
 }
 
 type UserConnection {
-  edges: [UserEdge]
-  nodes: [User]
+  edges: [UserEdge]!
+  nodes: [User]!
   pageInfo: PageInfo!
   totalCount: Int!
 }

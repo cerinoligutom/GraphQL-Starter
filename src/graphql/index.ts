@@ -52,7 +52,8 @@ export const initApolloGraphqlServer = (app: Express) => {
         console.info('connected');
 
         // The value returned here goes to "connection.context" in "context" property above.
-        return {} as Partial<IGraphQLContext>;
+        const context: Partial<IGraphQLContext> = {};
+        return context;
       },
       onDisconnect: (webSocket, context) => {
         console.info('disconnected');

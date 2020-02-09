@@ -44,7 +44,7 @@ async function register(input: GQL_RegisterInput) {
     throw new Error('Email is already taken.');
   }
 
-  return await User.query().insertAndFetch({
+  const form: Partial<User> = {
     firstName,
     middleName,
     lastName,
@@ -52,7 +52,9 @@ async function register(input: GQL_RegisterInput) {
     email,
     hash,
     salt,
-  } as User);
+  };
+
+  return await User.query().insertAndFetch(form);
 }
 
 export const authService = {

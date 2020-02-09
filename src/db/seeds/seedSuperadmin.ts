@@ -10,14 +10,14 @@ export async function seed(knex: Knex): Promise<any> {
   const salt = await bcryptUtil.generateSalt();
   const hash = await bcryptUtil.generateHash(defaultPassword, salt);
 
-  const superadmin = {
+  const superadmin: Partial<User> = {
     hash,
     salt,
     username: 'superadmin',
     firstName: 'superadmin',
     lastName: 'sa',
     email: 'superadmin@app.com',
-  } as User;
+  };
 
   const query = knex(TABLE_NAME).insert([superadmin]);
 

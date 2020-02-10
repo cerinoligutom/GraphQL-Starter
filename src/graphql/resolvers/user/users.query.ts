@@ -19,7 +19,7 @@ export const usersResolver: GQL_QueryResolvers['users'] = async (parent, args, {
     sortField: args.sortBy.field,
   });
 
-  const connectionResult: GQL_UserConnection = {
+  const userConnection: GQL_UserConnection = {
     edges: result.results.map<GQL_UserEdge>(x => ({
       cursor: x.cursor,
       node: x.data,
@@ -29,5 +29,5 @@ export const usersResolver: GQL_QueryResolvers['users'] = async (parent, args, {
     totalCount: result.totalCount,
   };
 
-  return connectionResult;
+  return userConnection;
 };

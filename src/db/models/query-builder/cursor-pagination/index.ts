@@ -2,8 +2,7 @@ import { Model, Page, QueryBuilder } from 'objection';
 import { CursorQueryBuilder } from './cursor.query-builder';
 
 export class CursorPaginationQueryBuilder<M extends Model, R = M[]> extends CursorQueryBuilder<M, R> {
-  // These are necessary. You can just copy-paste them and change the
-  // name of the query builder class.
+  // These are necessary. See https://vincit.github.io/objection.js/recipes/custom-query-builder.html#extending-the-query-builder-in-typescript
   ArrayQueryBuilderType!: CursorPaginationQueryBuilder<M, M[]>;
   SingleQueryBuilderType!: CursorPaginationQueryBuilder<M, M>;
   NumberQueryBuilderType!: CursorPaginationQueryBuilder<M, number>;

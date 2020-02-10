@@ -1,6 +1,7 @@
 import Objection, { compose, QueryBuilder } from 'objection';
 import knex from '../../knex';
 import base64url from 'base64url';
+import { CursorPaginationQueryBuilder } from '../query-builder/cursor-pagination';
 
 // Attach knex to objection model
 Objection.Model.knex(knex);
@@ -11,6 +12,10 @@ Objection.Model.knex(knex);
 const EnhancedModel = compose([])(Objection.Model);
 
 export class BaseModel extends EnhancedModel {
+  // Both of these are needed.
+  QueryBuilderType!: CursorPaginationQueryBuilder<this>;
+  static QueryBuilder = CursorPaginationQueryBuilder;
+
   static async nextCursorPage<QM extends Objection.Model>(query: QueryBuilder<QM>, cursor?: string) {
     return this.cursorPage(query, cursor, false);
   }

@@ -1,5 +1,7 @@
+import Objection, { OrderByDirection } from 'objection';
+
 export interface IOrderByOperation {
-  column: string;
-  order: 'asc' | 'desc' | 'ASC' | 'DESC' | undefined;
+  column: Objection.ColumnRef | Objection.ColumnRefOrOrderByDescriptor[];
+  order?: OrderByDirection;
   property?: string;
 }

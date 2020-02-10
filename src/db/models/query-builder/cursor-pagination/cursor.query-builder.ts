@@ -1,5 +1,4 @@
 // tslint:disable:no-any
-
 import { Model } from 'objection';
 import _ from 'lodash';
 import { OrderByCoalesceQueryBuilder } from './order-by-coalesce.query-builder';
@@ -7,12 +6,15 @@ import { IOrderByOperation } from './IOrderByOperation';
 import { columnToProperty } from './convert';
 import { deserializeCursor, serializeCursor } from './serialize';
 import { IObject } from '@app/core/interfaces';
+import { Maybe } from 'graphql-resolvers';
 
 const DEFAULT_LIMIT = 20;
 
 interface ICursorPaginationResult<M> {
   results: ICursorResult<M>[];
   pageInfo: IPageInfo;
+  totalCount: number;
+  remaining: number;
 }
 
 interface ICursorResult<M> {
@@ -28,9 +30,9 @@ interface IPageInfo {
 }
 
 export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesceQueryBuilder<M, R> {
-  cursorPage(cursor: string, before = false) {
-    return new Promise(resolve => {
-      this.runBefore((result, builder) => {
+  async cursorPage(cursor: Maybe<string>, before = false): Promise<ICursorPaginationResult<M>> {
+    return new Promise(async resolve => {
+      await this.runBefore((result, builder) => {
         // Save current builder (before additional where statements) for pageInfo (total)
         const originalQuery = builder
           .clone()
@@ -41,7 +43,11 @@ export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesc
 
         return result;
       })
-        .onBuild(builder => this.buildCursor(builder, cursor, before))
+        .onBuild(builder =>
+          this.lockStatement(builder, 'onBuild', () => {
+            this.buildCursor(builder, cursor, before);
+          }),
+        )
         .runAfter(async (models, builder) => {
           const resultModels = (models as unknown) as M[];
 
@@ -83,6 +89,8 @@ export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesc
           const cursorPaginationResult: ICursorPaginationResult<M> = {
             results,
             pageInfo,
+            remaining,
+            totalCount: total,
           };
 
           resolve(cursorPaginationResult);
@@ -92,15 +100,15 @@ export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesc
     });
   }
 
-  nextCursorPage(cursor: string) {
+  nextCursorPage(cursor: Maybe<string>) {
     return this.cursorPage(cursor, false);
   }
 
-  previousCursorPage(cursor: string) {
+  previousCursorPage(cursor: Maybe<string>) {
     return this.cursorPage(cursor, true);
   }
 
-  private buildCursor(builder: this, cursor: string, before: boolean) {
+  private buildCursor(builder: this, cursor: Maybe<string>, before: boolean) {
     if (builder.$flag('originalQuery')) {
       return;
     }
@@ -110,19 +118,19 @@ export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesc
 
     this.addWhereStatements(builder, orderByOps, item);
 
-    if (!builder.has(/limit/)) {
+    if (!builder.has(/limit/) && !builder.$flag('resultSizeQuery')) {
       builder.limit(DEFAULT_LIMIT);
     }
 
     // Swap orderBy directions when going backward
     if (before) {
-      // This method exists on runtime
+      // The method below exists, just not typed as of writing in its TS Definition
       (builder as any).forEachOperation(/orderBy/, (op: any) => {
         op.args[1] = op.args[1] === 'asc' ? 'desc' : 'asc';
       });
     }
 
-    // Save copy of current builder for pageInfo (hasNext, remaining, etc.)
+    // Save copy of current builder for pageInfo
     const resultSizeQuery = builder
       .clone()
       .$flag('resultSizeQuery', true)
@@ -142,7 +150,7 @@ export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesc
     }));
   }
 
-  private getPartialCursorItem(cursor: string) {
+  private getPartialCursorItem(cursor: Maybe<string>) {
     // Direction doesn't matter here, since we only want to know if a column exists
     const orderByOps = this.getOrderByOperations();
 
@@ -151,12 +159,12 @@ export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesc
   }
 
   private getCoalescedOp(builder: this, coalesceObj: IObject = {}, { column: origColumn, property, order }: IOrderByOperation, item: any) {
-    let value = _.get(item, property, null);
-    let column: any = null;
+    let value = _.get(item, property!, null);
+    let column: any = origColumn;
 
-    if (coalesceObj[property]) {
+    if (coalesceObj[property!]) {
       const model = builder.modelClass();
-      const mappedCoalesce = coalesceObj[property].map(v => this.stringifyObjectionBuilder(builder, v));
+      const mappedCoalesce = coalesceObj[property!].map((v: any) => this.stringifyObjectionBuilder(builder, v));
       const coalesceBindingsStr = mappedCoalesce.map(() => '?');
       column = this.stringifyObjectionBuilder(builder, origColumn);
       value = this.stringifyObjectionBuilder(builder, value);
@@ -210,6 +218,6 @@ export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesc
       });
     });
 
-    return;
+    return builder;
   }
 }

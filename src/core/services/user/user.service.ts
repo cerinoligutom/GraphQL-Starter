@@ -1,5 +1,6 @@
 import { User } from '@app/db/models';
 import { UserSortField } from '@app/graphql/enums';
+import { OrderByDirection } from 'objection';
 
 async function getById(id: string) {
   return (await User.query().findById(id)) || null;
@@ -13,22 +14,22 @@ interface IUserCursorPaginatedArgs {
   before?: string | null;
   after?: string | null;
   first: number;
-  sortDirection: 'asc' | 'desc' | 'ASC' | 'DESC' | undefined;
+  sortDirection: OrderByDirection;
   sortField: UserSortField;
 }
 async function getCursorPaginated(args: IUserCursorPaginatedArgs) {
   const { before, after, first, sortDirection, sortField } = args;
 
   const query = User.query()
+    .orderBy('firstName')
     .orderBy(sortField, sortDirection)
-    .limit(first)
-    .clone();
+    .limit(first);
 
   if (before) {
-    return await User.previousCursorPage(query, before);
+    return query.previousCursorPage(before);
   }
 
-  return await User.nextCursorPage(query, after!);
+  return query.nextCursorPage(after);
 }
 
 export const userService = {

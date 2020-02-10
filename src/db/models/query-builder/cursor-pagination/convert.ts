@@ -1,9 +1,10 @@
 // tslint:disable:no-any
 import _ from 'lodash';
-import { ModelClass, Model, ReferenceBuilder } from 'objection';
+import Objection, { ModelClass, Model } from 'objection';
 
 function stringToProperty<M extends Model>(model: ModelClass<M>, str: string): string {
   const prop = str.substr(str.lastIndexOf('.') + 1);
+  // The method below exists, just not typed as of writing in its TS Definition
   return (model as any).columnNameToPropertyName(prop);
 }
 
@@ -18,7 +19,10 @@ function refToProperty<M extends Model>(model: ModelClass<M>, ref: any) {
   return _.trim(prop, '.');
 }
 
-function columnToProperty<M extends Model>(model: ModelClass<M>, col: string | ReferenceBuilder) {
+function columnToProperty<M extends Model>(
+  model: ModelClass<M>,
+  col: string | Objection.ColumnRef | Objection.ColumnRefOrOrderByDescriptor[],
+) {
   if (typeof col === 'string') {
     return stringToProperty(model, col);
   }

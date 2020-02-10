@@ -16,7 +16,8 @@
     "pubsub",
     "serialize",
     "serializer",
-    "serializers"
+    "serializers",
+    "superadmin"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }

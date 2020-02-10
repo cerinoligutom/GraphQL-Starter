@@ -3,6 +3,7 @@
     "codegen",
     "dataloader",
     "dataloaders",
+    "deserialize",
     "dockerignore",
     "gitignore",
     "graphql",
@@ -12,7 +13,11 @@
     "pgsql",
     "prettierrc",
     "printf",
-    "pubsub"
+    "pubsub",
+    "serialize",
+    "serializer",
+    "serializers",
+    "superadmin"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }

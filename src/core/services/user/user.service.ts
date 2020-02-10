@@ -21,7 +21,6 @@ async function getCursorPaginated(args: IUserCursorPaginatedArgs) {
   const { before, after, first, sortDirection, sortField } = args;
 
   const query = User.query()
-    .orderBy('firstName')
     .orderBy(sortField, sortDirection)
     .limit(first);
 

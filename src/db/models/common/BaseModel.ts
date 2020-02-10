@@ -1,4 +1,4 @@
-import Objection, { compose, QueryBuilder } from 'objection';
+import Objection, { compose } from 'objection';
 import knex from '../../knex';
 import { CursorPaginationQueryBuilder } from '../query-builder/cursor-pagination';
 
@@ -11,6 +11,7 @@ Objection.Model.knex(knex);
 const EnhancedModel = compose([])(Objection.Model);
 
 export class BaseModel extends EnhancedModel {
+  // See https://vincit.github.io/objection.js/recipes/custom-query-builder.html#extending-the-query-builder-in-typescript
   // Both of these are needed.
   QueryBuilderType!: CursorPaginationQueryBuilder<this>;
   static QueryBuilder = CursorPaginationQueryBuilder;

@@ -3,7 +3,7 @@
   "description": "GraphQL Starter",
   "scripts": {
     "prestart": "graphql-codegen",
-    "start": "concurrently \"npm run nodemon\" \"npm run generate:gql-types\" ",
+    "start": "concurrently -n \"api,codegen\" -c \"bgCyan.bold,bgMagenta.bold\" \"npm run nodemon\" \"npm run generate:gql-types\" ",
     "production": "ts-node src/app.ts",
     "ts-node": "ts-node",
     "nodemon": "nodemon -L",

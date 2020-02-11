@@ -1,6 +1,6 @@
 {
   "watch": ["src/**/*"],
   "ext": "ts, graphql",
-  "exec": "node --inspect=0.0.0.0:9229 -r ts-node/register ./src/app.ts",
+  "exec": "npm run lint && node --inspect=0.0.0.0:9229 -r ts-node/register ./src/app.ts",
   "inspect": true
 }

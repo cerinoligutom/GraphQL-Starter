@@ -1,6 +1,9 @@
 {
   "defaultSeverity": "error",
   "extends": ["tslint:recommended", "tslint-config-airbnb", "tslint-config-prettier"],
+  "linterOptions": {
+    "exclude": ["src/db/migrations/**/*.ts"]
+  },
   "jsRules": {},
   "rules": {
     "no-console": [true, "log"],

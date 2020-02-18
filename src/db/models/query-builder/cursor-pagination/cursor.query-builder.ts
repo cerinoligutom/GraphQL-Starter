@@ -5,7 +5,6 @@ import { OrderByCoalesceQueryBuilder } from './order-by-coalesce.query-builder';
 import { IOrderByOperation } from './IOrderByOperation';
 import { columnToProperty } from './convert';
 import { deserializeCursor, serializeCursor } from './serialize';
-import { IObject } from '@app/core/interfaces';
 import { Maybe } from 'graphql-resolvers';
 
 const DEFAULT_LIMIT = 20;
@@ -158,7 +157,12 @@ export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesc
     return deserializeCursor(orderByOps, cursor);
   }
 
-  private getCoalescedOp(builder: this, coalesceObj: IObject = {}, { column: origColumn, property, order }: IOrderByOperation, item: any) {
+  private getCoalescedOp(
+    builder: this,
+    coalesceObj: Record<string, any> = {},
+    { column: origColumn, property, order }: IOrderByOperation,
+    item: any,
+  ) {
     let value = _.get(item, property!, null);
     let column: any = origColumn;
 

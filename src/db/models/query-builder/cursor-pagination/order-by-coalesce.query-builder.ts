@@ -1,4 +1,4 @@
-// tslint:disable:no-any typedef
+// tslint:disable:no-any
 
 import { ContextBase } from './context-base.query-builder';
 import Objection, { Model, OrderByDirection } from 'objection';

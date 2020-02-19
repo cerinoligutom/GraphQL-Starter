@@ -1,4 +1,4 @@
-// tslint:disable:no-any max-classes-per-file typedef
+// tslint:disable:no-any max-classes-per-file
 
 class TypeSerializer {
   typeName: string;

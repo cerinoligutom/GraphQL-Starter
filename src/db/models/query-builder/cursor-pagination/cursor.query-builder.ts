@@ -1,4 +1,4 @@
-// tslint:disable:no-any typedef
+// tslint:disable:no-any
 
 import { Model } from 'objection';
 import _ from 'lodash';

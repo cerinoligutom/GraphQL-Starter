@@ -2,8 +2,6 @@
 
 import base64url from 'base64url';
 import _ from 'lodash';
-// tslint:disable:typedef
-
 import { serializeValue, deserializeString } from './type-serializer';
 import { IOrderByOperation } from './IOrderByOperation';
 import { Maybe } from 'graphql-resolvers';

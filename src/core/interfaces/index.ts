@@ -1,1 +1,3 @@
-export * from './IObject';
+export * from './ICursorPaginationResult';
+export * from './ICursorResult';
+export * from './IPageInfo';

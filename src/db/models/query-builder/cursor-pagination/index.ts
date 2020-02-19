@@ -1,4 +1,4 @@
-import { Model, Page, QueryBuilder } from 'objection';
+import { Model, Page } from 'objection';
 import { CursorQueryBuilder } from './cursor.query-builder';
 
 export class CursorPaginationQueryBuilder<M extends Model, R = M[]> extends CursorQueryBuilder<M, R> {

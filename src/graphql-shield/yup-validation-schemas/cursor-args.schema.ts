@@ -8,6 +8,7 @@ export const cursorArgsSchema = yup.object().shape({
   before: yup.string(),
   after: yup.string().test({
     message: `Define either 'before' or 'after' only.`,
+    // tslint:disable-next-line: typedef
     test(value: string) {
       if (!value) return true;
 

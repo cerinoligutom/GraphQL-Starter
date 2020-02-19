@@ -1,33 +1,15 @@
-// tslint:disable:no-any
+// tslint:disable:no-any typedef
+
 import { Model } from 'objection';
 import _ from 'lodash';
 import { OrderByCoalesceQueryBuilder } from './order-by-coalesce.query-builder';
 import { IOrderByOperation } from './IOrderByOperation';
 import { columnToProperty } from './convert';
 import { deserializeCursor, serializeCursor } from './serialize';
-import { IObject } from '@app/core/interfaces';
 import { Maybe } from 'graphql-resolvers';
+import { ICursorPaginationResult, ICursorResult, IPageInfo } from '@app/core/interfaces';
 
 const DEFAULT_LIMIT = 20;
-
-interface ICursorPaginationResult<M> {
-  results: ICursorResult<M>[];
-  pageInfo: IPageInfo;
-  totalCount: number;
-  remaining: number;
-}
-
-interface ICursorResult<M> {
-  cursor: string;
-  data: M;
-}
-
-interface IPageInfo {
-  startCursor: string | null;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  endCursor: string | null;
-}
 
 export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesceQueryBuilder<M, R> {
   async cursorPage(cursor: Maybe<string>, before = false): Promise<ICursorPaginationResult<M>> {
@@ -158,7 +140,12 @@ export class CursorQueryBuilder<M extends Model, R = M[]> extends OrderByCoalesc
     return deserializeCursor(orderByOps, cursor);
   }
 
-  private getCoalescedOp(builder: this, coalesceObj: IObject = {}, { column: origColumn, property, order }: IOrderByOperation, item: any) {
+  private getCoalescedOp(
+    builder: this,
+    coalesceObj: Record<string, any> = {},
+    { column: origColumn, property, order }: IOrderByOperation,
+    item: any,
+  ) {
     let value = _.get(item, property!, null);
     let column: any = origColumn;
 

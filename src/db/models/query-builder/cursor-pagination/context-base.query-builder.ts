@@ -1,4 +1,5 @@
-// tslint:disable:no-any
+// tslint:disable:no-any typedef
+
 import { Model, QueryBuilder } from 'objection';
 
 export class ContextBase<M extends Model, R = M[]> extends QueryBuilder<M, R> {

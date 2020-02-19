@@ -223,7 +223,7 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   info: GraphQLResolveInfo
 ) => Maybe<TTypes>;
 
-export type isTypeOfResolverFn = (obj: any, info: GraphQLResolveInfo) => boolean;
+export type isTypeOfResolverFn<T = {}> = (obj: T, info: GraphQLResolveInfo) => boolean;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
@@ -303,20 +303,20 @@ export interface GQL_DateTimeScalarConfig extends GraphQLScalarTypeConfig<GQL_Re
 
 export type GQL_DummySubscriptionPayloadResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['DummySubscriptionPayload'] = GQL_ResolversParentTypes['DummySubscriptionPayload']> = {
   dummy?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type GQL_FileResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['File'] = GQL_ResolversParentTypes['File']> = {
   filename?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>,
   mimetype?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>,
   encoding?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type GQL_LoginPayloadResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['LoginPayload'] = GQL_ResolversParentTypes['LoginPayload']> = {
   user?: Resolver<Maybe<GQL_ResolversTypes['User']>, ParentType, ContextType>,
   token?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type GQL_MutationResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['Mutation'] = GQL_ResolversParentTypes['Mutation']> = {
@@ -337,7 +337,7 @@ export type GQL_PageInfoResolvers<ContextType = IGraphQLContext, ParentType exte
   hasNextPage?: Resolver<GQL_ResolversTypes['Boolean'], ParentType, ContextType>,
   hasPreviousPage?: Resolver<GQL_ResolversTypes['Boolean'], ParentType, ContextType>,
   startCursor?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type GQL_QueryResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['Query'] = GQL_ResolversParentTypes['Query']> = {
@@ -348,7 +348,7 @@ export type GQL_QueryResolvers<ContextType = IGraphQLContext, ParentType extends
 
 export type GQL_RegisterPayloadResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['RegisterPayload'] = GQL_ResolversParentTypes['RegisterPayload']> = {
   success?: Resolver<GQL_ResolversTypes['Boolean'], ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type GQL_SubscriptionResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['Subscription'] = GQL_ResolversParentTypes['Subscription']> = {
@@ -373,7 +373,7 @@ export type GQL_UserResolvers<ContextType = IGraphQLContext, ParentType extends 
   email?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>,
   createdAt?: Resolver<Maybe<GQL_ResolversTypes['DateTime']>, ParentType, ContextType>,
   updatedAt?: Resolver<Maybe<GQL_ResolversTypes['DateTime']>, ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type GQL_UserConnectionResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['UserConnection'] = GQL_ResolversParentTypes['UserConnection']> = {
@@ -381,13 +381,13 @@ export type GQL_UserConnectionResolvers<ContextType = IGraphQLContext, ParentTyp
   nodes?: Resolver<Array<Maybe<GQL_ResolversTypes['User']>>, ParentType, ContextType>,
   pageInfo?: Resolver<GQL_ResolversTypes['PageInfo'], ParentType, ContextType>,
   totalCount?: Resolver<GQL_ResolversTypes['Int'], ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type GQL_UserEdgeResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['UserEdge'] = GQL_ResolversParentTypes['UserEdge']> = {
   cursor?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>,
   node?: Resolver<Maybe<GQL_ResolversTypes['User']>, ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type GQL_Resolvers<ContextType = IGraphQLContext> = {

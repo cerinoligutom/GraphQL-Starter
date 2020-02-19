@@ -33,7 +33,7 @@ export const _dummyResolver: GQL_SubscriptionResolvers['_dummy'] = {
 // -- Ignore --
 let timeout: NodeJS.Timeout;
 let count = 0;
-function startTicker() {
+function startTicker(): void {
   if (!timeout) {
     timeout = setInterval(async () => {
       count = count + 1;

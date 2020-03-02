@@ -15,7 +15,8 @@
     "seed:make": "knex --knexfile ./knexfile.ts seed:make -x ts",
     "seed": "knex --knexfile ./knexfile.ts seed:run",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate:gql-types": "graphql-codegen --watch"
+    "generate:gql-types": "graphql-codegen --watch",
+    "apollo:service:push": "npx apollo service:push"
   },
   "repository": {
     "type": "git",

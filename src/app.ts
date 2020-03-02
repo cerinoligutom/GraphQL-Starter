@@ -1,7 +1,6 @@
 import 'tsconfig-paths/register';
 
 import compression from 'compression';
-import cors from 'cors';
 import helmet from 'helmet';
 
 import { env } from '@app/config/environment';
@@ -14,6 +13,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { initRoutes } from './routes';
 import { initApolloGraphqlServer } from './graphql';
+import { corsMiddleware } from './middleware/cors.middleware';
 
 const app = express();
 
@@ -25,12 +25,12 @@ const startApp = async () => {
     return;
   }
 
-  app.use(expressStatusMonitor());
-  app.use(httpLogger);
   app.use(express.json());
   app.use(helmet());
-  app.use(cors());
+  app.use(corsMiddleware());
   app.use(compression());
+  app.use(expressStatusMonitor());
+  app.use(httpLogger);
 
   initRoutes(app);
 

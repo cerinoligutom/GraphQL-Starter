@@ -6,6 +6,7 @@ import { initLoaders } from '../graphql-dataloaders';
 import { env } from '@app/config/environment';
 import * as services from '@app/core/services';
 import { jwtUtil, logger } from '@app/utils';
+import { apolloOptions } from '@app/config/apollo-options';
 
 export interface IGraphQLContext {
   userId: string | null;
@@ -16,6 +17,7 @@ export interface IGraphQLContext {
 export const initApolloGraphqlServer = (app: Express) => {
   const server = new ApolloServer({
     schema,
+
     context: ({ req, connection }) => {
       const graphqlContext: IGraphQLContext = {
         services,
@@ -45,7 +47,9 @@ export const initApolloGraphqlServer = (app: Express) => {
 
       return graphqlContext;
     },
+
     validationRules: [depthLimit(10)],
+
     subscriptions: {
       onConnect: (connectionParams, webSocket) => {
         // https://www.apollographql.com/docs/graphql-subscriptions/authentication/
@@ -59,6 +63,7 @@ export const initApolloGraphqlServer = (app: Express) => {
         console.info('disconnected');
       },
     },
+
     formatError: err => {
       // https://www.apollographql.com/docs/apollo-server/features/errors.html#Masking-and-logging-errors
 
@@ -78,17 +83,20 @@ export const initApolloGraphqlServer = (app: Express) => {
 
       return err;
     },
+
     introspection: !env.isProduction,
+
     uploads: {
       // Limits here should be stricter than config for surrounding
       // infrastructure such as Nginx so errors can be handled elegantly by
       // graphql-upload:
       // https://github.com/jaydenseric/graphql-upload#type-uploadoptions
-      maxFileSize: 10000000, // 10 MB
-      maxFiles: 20,
+      maxFileSize: apolloOptions.maxFileSize,
+      maxFiles: apolloOptions.maxFiles,
     },
+
     engine: {
-      apiKey: process.env.ENGINE_API_KEY,
+      apiKey: apolloOptions.engineApiKey,
       schemaTag: env.environment,
     },
   });

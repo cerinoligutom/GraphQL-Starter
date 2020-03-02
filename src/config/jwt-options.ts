@@ -1,4 +1,7 @@
-export interface IJwtOptions {
+import { config as configDotEnv } from 'dotenv';
+configDotEnv();
+
+interface IJwtOptions {
   issuer: string | undefined;
   audience: string | undefined;
   secretKey: string;

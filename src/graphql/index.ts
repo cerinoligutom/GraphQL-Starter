@@ -1,4 +1,4 @@
-import { Express } from 'express';
+import { Express, Request, Response } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import { schema } from './schema';
@@ -12,15 +12,19 @@ export interface IGraphQLContext {
   userId: string | null;
   services: typeof services;
   loaders: ReturnType<typeof initLoaders>;
+  req: Request;
+  res: Response;
 }
 
 export const initApolloGraphqlServer = (app: Express) => {
   const server = new ApolloServer({
     schema,
 
-    context: ({ req, connection }) => {
+    context: ({ req, res, connection }) => {
       const graphqlContext: IGraphQLContext = {
         services,
+        req,
+        res,
         userId: null,
         loaders: initLoaders(),
       };

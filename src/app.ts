@@ -17,7 +17,7 @@ import { corsMiddleware } from './middleware/cors.middleware';
 
 const app = express();
 
-const startApp = async () => {
+(async () => {
   // Test Postgres DB
   try {
     await pingPostgresDatabase();
@@ -44,5 +44,4 @@ const startApp = async () => {
   httpServer.listen(env.port, () => {
     console.info(`Server is now up @ ${env.port}`);
   });
-};
-startApp();
+})();

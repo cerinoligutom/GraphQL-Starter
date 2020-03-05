@@ -1,5 +1,4 @@
-import { config as configDotEnv } from 'dotenv';
-configDotEnv();
+import 'dotenv/config';
 
 interface IApolloOptions {
   maxFileSize: number;

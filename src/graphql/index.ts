@@ -5,11 +5,12 @@ import { schema } from './schema';
 import { initLoaders } from '../graphql-dataloaders';
 import { env } from '@app/config/environment';
 import * as services from '@app/core/services';
-import { jwtUtil, logger } from '@app/utils';
+import { logger } from '@app/utils';
 import { apolloOptions } from '@app/config/apollo-options';
+import { IAccessTokenPayload } from '@app/core/interfaces';
 
 export interface IGraphQLContext {
-  userId: string | null;
+  payload: IAccessTokenPayload | null;
   services: typeof services;
   loaders: ReturnType<typeof initLoaders>;
   req: Request;
@@ -25,7 +26,7 @@ export const initApolloGraphqlServer = (app: Express) => {
         services,
         req,
         res,
-        userId: null,
+        payload: null,
         loaders: initLoaders(),
       };
 
@@ -43,11 +44,6 @@ export const initApolloGraphqlServer = (app: Express) => {
           ...graphqlContext,
         };
       }
-
-      // Query/Mutation Resolver (check from "req")
-      const payload = jwtUtil.validateToken(req.headers.authorization);
-      const userId = payload ? payload.userId : null;
-      graphqlContext.userId = userId;
 
       return graphqlContext;
     },
@@ -107,6 +103,8 @@ export const initApolloGraphqlServer = (app: Express) => {
 
   server.applyMiddleware({
     app,
+    // We'll handle cors on the express app
+    cors: false,
   });
 
   return server;

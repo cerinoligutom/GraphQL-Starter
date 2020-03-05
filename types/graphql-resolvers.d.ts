@@ -47,6 +47,7 @@ export type GQL_Mutation = {
    __typename?: 'Mutation',
   _dummy?: Maybe<Scalars['String']>,
   login?: Maybe<GQL_LoginPayload>,
+  logout: Scalars['Boolean'],
   multipleUpload: Array<GQL_File>,
   register?: Maybe<GQL_RegisterPayload>,
   singleUpload: GQL_File,
@@ -322,6 +323,7 @@ export type GQL_LoginPayloadResolvers<ContextType = IGraphQLContext, ParentType 
 export type GQL_MutationResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['Mutation'] = GQL_ResolversParentTypes['Mutation']> = {
   _dummy?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>,
   login?: Resolver<Maybe<GQL_ResolversTypes['LoginPayload']>, ParentType, ContextType, RequireFields<GQL_MutationLoginArgs, 'input'>>,
+  logout?: Resolver<GQL_ResolversTypes['Boolean'], ParentType, ContextType>,
   multipleUpload?: Resolver<Array<GQL_ResolversTypes['File']>, ParentType, ContextType, RequireFields<GQL_MutationMultipleUploadArgs, 'files'>>,
   register?: Resolver<Maybe<GQL_ResolversTypes['RegisterPayload']>, ParentType, ContextType, RequireFields<GQL_MutationRegisterArgs, 'input'>>,
   singleUpload?: Resolver<GQL_ResolversTypes['File'], ParentType, ContextType, RequireFields<GQL_MutationSingleUploadArgs, 'file'>>,

@@ -177,6 +177,7 @@ Credentials:
 | graphql-middleware     | GraphQL Middlewares made easy.                                        |
 | graphql-shield         | GraphQL Server permissions as another layer of abstraction.           |
 | helmet                 | NodeJS helmet middleware.                                             |
+| cookie-parser          | Parse cookies into a nice object format.                              |
 | jsonwebtoken           | JWT library.                                                          |
 | knex                   | SQL Query Builder.                                                    |
 | lodash                 | A utility library for working with arrays, numbers, objects, strings. |
@@ -228,34 +229,39 @@ You can switch between environments by setting `CURRENT_ENVIRONMENT`.
 ```
 CURRENT_ENVIRONMENT=LOCAL
 
-JWT_ISSUER=
-JWT_AUDIENCE=
-JWT_SECRET=
+# JWT
+ACCESS_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET=
 
+# Local Environment
 LOCAL_APP_PORT=
 LOCAL_PG_DATABASE=
 LOCAL_PG_HOST=
 LOCAL_PG_PASSWORD=
 LOCAL_PG_USER=
 
+# Test Environment
 TEST_APP_PORT=
 TEST_PG_DATABASE=
 TEST_PG_HOST=
 TEST_PG_PASSWORD=
 TEST_PG_USER=
 
+# Dev Environment
 DEV_APP_PORT=
 DEV_PG_DATABASE=
 DEV_PG_HOST=
 DEV_PG_PASSWORD=
 DEV_PG_USER=
 
+# Staging Environment
 STAGING_APP_PORT=
 STAGING_PG_DATABASE=
 STAGING_PG_HOST=
 STAGING_PG_PASSWORD=
 STAGING_PG_USER=
 
+# Production Environment
 PROD_APP_PORT=
 PROD_PG_DATABASE=
 PROD_PG_HOST=

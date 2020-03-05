@@ -1,6 +1,7 @@
 extend type Mutation {
   register(input: RegisterInput!): RegisterPayload
   login(input: LoginInput!): LoginPayload
+  logout: Boolean!
 }
 
 input RegisterInput {

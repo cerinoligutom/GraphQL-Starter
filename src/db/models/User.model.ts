@@ -22,32 +22,12 @@ export class User extends BaseModel {
       .string()
       .min(4)
       .max(32)
-      .required()
-      .test({
-        message: 'Username already exists.',
-        test: async (value: string) => {
-          const user = await User.query().findOne({
-            username: value,
-          });
-
-          return !user;
-        },
-      }),
+      .required(),
 
     email: yup
       .string()
       .email()
-      .required()
-      .test({
-        message: 'Email already exists.',
-        test: async (value: string) => {
-          const user = await User.query().findOne({
-            email: value,
-          });
-
-          return !user;
-        },
-      }),
+      .required(),
   };
 
   id!: string;

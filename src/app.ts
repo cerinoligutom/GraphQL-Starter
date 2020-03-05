@@ -1,19 +1,15 @@
 import 'tsconfig-paths/register';
-
-import compression from 'compression';
-import helmet from 'helmet';
-
 import { env } from '@app/config/environment';
 
-import { errorMiddleware, httpLogger, expressStatusMonitor } from '@app/middleware';
-
+import { errorMiddleware, httpLogger, expressStatusMonitor, corsMiddleware } from '@app/middleware';
 import { ping as pingPostgresDatabase } from './db/knex';
-
-import express from 'express';
-import { createServer } from 'http';
 import { initRoutes } from './routes';
 import { initApolloGraphqlServer } from './graphql';
-import { corsMiddleware } from './middleware/cors.middleware';
+
+import { createServer } from 'http';
+import compression from 'compression';
+import helmet from 'helmet';
+import express from 'express';
 
 const app = express();
 
@@ -25,9 +21,9 @@ const app = express();
     return;
   }
 
+  app.use(corsMiddleware());
   app.use(express.json());
   app.use(helmet());
-  app.use(corsMiddleware());
   app.use(compression());
   app.use(expressStatusMonitor());
   app.use(httpLogger);

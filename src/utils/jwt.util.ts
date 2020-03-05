@@ -1,38 +1,12 @@
-import jwt, { VerifyOptions, SignOptions } from 'jsonwebtoken';
-import { jwtOptions } from '@app/config/jwt-options';
+import jwt from 'jsonwebtoken';
 
-export interface IJwtPayload {
-  userId: string;
-}
-
-const { issuer, audience, expiresIn, secretKey } = jwtOptions;
-
-const signOptions: SignOptions = {
-  issuer,
-  audience,
-  expiresIn,
+const validateToken = <T>(token: string, secretKey: string) => {
+  const result = jwt.verify(token, secretKey);
+  return (result as unknown) as T;
 };
 
-const verifyOptions: VerifyOptions = {
-  issuer,
-  audience,
-};
-
-const validateToken = (bearerToken: string | undefined) => {
-  if (!bearerToken) {
-    return null;
-  }
-
-  try {
-    const token = bearerToken.split(' ')[1]; // Bearer <token>
-    const result = jwt.verify(token, secretKey, verifyOptions);
-    return result as IJwtPayload;
-  } catch {
-    return null;
-  }
-};
-
-const createToken = (payload: IJwtPayload) => {
+// tslint:disable-next-line: no-any
+const createToken = (payload: any, secretKey: string, signOptions: jwt.SignOptions) => {
   return jwt.sign(payload, secretKey, signOptions);
 };
 

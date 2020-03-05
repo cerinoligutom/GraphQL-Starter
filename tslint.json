@@ -6,7 +6,10 @@
   },
   "jsRules": {},
   "rules": {
-    "no-console": [true, "log"],
+    "no-console": {
+      "severity": "warning",
+      "options": ["log"]
+    },
     "quotemark": [true, "single"],
     "no-var-requires": false,
     "indent": [true, "spaces", 2],

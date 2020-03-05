@@ -19,6 +19,7 @@ export const schemaPermissions = shield({
   Mutation: {
     '*': isAuthenticated,
     login: yupRule(loginSchema),
+    logout: allow,
     register: yupRule(registerSchema),
   },
 });

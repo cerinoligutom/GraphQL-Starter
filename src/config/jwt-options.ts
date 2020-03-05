@@ -1,16 +1,16 @@
-import { config as configDotEnv } from 'dotenv';
-configDotEnv();
+import 'dotenv/config';
 
 interface IJwtOptions {
-  issuer: string | undefined;
-  audience: string | undefined;
   secretKey: string;
   expiresIn: string | number | undefined;
 }
 
-export const jwtOptions: IJwtOptions = {
-  issuer: process.env.JWT_ISSUER || 'Graphql Starter API',
-  audience: process.env.JWT_AUDIENCE || 'GraphQL Starter API Consumer',
-  secretKey: process.env.JWT_SECRET || 'jw+s3cr3+',
+export const accessTokenOptions: IJwtOptions = {
+  secretKey: process.env.ACCESS_TOKEN_SECRET || 'acC3sS_jw+s3cr3+',
+  expiresIn: '30m',
+};
+
+export const refreshTokenOptions: IJwtOptions = {
+  secretKey: process.env.REFRESH_TOKEN_SECRET || 'r3fR35h_jw+s3cr3+',
   expiresIn: '7d',
 };

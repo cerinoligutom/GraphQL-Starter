@@ -40,7 +40,13 @@ async function refreshTokenRoute(req: Request, res: Response) {
   // whitelisting/blacklisting tokens or versioning tokens (simple).
 
   const accessToken = authService.createAccessToken(user);
-  sendRefreshToken(res, accessToken);
+
+  // Note:
+  // You might want to put some logic on how often the refresh token
+  // gets updated like for example, only update the refresh token
+  // if there's less than 1 day left before the token expires.
+  sendRefreshToken(res, authService.createRefreshToken(user));
+
   return res.send({ accessToken, ok: true });
 }
 

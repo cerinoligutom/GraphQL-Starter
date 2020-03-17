@@ -17,7 +17,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 
 ## Features
 
-- **Local JWT Authentication** using Email/Username and Password
+- **Session Cookie Based Authentication** using Email/Username and Password
 - Configurable Environments
 - Functionality-based project structure
 - Node Express REST endpoints
@@ -27,10 +27,11 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - Facebook Dataloader for caching and batching
 - PostgreSQL Database
 - Adminer for managing DB Database
-- Pre-commit hook for auto formatting files with Husky and Prettier
+- Redis for Caching
+- RedisCommander for managing the Redis Database
+- Pre-commit hook for auto formatting files with Husky, Lint-Staged and Prettier
 - Logging
 - Input schema validation on GraphQL resolvers via GraphQL Shield and Yup
-- File Upload (single and multiple) examples
 - Subscription examples
 
 ## Prerequisites
@@ -39,7 +40,6 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [NodeJS](https://nodejs.org/)
 - TypeScript
 - TSLint
-- (Optional) Insomnia REST Client for testing file uploads
 - (Optional) Extensions/Plugins:
   - Apollo GraphQL
   - Docker
@@ -82,6 +82,10 @@ Credentials:
 | Password | password   | As defined in the `docker-compose.yml` config                                                |
 | Database | db         | As defined in the `docker-compose.yml` config                                                |
 
+**Redis Commander endpoint**
+
+[http://localhost:8889](http://localhost:8889/)
+
 **Node Express REST Health Check endpoint**
 
 [http://localhost:8080/api/v1/maintenance/health-check](http://localhost:8080/api/v1/maintenance/health-check)
@@ -116,7 +120,6 @@ Credentials:
 | **src/graphql**/resolvers/`<feature-name>`/`<resolver-name>`.`query\|mutation\|subscription`.ts | 1 file per field/query/mutation/subscription resolver. Name your file accordingly for quick searching. Don't forget the **barrel files (index.ts)** as this is what the schema script checks to find the resolver implementations. |
 | **src/graphql**/resolvers/\_dummy/\_dummy.`query\|mutation\|subscription`.ts                    | Resolver examples. 1 for each resolver type (`query`, `mutation` and `subscription`).                                                                                                                                              |
 | **src/graphql**/scalars/`<scalar-name>`.scalar.ts                                               | GraphQL Enum resolvers and internal values.                                                                                                                                                                                        |
-|                                                                                                 |
 | **src/graphql**/typeDefs/`<feature-name>`.graphql                                               | Graphql schema files.                                                                                                                                                                                                              |
 | **src/graphql**/index.ts                                                                        | Apollo GraphQL setup.                                                                                                                                                                                                              |
 | **src/graphql**/schema.ts                                                                       | GraphQL Schema/Resolver builder script                                                                                                                                                                                             |
@@ -126,6 +129,8 @@ Credentials:
 | **src/graphql-shield**/yup-validation-schemas/`<yup-schema-name>`.schema.ts                     | Yup schema files for input validation from client                                                                                                                                                                                  |
 | **src/graphql-shield**/index.ts                                                                 | GraphQL Shield middleware rules implementation.                                                                                                                                                                                    |
 | **src/middleware**/`<middleware-name>`.middleware.ts                                            | Node Express Middleware files.                                                                                                                                                                                                     |
+| **src/passport-strategies**/`<strategy-name>`.passport-strategy.ts                              | Contains all your PassportJS strategies and setup                                                                                                                                                                                  |
+| **src/redis**/client.ts                                                                         | Redis client is initialized here                                                                                                                                                                                                   |
 | **src/routes**/`<api-version>`/index.ts                                                         | Exports all routers for this api version to a single variable to be used by `src/routes/index.ts`.                                                                                                                                 |
 | **src/routes**/`<api-version>`/`<router-name>`.routes.ts                                        | Node Express Router files.                                                                                                                                                                                                         |
 | **src/routes**/index.ts                                                                         | Node Express Routes initialization.                                                                                                                                                                                                |
@@ -145,7 +150,6 @@ Credentials:
 | docker-compose.yml                                                                              | Docker compose configuration file.                                                                                                                                                                                                 |
 | Dockerfile                                                                                      | Docker configuration file.                                                                                                                                                                                                         |
 | graphql.schema.json                                                                             | Introspection file generated by GraphQL Code Generator based on GraphQL Schema files defined at `src/graphql/typeDefs`.                                                                                                            |
-| insomnia-file-upload-queries.json                                                               | Insomnia sample queries for file uploads. Import this to your Insomnia client.                                                                                                                                                     |
 | knexfile.ts                                                                                     | KnexJS configuration file that contains database config.                                                                                                                                                                           |
 | nodemon.json                                                                                    | Nodemon (file watcher) configuration file.                                                                                                                                                                                         |
 | package.json                                                                                    | NPM dependencies.                                                                                                                                                                                                                  |
@@ -164,26 +168,29 @@ Credentials:
 | apollo-server-express  | Apollo GraphQL for Express.                                           |
 | base64url              | Convert strings to base64 url-safe strings.                           |
 | bcryptjs               | Library for hashing and salting user passwords.                       |
-| compression            | NodeJS compression middleware.                                        |
-| cors                   | NodeJS cors middleware.                                               |
-| compression            | NodeJS compression middleware.                                        |
+| compression            | ExpressJS compression middleware.                                     |
+| cors                   | ExpressJS cors middleware.                                            |
+| compression            | ExpressJS compression middleware.                                     |
+| connect-redis          | Redis Store for express-session.                                      |
+| cookie-parser          | Parse cookies into a nice object format.                              |
 | dataloader             | Facebook Dataloader for batching and caching GraphQL requests.        |
 | dotenv                 | Loads environment variables from `.env` file.                         |
-| express                | NodeJS web framework.                                                 |
+| express                | Unopinionated NodeJS web framework.                                   |
+| express-session        | ExpressJS session middleware.                                         |
 | express-status-monitor | Reports real-time server metrics for express.                         |
 | graphql                | GraphQL core library.                                                 |
 | graphql-depth-limit    | GraphQL depth limit middleware.                                       |
 | graphql-iso-date       | GraphQL ISO Date scalars.                                             |
 | graphql-middleware     | GraphQL Middlewares made easy.                                        |
 | graphql-shield         | GraphQL Server permissions as another layer of abstraction.           |
-| helmet                 | NodeJS helmet middleware.                                             |
-| cookie-parser          | Parse cookies into a nice object format.                              |
-| jsonwebtoken           | JWT library.                                                          |
+| helmet                 | Security middleware.                                                  |
+| ioredis                | NodeJS Redis Client.                                                  |
 | knex                   | SQL Query Builder.                                                    |
 | lodash                 | A utility library for working with arrays, numbers, objects, strings. |
 | merge-graphql-schemas  | GraphQL Schema utilities.                                             |
-| morgan                 | NodeJS HTTP request logger middleware.                                |
+| morgan                 | ExpressJS HTTP request logger middleware.                             |
 | objection              | ObjectionJS SQL ORM.                                                  |
+| passport               | Simple, unobtrusive authentication for NodeJS.                        |
 | pg                     | Node Postgres client.                                                 |
 | ts-node                | TypeScript Node environment.                                          |
 | typescript             | TypeScript compiler.                                                  |
@@ -229,9 +236,11 @@ You can switch between environments by setting `CURRENT_ENVIRONMENT`.
 ```
 CURRENT_ENVIRONMENT=LOCAL
 
-# JWT
-ACCESS_TOKEN_SECRET=
-REFRESH_TOKEN_SECRET=
+# Apollo Engine
+ENGINE_API_KEY=
+
+# Express Session
+SESSION_SECRET=
 
 # Local Environment
 LOCAL_APP_PORT=

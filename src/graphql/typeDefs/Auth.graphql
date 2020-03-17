@@ -24,5 +24,4 @@ type RegisterPayload {
 
 type LoginPayload {
   user: User
-  token: String
 }

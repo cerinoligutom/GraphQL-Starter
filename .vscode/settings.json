@@ -11,13 +11,17 @@
     "nginx",
     "npmrc",
     "pgsql",
+    "postgresql",
     "prettierrc",
     "printf",
     "pubsub",
+    "rediscommander",
     "serialize",
     "serializer",
     "serializers",
-    "superadmin"
+    "superadmin",
+    "tinymce",
+    "unopinionated"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }

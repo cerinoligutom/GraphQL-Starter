@@ -1,7 +1,7 @@
 import { GQL_QueryResolvers, GQL_UserConnection, GQL_UserEdge } from 'graphql-resolvers';
 import { UserSortField, SortDirection } from '@app/graphql/enums';
 
-export const usersResolver: GQL_QueryResolvers['users'] = async (parent, args, { services, payload }) => {
+export const usersResolver: GQL_QueryResolvers['users'] = async (parent, args, { services }) => {
   const { userService } = services;
 
   if (!args.sortBy) {

@@ -7,10 +7,8 @@ import { env } from '@app/config/environment';
 import * as services from '@app/core/services';
 import { logger } from '@app/utils';
 import { apolloOptions } from '@app/config/apollo-options';
-import { IAccessTokenPayload } from '@app/core/interfaces';
 
 export interface IGraphQLContext {
-  payload: IAccessTokenPayload | null;
   services: typeof services;
   loaders: ReturnType<typeof initLoaders>;
   req: Request;
@@ -26,7 +24,6 @@ export const initApolloGraphqlServer = (app: Express) => {
         services,
         req,
         res,
-        payload: null,
         loaders: initLoaders(),
       };
 

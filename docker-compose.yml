@@ -10,10 +10,10 @@ services:
     depends_on:
       - db
     ports:
-      - "8080:8080"
-      - "9229:9229"
+      - '8080:8080'
+      - '9229:9229'
     tty: true
-  
+
   db:
     image: postgres:11
     restart: always
@@ -27,11 +27,26 @@ services:
     image: adminer
     restart: always
     ports:
-      - "8888:8080"
-    environment: 
+      - '8888:8080'
+    environment:
       ADMINER_PLUGINS: 'tables-filter tinymce'
       ADMINER_DESIGN: 'price'
 
+  redis:
+    image: redis:5-alpine
+    restart: always
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    volumes:
+      - redis-data:/data
+    ports:
+      - '8889:8081'
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+
 volumes:
   postgres-data:
+  redis-data:
     # external: true # https://github.com/docker/for-win/issues/445#issuecomment-405185621

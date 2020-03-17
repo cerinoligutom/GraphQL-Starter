@@ -1,7 +1,7 @@
 import 'tsconfig-paths/register';
 import { env } from '@app/config/environment';
 
-import { errorMiddleware, httpLogger, expressStatusMonitor, corsMiddleware } from '@app/middleware';
+import { errorMiddleware, httpLogger, expressStatusMonitor, corsMiddleware, sessionMiddleware } from '@app/middleware';
 import { ping as pingPostgresDatabase } from './db/knex';
 import { initRoutes } from './routes';
 import { initApolloGraphqlServer } from './graphql';
@@ -9,7 +9,11 @@ import { initApolloGraphqlServer } from './graphql';
 import { createServer } from 'http';
 import compression from 'compression';
 import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
 import express from 'express';
+
+import passport from 'passport';
+import './passport-strategies';
 
 const app = express();
 
@@ -21,12 +25,17 @@ const app = express();
     return;
   }
 
+  app.use(helmet());
   app.use(corsMiddleware());
   app.use(express.json());
-  app.use(helmet());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(cookieParser());
+  app.use(sessionMiddleware());
   app.use(compression());
   app.use(expressStatusMonitor());
   app.use(httpLogger);
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   initRoutes(app);
 

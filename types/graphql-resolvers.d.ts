@@ -40,7 +40,6 @@ export type GQL_LoginInput = {
 export type GQL_LoginPayload = {
    __typename?: 'LoginPayload',
   user?: Maybe<GQL_User>,
-  token?: Maybe<Scalars['String']>,
 };
 
 export type GQL_Mutation = {
@@ -316,7 +315,6 @@ export type GQL_FileResolvers<ContextType = IGraphQLContext, ParentType extends 
 
 export type GQL_LoginPayloadResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['LoginPayload'] = GQL_ResolversParentTypes['LoginPayload']> = {
   user?: Resolver<Maybe<GQL_ResolversTypes['User']>, ParentType, ContextType>,
-  token?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 

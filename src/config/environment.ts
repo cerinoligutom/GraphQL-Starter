@@ -13,6 +13,8 @@ interface IEnvironmentConfig {
       database?: string;
       debug: boolean;
     };
+
+    redisUrl: string;
   };
 }
 
@@ -43,6 +45,7 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
       user: process.env.PROD_PG_USER,
       debug: false,
     },
+    redisUrl: process.env.PROD_REDIS_URL!,
   },
 
   [EnvironmentOptions.STAGING]: {
@@ -57,6 +60,8 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
       user: process.env.STAGING_PG_USER,
       debug: true,
     },
+
+    redisUrl: process.env.STAGING_REDIS_URL!,
   },
 
   [EnvironmentOptions.DEV]: {
@@ -71,6 +76,8 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
       user: process.env.DEV_PG_USER,
       debug: true,
     },
+
+    redisUrl: process.env.DEV_REDIS_URL!,
   },
 
   [EnvironmentOptions.TEST]: {
@@ -85,6 +92,8 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
       user: process.env.TEST_PG_USER,
       debug: true,
     },
+
+    redisUrl: process.env.TEST_REDIS_URL!,
   },
 
   [EnvironmentOptions.LOCAL]: {
@@ -99,6 +108,8 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
       user: process.env.LOCAL_PG_USER || 'postgres',
       debug: true,
     },
+
+    redisUrl: process.env.LOCAL_REDIS_URL || 'redis', // 'redis' is the service name of the redis container
   },
 };
 

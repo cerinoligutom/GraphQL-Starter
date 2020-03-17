@@ -1,19 +1,31 @@
 import { GQL_MutationResolvers } from 'graphql-resolvers';
 import { AuthenticationError } from 'apollo-server-core';
-import { sendRefreshToken } from '@app/utils';
+import { logger } from '@app/utils';
 
-export const loginResolver: GQL_MutationResolvers['login'] = async (_, args, { services, res }) => {
+export const loginResolver: GQL_MutationResolvers['login'] = async (_, args, { services, req }) => {
   const { authService } = services;
   const { usernameOrEmail, password } = args.input;
 
   try {
-    const result = await authService.login(usernameOrEmail, password);
+    const user = await authService.login(usernameOrEmail, password);
 
-    // Set refresh token in cookie
-    const refreshToken = authService.createRefreshToken(result.user);
-    sendRefreshToken(res, refreshToken);
+    if (user) {
+      // Logout previous session
+      if (req.isAuthenticated()) {
+        req.logout();
+      }
 
-    return result;
+      // Invoke PassportJS login method to set up session
+      req.login(user, err => {
+        if (err) {
+          logger.error(err.message);
+        }
+      });
+    }
+
+    return {
+      user,
+    };
   } catch (err) {
     throw new AuthenticationError(err.message);
   }

@@ -29,7 +29,7 @@ export class BaseModel extends EnhancedModel {
     return class<M extends Objection.Model, R = M[]> extends EnhancedModel.QueryBuilder<M, R> {
       cursorPage(cursor?: string | null, before = false) {
         // tslint:disable-next-line: no-any
-        return (super.cursorPage(cursor, before) as this).runAfter(result => mapToCursorPaginationResult(result as any));
+        return super.cursorPage(cursor, before).runAfter(result => mapToCursorPaginationResult(result as any));
       }
     };
   }

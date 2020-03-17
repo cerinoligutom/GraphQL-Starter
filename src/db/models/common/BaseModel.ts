@@ -3,7 +3,7 @@ import Objection, { compose } from 'objection';
 import knex from '../../knex';
 
 const cursorMixin = require('objection-cursor');
-import { mapToCursorPaginationResult } from './objection.cursor.plugin-helper';
+import { mapToCursorPaginationResult } from './objection-cursor.plugin-helper';
 
 // Attach knex to objection model
 Objection.Model.knex(knex);

@@ -1,5 +1,8 @@
 type Query {
   _dummy: String @deprecated
+  _sampleDateTimeScalar: DateTime @deprecated
+  _sampleDateScalar: Date @deprecated
+  _sampleTimeScalar: Time @deprecated
 }
 
 type Mutation {

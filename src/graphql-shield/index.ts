@@ -14,12 +14,21 @@ import { loginSchema, registerSchema, cursorArgsSchema } from './yup-validation-
 export const schemaPermissions = shield({
   Query: {
     '*': isAuthenticated,
+    _dummy: allow,
+    _sampleDateTimeScalar: allow,
+    _sampleDateScalar: allow,
+    _sampleTimeScalar: allow,
     users: and(isAuthenticated, yupRule(cursorArgsSchema)),
   },
   Mutation: {
     '*': isAuthenticated,
+    _dummy: allow,
     login: yupRule(loginSchema),
     logout: allow,
     register: yupRule(registerSchema),
+  },
+  Subscription: {
+    '*': isAuthenticated,
+    _dummy: allow,
   },
 });

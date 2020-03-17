@@ -5,6 +5,9 @@ import { _dummyResolver as _dummySubscriptionResolver } from './_dummy.subscript
 export default {
   Query: {
     _dummy: _dummyQueryResolver,
+    _sampleDateTimeScalar: () => new Date(),
+    _sampleDateScalar: () => new Date(),
+    _sampleTimeScalar: () => new Date(),
   },
   Mutation: {
     _dummy: _dummyMutationResolver,

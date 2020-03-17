@@ -7,159 +7,162 @@ export type Maybe<T> = T | null | undefined;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string,
-  String: string,
-  Boolean: boolean,
-  Int: number,
-  Float: number,
-  DateTime: any,
-  Upload: FileUpload,
-  Date: any,
-  Time: any,
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  Date: any;
+  DateTime: any;
+  Time: any;
+  Upload: FileUpload;
 };
 
 
 
 export type GQL_DummySubscriptionPayload = {
-   __typename?: 'DummySubscriptionPayload',
-  dummy?: Maybe<Scalars['String']>,
+   __typename?: 'DummySubscriptionPayload';
+  dummy?: Maybe<Scalars['String']>;
 };
 
 export type GQL_File = {
-   __typename?: 'File',
-  filename: Scalars['String'],
-  mimetype: Scalars['String'],
-  encoding: Scalars['String'],
+   __typename?: 'File';
+  filename: Scalars['String'];
+  mimetype: Scalars['String'];
+  encoding: Scalars['String'];
 };
 
 export type GQL_LoginInput = {
-  usernameOrEmail: Scalars['String'],
-  password: Scalars['String'],
+  usernameOrEmail: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type GQL_LoginPayload = {
-   __typename?: 'LoginPayload',
-  user?: Maybe<GQL_User>,
+   __typename?: 'LoginPayload';
+  user?: Maybe<GQL_User>;
 };
 
 export type GQL_Mutation = {
-   __typename?: 'Mutation',
-  _dummy?: Maybe<Scalars['String']>,
-  login?: Maybe<GQL_LoginPayload>,
-  logout: Scalars['Boolean'],
-  multipleUpload: Array<GQL_File>,
-  register?: Maybe<GQL_RegisterPayload>,
-  singleUpload: GQL_File,
+   __typename?: 'Mutation';
+  _dummy?: Maybe<Scalars['String']>;
+  login?: Maybe<GQL_LoginPayload>;
+  logout: Scalars['Boolean'];
+  multipleUpload: Array<GQL_File>;
+  register?: Maybe<GQL_RegisterPayload>;
+  singleUpload: GQL_File;
 };
 
 
 export type GQL_MutationLoginArgs = {
-  input: GQL_LoginInput
+  input: GQL_LoginInput;
 };
 
 
 export type GQL_MutationMultipleUploadArgs = {
-  files: Array<Scalars['Upload']>
+  files: Array<Scalars['Upload']>;
 };
 
 
 export type GQL_MutationRegisterArgs = {
-  input: GQL_RegisterInput
+  input: GQL_RegisterInput;
 };
 
 
 export type GQL_MutationSingleUploadArgs = {
-  file: Scalars['Upload']
+  file: Scalars['Upload'];
 };
 
 export type GQL_Node = {
-  id: Scalars['ID'],
+  id: Scalars['ID'];
 };
 
 export type GQL_PageInfo = {
-   __typename?: 'PageInfo',
+   __typename?: 'PageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>,
+  endCursor?: Maybe<Scalars['String']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'],
+  hasNextPage: Scalars['Boolean'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'],
-  startCursor?: Maybe<Scalars['String']>,
+  hasPreviousPage: Scalars['Boolean'];
+  startCursor?: Maybe<Scalars['String']>;
 };
 
 export type GQL_Query = {
-   __typename?: 'Query',
-  _dummy?: Maybe<Scalars['String']>,
-  node?: Maybe<GQL_Node>,
-  users: GQL_UserConnection,
+   __typename?: 'Query';
+  _dummy?: Maybe<Scalars['String']>;
+  _sampleDateScalar?: Maybe<Scalars['Date']>;
+  _sampleDateTimeScalar?: Maybe<Scalars['DateTime']>;
+  _sampleTimeScalar?: Maybe<Scalars['Time']>;
+  node?: Maybe<GQL_Node>;
+  users: GQL_UserConnection;
 };
 
 
 export type GQL_QueryNodeArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID'];
 };
 
 
 export type GQL_QueryUsersArgs = {
-  first?: Maybe<Scalars['Int']>,
-  before?: Maybe<Scalars['String']>,
-  after?: Maybe<Scalars['String']>,
-  sortBy?: Maybe<GQL_UserSort>
+  first?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['String']>;
+  after?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<GQL_UserSort>;
 };
 
 export type GQL_RegisterInput = {
-  firstName: Scalars['String'],
-  middleName?: Maybe<Scalars['String']>,
-  lastName: Scalars['String'],
-  username: Scalars['String'],
-  email: Scalars['String'],
-  password: Scalars['String'],
+  firstName: Scalars['String'];
+  middleName?: Maybe<Scalars['String']>;
+  lastName: Scalars['String'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type GQL_RegisterPayload = {
-   __typename?: 'RegisterPayload',
-  success: Scalars['Boolean'],
+   __typename?: 'RegisterPayload';
+  success: Scalars['Boolean'];
 };
 
 export { SortDirection };
 
 export type GQL_Subscription = {
-   __typename?: 'Subscription',
-  _dummy?: Maybe<GQL_DummySubscriptionPayload>,
+   __typename?: 'Subscription';
+  _dummy?: Maybe<GQL_DummySubscriptionPayload>;
 };
 
 
 
 export type GQL_User = GQL_Node & {
-   __typename?: 'User',
-  id: Scalars['ID'],
-  firstName?: Maybe<Scalars['String']>,
-  middleName?: Maybe<Scalars['String']>,
-  lastName?: Maybe<Scalars['String']>,
-  fullName?: Maybe<Scalars['String']>,
-  username?: Maybe<Scalars['String']>,
-  email?: Maybe<Scalars['String']>,
-  createdAt?: Maybe<Scalars['DateTime']>,
-  updatedAt?: Maybe<Scalars['DateTime']>,
+   __typename?: 'User';
+  id: Scalars['ID'];
+  firstName?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type GQL_UserConnection = {
-   __typename?: 'UserConnection',
-  edges: Array<Maybe<GQL_UserEdge>>,
-  nodes: Array<Maybe<GQL_User>>,
-  pageInfo: GQL_PageInfo,
-  totalCount: Scalars['Int'],
+   __typename?: 'UserConnection';
+  edges: Array<Maybe<GQL_UserEdge>>;
+  nodes: Array<Maybe<GQL_User>>;
+  pageInfo: GQL_PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type GQL_UserEdge = {
-   __typename?: 'UserEdge',
-  cursor: Scalars['String'],
-  node?: Maybe<GQL_User>,
+   __typename?: 'UserEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<GQL_User>;
 };
 
 export type GQL_UserSort = {
-  field: UserSortField,
-  direction: SortDirection,
+  field: UserSortField;
+  direction: SortDirection;
 };
 
 export { UserSortField };
@@ -167,13 +170,6 @@ export { UserSortField };
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
-
-export type ResolverFn<TResult, TParent, TContext, TArgs> = (
-  parent: TParent,
-  args: TArgs,
-  context: TContext,
-  info: GraphQLResolveInfo
-) => Promise<TResult> | TResult;
 
 
 export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
@@ -184,6 +180,13 @@ export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
 export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
   | ResolverFn<TResult, TParent, TContext, TArgs>
   | StitchingResolver<TResult, TParent, TContext, TArgs>;
+
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Promise<TResult> | TResult;
 
 export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -221,9 +224,9 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   parent: TParent,
   context: TContext,
   info: GraphQLResolveInfo
-) => Maybe<TTypes>;
+) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type isTypeOfResolverFn<T = {}> = (obj: T, info: GraphQLResolveInfo) => boolean;
+export type isTypeOfResolverFn<T = {}> = (obj: T, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
@@ -239,6 +242,9 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type GQL_ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
   String: ResolverTypeWrapper<Scalars['String']>,
+  Date: ResolverTypeWrapper<Scalars['Date']>,
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
+  Time: ResolverTypeWrapper<Scalars['Time']>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
   Node: ResolverTypeWrapper<GQL_Node>,
   Int: ResolverTypeWrapper<Scalars['Int']>,
@@ -248,7 +254,6 @@ export type GQL_ResolversTypes = {
   UserConnection: ResolverTypeWrapper<GQL_UserConnection>,
   UserEdge: ResolverTypeWrapper<GQL_UserEdge>,
   User: ResolverTypeWrapper<GQL_User>,
-  DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
   PageInfo: ResolverTypeWrapper<GQL_PageInfo>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Mutation: ResolverTypeWrapper<{}>,
@@ -260,14 +265,15 @@ export type GQL_ResolversTypes = {
   RegisterPayload: ResolverTypeWrapper<GQL_RegisterPayload>,
   Subscription: ResolverTypeWrapper<{}>,
   DummySubscriptionPayload: ResolverTypeWrapper<GQL_DummySubscriptionPayload>,
-  Date: ResolverTypeWrapper<Scalars['Date']>,
-  Time: ResolverTypeWrapper<Scalars['Time']>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type GQL_ResolversParentTypes = {
   Query: {},
   String: Scalars['String'],
+  Date: Scalars['Date'],
+  DateTime: Scalars['DateTime'],
+  Time: Scalars['Time'],
   ID: Scalars['ID'],
   Node: GQL_Node,
   Int: Scalars['Int'],
@@ -277,7 +283,6 @@ export type GQL_ResolversParentTypes = {
   UserConnection: GQL_UserConnection,
   UserEdge: GQL_UserEdge,
   User: GQL_User,
-  DateTime: Scalars['DateTime'],
   PageInfo: GQL_PageInfo,
   Boolean: Scalars['Boolean'],
   Mutation: {},
@@ -289,8 +294,6 @@ export type GQL_ResolversParentTypes = {
   RegisterPayload: GQL_RegisterPayload,
   Subscription: {},
   DummySubscriptionPayload: GQL_DummySubscriptionPayload,
-  Date: Scalars['Date'],
-  Time: Scalars['Time'],
 };
 
 export interface GQL_DateScalarConfig extends GraphQLScalarTypeConfig<GQL_ResolversTypes['Date'], any> {
@@ -342,6 +345,9 @@ export type GQL_PageInfoResolvers<ContextType = IGraphQLContext, ParentType exte
 
 export type GQL_QueryResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['Query'] = GQL_ResolversParentTypes['Query']> = {
   _dummy?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>,
+  _sampleDateScalar?: Resolver<Maybe<GQL_ResolversTypes['Date']>, ParentType, ContextType>,
+  _sampleDateTimeScalar?: Resolver<Maybe<GQL_ResolversTypes['DateTime']>, ParentType, ContextType>,
+  _sampleTimeScalar?: Resolver<Maybe<GQL_ResolversTypes['Time']>, ParentType, ContextType>,
   node?: Resolver<Maybe<GQL_ResolversTypes['Node']>, ParentType, ContextType, RequireFields<GQL_QueryNodeArgs, 'id'>>,
   users?: Resolver<GQL_ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<GQL_QueryUsersArgs, 'first'>>,
 };

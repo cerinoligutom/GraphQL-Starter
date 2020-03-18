@@ -40,7 +40,7 @@ async function register(input: GQL_RegisterInput): Promise<User> {
   }
 
   const form: User = new User();
-  form.$set({
+  form.set({
     firstName,
     middleName,
     lastName,

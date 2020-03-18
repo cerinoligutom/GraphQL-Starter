@@ -1,5 +1,5 @@
 // tslint:disable: max-classes-per-file
-import Objection, { compose } from 'objection';
+import Objection, { compose, PartialModelObject } from 'objection';
 import knex from '../../knex';
 
 const cursorMixin = require('objection-cursor');
@@ -32,5 +32,15 @@ export class BaseModel extends EnhancedModel {
         return super.cursorPage(cursor, before).runAfter(result => mapToCursorPaginationResult(result as any));
       }
     };
+  }
+
+  /**
+   * Set this object's property values. Internally calls `Objection.Model.$set()` method but with
+   * auto completion based on this model's properties.
+   *
+   * Related: https://github.com/Vincit/objection.js/issues/1716
+   */
+  set(values: PartialModelObject<this>): this {
+    return this.$set(values);
   }
 }

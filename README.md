@@ -166,7 +166,6 @@ Credentials:
 | Package                | Description                                                           |
 | ---------------------- | --------------------------------------------------------------------- |
 | apollo-server-express  | Apollo GraphQL for Express.                                           |
-| base64url              | Convert strings to base64 url-safe strings.                           |
 | bcryptjs               | Library for hashing and salting user passwords.                       |
 | compression            | ExpressJS compression middleware.                                     |
 | cors                   | ExpressJS cors middleware.                                            |
@@ -209,7 +208,6 @@ Credentials:
 | husky                                 | Git hooks.                                               |
 | lint-staged                           | Run linters against staged git files.                    |
 | nodemon                               | File watcher.                                            |
-| npm-run-all                           | For running multiple commands at once.                   |
 | prettier                              | File formatter.                                          |
 | rimraf                                | For deleting folders and/or files.                       |
 | tsconfig-paths                        | TypeScript path resolver.                                |

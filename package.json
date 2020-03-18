@@ -45,7 +45,6 @@
   },
   "dependencies": {
     "apollo-server-express": "^2.11.0",
-    "base64url": "^3.0.1",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "connect-redis": "^4.0.4",
@@ -77,10 +76,10 @@
     "yup": "^0.28.3"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "1.13.0",
-    "@graphql-codegen/introspection": "1.13.0",
-    "@graphql-codegen/typescript": "1.13.0",
-    "@graphql-codegen/typescript-resolvers": "1.13.0",
+    "@graphql-codegen/cli": "1.13.1",
+    "@graphql-codegen/introspection": "1.13.1",
+    "@graphql-codegen/typescript": "1.13.1",
+    "@graphql-codegen/typescript-resolvers": "1.13.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/compression": "1.7.0",
     "@types/connect-redis": "0.0.13",
@@ -102,7 +101,6 @@
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
     "nodemon": "^2.0.2",
-    "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
     "tsconfig-paths": "^3.9.0",

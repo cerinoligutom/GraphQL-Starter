@@ -6,7 +6,7 @@ export const corsMiddleware = () => {
   const whitelist = [];
 
   if (!env.isProduction) {
-    whitelist.push(/localhost%/);
+    whitelist.push(/localhost/);
   }
 
   const corsOptions: CorsOptions = {

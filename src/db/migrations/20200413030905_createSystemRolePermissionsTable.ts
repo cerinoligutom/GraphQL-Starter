@@ -5,7 +5,7 @@ const TABLE_NAME = 'system_role_permissions';
 export async function up(knex: Knex): Promise<any> {
   const tableExists = await knex.schema.hasTable(TABLE_NAME);
   if (!tableExists) {
-    await knex.schema.createTable(TABLE_NAME, t => {
+    await knex.schema.createTable(TABLE_NAME, (t) => {
       t.uuid('roleId').notNullable();
       t.uuid('permissionId').notNullable();
 

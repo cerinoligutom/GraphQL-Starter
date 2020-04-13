@@ -26,7 +26,7 @@ const typeDefs = mergeTypes(getTypeDefs());
 let graphqlSchema = makeExecutableSchema({
   typeDefs,
   resolvers,
-  logger: { log: e => console.info(e) },
+  logger: { log: (e) => console.info(e) },
 });
 
 // Apply graphql-shield middleware

@@ -20,11 +20,11 @@ export const usersResolver: GQL_QueryResolvers['users'] = async (parent, args, {
   });
 
   const userConnection: GQL_UserConnection = {
-    edges: result.results.map<GQL_UserEdge>(x => ({
+    edges: result.results.map<GQL_UserEdge>((x) => ({
       cursor: x.cursor,
       node: x.data,
     })),
-    nodes: result.results.map(x => x.data),
+    nodes: result.results.map((x) => x.data),
     pageInfo: result.pageInfo,
     totalCount: result.totalCount,
   };

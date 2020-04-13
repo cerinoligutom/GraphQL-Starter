@@ -4,7 +4,7 @@ const logFormat = format.combine(format.timestamp(), format.json());
 
 const consoleLogFormat = format.combine(
   format.timestamp(),
-  format.printf(info => {
+  format.printf((info) => {
     const header = `${info.level.toLocaleUpperCase()} - ${info.timestamp}`;
     const footer = '-'.repeat(header.length);
 

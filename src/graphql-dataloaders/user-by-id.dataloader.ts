@@ -5,6 +5,6 @@ export const userByIdLoader = () => {
   return createDataLoader(async (ids: string[]) => {
     const rows = await userService.getByIds(ids);
 
-    return ids.map(id => rows.find(row => row.id === id) || null);
+    return ids.map((id) => rows.find((row) => row.id === id) || null);
   });
 };

@@ -8,13 +8,9 @@ export async function up(knex: Knex): Promise<any> {
 
   if (!tableExists) {
     await knex.schema
-      .createTable(TABLE_NAME, t => {
-        t.uuid('id')
-          .primary()
-          .defaultTo(knex.raw('uuid_generate_v4()'));
-        t.string('name')
-          .notNullable()
-          .unique();
+      .createTable(TABLE_NAME, (t) => {
+        t.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
+        t.string('name').notNullable().unique();
         t.text('description').notNullable();
       })
       .then(async () => {

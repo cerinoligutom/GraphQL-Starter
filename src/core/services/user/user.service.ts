@@ -21,9 +21,7 @@ interface IUserCursorPaginatedArgs {
 async function getCursorPaginated(args: IUserCursorPaginatedArgs): Promise<ICursorPaginationResult<User>> {
   const { before, after, first, sortDirection, sortField } = args;
 
-  const query = User.query()
-    .orderBy(sortField, sortDirection)
-    .limit(first);
+  const query = User.query().orderBy(sortField, sortDirection).limit(first);
 
   if (before) {
     return query.previousCursorPage(before);

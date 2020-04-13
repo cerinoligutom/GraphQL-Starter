@@ -3,10 +3,7 @@ import { bcryptUtil } from '@app/utils';
 import { GQL_RegisterInput } from 'graphql-resolvers';
 
 async function login(usernameOrEmail: string, password: string): Promise<User> {
-  const user = await User.query()
-    .where('username', usernameOrEmail)
-    .orWhere('email', usernameOrEmail)
-    .first();
+  const user = await User.query().where('username', usernameOrEmail).orWhere('email', usernameOrEmail).first();
 
   if (user) {
     const isValidPassword = await bcryptUtil.verify(password, user.hash, user.salt);
@@ -25,16 +22,12 @@ async function register(input: GQL_RegisterInput): Promise<User> {
   const salt = await bcryptUtil.generateSalt();
   const hash = await bcryptUtil.generateHash(password, salt);
 
-  const existingUsername = await User.query()
-    .where('username', username)
-    .first();
+  const existingUsername = await User.query().where('username', username).first();
   if (existingUsername) {
     throw new Error('Username is already taken.');
   }
 
-  const existingEmail = await User.query()
-    .where('email', email)
-    .first();
+  const existingEmail = await User.query().where('email', email).first();
   if (existingEmail) {
     throw new Error('Email is already taken.');
   }

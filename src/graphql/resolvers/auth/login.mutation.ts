@@ -16,7 +16,7 @@ export const loginResolver: GQL_MutationResolvers['login'] = async (_, args, { s
       }
 
       // Invoke PassportJS login method to set up session
-      req.login(user, err => {
+      req.login(user, (err) => {
         if (err) {
           logger.error(err.message);
         }

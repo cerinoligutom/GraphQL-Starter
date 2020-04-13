@@ -1,10 +1,7 @@
 import * as yup from 'yup';
 
 export const cursorArgsSchema = yup.object().shape({
-  first: yup
-    .number()
-    .required()
-    .min(0),
+  first: yup.number().required().min(0),
   before: yup.string(),
   after: yup.string().test({
     message: `Define either 'before' or 'after' only.`,

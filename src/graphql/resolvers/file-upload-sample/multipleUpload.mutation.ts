@@ -2,7 +2,7 @@ import { GQL_MutationResolvers } from 'graphql-resolvers';
 
 export const multipleUploadResolver: GQL_MutationResolvers['multipleUpload'] = async (_, { files }) => {
   const multipleFiles = await Promise.all(
-    files.map(async file => {
+    files.map(async (file) => {
       const { createReadStream, filename, mimetype, encoding } = await file;
 
       // 1. Validate file metadata.

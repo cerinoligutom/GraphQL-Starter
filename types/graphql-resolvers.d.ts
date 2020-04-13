@@ -44,6 +44,7 @@ export type GQL_LoginPayload = {
 
 export type GQL_Mutation = {
    __typename?: 'Mutation';
+  /** @deprecated Field no longer supported */
   _dummy?: Maybe<Scalars['String']>;
   login?: Maybe<GQL_LoginPayload>;
   logout: Scalars['Boolean'];
@@ -78,20 +79,23 @@ export type GQL_Node = {
 
 export type GQL_PageInfo = {
    __typename?: 'PageInfo';
-  /** When paginating forwards, the cursor to continue. */
   endCursor?: Maybe<Scalars['String']>;
-  /** When paginating forwards, are there more items? */
   hasNextPage: Scalars['Boolean'];
-  /** When paginating backwards, are there more items? */
   hasPreviousPage: Scalars['Boolean'];
   startCursor?: Maybe<Scalars['String']>;
 };
 
 export type GQL_Query = {
    __typename?: 'Query';
+  /** @deprecated Field no longer supported */
+  _authorizedOnlyQuery?: Maybe<Scalars['Boolean']>;
+  /** @deprecated Field no longer supported */
   _dummy?: Maybe<Scalars['String']>;
+  /** @deprecated Field no longer supported */
   _sampleDateScalar?: Maybe<Scalars['Date']>;
+  /** @deprecated Field no longer supported */
   _sampleDateTimeScalar?: Maybe<Scalars['DateTime']>;
+  /** @deprecated Field no longer supported */
   _sampleTimeScalar?: Maybe<Scalars['Time']>;
   node?: Maybe<GQL_Node>;
   users: GQL_UserConnection;
@@ -128,6 +132,7 @@ export { SortDirection };
 
 export type GQL_Subscription = {
    __typename?: 'Subscription';
+  /** @deprecated Field no longer supported */
   _dummy?: Maybe<GQL_DummySubscriptionPayload>;
 };
 
@@ -241,12 +246,13 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type GQL_ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   String: ResolverTypeWrapper<Scalars['String']>,
   Date: ResolverTypeWrapper<Scalars['Date']>,
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
   Time: ResolverTypeWrapper<Scalars['Time']>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
-  Node: ResolverTypeWrapper<GQL_Node>,
+  Node: GQL_ResolversTypes['User'],
   Int: ResolverTypeWrapper<Scalars['Int']>,
   UserSort: GQL_UserSort,
   UserSortField: UserSortField,
@@ -255,7 +261,6 @@ export type GQL_ResolversTypes = {
   UserEdge: ResolverTypeWrapper<GQL_UserEdge>,
   User: ResolverTypeWrapper<GQL_User>,
   PageInfo: ResolverTypeWrapper<GQL_PageInfo>,
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Mutation: ResolverTypeWrapper<{}>,
   LoginInput: GQL_LoginInput,
   LoginPayload: ResolverTypeWrapper<GQL_LoginPayload>,
@@ -270,12 +275,13 @@ export type GQL_ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type GQL_ResolversParentTypes = {
   Query: {},
+  Boolean: Scalars['Boolean'],
   String: Scalars['String'],
   Date: Scalars['Date'],
   DateTime: Scalars['DateTime'],
   Time: Scalars['Time'],
   ID: Scalars['ID'],
-  Node: GQL_Node,
+  Node: GQL_ResolversParentTypes['User'],
   Int: Scalars['Int'],
   UserSort: GQL_UserSort,
   UserSortField: UserSortField,
@@ -284,7 +290,6 @@ export type GQL_ResolversParentTypes = {
   UserEdge: GQL_UserEdge,
   User: GQL_User,
   PageInfo: GQL_PageInfo,
-  Boolean: Scalars['Boolean'],
   Mutation: {},
   LoginInput: GQL_LoginInput,
   LoginPayload: GQL_LoginPayload,
@@ -344,6 +349,7 @@ export type GQL_PageInfoResolvers<ContextType = IGraphQLContext, ParentType exte
 };
 
 export type GQL_QueryResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['Query'] = GQL_ResolversParentTypes['Query']> = {
+  _authorizedOnlyQuery?: Resolver<Maybe<GQL_ResolversTypes['Boolean']>, ParentType, ContextType>,
   _dummy?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>,
   _sampleDateScalar?: Resolver<Maybe<GQL_ResolversTypes['Date']>, ParentType, ContextType>,
   _sampleDateTimeScalar?: Resolver<Maybe<GQL_ResolversTypes['DateTime']>, ParentType, ContextType>,

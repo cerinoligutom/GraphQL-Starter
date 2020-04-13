@@ -10,6 +10,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Project Structure](#project-structure)
 - [List of Packages](#list-of-packages)
 - [Sample Environment File](#sample-environment-file)
+- [Suggested Workflow](#suggested-workflow)
 - [Future Plans](#future-plans)
 - [Pro Tips](#pro-tips)
 - [Contributing](#contributing)
@@ -18,6 +19,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 ## Features
 
 - **Session Cookie Based Authentication** using Email/Username and Password
+- Authorization with CASL (user-role-permission)
 - Configurable Environments
 - Functionality-based project structure
 - Node Express REST endpoints
@@ -107,9 +109,11 @@ Credentials:
 | **src/config**/\*                                                                               | Any app level environment configs should go here.                                                                                                                                                                                  |
 | **src/controllers**/`<feature-name>`/`<feature-name>`.ctrl.ts                                   | Controller files.                                                                                                                                                                                                                  |
 | **src/core/\*\***/\*.ts                                                                         | Business Logic Layer files.                                                                                                                                                                                                        |
+| **src/core**/authorization/`<ability-name>`.ability.ts                                          | CASL Ability (Authorization) files.                                                                                                                                                                                                |
 | **src/core**/enums/`<enum-name>`.enum.ts                                                        | Enum files.                                                                                                                                                                                                                        |
 | **src/core**/interfaces/\*.ts                                                                   | Interfaces that are shared by many and cannot be owned by one module goes here.                                                                                                                                                    |
 | **src/core**/services/`<service-name>`/`<service-name>`.service.ts                              | Business Logic services.                                                                                                                                                                                                           |
+| **src/core**/types/\*.ts                                                                        | Custom types.                                                                                                                                                                                                                      |
 | **src/db**/helpers/\*.ts                                                                        | Migration script helpers.                                                                                                                                                                                                          |
 | **src/db**/helpers/addTimeStamps.ts                                                             | Migration script for adding `createdAt` and `updatedAt` fields to a table.                                                                                                                                                         |
 | **src/db**/migrations/\*.ts                                                                     | Generated migration files by KnexJS goes here as per `knexfile.ts` config.                                                                                                                                                         |
@@ -119,6 +123,7 @@ Credentials:
 | **src/graphql**/enums/`<enum-name>`.enum.ts                                                     | GraphQL internal Enum resolvers/values.                                                                                                                                                                                            |
 | **src/graphql**/resolvers/`<feature-name>`/`<resolver-name>`.`query\|mutation\|subscription`.ts | 1 file per field/query/mutation/subscription resolver. Name your file accordingly for quick searching. Don't forget the **barrel files (index.ts)** as this is what the schema script checks to find the resolver implementations. |
 | **src/graphql**/resolvers/\_dummy/\_dummy.`query\|mutation\|subscription`.ts                    | Resolver examples. 1 for each resolver type (`query`, `mutation` and `subscription`).                                                                                                                                              |
+| **src/graphql**/resolvers/\_sample/index.ts                                                     | More setup-specific examples.                                                                                                                                                                                                      |
 | **src/graphql**/scalars/`<scalar-name>`.scalar.ts                                               | GraphQL Enum resolvers and internal values.                                                                                                                                                                                        |
 | **src/graphql**/typeDefs/`<feature-name>`.graphql                                               | Graphql schema files.                                                                                                                                                                                                              |
 | **src/graphql**/index.ts                                                                        | Apollo GraphQL setup.                                                                                                                                                                                                              |
@@ -143,6 +148,8 @@ Credentials:
 | **types**/graphql-resolvers.d.ts                                                                | Auto generated types and interfaces by GraphQL Code Generator based on GraphQL Schema files defined at `src/graphql/typeDefs`.                                                                                                     |
 | .dockerignore                                                                                   | Folder and files ignored by docker usage.                                                                                                                                                                                          |
 | .gitignore                                                                                      | Folder and files ignored by git.                                                                                                                                                                                                   |
+| .huskyrc                                                                                        | Husky config.                                                                                                                                                                                                                      |
+| .lintstagedrc                                                                                   | Lint-staged config git.                                                                                                                                                                                                            |
 | .npmrc                                                                                          | `npm` config. Currently automatically saves all npm dependencies installed as `--save` if not specified.                                                                                                                           |
 | .prettierrc                                                                                     | Prettier formatter configuration file.                                                                                                                                                                                             |
 | apollo.config.js                                                                                | Apollo Server configuration file.                                                                                                                                                                                                  |
@@ -165,13 +172,14 @@ Credentials:
 
 | Package                | Description                                                           |
 | ---------------------- | --------------------------------------------------------------------- |
+| @casl/ability          | An isomorphic authorization JS library.                               |
 | apollo-server-express  | Apollo GraphQL for Express.                                           |
 | bcryptjs               | Library for hashing and salting user passwords.                       |
 | compression            | ExpressJS compression middleware.                                     |
-| cors                   | ExpressJS cors middleware.                                            |
 | compression            | ExpressJS compression middleware.                                     |
 | connect-redis          | Redis Store for express-session.                                      |
 | cookie-parser          | Parse cookies into a nice object format.                              |
+| cors                   | ExpressJS cors middleware.                                            |
 | dataloader             | Facebook Dataloader for batching and caching GraphQL requests.        |
 | dotenv                 | Loads environment variables from `.env` file.                         |
 | express                | Unopinionated NodeJS web framework.                                   |
@@ -189,6 +197,7 @@ Credentials:
 | merge-graphql-schemas  | GraphQL Schema utilities.                                             |
 | morgan                 | ExpressJS HTTP request logger middleware.                             |
 | objection              | ObjectionJS SQL ORM.                                                  |
+| objection-cursor       | ObjectionJS mixin for cursor-based pagination.                        |
 | passport               | Simple, unobtrusive authentication for NodeJS.                        |
 | pg                     | Node Postgres client.                                                 |
 | ts-node                | TypeScript Node environment.                                          |
@@ -276,14 +285,81 @@ PROD_PG_PASSWORD=
 PROD_PG_USER=
 ```
 
+## Suggested Workflow
+
+Keep in mind this layered architecture.
+
+![image](https://i.imgur.com/lZzIFYS.png)
+
+The folder structure of this project is mainly functionality-based so it should mostly be self explanatory where to put what.
+
+### Create a migration script with KnexJS for your database table.
+
+1. Run `npm run migrate:make <script_name>`.
+2. Go to the generated script at `src/db/migrations/<your_script>.ts`.
+3. Populate the script accordingly. Use the `addTimestamps.ts` helper if you need timestamps for your table.
+
+### (Optional) Create a seed script with KnexJS.
+
+1. Run `npm run seed:make <script_name>`.
+2. Go to the generated script at `src/db/seeds/<your_script>.ts`.
+3. Populate the script accordingly.
+
+### Create the corresponding ObjectionJS model.
+
+1. Create a TS file at `src/db/models/`.
+2. Populate the file accordingly.
+   - Make sure to set the static `tableName` property.
+   - (Optional) Set the static `relationMappings` property if applicable. See ObjectionJS docs for more details.
+   - (Recommended) Create a static `yupSchema` property for a centralized schema validation for that model. See existing models for example. This will later be used on in graphql-shield for graphql input validations.
+   - Setup the model's properties based on your database table schema.
+
+### Create a service (Business Logic).
+
+1. Create a new folder at `src/core/services/<service_name>`.
+2. Create the service file under the new folder.
+3. Populate it with the basic stuffs you'll need.
+   - Such as the basic CRUD methods.
+
+**Note:** Your Interface Layer shouldn't be accessing the Data Access Layer directly.
+
+### Create the GraphQL type definitions for your entity.
+
+1. Create a GraphQL file at `src/graphql/typeDefs/`.
+2. Define your GraphQL typedef that you want to expose on your schema.
+3. Think in graphs.
+   - So that your GraphQL schema wouldn't look like a reflection of your database schema.
+
+### Create your GraphQL resolvers based on the GraphQL TypeDefs.
+
+1. Create a new folder under `src/graphql/resolvers/<entity_name>`.
+   - I'd like to group the resolvers by their `type`.
+2. Create an `index.ts` file under that
+   - **Note:** This is important as `schema.ts` uses the `index` barrels (TS files) to get the resolvers.
+3. Create the `query/mutation/subscription` resolver file under the folder.
+4. Implement. Refer to the resolvers under `user` for examples.
+
+**Tip:** Keep your resolvers thin by making the business logic layer services do the actual work and call those functions in the resolvers.
+
+If you have enums defined in your GraphQL Schema, most likely you have your own internal values which means you'll have to resolve these enums to match your internal values which, most of the time, are internal enums you use in the app. Simply define the enums under the `src/graphql/enums` directory and make sure to export it on the `index` barrel.
+
+This is also true to scalars at `src/graphql/scalars`.
+
+### Add resolver permission rules with GraphQL Shield.
+
+Populate accordingly at `src/graphql-shield/index.ts`.
+
+If you want to validate your graphql inputs (e.g. input from a mutation), define your yup schema at `src/graphql-shield/yup-validation-schemas` then pass that as an argument of `yupRule` and use that on the corresponding resolver on the GraphQL Shield config.
+
 ## Future Plans
 
+- Build Process
 - Testing
 - CircleCI
 
 ## Pro Tips
 
-- When resolver types are generated by GraphQL Code Generator, the type of the 1st parameter of a **field resolver** is the parent type by default. This is not always true because during runtime, what the parent resolver returns is the actual type. In cases like this, you'd need to type assert the parent. See `fullName.query.ts`.
+- When resolver types are generated by GraphQL Code Generator, the type of the 1st parameter of a **field resolver** is the parent type by default. This is not always true because at runtime, what the parent resolver returns is the actual type/object that will arrive in the field resolver 1st (parent) parameter. In cases like this, you'd need to type assert the parent. See `fullName.query.ts`.
 
   - Another example for this is let's say we have a `pets` table and a pet has an `ownerId` but in your GraphQL Schema, what you expose is `owner` and not `ownerId`. You won't have access to the `ownerId` in your resolver because GraphQL Code Generator generated what you defined in the schema. You'll have then to type assert in your resolver the type you know you returned.
 

@@ -1,8 +1,26 @@
 import { BaseModel } from './common/BaseModel';
 import * as yup from 'yup';
+import { RelationMappings, Model } from 'objection';
+import { SystemRole } from './SystemRole.model';
+import { Maybe } from 'graphql-resolvers';
 
 export class User extends BaseModel {
   static tableName = 'users';
+
+  static relationMappings: RelationMappings = {
+    roles: {
+      relation: Model.ManyToManyRelation,
+      modelClass: `${__dirname}/SystemRole.model`,
+      join: {
+        from: 'users.id',
+        through: {
+          from: 'user_system_roles.userId',
+          to: 'user_system_roles.roleId',
+        },
+        to: 'system_roles.id',
+      },
+    },
+  };
 
   static yupSchema = {
     firstName: yup
@@ -33,11 +51,13 @@ export class User extends BaseModel {
   id!: string;
   username!: string;
   firstName!: string;
-  middleName?: string | null;
+  middleName?: Maybe<string>;
   lastName!: string;
   email!: string;
   hash!: string;
   salt!: string;
   createdAt!: Date;
   updatedAt!: Date;
+
+  roles?: SystemRole[];
 }

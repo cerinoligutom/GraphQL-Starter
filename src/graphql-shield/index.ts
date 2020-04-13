@@ -19,6 +19,7 @@ export const schemaPermissions = shield(
       _sampleDateTimeScalar: allow,
       _sampleDateScalar: allow,
       _sampleTimeScalar: allow,
+      _authorizedOnlyQuery: allow,
       users: and(isAuthenticated, yupRule(cursorArgsSchema)),
     },
     Mutation: {

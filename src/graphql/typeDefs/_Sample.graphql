@@ -1,0 +1,6 @@
+extend type Query {
+  _sampleDateTimeScalar: DateTime @deprecated
+  _sampleDateScalar: Date @deprecated
+  _sampleTimeScalar: Time @deprecated
+  _authorizedOnlyQuery: Boolean @deprecated
+}

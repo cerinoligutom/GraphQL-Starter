@@ -7,24 +7,28 @@ import { env } from '@app/config/environment';
 import * as services from '@app/core/services';
 import { logger } from '@app/utils';
 import { apolloOptions } from '@app/config/apollo-options';
+import { defineSystemAbilitiesFor } from '@app/core/authorization';
+import { Await } from '@app/core/types/Await';
 
 export interface IGraphQLContext {
   services: typeof services;
   loaders: ReturnType<typeof initLoaders>;
   req: Request;
   res: Response;
+  ability: Await<ReturnType<typeof defineSystemAbilitiesFor>>;
 }
 
 export const initApolloGraphqlServer = (app: Express) => {
   const server = new ApolloServer({
     schema,
 
-    context: ({ req, res, connection }) => {
+    context: async ({ req, res, connection }) => {
       const graphqlContext: IGraphQLContext = {
         services,
         req,
         res,
         loaders: initLoaders(),
+        ability: await defineSystemAbilitiesFor(req.user?.id),
       };
 
       if (connection) {
@@ -61,7 +65,7 @@ export const initApolloGraphqlServer = (app: Express) => {
       },
     },
 
-    formatError: err => {
+    formatError: (err) => {
       // https://www.apollographql.com/docs/apollo-server/features/errors.html#Masking-and-logging-errors
 
       // Log error to server's console

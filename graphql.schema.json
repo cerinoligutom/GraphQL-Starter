@@ -13,11 +13,23 @@
       {
         "kind": "OBJECT",
         "name": "Query",
-        "description": "",
+        "description": null,
         "fields": [
           {
+            "name": "_authorizedOnlyQuery",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": true,
+            "deprecationReason": "No longer supported"
+          },
+          {
             "name": "_dummy",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -29,7 +41,7 @@
           },
           {
             "name": "_sampleDateScalar",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -41,7 +53,7 @@
           },
           {
             "name": "_sampleDateTimeScalar",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -53,7 +65,7 @@
           },
           {
             "name": "_sampleTimeScalar",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -65,11 +77,11 @@
           },
           {
             "name": "node",
-            "description": "",
+            "description": null,
             "args": [
               {
                 "name": "id",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -92,11 +104,11 @@
           },
           {
             "name": "users",
-            "description": "",
+            "description": null,
             "args": [
               {
                 "name": "first",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -106,7 +118,7 @@
               },
               {
                 "name": "before",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -116,7 +128,7 @@
               },
               {
                 "name": "after",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -126,7 +138,7 @@
               },
               {
                 "name": "sortBy",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "UserSort",
@@ -155,6 +167,16 @@
       },
       {
         "kind": "SCALAR",
+        "name": "Boolean",
+        "description": "The `Boolean` scalar type represents `true` or `false`.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
         "name": "String",
         "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
         "fields": null,
@@ -166,7 +188,7 @@
       {
         "kind": "SCALAR",
         "name": "Date",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -176,7 +198,7 @@
       {
         "kind": "SCALAR",
         "name": "DateTime",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -186,7 +208,7 @@
       {
         "kind": "SCALAR",
         "name": "Time",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -206,11 +228,11 @@
       {
         "kind": "INTERFACE",
         "name": "Node",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "id",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -249,12 +271,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "UserSort",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": [
           {
             "name": "field",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -268,7 +290,7 @@
           },
           {
             "name": "direction",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -288,20 +310,20 @@
       {
         "kind": "ENUM",
         "name": "UserSortField",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
             "name": "CREATED_AT",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "UPDATED_AT",
-            "description": "",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -311,20 +333,20 @@
       {
         "kind": "ENUM",
         "name": "SortDirection",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
             "name": "ASC",
-            "description": "Specifies an ascending order for a given `sortBy` argument.",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "DESC",
-            "description": "Specifies an descending order for a given `sortBy` argument.",
+            "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -334,11 +356,11 @@
       {
         "kind": "OBJECT",
         "name": "UserConnection",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "edges",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -358,7 +380,7 @@
           },
           {
             "name": "nodes",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -378,7 +400,7 @@
           },
           {
             "name": "pageInfo",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -394,7 +416,7 @@
           },
           {
             "name": "totalCount",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -417,11 +439,11 @@
       {
         "kind": "OBJECT",
         "name": "UserEdge",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "cursor",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -437,7 +459,7 @@
           },
           {
             "name": "node",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -456,11 +478,11 @@
       {
         "kind": "OBJECT",
         "name": "User",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "id",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -476,7 +498,7 @@
           },
           {
             "name": "firstName",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -488,7 +510,7 @@
           },
           {
             "name": "middleName",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -500,7 +522,7 @@
           },
           {
             "name": "lastName",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -512,7 +534,7 @@
           },
           {
             "name": "fullName",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -524,7 +546,7 @@
           },
           {
             "name": "username",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -536,7 +558,7 @@
           },
           {
             "name": "email",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -548,7 +570,7 @@
           },
           {
             "name": "createdAt",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -560,7 +582,7 @@
           },
           {
             "name": "updatedAt",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -585,11 +607,11 @@
       {
         "kind": "OBJECT",
         "name": "PageInfo",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "endCursor",
-            "description": "When paginating forwards, the cursor to continue.",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -601,7 +623,7 @@
           },
           {
             "name": "hasNextPage",
-            "description": "When paginating forwards, are there more items?",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -617,7 +639,7 @@
           },
           {
             "name": "hasPreviousPage",
-            "description": "When paginating backwards, are there more items?",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -633,7 +655,7 @@
           },
           {
             "name": "startCursor",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -650,23 +672,13 @@
         "possibleTypes": null
       },
       {
-        "kind": "SCALAR",
-        "name": "Boolean",
-        "description": "The `Boolean` scalar type represents `true` or `false`.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "Mutation",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "_dummy",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -678,11 +690,11 @@
           },
           {
             "name": "login",
-            "description": "",
+            "description": null,
             "args": [
               {
                 "name": "input",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -705,7 +717,7 @@
           },
           {
             "name": "logout",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -721,11 +733,11 @@
           },
           {
             "name": "multipleUpload",
-            "description": "",
+            "description": null,
             "args": [
               {
                 "name": "files",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -768,11 +780,11 @@
           },
           {
             "name": "register",
-            "description": "",
+            "description": null,
             "args": [
               {
                 "name": "input",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -795,11 +807,11 @@
           },
           {
             "name": "singleUpload",
-            "description": "",
+            "description": null,
             "args": [
               {
                 "name": "file",
-                "description": "",
+                "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -833,12 +845,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "LoginInput",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": [
           {
             "name": "usernameOrEmail",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -852,7 +864,7 @@
           },
           {
             "name": "password",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -872,11 +884,11 @@
       {
         "kind": "OBJECT",
         "name": "LoginPayload",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "user",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -895,7 +907,7 @@
       {
         "kind": "SCALAR",
         "name": "Upload",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -905,11 +917,11 @@
       {
         "kind": "OBJECT",
         "name": "File",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "filename",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -925,7 +937,7 @@
           },
           {
             "name": "mimetype",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -941,7 +953,7 @@
           },
           {
             "name": "encoding",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -964,12 +976,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "RegisterInput",
-        "description": "",
+        "description": null,
         "fields": null,
         "inputFields": [
           {
             "name": "firstName",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -983,7 +995,7 @@
           },
           {
             "name": "middleName",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -993,7 +1005,7 @@
           },
           {
             "name": "lastName",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1007,7 +1019,7 @@
           },
           {
             "name": "username",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1021,7 +1033,7 @@
           },
           {
             "name": "email",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1035,7 +1047,7 @@
           },
           {
             "name": "password",
-            "description": "",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1055,11 +1067,11 @@
       {
         "kind": "OBJECT",
         "name": "RegisterPayload",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "success",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1082,11 +1094,11 @@
       {
         "kind": "OBJECT",
         "name": "Subscription",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "_dummy",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -1105,11 +1117,11 @@
       {
         "kind": "OBJECT",
         "name": "DummySubscriptionPayload",
-        "description": "",
+        "description": null,
         "fields": [
           {
             "name": "dummy",
-            "description": "",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",

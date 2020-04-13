@@ -2,9 +2,9 @@ import * as Knex from 'knex';
 
 export const addTimeStamps = async (knex: Knex, tableName: string) => {
   return knex.schema
-    .alterTable(tableName, t => {
-      t.timestamp('createdAt').defaultTo(knex.raw(`date_trunc('millisecond', now())`));
-      t.timestamp('updatedAt').defaultTo(knex.raw(`date_trunc('millisecond', now())`));
+    .alterTable(tableName, (t) => {
+      t.timestamp('createdAt', { precision: 3 }).defaultTo(knex.fn.now());
+      t.timestamp('updatedAt', { precision: 3 }).defaultTo(knex.fn.now());
     })
     .then(() => {
       // We need to ensure the function exists, then add the table trigger
@@ -12,7 +12,7 @@ export const addTimeStamps = async (knex: Knex, tableName: string) => {
         CREATE OR REPLACE FUNCTION update_modified_column()
         RETURNS TRIGGER AS $$
         BEGIN
-          NEW."updatedAt" = date_trunc('millisecond', now());
+          NEW."updatedAt" = now();
           RETURN NEW;
         END;
         $$ language 'plpgsql';

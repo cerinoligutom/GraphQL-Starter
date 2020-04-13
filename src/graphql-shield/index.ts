@@ -11,24 +11,29 @@ import { loginSchema, registerSchema, cursorArgsSchema } from './yup-validation-
  * it'll keep on throwing errors unless we specify all `<x>Payload` types below.
  *
  */
-export const schemaPermissions = shield({
-  Query: {
-    '*': isAuthenticated,
-    _dummy: allow,
-    _sampleDateTimeScalar: allow,
-    _sampleDateScalar: allow,
-    _sampleTimeScalar: allow,
-    users: and(isAuthenticated, yupRule(cursorArgsSchema)),
+export const schemaPermissions = shield(
+  {
+    Query: {
+      '*': isAuthenticated,
+      _dummy: allow,
+      _sampleDateTimeScalar: allow,
+      _sampleDateScalar: allow,
+      _sampleTimeScalar: allow,
+      users: and(isAuthenticated, yupRule(cursorArgsSchema)),
+    },
+    Mutation: {
+      '*': isAuthenticated,
+      _dummy: allow,
+      login: yupRule(loginSchema),
+      logout: allow,
+      register: yupRule(registerSchema),
+    },
+    Subscription: {
+      '*': isAuthenticated,
+      _dummy: allow,
+    },
   },
-  Mutation: {
-    '*': isAuthenticated,
-    _dummy: allow,
-    login: yupRule(loginSchema),
-    logout: allow,
-    register: yupRule(registerSchema),
+  {
+    allowExternalErrors: true,
   },
-  Subscription: {
-    '*': isAuthenticated,
-    _dummy: allow,
-  },
-});
+);

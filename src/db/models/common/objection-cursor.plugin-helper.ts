@@ -8,8 +8,8 @@ export function mapToCursorPaginationResult<M>({ nodes, pageInfo }: IObjectionCu
     results: nodes,
 
     pageInfo: {
-      endCursor: nodes[0]?.cursor,
-      startCursor: nodes[nodes.length - 1]?.cursor,
+      endCursor: nodes[nodes.length - 1]?.cursor ?? null,
+      startCursor: nodes[0]?.cursor ?? null,
       hasNextPage: pageInfo.hasNext,
       hasPreviousPage: pageInfo.hasPrevious,
     },

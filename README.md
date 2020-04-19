@@ -11,6 +11,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [List of Packages](#list-of-packages)
 - [Sample Environment File](#sample-environment-file)
 - [Suggested Workflow](#suggested-workflow)
+- [Naming Convention](#naming-convention)
 - [Future Plans](#future-plans)
 - [Pro Tips](#pro-tips)
 - [Contributing](#contributing)
@@ -350,6 +351,35 @@ This is also true to scalars at `src/graphql/scalars`.
 Populate accordingly at `src/graphql-shield/index.ts`.
 
 If you want to validate your graphql inputs (e.g. input from a mutation), define your yup schema at `src/graphql-shield/yup-validation-schemas` then pass that as an argument of `yupRule` and use that on the corresponding resolver on the GraphQL Shield config.
+
+## Naming Convention
+
+### For files and folders:
+
+Generally, use `snake-case`.
+
+In some cases, we include the file `functionality` in its file name in the format:
+
+`file-name.<functionality>.<extension>`
+
+For example:
+
+- user`.service`.ts
+- sort-direction`.enum`.ts
+- User`.model`.ts
+- async-handler`.util`.ts
+
+TypeScript `interface` and `type` file names should match their definition name.
+
+For example:
+
+| Interface/Type name       | File name                    |
+| ------------------------- | ---------------------------- |
+| `ICursorPaginationResult` | `ICursorPaginationResult`.ts |
+| `ICursorResult`           | `ICursorResult`.ts           |
+| `IPageInfo`               | `IPageInfo`.ts               |
+| `Await`                   | `Await`.ts                   |
+| `ExcludeMaybe`            | `ExcludeMaybe`.ts            |
 
 ## Future Plans
 

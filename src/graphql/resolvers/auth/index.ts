@@ -1,6 +1,6 @@
 import { loginResolver } from './login.mutation';
 import { registerResolver } from './register.mutation';
-import { logoutResolver } from './logout.resolver.mutation';
+import { logoutResolver } from './logout.mutation';
 
 export default {
   Mutation: {

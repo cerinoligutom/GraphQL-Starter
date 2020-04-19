@@ -1,5 +1,5 @@
 import { PubSub, PubSubEngine } from 'graphql-subscriptions';
-import { publishDummyEvent } from './publishDummyEvent.pubsub';
+import { publishDummyEvent } from './publish-dummy-event.pubsub';
 
 // NOTE:
 // Note that the default PubSub implementation is intended for demo purposes.

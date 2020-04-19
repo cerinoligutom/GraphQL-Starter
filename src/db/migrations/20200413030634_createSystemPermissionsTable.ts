@@ -1,5 +1,5 @@
 import * as Knex from 'knex';
-import { addTimeStamps } from '../helpers/addTimeStamps';
+import { addTimeStamps } from '../helpers/add-timestamps';
 
 const TABLE_NAME = 'system_permissions';
 

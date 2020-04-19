@@ -5,10 +5,10 @@ import { schema } from './schema';
 import { initLoaders } from '../graphql-dataloaders';
 import { env } from '@app/config/environment';
 import * as services from '@app/core/services';
-import { logger } from '@app/utils';
 import { apolloOptions } from '@app/config/apollo-options';
 import { defineSystemAbilitiesFor } from '@app/core/authorization';
 import { Await } from '@app/core/types/Await';
+import { handleGraphQLError } from '@app/error-handler/error-handler';
 
 export interface IGraphQLContext {
   services: typeof services;
@@ -65,25 +65,8 @@ export const initApolloGraphqlServer = (app: Express) => {
       },
     },
 
-    formatError: (err) => {
-      // https://www.apollographql.com/docs/apollo-server/features/errors.html#Masking-and-logging-errors
-
-      // Log error to server's console
-      logger.error(`${err}`);
-
-      // Do not send the exception object to the client
-      // for 500 errors when in production
-      if (env.isProduction) {
-        if (err.extensions!.code === 'INTERNAL_SERVER_ERROR') {
-          err.message = 'Oops! Something went wrong.';
-          if (err.extensions && err.extensions.exception) {
-            err.extensions.exception.stacktrace = undefined;
-          }
-        }
-      }
-
-      return err;
-    },
+    // Centralized error handling
+    formatError: (graphqlError) => handleGraphQLError(graphqlError),
 
     introspection: !env.isProduction,
 

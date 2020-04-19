@@ -14,6 +14,15 @@ export const yupRule = (schema: yup.Schema<any>) =>
 
       return true;
     } catch (err) {
-      return new UserInputError('Invalid form', err);
+      /**
+       * Note:
+       * We need to catch here and simply return the error to be forwarded
+       * later on our error handler (see formatError handler in ApolloServer initialization).
+       *
+       * If we don't catch it and let GraphQL Shield catch the error, it would
+       * treat it as an INTERNAL_SERVER_ERROR with a message "Not authorised!"
+       * which is not what we want.
+       */
+      return err;
     }
   });

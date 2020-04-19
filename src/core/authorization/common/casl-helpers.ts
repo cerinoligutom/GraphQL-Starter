@@ -1,8 +1,17 @@
 // tslint:disable:no-any ter-prefer-arrow-callback
 
-import { Ability, ClaimRawRule, LegacyClaimRawRule, SubjectRawRule, LegacySubjectRawRule, SubjectType } from '@casl/ability';
-import { PartialModelObject, Model } from 'objection';
+import {
+  Ability,
+  ClaimRawRule,
+  LegacyClaimRawRule,
+  SubjectRawRule,
+  LegacySubjectRawRule,
+  SubjectType,
+  ForbiddenError,
+} from '@casl/ability';
 import * as _ from 'lodash';
+
+ForbiddenError.setDefaultMessage('Unauthorized!');
 
 export type Actions = 'manage' | 'create' | 'read' | 'update' | 'delete';
 

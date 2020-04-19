@@ -35,6 +35,11 @@ export const schemaPermissions = shield(
     },
   },
   {
+    /**
+     * Enable this property so your custom errors get exposed.
+     * This is `false` by default and GraphQL Shield just sets
+     * the `message` into "Not authorised!" for errors thrown.
+     */
     allowExternalErrors: true,
   },
 );

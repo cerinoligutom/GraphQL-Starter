@@ -1,6 +1,8 @@
 import { User } from '@app/db/models';
 import { bcryptUtil } from '@app/utils';
 import { GQL_RegisterInput } from 'graphql-resolvers';
+import { EmailAlreadyTakenError } from '@app/error-handler/errors/EmailAlreadyTakenError';
+import { UsernameAlreadyTakenError } from '@app/error-handler/errors/UsernameAlreadyTakenError';
 
 async function login(usernameOrEmail: string, password: string): Promise<User> {
   const user = await User.query().where('username', usernameOrEmail).orWhere('email', usernameOrEmail).first();
@@ -24,12 +26,12 @@ async function register(input: GQL_RegisterInput): Promise<User> {
 
   const existingUsername = await User.query().where('username', username).first();
   if (existingUsername) {
-    throw new Error('Username is already taken.');
+    throw new UsernameAlreadyTakenError();
   }
 
   const existingEmail = await User.query().where('email', email).first();
   if (existingEmail) {
-    throw new Error('Email is already taken.');
+    throw new EmailAlreadyTakenError();
   }
 
   const form: User = new User();

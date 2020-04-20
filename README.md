@@ -245,8 +245,8 @@ You can switch between environments by setting `CURRENT_ENVIRONMENT`.
 ```
 CURRENT_ENVIRONMENT=LOCAL
 
-# Apollo Engine
-ENGINE_API_KEY=
+# Apollo Graph Manager
+APOLLO_KEY=
 
 # Express Session
 SESSION_SECRET=

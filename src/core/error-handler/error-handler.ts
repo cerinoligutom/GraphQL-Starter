@@ -59,6 +59,9 @@ export function handleError(error: Error): Error {
       // IMPORTANT:
       // If you have metrics stuffs, you might want to do the
       // error tracker stuffs here.
+      // The Apollo Server automatically sends errors to your
+      // Apollo Graph Manager if you have configured one.
+      // Check `rewriteError()` in the Apollo Server config.
 
       error.httpStatusCode = error?.httpStatusCode ?? 500;
       return error;

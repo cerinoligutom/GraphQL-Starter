@@ -1,5 +1,5 @@
 import { Express, Request, Response } from 'express';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import { schema } from './schema';
 import { initLoaders } from '../graphql-dataloaders';
@@ -80,8 +80,23 @@ export const initApolloGraphqlServer = (app: Express) => {
     },
 
     engine: {
-      apiKey: apolloOptions.engineApiKey,
+      apiKey: apolloOptions.apolloKey,
       schemaTag: env.environment,
+      /**
+       * Note:
+       * You can control what gets sent over to Apollo Graph Manager thru this function.
+       *
+       * Read more: https://www.apollographql.com/docs/apollo-server/data/errors/#for-apollo-graph-manager-reporting
+       */
+      rewriteError: (err) => {
+        // Return `null` to avoid reporting `AuthenticationError`s
+        if (err instanceof AuthenticationError) {
+          return null;
+        }
+
+        // All other errors will be reported.
+        return err;
+      },
     },
   });
 

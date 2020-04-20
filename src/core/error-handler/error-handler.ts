@@ -65,13 +65,30 @@ export function handleError(error: Error): Error {
   }
 }
 
+function toGraphQLError(handledError: Error, gqlError: GraphQLError) {
+  if (handledError instanceof GraphQLError) {
+    return handledError;
+  }
+
+  // Format the error to be a GraphQLError
+  return new GraphQLError(
+    handledError.message,
+    gqlError.nodes,
+    gqlError.source,
+    gqlError.positions,
+    gqlError.path,
+    handledError,
+    gqlError.extensions,
+  );
+}
+
 export function handleGraphQLError(error: GraphQLError) {
   /**
    * Note:
    * "originalError" property only gets populated from errors thrown in our resolvers.
    */
   if (error.originalError instanceof Error) {
-    return handleError(error.originalError!);
+    return toGraphQLError(handleError(error.originalError!), error);
   }
 
   /**

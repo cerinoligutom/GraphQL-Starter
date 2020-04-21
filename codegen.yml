@@ -13,6 +13,9 @@ generates:
       enumValues: '../src/graphql/enums/index'
       scalars:
         Upload: ../src/graphql/scalars/Upload.scalar#FileUpload
+        DateTime: Date
+        Time: Date
+        Date: Date
       namingConvention:
         enumValues: constant-case#constantCase
     plugins:

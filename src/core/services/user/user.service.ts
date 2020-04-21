@@ -1,7 +1,7 @@
 import { User } from '@app/db/models';
-import { UserSortField } from '@app/graphql/enums';
 import { OrderByDirection } from 'objection';
 import { ICursorPaginationResult } from '@app/core/interfaces';
+import { UserSortField } from '@app/core/enums';
 
 async function getById(id: string): Promise<User> {
   return User.query().findById(id);

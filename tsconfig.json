@@ -54,7 +54,6 @@
       "@app/core/types/*": ["./src/core/types/*"],
       "@app/core/enums": ["./src/core/enums"],
       "@app/graphql": ["./src/graphql"],
-      "@app/graphql/enums": ["./src/graphql/enums"],
       "@app/graphql/pubsub": ["./src/graphql-pubsub"],
       "@app/yup-schemas": ["./src/graphql-shield/yup-validation-schemas"],
       "@app/error-handler/*": ["./src/core/error-handler/*"]

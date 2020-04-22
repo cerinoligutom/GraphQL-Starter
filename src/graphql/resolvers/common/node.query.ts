@@ -1,7 +1,6 @@
-import { GQL_QueryResolvers, GQL_ResolversParentTypes, Maybe, GQL_User } from 'graphql-resolvers';
-import { ExcludeMaybe } from '@app/core/types/ExcludeMaybe';
-import { FieldNode, InlineFragmentNode } from 'graphql';
+import { GQL_QueryResolvers, Maybe, GQL_User } from 'graphql-resolvers';
 import { User as DB_User } from '@app/db/models';
+import { getNodeType } from '@app/utils';
 
 type User = GQL_User & DB_User;
 
@@ -23,22 +22,3 @@ export const nodeResolver: GQL_QueryResolvers['node'] = async (parent, { id }, {
       return null;
   }
 };
-
-type ValidNodeType = ExcludeMaybe<GQL_ResolversParentTypes['Node']['__typename']>;
-function getNodeType(fieldNode: Maybe<FieldNode>): ValidNodeType | null {
-  if (!fieldNode?.selectionSet) {
-    return null;
-  }
-
-  const selection = fieldNode.selectionSet.selections.find((x) => x.kind === 'InlineFragment');
-  if (!selection) {
-    return null;
-  }
-
-  const inlineFragmentNode = selection as InlineFragmentNode;
-  if (!inlineFragmentNode.typeCondition) {
-    return null;
-  }
-
-  return inlineFragmentNode.typeCondition.name.value as ValidNodeType;
-}

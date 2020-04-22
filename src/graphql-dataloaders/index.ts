@@ -1,8 +1,9 @@
 import { userByIdLoader } from './user-by-id.dataloader';
+import * as coreServices from '@app/core/services';
 
-export const initLoaders = () => {
+export const initLoaders = (services: typeof coreServices) => {
   const loaders = {
-    userById: userByIdLoader(),
+    userById: userByIdLoader(services),
   };
 
   return loaders;

@@ -27,7 +27,7 @@ export const initApolloGraphqlServer = (app: Express) => {
         services,
         req,
         res,
-        loaders: initLoaders(),
+        loaders: initLoaders(services),
         ability: await defineSystemAbilitiesFor(req.user?.id),
       };
 

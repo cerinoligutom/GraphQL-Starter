@@ -2,6 +2,7 @@ import { User } from '@app/db/models';
 import { OrderByDirection } from 'objection';
 import { ICursorPaginationResult } from '@app/core/interfaces';
 import { UserSortField } from '@app/core/enums';
+import { Maybe } from 'graphql-resolvers';
 
 async function getById(id: string): Promise<User> {
   return User.query().findById(id);
@@ -12,8 +13,8 @@ async function getByIds(ids: string[]): Promise<User[]> {
 }
 
 interface IUserCursorPaginatedArgs {
-  before?: string | null;
-  after?: string | null;
+  before?: Maybe<string>;
+  after?: Maybe<string>;
   first: number;
   sortDirection: OrderByDirection;
   sortField: UserSortField;

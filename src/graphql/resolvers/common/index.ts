@@ -1,8 +1,10 @@
-import { NodeInterface } from './node.interface';
 import { nodeResolver } from './node.query';
+import { nodeInterfaceResolveType } from './node.interface';
 
 export default {
-  Node: NodeInterface,
+  Node: {
+    __resolveType: nodeInterfaceResolveType,
+  },
   Query: {
     node: nodeResolver,
   },

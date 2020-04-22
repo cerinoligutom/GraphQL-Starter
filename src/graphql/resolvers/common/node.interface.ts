@@ -1,6 +1,5 @@
-export const NodeInterface = {
-  // tslint:disable-next-line: no-any function-name
-  __resolveType(obj: any, ctx: any, info: any): string {
-    return obj?.__typename ?? 'Node';
-  },
+import { GQL_NodeResolvers } from 'graphql-resolvers';
+
+export const nodeInterfaceResolveType: GQL_NodeResolvers['__resolveType'] = (parent) => {
+  return parent?.__typename ?? null;
 };

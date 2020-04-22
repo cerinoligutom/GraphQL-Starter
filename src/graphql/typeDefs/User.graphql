@@ -1,5 +1,5 @@
 type User implements Node {
-  id: ID!
+  id: GUID!
   firstName: String
   middleName: String
   lastName: String

@@ -16,6 +16,7 @@ generates:
         DateTime: Date
         Time: Date
         Date: Date
+        GUID: string
       namingConvention:
         enumValues: constant-case#constantCase
     plugins:

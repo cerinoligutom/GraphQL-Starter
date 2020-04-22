@@ -1,9 +1,9 @@
 extend type Query {
-  node(id: ID!): Node
+  node(id: GUID!): Node
 }
 
 interface Node {
-  id: ID!
+  id: GUID!
 }
 
 type PageInfo {

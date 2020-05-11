@@ -1,53 +1,38 @@
-import { AbilityBuilder, RawRule, InferSubjects } from '@casl/ability';
+// tslint:disable: no-any
+
+import { AbilityBuilder, InferSubjects, Ability } from '@casl/ability';
 import { User } from '@app/db/models';
-import { SystemRole } from '@app/core/enums';
-import { createAbility, parseConditions } from './common/casl-helpers';
+import { createAbility } from './common/casl-helpers';
+import { rolePermissions } from './role-permissions';
 
-// Valid subject for this ability
-type Subject = InferSubjects<typeof User> | 'all';
+// Modify these as per your needs
+type Action = 'manage' | 'create' | 'read' | 'update' | 'delete';
+type Subject = typeof User;
 
-// Note:
-// Variables parameter left intentionally for example purposes.
-// Replace with proper variables if you start needing it.
-export async function defineSystemAbilitiesFor(userId?: string, variables = {}) {
-  const { rules, can } = new AbilityBuilder();
+// Do not touch
+export type SystemAbilityAction = Action;
+export type SystemAbilitySubject = InferSubjects<Subject, true> | 'all';
+export type SystemAbility = Ability<[SystemAbilityAction, SystemAbilitySubject]>;
 
-  // Note:
-  // Define default system abilities for default users here
-  can('read', 'all');
+export async function defineSystemAbilitiesFor(userId?: string) {
+  const abilityBuilder = new AbilityBuilder<SystemAbility>();
+  const { rules } = abilityBuilder;
 
   if (!userId) {
-    return createAbility<Subject>(rules);
+    return createAbility<SystemAbilityAction, SystemAbilitySubject>(rules);
   }
 
-  const user = await User.query().findById(userId).withGraphFetched('roles.permissions');
+  const user = await User.query().findById(userId).withGraphFetched('roles');
   if (!user) {
     throw new Error(`Failed to create abilities. User ID "${userId}" does not exist.`);
   }
 
-  const isSuperadmin = user?.roles?.some((x) => x.name === SystemRole.SUPER_ADMINISTRATOR) ?? false;
-  if (isSuperadmin) {
-    // Don't question the superadmin
-    can('manage', 'all');
-    return createAbility<Subject>(rules);
+  // Set default permissions
+  rolePermissions.default({ userId }, abilityBuilder);
+
+  for (const role of user?.roles ?? []) {
+    rolePermissions[role.name as keyof typeof rolePermissions]({ userId }, abilityBuilder);
   }
 
-  const permissions = (user?.roles?.map((x) => x.permissions ?? []) ?? []).flat();
-  const rawRules: RawRule[] = permissions.map<RawRule>((permission) => {
-    const { subject, action } = permission;
-
-    // tslint:disable-next-line: no-any
-    let conditions: Record<any, any> | undefined;
-    if (permission.conditions) {
-      conditions = parseConditions(permission.conditions, variables);
-    }
-
-    return {
-      subject,
-      conditions,
-      actions: action,
-    };
-  });
-
-  return createAbility<Subject>([...rawRules, ...rules]);
+  return createAbility<SystemAbilityAction, SystemAbilitySubject>(rules);
 }

@@ -2,7 +2,6 @@ import { BaseModel } from './common/BaseModel';
 import * as yup from 'yup';
 import { RelationMappings, Model } from 'objection';
 import { User } from './User.model';
-import { SystemPermission } from './SystemPermission.model';
 
 export class SystemRole extends BaseModel {
   static tableName = 'system_roles';
@@ -20,19 +19,6 @@ export class SystemRole extends BaseModel {
         to: 'users.id',
       },
     },
-
-    permissions: {
-      relation: Model.ManyToManyRelation,
-      modelClass: `${__dirname}/SystemPermission.model`,
-      join: {
-        from: 'system_roles.id',
-        through: {
-          from: 'system_role_permissions.roleId',
-          to: 'system_role_permissions.permissionId',
-        },
-        to: 'system_permissions.id',
-      },
-    },
   };
 
   static yupSchema = {
@@ -48,5 +34,4 @@ export class SystemRole extends BaseModel {
   updatedAt!: Date;
 
   users?: User[];
-  permissions?: SystemPermission[];
 }

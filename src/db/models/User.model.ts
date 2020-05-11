@@ -6,6 +6,7 @@ import { Maybe } from 'graphql-resolvers';
 
 export class User extends BaseModel {
   static tableName = 'users';
+  static readonly modelName = 'User';
 
   static relationMappings: RelationMappings = {
     roles: {

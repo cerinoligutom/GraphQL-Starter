@@ -10,6 +10,7 @@ type DefinePermission = (variables: IDefinePermissionVariables, builder: Ability
 
 export const rolePermissions: Record<SystemRole | 'default', DefinePermission> = {
   default: ({ userId }, { can }) => {
+    can('read', 'User');
     can('update', 'User', {
       id: userId,
     });

@@ -1,5 +1,5 @@
 import { shield, allow, deny, and } from 'graphql-shield';
-import { isAuthenticated, yupRule } from './rules';
+import { isAuthenticated, yupRule, can } from './rules';
 import { loginSchema, registerSchema, cursorArgsSchema } from './yup-validation-schemas';
 
 /**
@@ -20,7 +20,7 @@ export const schemaPermissions = shield(
       _sampleDateScalar: allow,
       _sampleTimeScalar: allow,
       _authorizedOnlyQuery: allow,
-      users: and(isAuthenticated, yupRule(cursorArgsSchema)),
+      users: and(isAuthenticated, yupRule(cursorArgsSchema), can('read', 'User')),
     },
     Mutation: {
       '*': isAuthenticated,

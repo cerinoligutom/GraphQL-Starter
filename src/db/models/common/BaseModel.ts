@@ -4,6 +4,9 @@ import knex from '../../knex';
 
 const cursorMixin = require('objection-cursor');
 import { mapToCursorPaginationResult } from './objection-cursor.plugin-helper';
+import { Ability } from '@casl/ability';
+import { SystemAbilityAction, SystemAbilitySubject } from '@app/core/authorization';
+import { screenPermittedFields } from '@app/utils';
 
 // Attach knex to objection model
 Objection.Model.knex(knex);
@@ -24,6 +27,12 @@ const EnhancedModel = compose([
   }),
 ])(Objection.Model);
 
+interface ISetOptions {
+  ability: Ability;
+  action: SystemAbilityAction;
+}
+type ModelName = Exclude<Extract<SystemAbilitySubject, string>, 'all'>;
+
 export class BaseModel extends EnhancedModel {
   static get QueryBuilder() {
     return class<M extends Objection.Model, R = M[]> extends EnhancedModel.QueryBuilder<M, R> {
@@ -35,12 +44,33 @@ export class BaseModel extends EnhancedModel {
   }
 
   /**
+   * For CASL Ability Subject
+   */
+  static readonly modelName: ModelName;
+
+  private get _modelName(): ModelName {
+    const model = this.constructor as typeof BaseModel;
+    return model.modelName;
+  }
+
+  /**
    * Set this object's property values. Internally calls `Objection.Model.$set()` method but with
    * auto completion based on this model's properties.
    *
    * Related: https://github.com/Vincit/objection.js/issues/1716
    */
-  set(values: PartialModelObject<this>): this {
-    return this.$set(values);
+  set(values: PartialModelObject<this>, options?: ISetOptions): this {
+    if (!options) {
+      return this.$set(values);
+    }
+
+    const { ability, action } = options;
+    const screenedValues = screenPermittedFields(values, {
+      ability,
+      action,
+      modelName: this._modelName,
+    });
+
+    return this.$set(screenedValues);
   }
 }

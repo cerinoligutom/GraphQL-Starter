@@ -16,6 +16,6 @@ export const rolePermissions: Record<SystemRole | 'default', DefinePermission> =
   },
 
   [SystemRole.SUPER_ADMINISTRATOR]: ({ userId }, { can }) => {
-    can('manage', 'all');
+    can('manage', 'all', ['*']);
   },
 };

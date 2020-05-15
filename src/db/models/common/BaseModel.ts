@@ -68,7 +68,7 @@ export class BaseModel extends EnhancedModel {
     const screenedValues = screenPermittedFields(values, {
       ability,
       action,
-      modelName: this._modelName,
+      subject: this._modelName,
     });
 
     return this.$set(screenedValues);

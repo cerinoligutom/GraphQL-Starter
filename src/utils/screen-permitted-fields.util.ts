@@ -20,5 +20,5 @@ export const screenPermittedFields = <T extends object>(data: T, { ability, subj
   if (fields.length === 0 || fields.includes('*')) {
     return data;
   }
-  return pick(data, fields);
+  return pick(data, [...fields, 'id']);
 };

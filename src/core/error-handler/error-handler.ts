@@ -1,7 +1,7 @@
 import { GraphQLError } from 'graphql';
 import { logger } from '@app/utils';
 import { ValidationError as YupValidationError } from 'yup';
-import { UserInputError, AuthenticationError, ForbiddenError as GraphQLForbiddenError } from 'apollo-server-express';
+import { UserInputError, AuthenticationError, ForbiddenError as GraphQLForbiddenError, ApolloError } from 'apollo-server-express';
 import { ForbiddenError as CaslForbiddenError } from '@casl/ability';
 
 declare global {
@@ -26,15 +26,25 @@ export function handleError(error: Error): Error {
      * Convert Yup ValidationError to Apollo GraphQL UserInputError
      */
     case error instanceof YupValidationError:
-      error.httpStatusCode = 422;
-      return new UserInputError('Invalid form', error);
+      const { inner } = error as YupValidationError;
+      const validationErrors = inner.map((x) => ({
+        path: x.path,
+        message: x.message,
+      }));
+
+      const userInputError = new UserInputError('Invalid form', {
+        formErrors: validationErrors,
+      });
+      userInputError.httpStatusCode = 422;
+      return userInputError;
 
     /**
      * Convert CASL ForbiddenError to Apollo GraphQL ForbiddenError
      */
     case error instanceof CaslForbiddenError:
-      error.httpStatusCode = 403;
-      return new GraphQLForbiddenError(error.message);
+      const forbiddenError = new GraphQLForbiddenError(error.message);
+      forbiddenError.httpStatusCode = 403;
+      return forbiddenError;
 
     /**
      * GraphQL Errors
@@ -69,7 +79,7 @@ export function handleError(error: Error): Error {
 }
 
 function toGraphQLError(handledError: Error, gqlError: GraphQLError) {
-  if (handledError instanceof GraphQLError) {
+  if (handledError instanceof ApolloError || handledError instanceof GraphQLError) {
     return handledError;
   }
 

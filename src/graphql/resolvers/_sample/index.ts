@@ -1,4 +1,4 @@
-import { GQL_QueryResolvers } from 'graphql-resolvers';
+import { GQL_QueryResolvers, GQL_Resolvers } from 'graphql-resolvers';
 import { ForbiddenError } from '@casl/ability';
 
 const _authorizedOnlyQuery: GQL_QueryResolvers['_authorizedOnlyQuery'] = (_, __, ctx) => {
@@ -7,7 +7,7 @@ const _authorizedOnlyQuery: GQL_QueryResolvers['_authorizedOnlyQuery'] = (_, __,
   return true;
 };
 
-export default {
+const resolvers: GQL_Resolvers = {
   Query: {
     _authorizedOnlyQuery,
     _sampleDateTimeScalar: () => new Date(),
@@ -15,3 +15,4 @@ export default {
     _sampleTimeScalar: () => new Date(),
   },
 };
+export default resolvers;

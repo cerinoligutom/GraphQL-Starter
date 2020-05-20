@@ -1,7 +1,8 @@
+import { GQL_Resolvers } from 'graphql-resolvers';
 import { nodeResolver } from './node.query';
 import { nodeInterfaceResolveType } from './node.interface';
 
-export default {
+const resolvers: GQL_Resolvers = {
   Node: {
     __resolveType: nodeInterfaceResolveType,
   },
@@ -9,3 +10,4 @@ export default {
     node: nodeResolver,
   },
 };
+export default resolvers;

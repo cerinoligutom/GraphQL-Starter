@@ -1,7 +1,8 @@
+import { GQL_Resolvers } from 'graphql-resolvers';
 import { usersResolver } from './users.query';
 import { fullNameResolver } from './fullName.query';
 
-export default {
+const resolvers: GQL_Resolvers = {
   Query: {
     users: usersResolver,
   },
@@ -9,3 +10,4 @@ export default {
     fullName: fullNameResolver,
   },
 };
+export default resolvers;

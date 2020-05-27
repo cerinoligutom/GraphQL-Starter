@@ -2,8 +2,8 @@ import session from 'express-session';
 import { env } from '@app/config/environment';
 import { sessionOptions } from '@app/config/session-options';
 import { redisClient } from '../redis/client';
-import { RedisStore } from 'connect-redis';
-const RedisStore: RedisStore = require('connect-redis')(session);
+import { RedisStore as IRedisStore } from 'connect-redis';
+const RedisStore: IRedisStore = require('connect-redis')(session);
 
 export const sessionMiddleware = () => {
   return session({

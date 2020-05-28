@@ -4,10 +4,10 @@
   "scripts": {
     "start": "concurrently -n \"api,codegen\" -c \"bgCyan.bold,bgMagenta.bold\" \"npm run nodemon\" \"npm run generate:gql-types\" ",
     "production": "node ./src/app.js",
-    "build": "concurrently -m 1 npm:build:clean npm:build:babel npm:build:copy-files",
+    "build": "concurrently -m 1 npm:build:clean npm:build:typescript npm:build:copy-files",
     "build:clean": "rimraf build",
-    "build:babel": "babel . --out-dir build --extensions \".ts\" --config-file ./.babelrc",
-    "build:copy-files": "copyfiles ./src/**/*.graphql ./package*.json ./tsconfig.json ./LICENSE build",
+    "build:typescript": "tsc",
+    "build:copy-files": "copyfiles src/**/!(*.ts) package*.json tsconfig.json LICENSE build",
     "ts-node": "ts-node",
     "nodemon": "nodemon -L",
     "lint": "tslint -p tsconfig.json",
@@ -70,11 +70,6 @@
     "yup": "^0.29.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.0",
-    "@babel/core": "^7.10.0",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-env": "^7.10.0",
-    "@babel/preset-typescript": "^7.9.0",
     "@graphql-codegen/cli": "1.15.0",
     "@graphql-codegen/typescript": "1.15.0",
     "@graphql-codegen/typescript-resolvers": "1.15.0",
@@ -95,7 +90,6 @@
     "@types/morgan": "^1.9.0",
     "@types/node": "^14.0.5",
     "@types/passport": "^1.0.3",
-    "babel-preset-minify": "^0.5.1",
     "concurrently": "^5.2.0",
     "copyfiles": "^2.2.0",
     "husky": "^4.2.5",

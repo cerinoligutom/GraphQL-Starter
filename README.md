@@ -150,7 +150,6 @@ Credentials:
 | **src/utils**/logger.util.ts                                                                    | Logging utility. Make sure to use the `logger` function if you want logs go to the `logs/*.log`.                                                                                                                                   |
 | **src/app.ts**                                                                                  | Main application file.                                                                                                                                                                                                             |
 | **types**/graphql-resolvers.d.ts                                                                | Auto generated types and interfaces by GraphQL Code Generator based on GraphQL Schema files defined at `src/graphql/typeDefs`.                                                                                                     |
-| .babelrc                                                                                        | Babel compiler config                                                                                                                                                                                                              |
 | .dockerignore                                                                                   | Folder and files ignored by docker usage.                                                                                                                                                                                          |
 | .gitignore                                                                                      | Folder and files ignored by git.                                                                                                                                                                                                   |
 | .huskyrc                                                                                        | Husky config.                                                                                                                                                                                                                      |
@@ -214,12 +213,10 @@ Credentials:
 
 | Package                               | Description                                                                                                       |
 | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| @babel/\*                             | Compile our TS files to JS + more.                                                                                |
 | @graphql-codegen/cli                  | GraphQL Code Generator CLI.                                                                                       |
 | @graphql-codegen/introspection        | GraphQL Code Generator introspection plugin.                                                                      |
 | @graphql-codegen/typescript           | GraphQL Code Generator typescript plugin.                                                                         |
 | @graphql-codegen/typescript-resolvers | GraphQL Code typescript-resolvers plugin.                                                                         |
-| babel-preset-minify                   | Minify Plugin for Babel.                                                                                          |
 | concurrently                          | For running multiple commands concurrently.                                                                       |
 | copyfiles                             | For copying files. Currently used in the build toolchain. Particularly, to copy files needed for the final build. |
 | husky                                 | Git hooks.                                                                                                        |

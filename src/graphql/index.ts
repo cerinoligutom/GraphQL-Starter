@@ -1,7 +1,7 @@
 import { Express, Request, Response } from 'express';
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
-import { schema } from './schema';
+import { initializeSchema } from './schema';
 import { initLoaders } from '../graphql-dataloaders';
 import { env } from '@app/config/environment';
 import * as services from '@app/core/services';
@@ -18,9 +18,9 @@ export interface IGraphQLContext {
   ability: Await<ReturnType<typeof defineSystemAbilitiesFor>>;
 }
 
-export const initApolloGraphqlServer = (app: Express) => {
+export const initApolloGraphqlServer = async (app: Express) => {
   const server = new ApolloServer({
-    schema,
+    schema: await initializeSchema(),
 
     context: async ({ req, res, connection }) => {
       const graphqlContext: IGraphQLContext = {

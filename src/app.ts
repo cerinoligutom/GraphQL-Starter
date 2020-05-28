@@ -40,7 +40,7 @@ const app = express();
   initRoutes(app);
 
   app.use(errorMiddleware());
-  const apolloServer = initApolloGraphqlServer(app);
+  const apolloServer = await initApolloGraphqlServer(app);
 
   // For the subscription server
   const httpServer = createServer(app);

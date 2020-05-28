@@ -12,6 +12,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Sample Environment File](#sample-environment-file)
 - [Suggested Workflow](#suggested-workflow)
 - [Naming Convention](#naming-convention)
+- [Deployment](#Deployment)
 - [Future Plans](#future-plans)
 - [Pro Tips](#pro-tips)
 - [Contributing](#contributing)
@@ -192,39 +193,42 @@ Credentials:
 | graphql-iso-date       | GraphQL ISO Date scalars.                                             |
 | graphql-middleware     | GraphQL Middlewares made easy.                                        |
 | graphql-shield         | GraphQL Server permissions as another layer of abstraction.           |
+| graphql-tools          | A set of utilities for faster development of GraphQL Schemas.         |
 | helmet                 | Security middleware.                                                  |
 | ioredis                | NodeJS Redis Client.                                                  |
 | knex                   | SQL Query Builder.                                                    |
 | lodash                 | A utility library for working with arrays, numbers, objects, strings. |
-| merge-graphql-schemas  | GraphQL Schema utilities.                                             |
 | morgan                 | ExpressJS HTTP request logger middleware.                             |
 | objection              | ObjectionJS SQL ORM.                                                  |
 | objection-cursor       | ObjectionJS mixin for cursor-based pagination.                        |
 | passport               | Simple, unobtrusive authentication for NodeJS.                        |
 | pg                     | Node Postgres client.                                                 |
-| ts-node                | TypeScript Node environment.                                          |
-| typescript             | TypeScript compiler.                                                  |
+| tsconfig-paths         | TypeScript path resolver.                                             |
 | winston                | Logging library.                                                      |
 | yup                    | Schema validator.                                                     |
 
 **Dev Dependencies**
 
-| Package                               | Description                                              |
-| ------------------------------------- | -------------------------------------------------------- |
-| @graphql-codegen/cli                  | GraphQL Code Generator CLI.                              |
-| @graphql-codegen/introspection        | GraphQL Code Generator introspection plugin.             |
-| @graphql-codegen/typescript           | GraphQL Code Generator typescript plugin.                |
-| @graphql-codegen/typescript-resolvers | GraphQL Code typescript-resolvers plugin.                |
-| concurrently                          | For running multiple commands concurrently.              |
-| husky                                 | Git hooks.                                               |
-| lint-staged                           | Run linters against staged git files.                    |
-| nodemon                               | File watcher.                                            |
-| prettier                              | File formatter.                                          |
-| rimraf                                | For deleting folders and/or files.                       |
-| tsconfig-paths                        | TypeScript path resolver.                                |
-| tslint                                | TypeScript linter.                                       |
-| tslint-config-airbnb                  | Airbnb TypeScript style guide configuration for TSLint.  |
-| tslint-config-prettier                | Integration for prettier to use rules defined in TSLint. |
+| Package                               | Description                                                                                                       |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| @babel/\*                             | Compile our TS files to JS + more.                                                                                |
+| @graphql-codegen/cli                  | GraphQL Code Generator CLI.                                                                                       |
+| @graphql-codegen/introspection        | GraphQL Code Generator introspection plugin.                                                                      |
+| @graphql-codegen/typescript           | GraphQL Code Generator typescript plugin.                                                                         |
+| @graphql-codegen/typescript-resolvers | GraphQL Code typescript-resolvers plugin.                                                                         |
+| babel-preset-minify                   | Minify Plugin for Babel.                                                                                          |
+| concurrently                          | For running multiple commands concurrently.                                                                       |
+| copyfiles                             | For copying files. Currently used in the build toolchain. Particularly, to copy files needed for the final build. |
+| husky                                 | Git hooks.                                                                                                        |
+| lint-staged                           | Run linters against staged git files.                                                                             |
+| nodemon                               | File watcher.                                                                                                     |
+| prettier                              | File formatter.                                                                                                   |
+| rimraf                                | For deleting folders and/or files.                                                                                |
+| ts-node                               | TypeScript Node environment.                                                                                      |
+| tslint                                | TypeScript linter.                                                                                                |
+| tslint-config-airbnb                  | Airbnb TypeScript style guide configuration for TSLint.                                                           |
+| tslint-config-prettier                | Integration for prettier to use rules defined in TSLint.                                                          |
+| typescript                            | TypeScript compiler.                                                                                              |
 
 ## Sample Environment File
 
@@ -382,9 +386,73 @@ For example:
 | `Await`                   | `Await`.ts                   |
 | `ExcludeMaybe`            | `ExcludeMaybe`.ts            |
 
+## Deployment
+
+There are 2 ways to go about this and can vary based on your setup. Let's go through each:
+
+### Docker Way (preferred)
+
+Simply build the image from your local machine (or let your CI tool do it) with the syntax below.
+
+```bash
+# The dot on the end is important.
+docker build -f <docker_file> -t <image_name>[:<image_tag>] .
+
+# Example:
+docker build -f Dockerfile -t graphql-starter:latest .
+```
+
+Then push the image you just built from your local machine (or from your CI tool) to your docker image repository (e.g. Docker Hub, AWS ECR).
+
+```bash
+docker push <typically_a_url_to_your_docker_image_repository>
+```
+
+**Note:** Typically, the `tag` for the image you built should match the `url` to your docker image repository. Refer to your image repository provider for specific details.
+
+**Extra:** If you want to test the image you just built with your local setup, then configure the docker-compose file such that it points to your image instead of building from a Dockerfile. For example:
+
+From:
+
+```yaml
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: npm start
+    restart: always
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+```
+
+To:
+
+```yaml
+services:
+  api:
+    # Set it to the image you just built
+    image: graphql-starter:latest
+    restart: always
+```
+
+### Build Locally
+
+If you're not using Docker, you can still get your hands to the build files. Normally, you'd want this approach if you're deploying to a VPS and have to move the files via FTP to your server or you have a cloud provider that accepts node apps where you'll have to provide it your project files with a `package.json` file in the project folder (typically zipped).
+
+Build the project:
+
+```bash
+npm run build
+```
+
+This will then create a `build` folder in the project directory which you can deploy.
+
+**Note:** You might need to manually install the dependencies yourself if you're using a VPS. Otherwise, your cloud provider's NodeJS container will typically just need a `package.json` from the root folder and they'll do the installation on every deploy.
+
 ## Future Plans
 
-- Build Process
 - Testing
 - CircleCI
 

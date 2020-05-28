@@ -1,0 +1,17 @@
+{
+  "plugins": ["@babel/plugin-proposal-class-properties"],
+  "presets": [
+    "minify",
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        },
+        "modules": "cjs"
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "ignore": ["node_modules"]
+}

@@ -37,8 +37,8 @@ RUN apk add --no-cache --virtual .gyp python make g++
 # Copy the necessary files from the builder stage to this stage
 COPY --from=builder /usr/src/app/build .
 
-# TODO: Use npm ci --production when the raised issue from graphql-tools gets resolved
-COPY --from=builder /usr/src/app/node_modules ./node_modules
+# Install production dependencies only
+RUN npm ci --production
 
 # List the directory on this build stage
 RUN ls -al

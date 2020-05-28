@@ -175,39 +175,40 @@ Credentials:
 
 ### Dependencies
 
-| Package                | Description                                                           |
-| ---------------------- | --------------------------------------------------------------------- |
-| @casl/ability          | An isomorphic authorization JS library.                               |
-| apollo-server-express  | Apollo GraphQL for Express.                                           |
-| bcryptjs               | Library for hashing and salting user passwords.                       |
-| compression            | ExpressJS compression middleware.                                     |
-| compression            | ExpressJS compression middleware.                                     |
-| connect-redis          | Redis Store for express-session.                                      |
-| cookie-parser          | Parse cookies into a nice object format.                              |
-| cors                   | ExpressJS cors middleware.                                            |
-| dataloader             | Facebook Dataloader for batching and caching GraphQL requests.        |
-| dotenv                 | Loads environment variables from `.env` file.                         |
-| express                | Unopinionated NodeJS web framework.                                   |
-| express-session        | ExpressJS session middleware.                                         |
-| express-status-monitor | Reports real-time server metrics for express.                         |
-| graphql                | GraphQL core library.                                                 |
-| graphql-depth-limit    | GraphQL depth limit middleware.                                       |
-| graphql-iso-date       | GraphQL ISO Date scalars.                                             |
-| graphql-middleware     | GraphQL Middlewares made easy.                                        |
-| graphql-shield         | GraphQL Server permissions as another layer of abstraction.           |
-| graphql-tools          | A set of utilities for faster development of GraphQL Schemas.         |
-| helmet                 | Security middleware.                                                  |
-| ioredis                | NodeJS Redis Client.                                                  |
-| knex                   | SQL Query Builder.                                                    |
-| lodash                 | A utility library for working with arrays, numbers, objects, strings. |
-| morgan                 | ExpressJS HTTP request logger middleware.                             |
-| objection              | ObjectionJS SQL ORM.                                                  |
-| objection-cursor       | ObjectionJS mixin for cursor-based pagination.                        |
-| passport               | Simple, unobtrusive authentication for NodeJS.                        |
-| pg                     | Node Postgres client.                                                 |
-| tsconfig-paths         | TypeScript path resolver.                                             |
-| winston                | Logging library.                                                      |
-| yup                    | Schema validator.                                                     |
+| Package                   | Description                                                                    |
+| ------------------------- | ------------------------------------------------------------------------------ |
+| @casl/ability             | An isomorphic authorization JS library.                                        |
+| @graphql-tools/load-files | GraphQL Schema helper for loading the files needed to build our schema.        |
+| @graphql-tools/merge      | GraphQL Schema helper for merging the loaded files needed to build our schema. |
+| apollo-server-express     | Apollo GraphQL for Express.                                                    |
+| bcryptjs                  | Library for hashing and salting user passwords.                                |
+| compression               | ExpressJS compression middleware.                                              |
+| compression               | ExpressJS compression middleware.                                              |
+| connect-redis             | Redis Store for express-session.                                               |
+| cookie-parser             | Parse cookies into a nice object format.                                       |
+| cors                      | ExpressJS cors middleware.                                                     |
+| dataloader                | Facebook Dataloader for batching and caching GraphQL requests.                 |
+| dotenv                    | Loads environment variables from `.env` file.                                  |
+| express                   | Unopinionated NodeJS web framework.                                            |
+| express-session           | ExpressJS session middleware.                                                  |
+| express-status-monitor    | Reports real-time server metrics for express.                                  |
+| graphql                   | GraphQL core library.                                                          |
+| graphql-depth-limit       | GraphQL depth limit middleware.                                                |
+| graphql-iso-date          | GraphQL ISO Date scalars.                                                      |
+| graphql-middleware        | GraphQL Middlewares made easy.                                                 |
+| graphql-shield            | GraphQL Server permissions as another layer of abstraction.                    |
+| helmet                    | Security middleware.                                                           |
+| ioredis                   | NodeJS Redis Client.                                                           |
+| knex                      | SQL Query Builder.                                                             |
+| lodash                    | A utility library for working with arrays, numbers, objects, strings.          |
+| morgan                    | ExpressJS HTTP request logger middleware.                                      |
+| objection                 | ObjectionJS SQL ORM.                                                           |
+| objection-cursor          | ObjectionJS mixin for cursor-based pagination.                                 |
+| passport                  | Simple, unobtrusive authentication for NodeJS.                                 |
+| pg                        | Node Postgres client.                                                          |
+| tsconfig-paths            | TypeScript path resolver.                                                      |
+| winston                   | Logging library.                                                               |
+| yup                       | Schema validator.                                                              |
 
 ### Dev Dependencies
 

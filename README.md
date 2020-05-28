@@ -68,11 +68,11 @@ docker-compose up
 
 If docker compose have bootstrapped all services successfully, you should be able to access:
 
-**GraphQL Endpoint**
+### GraphQL Endpoint
 
 [http://localhost:8080/graphql](http://localhost:8080/graphql)
 
-**Adminer endpoint**
+### Adminer endpoint
 
 [http://localhost:8888/](http://localhost:8888/)
 
@@ -86,15 +86,15 @@ Credentials:
 | Password | password   | As defined in the `docker-compose.yml` config                                                |
 | Database | db         | As defined in the `docker-compose.yml` config                                                |
 
-**Redis Commander endpoint**
+### Redis Commander endpoint
 
 [http://localhost:8889](http://localhost:8889/)
 
-**Node Express REST Health Check endpoint**
+### Node Express REST Health Check endpoint
 
 [http://localhost:8080/api/v1/maintenance/health-check](http://localhost:8080/api/v1/maintenance/health-check)
 
-**Node Express Status Monitor endpoint**
+### Node Express Status Monitor endpoint
 
 [http://localhost:8080/status](http://localhost:8080/status)
 
@@ -173,7 +173,7 @@ Credentials:
 
 ## List of Packages
 
-**Dependencies**
+### Dependencies
 
 | Package                | Description                                                           |
 | ---------------------- | --------------------------------------------------------------------- |
@@ -209,7 +209,7 @@ Credentials:
 | winston                | Logging library.                                                      |
 | yup                    | Schema validator.                                                     |
 
-**Dev Dependencies**
+### Dev Dependencies
 
 | Package                               | Description                                                                                                       |
 | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -248,7 +248,7 @@ Currently there are 5 environments that are ready:
 
 You can switch between environments by setting `CURRENT_ENVIRONMENT`.
 
-```
+```dotenv
 CURRENT_ENVIRONMENT=LOCAL
 
 # Apollo Graph Manager
@@ -301,19 +301,19 @@ Keep in mind this layered architecture.
 
 The folder structure of this project is mainly functionality-based so it should mostly be self explanatory where to put what.
 
-### Create a migration script with KnexJS for your database table.
+### Create a migration script with KnexJS for your database table
 
 1. Run `npm run migrate:make <script_name>`.
 2. Go to the generated script at `src/db/migrations/<your_script>.ts`.
 3. Populate the script accordingly. Use the `addTimestamps.ts` helper if you need timestamps for your table.
 
-### (Optional) Create a seed script with KnexJS.
+### (Optional) Create a seed script with KnexJS
 
 1. Run `npm run seed:make <script_name>`.
 2. Go to the generated script at `src/db/seeds/<your_script>.ts`.
 3. Populate the script accordingly.
 
-### Create the corresponding ObjectionJS model.
+### Create the corresponding ObjectionJS model
 
 1. Create a TS file at `src/db/models/`.
 2. Populate the file accordingly.
@@ -322,7 +322,7 @@ The folder structure of this project is mainly functionality-based so it should 
    - (Recommended) Create a static `yupSchema` property for a centralized schema validation for that model. See existing models for example. This will later be used on in graphql-shield for graphql input validations.
    - Setup the model's properties based on your database table schema.
 
-### Create a service (Business Logic).
+### Create a service (Business Logic)
 
 1. Create a new folder at `src/core/services/<service_name>`.
 2. Create the service file under the new folder.
@@ -331,14 +331,14 @@ The folder structure of this project is mainly functionality-based so it should 
 
 **Note:** Your Interface Layer shouldn't be accessing the Data Access Layer directly.
 
-### Create the GraphQL type definitions for your entity.
+### Create the GraphQL type definitions for your entity
 
 1. Create a GraphQL file at `src/graphql/typeDefs/`.
 2. Define your GraphQL typedef that you want to expose on your schema.
 3. Think in graphs.
    - So that your GraphQL schema wouldn't look like a reflection of your database schema.
 
-### Create your GraphQL resolvers based on the GraphQL TypeDefs.
+### Create your GraphQL resolvers based on the GraphQL TypeDefs
 
 1. Create a new folder under `src/graphql/resolvers/<entity_name>`.
    - I'd like to group the resolvers by their `type`.
@@ -353,7 +353,7 @@ If you have enums defined in your GraphQL Schema, most likely you have your own 
 
 This is also true to scalars at `src/graphql/scalars`.
 
-### Add resolver permission rules with GraphQL Shield.
+### Add resolver permission rules with GraphQL Shield
 
 Populate accordingly at `src/graphql-shield/index.ts`.
 
@@ -361,7 +361,7 @@ If you want to validate your graphql inputs (e.g. input from a mutation), define
 
 ## Naming Convention
 
-### For files and folders:
+### For files and folders
 
 Generally, use `snake-case`.
 

@@ -1,5 +1,3 @@
-import 'dotenv/config';
-
 interface IApolloOptions {
   maxFileSize: number;
   maxFiles: number;

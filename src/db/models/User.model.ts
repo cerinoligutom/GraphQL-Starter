@@ -38,7 +38,7 @@ export class User extends BaseModel {
   id!: string;
   username!: string;
   firstName!: string;
-  middleName?: Maybe<string>;
+  middleName!: string | null;
   lastName!: string;
   email!: string;
   hash!: string;

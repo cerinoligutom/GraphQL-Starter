@@ -4,5 +4,6 @@
   "singleQuote": true,
   "semi": true,
   "trailingComma": "all",
-  "htmlWhitespaceSensitivity": "ignore"
+  "htmlWhitespaceSensitivity": "ignore",
+  "endOfLine": "auto"
 }

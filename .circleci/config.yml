@@ -1,0 +1,146 @@
+version: 2.1
+
+commands:
+  restore_cache_command:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+  save_cache_command:
+    steps:
+      - save_cache:
+          paths:
+            - node_modules
+            - ~/.cache
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+
+  persist_workspace_command:
+    steps:
+      # https://circleci.com/docs/2.0/configuration-reference/#persist_to_workspace
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory of the executor.
+          # This is a directory on the container which is  taken to be the root directory of the workspace.
+          root: ./
+          paths:
+            - ./
+
+  attach_workspace_command:
+    steps:
+      # https://circleci.com/docs/2.0/configuration-reference/#attach_workspace
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: .
+
+executors:
+  docker-node-executor:
+    docker:
+      - image: circleci/node:12
+    working_directory: ~/repo
+
+jobs:
+  prepare:
+    executor: docker-node-executor
+    steps:
+      - checkout # ultimately just means, clone this repository
+      - restore_cache_command
+      - run:
+          name: Install npm dependencies
+          command: |
+            npm install
+      - save_cache_command
+      - persist_workspace_command
+
+  # Start splitting if it gets big and can afford :)
+  tests:
+    executor: docker-node-executor
+    steps:
+      - attach_workspace_command
+      - run:
+          name: Run linter
+          command: |
+            npm run lint
+      - run:
+          name: Run tsc with no emit
+          command: |
+            npm run tsc-check
+      - run:
+          name: Run tests
+          command: |
+            npm run test
+
+  build_deployment_artifacts:
+    executor: docker-node-executor
+    steps:
+      - attach_workspace_command
+      - run:
+          name: Build project
+          command: |
+            npm run build
+      - store_artifacts:
+          path: ./build
+
+  deploy_test:
+    executor: docker-node-executor
+    steps:
+      - run:
+          name: Deploy to Test Environment
+          command: |
+            echo "To be implemented"
+
+  deploy_staging:
+    executor: docker-node-executor
+    steps:
+      - run:
+          name: Deploy to Staging Environment
+          command: |
+            echo "To be implemented"
+
+  deploy_production:
+    executor: docker-node-executor
+    steps:
+      - run:
+          name: Deploy to Production Environment
+          command: |
+            echo "To be implemented"
+
+workflows:
+  version: 2.1
+  ci_cd:
+    jobs:
+      - prepare
+
+      - tests:
+          # specifying "requires" waits for the listed jobs to finish before executing this job
+          requires:
+            - prepare
+
+      - build_deployment_artifacts:
+          requires:
+            - tests
+          filters:
+            branches:
+              only:
+                - master
+                - staging
+                - test
+
+      - deploy_test:
+          filters:
+            branches:
+              only:
+                - test
+
+      - deploy_staging:
+          filters:
+            branches:
+              only:
+                - staging
+
+      - deploy_production:
+          filters:
+            branches:
+              only:
+                - master

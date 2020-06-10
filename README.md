@@ -446,7 +446,6 @@ This will then create a `build` folder in the project directory which you can de
 ## Future Plans
 
 - Testing
-- CircleCI
 
 ## Pro Tips
 

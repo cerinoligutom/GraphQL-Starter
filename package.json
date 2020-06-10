@@ -7,7 +7,7 @@
     "build": "concurrently -m 1 npm:build:clean npm:build:typescript npm:build:copy-files",
     "build:clean": "rimraf build",
     "build:typescript": "tsc",
-    "build:copy-files": "copyfiles src/**/!(*.ts) package*.json tsconfig.json LICENSE build",
+    "build:copy-files": "copyfiles \"src/**/!(*.ts)\" package*.json tsconfig.json LICENSE build",
     "ts-node": "ts-node",
     "nodemon": "nodemon -L",
     "lint": "tslint -p tsconfig.json",
@@ -17,7 +17,8 @@
     "migrate:rollback": "knex --knexfile ./knexfile.ts migrate:rollback",
     "seed:make": "knex --knexfile ./knexfile.ts seed:make -x ts",
     "seed": "knex --knexfile ./knexfile.ts seed:run",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"No test specified\" && exit 0",
+    "tsc-check": "npx tsc --noEmit",
     "generate:gql-types": "graphql-codegen --watch",
     "apollo:service:push": "npx apollo service:push"
   },

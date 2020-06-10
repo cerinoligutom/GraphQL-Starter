@@ -128,18 +128,24 @@ workflows:
                 - test
 
       - deploy_test:
+          requires:
+            - build_deployment_artifacts
           filters:
             branches:
               only:
                 - test
 
       - deploy_staging:
+          requires:
+            - build_deployment_artifacts
           filters:
             branches:
               only:
                 - staging
 
       - deploy_production:
+          requires:
+            - build_deployment_artifacts
           filters:
             branches:
               only:

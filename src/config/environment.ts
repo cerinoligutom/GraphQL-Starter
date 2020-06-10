@@ -21,7 +21,6 @@ interface IEnvironmentConfig {
 enum EnvironmentOptions {
   PRODUCTION = 'PRODUCTION',
   STAGING = 'STAGING',
-  DEV = 'DEV',
   TEST = 'TEST',
   LOCAL = 'LOCAL',
 }
@@ -62,22 +61,6 @@ const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
     },
 
     redisUrl: process.env.STAGING_REDIS_URL!,
-  },
-
-  [EnvironmentOptions.DEV]: {
-    isProduction,
-    environment: EnvironmentOptions.DEV,
-    port: +process.env.DEV_APP_PORT! || DEFAULT_APP_PORT,
-
-    db: {
-      database: process.env.DEV_PG_DATABASE,
-      host: process.env.DEV_PG_HOST,
-      password: process.env.DEV_PG_PASSWORD,
-      user: process.env.DEV_PG_USER,
-      debug: true,
-    },
-
-    redisUrl: process.env.DEV_REDIS_URL!,
   },
 
   [EnvironmentOptions.TEST]: {

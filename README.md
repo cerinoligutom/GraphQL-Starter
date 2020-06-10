@@ -236,13 +236,12 @@ You can configure your environments thru a `.env` file. Just simply create a `.e
 
 Currently there are 5 environments that are ready:
 
-| `CURRENT_ENVIRONMENT` value | Description          |
-| --------------------------- | -------------------- |
-| PRODUCTION                  | Production           |
-| STAGING                     | Staging              |
-| DEV                         | Development (Remote) |
-| TEST                        | Testing              |
-| LOCAL                       | Local development    |
+| `CURRENT_ENVIRONMENT` value | Description       |
+| --------------------------- | ----------------- |
+| PRODUCTION                  | Production        |
+| STAGING                     | Staging           |
+| TEST                        | Testing           |
+| LOCAL                       | Local development |
 
 You can switch between environments by setting `CURRENT_ENVIRONMENT`.
 
@@ -268,13 +267,6 @@ TEST_PG_DATABASE=
 TEST_PG_HOST=
 TEST_PG_PASSWORD=
 TEST_PG_USER=
-
-# Dev Environment
-DEV_APP_PORT=
-DEV_PG_DATABASE=
-DEV_PG_HOST=
-DEV_PG_PASSWORD=
-DEV_PG_USER=
 
 # Staging Environment
 STAGING_APP_PORT=

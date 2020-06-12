@@ -1,5 +1,11 @@
 version: 2.1
 
+orbs:
+  # https://circleci.com/orbs/registry/orb/circleci/aws-ecr
+  aws-ecr: circleci/aws-ecr@6.9.0
+  # https://circleci.com/orbs/registry/orb/circleci/aws-cli
+  aws-cli: circleci/aws-cli@1.1.0
+
 commands:
   restore_cache_command:
     steps:
@@ -34,15 +40,28 @@ commands:
           # Must be absolute path or relative path from working_directory
           at: .
 
+  update_elastic_beanstalk_command:
+    parameters:
+      application-name:
+        type: string
+      environment-id:
+        type: string
+    steps:
+      - aws-cli/setup
+      - run:
+          name: 'Update Elastic Beanstalk'
+          command: |
+            aws elasticbeanstalk update-environment --application-name << parameters.application-name >> --environment-id << parameters.environment-id >>
+
 executors:
-  docker-node-executor:
+  docker_node_executor:
     docker:
       - image: circleci/node:12
     working_directory: ~/repo
 
 jobs:
   prepare:
-    executor: docker-node-executor
+    executor: docker_node_executor
     steps:
       - checkout # ultimately just means, clone this repository
       - restore_cache_command
@@ -53,9 +72,9 @@ jobs:
       - save_cache_command
       - persist_workspace_command
 
-  # Start splitting if it gets big and can afford :)
+  # Fan-out (split each step as a job) if it gets big and can afford :)
   tests:
-    executor: docker-node-executor
+    executor: docker_node_executor
     steps:
       - attach_workspace_command
       - run:
@@ -71,43 +90,29 @@ jobs:
           command: |
             npm run test
 
-  build_deployment_artifacts:
-    executor: docker-node-executor
+  update_elastic_beanstalk_production:
+    executor: aws-cli/default
     steps:
-      - attach_workspace_command
-      - run:
-          name: Build project
-          command: |
-            npm run build
-      - store_artifacts:
-          path: ./build
+      - update_elastic_beanstalk_command:
+          application-name: $AWS_EB_APP_NAME_PRODUCTION
+          environment-id: $AWS_EB_ENV_ID_PRODUCTION
 
-  deploy_test:
-    executor: docker-node-executor
+  update_elastic_beanstalk_staging:
+    executor: aws-cli/default
     steps:
-      - run:
-          name: Deploy to Test Environment
-          command: |
-            echo "To be implemented"
+      - update_elastic_beanstalk_command:
+          application-name: $AWS_EB_APP_NAME_STAGING
+          environment-id: $AWS_EB_ENV_ID_STAGING
 
-  deploy_staging:
-    executor: docker-node-executor
+  update_elastic_beanstalk_test:
+    executor: aws-cli/default
     steps:
-      - run:
-          name: Deploy to Staging Environment
-          command: |
-            echo "To be implemented"
-
-  deploy_production:
-    executor: docker-node-executor
-    steps:
-      - run:
-          name: Deploy to Production Environment
-          command: |
-            echo "To be implemented"
+      - update_elastic_beanstalk_command:
+          application-name: $AWS_EB_APP_NAME_TEST
+          environment-id: $AWS_EB_ENV_ID_TEST
 
 workflows:
-  version: 2.1
+  version: 2
   ci_cd:
     jobs:
       - prepare
@@ -117,36 +122,68 @@ workflows:
           requires:
             - prepare
 
-      - build_deployment_artifacts:
+      # PRODUCTION
+      - aws-ecr/build-and-push-image:
+          name: build_and_push_image_production
           requires:
             - tests
           filters:
             branches:
               only:
                 - master
-                - staging
-                - test
-
-      - deploy_test:
+          # Job Parameters
+          repo: $AWS_ECR_REPOSITORY_NAME
+          tag: 'production,$CIRCLE_SHA1'
+          dockerfile: Dockerfile
+          path: .
+      - update_elastic_beanstalk_production:
           requires:
-            - build_deployment_artifacts
-          filters:
-            branches:
-              only:
-                - test
-
-      - deploy_staging:
-          requires:
-            - build_deployment_artifacts
-          filters:
-            branches:
-              only:
-                - staging
-
-      - deploy_production:
-          requires:
-            - build_deployment_artifacts
+            - build_and_push_image_production
           filters:
             branches:
               only:
                 - master
+
+      # STAGING
+      - aws-ecr/build-and-push-image:
+          name: build_and_push_image_staging
+          requires:
+            - tests
+          filters:
+            branches:
+              only:
+                - staging
+          # Job Parameters
+          repo: $AWS_ECR_REPOSITORY_NAME
+          tag: 'staging'
+          dockerfile: Dockerfile
+          path: .
+      - update_elastic_beanstalk_staging:
+          requires:
+            - build_and_push_image_staging
+          filters:
+            branches:
+              only:
+                - staging
+
+      # TEST
+      - aws-ecr/build-and-push-image:
+          name: build_and_push_image_test
+          requires:
+            - tests
+          filters:
+            branches:
+              only:
+                - test
+          # Job Parameters
+          repo: $AWS_ECR_REPOSITORY_NAME
+          tag: 'test'
+          dockerfile: Dockerfile
+          path: .
+      - update_elastic_beanstalk_staging:
+          requires:
+            - build_and_push_image_test
+          filters:
+            branches:
+              only:
+                - test

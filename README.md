@@ -12,7 +12,8 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Sample Environment File](#sample-environment-file)
 - [Suggested Workflow](#suggested-workflow)
 - [Naming Convention](#naming-convention)
-- [Deployment](#Deployment)
+- [Deployment](#deployment)
+- [CircleCI Config](#circleci-config)
 - [Future Plans](#future-plans)
 - [Pro Tips](#pro-tips)
 - [Contributing](#contributing)
@@ -104,6 +105,7 @@ Credentials:
 
 | Name                                                                                            | Description                                                                                                                                                                                                                        |
 | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **infrastructure**/Dockerrun.aws.json                                                           | Sample config for deploying a Docker app to AWS Elastic Beanstalk from a remote Docker repository (AWS ECR for this config). Make sure to replace the placeholders with your setup.                                                |
 | **logs**/access.log                                                                             | HTTP access logs by the `morgan` request middleware.                                                                                                                                                                               |
 | **logs**/combined.log                                                                           | All logs logged by the `logger` function in `logger.util.ts`.                                                                                                                                                                      |
 | **logs**/errors.log                                                                             | Error logs logged by the `logger` function in `logger.util.ts`.                                                                                                                                                                    |
@@ -380,9 +382,9 @@ For example:
 
 ## Deployment
 
-There are 2 ways to go about this and can vary based on your setup. Let's go through each:
+There are a few ways to go about this and can vary based on your setup.
 
-### Docker Way (preferred)
+### Docker Way
 
 Simply build the image from your local machine (or let your CI tool do it) with the syntax below.
 
@@ -431,7 +433,7 @@ services:
 
 ### Build Locally
 
-If you're not using Docker, you can still get your hands to the build files. Normally, you'd want this approach if you're deploying to a VPS and have to move the files via FTP to your server or you have a cloud provider that accepts node apps where you'll have to provide it your project files with a `package.json` file in the project folder (typically zipped).
+If you're not using Docker, you can still get your hands on the build files. Normally, you'd want this approach if you're deploying to a VPS and have to move the files via FTP manually to your server or you have a cloud provider that accepts node apps where you'll have to provide it your project files with a `package.json` file in the project folder (typically zipped).
 
 Build the project:
 
@@ -439,9 +441,64 @@ Build the project:
 npm run build
 ```
 
-This will then create a `build` folder in the project directory which you can deploy.
+This will create a `build` folder in the project directory which you can deploy.
 
 **Note:** You might need to manually install the dependencies yourself if you're using a VPS. Otherwise, your cloud provider's NodeJS container will typically just need a `package.json` from the root folder and they'll do the installation on every deploy.
+
+### Deploy to AWS Elastic Beanstalk w/ AWS ECR and CircleCI
+
+This is more advanced and can get pretty long so I'll assume you have prepared the AWS Resources and CircleCI account needed to make things work. Refer to the [CircleCI Config](#circleci-config) for which variables you need to set.
+
+The workflow would be:
+
+1. Make a PR to a configured branch as per config. Currently `master`, `staging` and `test`.
+
+1. CircleCI would process the pipeline as per config (build, test, deploy).
+
+1. CircleCI would then push the image artifact to AWS ECR then notify AWS Elastic Beanstalk to pull that image and update the environment.
+
+## CircleCI Config
+
+Currently uses 2 orbs:
+
+- aws-ecr
+- aws-cli
+
+Make sure to set these environment variables on your CircleCI project (or context):
+
+### Orbs
+
+| Variable                | Required by      | Description                                    |
+| ----------------------- | ---------------- | ---------------------------------------------- |
+| AWS_ACCESS_KEY_ID       | aws-ecr, aws-cli | AWS Account Access Key ID                      |
+| AWS_SECRET_ACCESS_KEY   | aws-ecr, aws-cli | AWS Secret Access Key                          |
+| AWS_REGION              | aws-ecr          | AWS Resources Region                           |
+| AWS_ECR_REPOSITORY_NAME | aws-ecr          | AWS Elastic Container Registry Repository Name |
+| AWS_ECR_ACCOUNT_URL     | aws-ecr          | AWS Elastic Container Registry Account URL     |
+| AWS_DEFAULT_REGION      | aws-cli          | AWS Resources Region                           |
+
+### Production
+
+| Variable                   | Description                        |
+| -------------------------- | ---------------------------------- |
+| AWS_EB_APP_NAME_PRODUCTION | Elastic Beanstalk Application Name |
+| AWS_EB_ENV_ID_PRODUCTION   | Elastic Beanstalk Environment ID   |
+
+### Staging
+
+| Variable                | Description                        |
+| ----------------------- | ---------------------------------- |
+| AWS_EB_APP_NAME_STAGING | Elastic Beanstalk Application Name |
+| AWS_EB_ENV_ID_STAGING   | Elastic Beanstalk Environment ID   |
+
+### Test
+
+| Variable             | Description                        |
+| -------------------- | ---------------------------------- |
+| AWS_EB_APP_NAME_TEST | Elastic Beanstalk Application Name |
+| AWS_EB_ENV_ID_TEST   | Elastic Beanstalk Environment ID   |
+
+**Tip:** You might want to enable the `Only build pull requests` and `Auto-cancel redundant builds` on your CircleCI project settings.
 
 ## Future Plans
 

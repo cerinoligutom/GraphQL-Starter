@@ -1,0 +1,14 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "<account-id>.dkr.ecr.<region>.amazonaws.com/<repository-name>:<tag>",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": 8080,
+      "HostPort": 80
+    }
+  ],
+  "Volumes": []
+}

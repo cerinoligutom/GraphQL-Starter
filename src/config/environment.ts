@@ -71,7 +71,6 @@ function initEnvironment(currentEnvironment: Environment) {
   // Load dotenv based on app environment
   dotenv.config({
     path: `.env.${appEnvironment}`,
-    debug: process.env.NODE_ENV !== 'production',
   });
 
   return {

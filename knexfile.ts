@@ -3,17 +3,9 @@ import 'tsconfig-paths/register';
 import { Config, MySqlConnectionConfig } from 'knex';
 import { env } from '@app/config/environment';
 
-const connectionConfig: MySqlConnectionConfig = {
-  host: env.db.host,
-  user: env.db.user,
-  password: env.db.password,
-  database: env.db.database,
-  debug: env.db.debug,
-};
-
 const config: Config = {
   client: 'pg',
-  connection: connectionConfig,
+  connection: env.postgresConnectionUrl,
   useNullAsDefault: true,
   migrations: {
     directory: './src/db/migrations',

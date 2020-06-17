@@ -234,56 +234,29 @@ Credentials:
 
 ## Sample Environment File
 
-You can configure your environments thru a `.env` file. Just simply create a `.env` file in the root folder and paste the snippet below. These environment variables are then consumed by the config file found under **src/config/environment.ts**.
-
-Currently there are 5 environments that are ready:
-
-| `CURRENT_ENVIRONMENT` value | Description       |
-| --------------------------- | ----------------- |
-| PRODUCTION                  | Production        |
-| STAGING                     | Staging           |
-| TEST                        | Testing           |
-| LOCAL                       | Local development |
-
-You can switch between environments by setting `CURRENT_ENVIRONMENT`.
+You can configure your environments thru `.env.{APP_ENV}` files. For example, to create one for your `development` environment, create a `.env.development` file in the root folder. Paste the snippet below and supply the appropriate variables for the environment. These environment variables are then consumed by the config file found under **src/config/environment.ts**. You can switch between environments by setting `CURRENT_ENVIRONMENT` variable in that file.
 
 ```dotenv
-CURRENT_ENVIRONMENT=LOCAL
+APP_PORT=
+
+POSTGRES_CONNECTION_URL=
+REDIS_CONNECTION_URL
 
 # Apollo Graph Manager
 APOLLO_KEY=
 
 # Express Session
 SESSION_SECRET=
-
-# Local Environment
-LOCAL_APP_PORT=
-LOCAL_PG_DATABASE=
-LOCAL_PG_HOST=
-LOCAL_PG_PASSWORD=
-LOCAL_PG_USER=
-
-# Test Environment
-TEST_APP_PORT=
-TEST_PG_DATABASE=
-TEST_PG_HOST=
-TEST_PG_PASSWORD=
-TEST_PG_USER=
-
-# Staging Environment
-STAGING_APP_PORT=
-STAGING_PG_DATABASE=
-STAGING_PG_HOST=
-STAGING_PG_PASSWORD=
-STAGING_PG_USER=
-
-# Production Environment
-PROD_APP_PORT=
-PROD_PG_DATABASE=
-PROD_PG_HOST=
-PROD_PG_PASSWORD=
-PROD_PG_USER=
 ```
+
+Currently there are 4 environments supported. Make sure the corresponding `.env` file for the environment exists so that it'll be loaded accordingly.
+
+| `APP_ENV`   | `.env` file        |
+| ----------- | ------------------ |
+| PRODUCTION  | `.env.production`  |
+| STAGING     | `.env.staging`     |
+| TEST        | `.env.test`        |
+| DEVELOPMENT | `.env.development` |
 
 ## Suggested Workflow
 
@@ -321,7 +294,7 @@ The folder structure of this project is mainly functionality-based so it should 
 3. Populate it with the basic stuffs you'll need.
    - Such as the basic CRUD methods.
 
-**Note:** Your Interface Layer shouldn't be accessing the Data Access Layer directly.
+**Note:** Your Interface Layer shouldn't do any DB Operations directly.
 
 ### Create the GraphQL type definitions for your entity
 

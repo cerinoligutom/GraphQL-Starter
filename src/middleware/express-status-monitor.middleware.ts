@@ -11,7 +11,7 @@ interface IHealthCheckItem {
 const commonHealthCheckItemArgs: Partial<IHealthCheckItem> = {
   protocol: 'http',
   host: 'localhost',
-  port: env.port.toString(),
+  port: `${env.app.port}`,
 };
 
 export const expressStatusMonitor = () => {

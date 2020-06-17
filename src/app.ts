@@ -46,7 +46,7 @@ const app = express();
   const httpServer = createServer(app);
   apolloServer.installSubscriptionHandlers(httpServer);
 
-  httpServer.listen(env.port, () => {
-    console.info(`Server is now up @ ${env.port}`);
+  httpServer.listen(env.app.port, () => {
+    console.info(`Server is now up @ ${env.app.port}`);
   });
 })();

@@ -1,110 +1,81 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+
+enum Environment {
+  PRODUCTION = 'production',
+  STAGING = 'staging',
+  TEST = 'test',
+  DEVELOPMENT = 'development',
+}
+
+// NOTE: Modify this variable to switch environments during local development
+const CURRENT_ENVIRONMENT = Environment.DEVELOPMENT;
+
+const { APP_ENV, NODE_ENV } = initEnvironment(CURRENT_ENVIRONMENT);
+
+//////////////////////////////////////////////////////////////////////////////
 
 interface IEnvironmentConfig {
-  [key: string]: {
+  isProduction: boolean;
+  app: {
     environment: string;
     port: number;
-    isProduction: boolean;
-
-    db: {
-      host?: string;
-      user?: string;
-      password?: string;
-      database?: string;
-      debug: boolean;
-    };
-
-    redisUrl: string;
   };
+
+  postgresConnectionUrl?: string;
+  redisConnectionUrl?: string;
 }
 
-enum EnvironmentOptions {
-  PRODUCTION = 'PRODUCTION',
-  STAGING = 'STAGING',
-  TEST = 'TEST',
-  LOCAL = 'LOCAL',
-}
-
-const DEFAULT_APP_PORT = 8080;
-
-const currentEnvironment = (process.env.CURRENT_ENVIRONMENT || EnvironmentOptions.LOCAL).toLocaleUpperCase() as EnvironmentOptions;
-const isProduction = [EnvironmentOptions.PRODUCTION, EnvironmentOptions.STAGING].includes(currentEnvironment);
-process.env.NODE_ENV = isProduction ? 'production' : 'development';
-
-const ENVIRONMENT_CONFIG: IEnvironmentConfig = {
-  [EnvironmentOptions.PRODUCTION]: {
-    isProduction,
-    environment: EnvironmentOptions.PRODUCTION,
-    port: +process.env.PROD_APP_PORT! || DEFAULT_APP_PORT,
-
-    db: {
-      database: process.env.PROD_PG_DATABASE,
-      host: process.env.PROD_PG_HOST,
-      password: process.env.PROD_PG_PASSWORD,
-      user: process.env.PROD_PG_USER,
-      debug: false,
-    },
-    redisUrl: process.env.PROD_REDIS_URL!,
+export const env: IEnvironmentConfig = {
+  isProduction: ['production', 'staging'].includes(NODE_ENV),
+  app: {
+    environment: APP_ENV,
+    port: +process.env.APP_PORT! || 8080,
   },
-
-  [EnvironmentOptions.STAGING]: {
-    isProduction,
-    environment: EnvironmentOptions.STAGING,
-    port: +process.env.STAGING_APP_PORT! || DEFAULT_APP_PORT,
-
-    db: {
-      database: process.env.STAGING_PG_DATABASE,
-      host: process.env.STAGING_PG_HOST,
-      password: process.env.STAGING_PG_PASSWORD,
-      user: process.env.STAGING_PG_USER,
-      debug: true,
-    },
-
-    redisUrl: process.env.STAGING_REDIS_URL!,
-  },
-
-  [EnvironmentOptions.TEST]: {
-    isProduction: false,
-    environment: EnvironmentOptions.TEST,
-    port: +process.env.TEST_APP_PORT! || DEFAULT_APP_PORT,
-
-    db: {
-      database: process.env.TEST_PG_DATABASE,
-      host: process.env.TEST_PG_HOST,
-      password: process.env.TEST_PG_PASSWORD,
-      user: process.env.TEST_PG_USER,
-      debug: true,
-    },
-
-    redisUrl: process.env.TEST_REDIS_URL!,
-  },
-
-  [EnvironmentOptions.LOCAL]: {
-    isProduction: false,
-    environment: EnvironmentOptions.LOCAL,
-    port: +process.env.LOCAL_APP_PORT! || DEFAULT_APP_PORT,
-
-    db: {
-      database: process.env.LOCAL_PG_DATABASE || 'db',
-      host: process.env.LOCAL_PG_HOST || 'db', // 'db' is the service name of the postgres container
-      password: process.env.LOCAL_PG_PASSWORD || 'password',
-      user: process.env.LOCAL_PG_USER || 'postgres',
-      debug: true,
-    },
-
-    redisUrl: process.env.LOCAL_REDIS_URL || 'redis', // 'redis' is the service name of the redis container
-  },
+  postgresConnectionUrl: process.env.POSTGRES_CONNECTION_URL,
+  redisConnectionUrl: process.env.REDIS_CONNECTION_URL,
 };
 
-const VALID_ENVIRONMENTS = Object.values<string>(EnvironmentOptions);
-if (!VALID_ENVIRONMENTS.includes(currentEnvironment)) {
-  const formattedValidOptions = VALID_ENVIRONMENTS.map((x, i) => `${i + 1}) ${x}`).join('\n');
-  console.error(`"${currentEnvironment}" is not a valid environment option. Valid environments are:\n${formattedValidOptions}`);
-  throw new Error('Invalid environment.');
+// Development environment defaults
+if (APP_ENV === Environment.DEVELOPMENT) {
+  env.postgresConnectionUrl = env.postgresConnectionUrl ?? 'postgresql://postgres:password@db:5432/db';
+  env.redisConnectionUrl = env.redisConnectionUrl ?? 'redis://redis';
 }
 
-export const env = ENVIRONMENT_CONFIG[currentEnvironment];
+console.info(`${'='.repeat(40)}`);
+console.info(`Current Environment: ${env.app.environment}`);
+console.info(`${'='.repeat(40)}`);
 
-console.info(`${'='.repeat(40)}`);
-console.info(`Current Environment: ${env.environment}`);
-console.info(`${'='.repeat(40)}`);
+//////////////////////////////////////////////////////////////////////////////
+
+function initEnvironment(currentEnvironment: Environment) {
+  // Check if NODE_ENV is valid
+  const VALID_NODE_ENVIRONMENTS = ['development', 'production'];
+  const nodeEnvironment = process.env.NODE_ENV;
+  if (nodeEnvironment && !VALID_NODE_ENVIRONMENTS.includes(nodeEnvironment)) {
+    throw new Error(`Invalid NODE_ENV value: ${nodeEnvironment}`);
+  }
+
+  // Prioritize NODE_ENV
+  const appEnvironment = (process.env.NODE_ENV ?? currentEnvironment).toLowerCase() as Environment;
+
+  // Set NODE_ENV to "production" for production-like environments
+  switch (appEnvironment) {
+    case Environment.PRODUCTION:
+    case Environment.STAGING:
+      process.env.NODE_ENV = 'production';
+      break;
+    default:
+      process.env.NODE_ENV = 'development';
+  }
+
+  // Load dotenv based on app environment
+  dotenv.config({
+    path: `.env.${appEnvironment}`,
+    debug: process.env.NODE_ENV !== 'production',
+  });
+
+  return {
+    APP_ENV: appEnvironment,
+    NODE_ENV: nodeEnvironment!,
+  };
+}

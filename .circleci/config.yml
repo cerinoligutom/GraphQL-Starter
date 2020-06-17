@@ -5,6 +5,8 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.9.0
   # https://circleci.com/orbs/registry/orb/circleci/aws-cli
   aws-cli: circleci/aws-cli@1.1.0
+  # https://circleci.com/orbs/registry/orb/circleci/slack
+  slack: circleci/slack@3.4.2
 
 commands:
   restore_cache_command:
@@ -58,6 +60,10 @@ executors:
     docker:
       - image: circleci/node:12
     working_directory: ~/repo
+  machine_ubuntu_executor:
+    machine:
+      image: 'ubuntu-1604:201903-01'
+    working_directory: ~/repo
 
 jobs:
   prepare:
@@ -71,6 +77,8 @@ jobs:
             npm install
       - save_cache_command
       - persist_workspace_command
+      - slack/status:
+          fail_only: true
 
   # Fan-out (split each step as a job) if it gets big and can afford :)
   tests:
@@ -89,6 +97,41 @@ jobs:
           name: Run tests
           command: |
             npm run test
+      - slack/status:
+          fail_only: true
+
+  build_and_push_image_production:
+    executor: machine_ubuntu_executor
+    steps:
+      - aws-ecr/build-and-push-image:
+          repo: $AWS_ECR_REPOSITORY_NAME
+          tag: 'production,$CIRCLE_SHA1'
+          dockerfile: Dockerfile
+          path: .
+      - slack/status:
+          fail_only: true
+
+  build_and_push_image_staging:
+    executor: machine_ubuntu_executor
+    steps:
+      - aws-ecr/build-and-push-image:
+          repo: $AWS_ECR_REPOSITORY_NAME
+          tag: 'staging'
+          dockerfile: Dockerfile
+          path: .
+      - slack/status:
+          fail_only: true
+
+  build_and_push_image_test:
+    executor: machine_ubuntu_executor
+    steps:
+      - aws-ecr/build-and-push-image:
+          repo: $AWS_ECR_REPOSITORY_NAME
+          tag: 'test'
+          dockerfile: Dockerfile
+          path: .
+      - slack/status:
+          fail_only: true
 
   update_elastic_beanstalk_production:
     executor: aws-cli/default
@@ -96,6 +139,8 @@ jobs:
       - update_elastic_beanstalk_command:
           application-name: $AWS_EB_APP_NAME_PRODUCTION
           environment-id: $AWS_EB_ENV_ID_PRODUCTION
+      - slack/status:
+          fail_only: true
 
   update_elastic_beanstalk_staging:
     executor: aws-cli/default
@@ -103,6 +148,8 @@ jobs:
       - update_elastic_beanstalk_command:
           application-name: $AWS_EB_APP_NAME_STAGING
           environment-id: $AWS_EB_ENV_ID_STAGING
+      - slack/status:
+          fail_only: true
 
   update_elastic_beanstalk_test:
     executor: aws-cli/default
@@ -110,6 +157,8 @@ jobs:
       - update_elastic_beanstalk_command:
           application-name: $AWS_EB_APP_NAME_TEST
           environment-id: $AWS_EB_ENV_ID_TEST
+      - slack/status:
+          fail_only: true
 
 workflows:
   version: 2
@@ -122,20 +171,14 @@ workflows:
           requires:
             - prepare
 
-      # PRODUCTION
-      - aws-ecr/build-and-push-image:
-          name: build_and_push_image_production
+      ######## PRODUCTION ########
+      - build_and_push_image_production:
           requires:
             - tests
           filters:
             branches:
               only:
                 - master
-          # Job Parameters
-          repo: $AWS_ECR_REPOSITORY_NAME
-          tag: 'production,$CIRCLE_SHA1'
-          dockerfile: Dockerfile
-          path: .
       - update_elastic_beanstalk_production:
           requires:
             - build_and_push_image_production
@@ -144,20 +187,14 @@ workflows:
               only:
                 - master
 
-      # STAGING
-      - aws-ecr/build-and-push-image:
-          name: build_and_push_image_staging
+      ######## STAGING ########
+      - build_and_push_image_staging:
           requires:
             - tests
           filters:
             branches:
               only:
                 - staging
-          # Job Parameters
-          repo: $AWS_ECR_REPOSITORY_NAME
-          tag: 'staging'
-          dockerfile: Dockerfile
-          path: .
       - update_elastic_beanstalk_staging:
           requires:
             - build_and_push_image_staging
@@ -166,21 +203,15 @@ workflows:
               only:
                 - staging
 
-      # TEST
-      - aws-ecr/build-and-push-image:
-          name: build_and_push_image_test
+      ######## TEST ########
+      - build_and_push_image_test:
           requires:
             - tests
           filters:
             branches:
               only:
                 - test
-          # Job Parameters
-          repo: $AWS_ECR_REPOSITORY_NAME
-          tag: 'test'
-          dockerfile: Dockerfile
-          path: .
-      - update_elastic_beanstalk_staging:
+      - update_elastic_beanstalk_test:
           requires:
             - build_and_push_image_test
           filters:

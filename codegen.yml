@@ -5,7 +5,7 @@ require:
   - ts-node/register
   - tsconfig-paths/register
 generates:
-  ./types/graphql-resolvers.d.ts:
+  ./@types/graphql-resolvers.d.ts:
     config:
       typesPrefix: GQL_
       maybeValue: T | null | undefined

@@ -240,7 +240,7 @@ You can configure your environments thru `.env.{APP_ENV}` files. For example, to
 APP_PORT=
 
 POSTGRES_CONNECTION_URL=
-REDIS_CONNECTION_URL
+REDIS_CONNECTION_URL=
 
 # Apollo Graph Manager
 APOLLO_KEY=

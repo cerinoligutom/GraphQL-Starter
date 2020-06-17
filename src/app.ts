@@ -3,6 +3,7 @@ import { env } from '@app/config/environment';
 
 import { errorMiddleware, httpLogger, expressStatusMonitor, corsMiddleware, sessionMiddleware } from '@app/middleware';
 import { ping as pingPostgresDatabase } from './db/knex';
+import { pingRedisDatabase } from './redis/client';
 import { initRoutes } from './routes';
 import { initApolloGraphqlServer } from './graphql';
 
@@ -21,6 +22,13 @@ const app = express();
   // Test Postgres DB
   try {
     await pingPostgresDatabase();
+  } catch {
+    return;
+  }
+
+  // Test Redis DB
+  try {
+    await pingRedisDatabase();
   } catch {
     return;
   }

@@ -33,6 +33,12 @@ const app = express();
     return;
   }
 
+  // Note:
+  // In case your app is running behind a proxy, you should configure this.
+  // Elastic Beanstalk instances for example has an nginx proxy by default. 
+  // Read more at https://expressjs.com/en/guide/behind-proxies.html 
+  app.set('trust proxy', true);
+  
   app.use(helmet());
   app.use(corsMiddleware());
   app.use(express.json());

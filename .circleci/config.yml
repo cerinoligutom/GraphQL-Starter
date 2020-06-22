@@ -46,12 +46,14 @@ commands:
         type: string
       environment-id:
         type: string
+      version-label:
+        type: string
     steps:
       - aws-cli/setup
       - run:
           name: 'Update Elastic Beanstalk'
           command: |
-            aws elasticbeanstalk update-environment --application-name << parameters.application-name >> --environment-id << parameters.environment-id >>
+            aws elasticbeanstalk update-environment --application-name << parameters.application-name >> --environment-id << parameters.environment-id >> --version-label << parameters.version-label >>
 
 executors:
   docker_node_executor:

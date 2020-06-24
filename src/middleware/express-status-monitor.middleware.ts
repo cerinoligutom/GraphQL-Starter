@@ -22,6 +22,10 @@ export const expressStatusMonitor = () => {
         ...commonHealthCheckItemArgs,
         path: '/api/v1/maintenance/pgsql-check',
       },
+      {
+        ...commonHealthCheckItemArgs,
+        path: '/api/v1/maintenance/redis-check',
+      },
     ] as IHealthCheckItem[],
   });
 };

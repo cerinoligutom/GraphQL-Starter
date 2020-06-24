@@ -139,6 +139,7 @@ jobs:
       - update_elastic_beanstalk_command:
           application-name: $AWS_EB_APP_NAME_PRODUCTION
           environment-id: $AWS_EB_ENV_ID_PRODUCTION
+          version-label: $AWS_EB_VERSION_LABEL_PRODUCTION
       # - slack/status:
       #     fail_only: true
 
@@ -148,6 +149,7 @@ jobs:
       - update_elastic_beanstalk_command:
           application-name: $AWS_EB_APP_NAME_STAGING
           environment-id: $AWS_EB_ENV_ID_STAGING
+          version-label: $AWS_EB_VERSION_LABEL_STAGING
       # - slack/status:
       #     fail_only: true
 
@@ -157,6 +159,7 @@ jobs:
       - update_elastic_beanstalk_command:
           application-name: $AWS_EB_APP_NAME_TEST
           environment-id: $AWS_EB_ENV_ID_TEST
+          version-label: $AWS_EB_VERSION_LABEL_TEST
       # - slack/status:
       #     fail_only: true
 

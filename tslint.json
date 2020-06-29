@@ -21,7 +21,8 @@
     "member-access": false,
     "import-name": false,
     "prefer-array-literal": false,
-    "no-object-literal-type-assertion": true
+    "no-object-literal-type-assertion": true,
+    "array-type": false
   },
   "rulesDirectory": []
 }

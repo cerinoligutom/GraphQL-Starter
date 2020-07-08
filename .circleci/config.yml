@@ -167,12 +167,26 @@ workflows:
   version: 2
   ci_cd:
     jobs:
-      - prepare
+      - prepare:
+          filters:
+            branches:
+              only:
+                - master
+                - staging
+                - test
+                - develop
 
       - tests:
           # specifying "requires" waits for the listed jobs to finish before executing this job
           requires:
             - prepare
+          filters:
+            branches:
+              only:
+                - master
+                - staging
+                - test
+                - develop
 
       ######## PRODUCTION ########
       - build_and_push_image_production:

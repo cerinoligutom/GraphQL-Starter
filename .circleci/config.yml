@@ -63,8 +63,8 @@ commands:
     steps:
       - slack/status:
           fail_only: << parameters.fail-only >>
-          success_message: ':tada: *"$CIRCLE_JOB"* job has *succeeded* for branch: *"$CIRCLE_BRANCH"*'
-          failure_message: ':red_circle: *"$CIRCLE_JOB"* job has *failed* for branch: *"$CIRCLE_BRANCH"*'
+          success_message: ':tada: *$CIRCLE_JOB* job has *succeeded* for branch: *$CIRCLE_BRANCH*'
+          failure_message: ':red_circle: *$CIRCLE_JOB* job has *failed* for branch: *$CIRCLE_BRANCH*'
 
 executors:
   docker_node_executor:

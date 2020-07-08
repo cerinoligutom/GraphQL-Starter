@@ -4,7 +4,7 @@
   "scripts": {
     "start": "concurrently -n \"api,codegen\" -c \"bgCyan.bold,bgMagenta.bold\" \"npm run nodemon\" \"npm run generate:gql-types\" ",
     "production": "node ./src/app.js",
-    "build": "concurrently -m 1 npm:build:clean npm:build:typescript npm:build:copy-files",
+    "build": "run-s build:clean build:typescript build:copy-files",
     "build:clean": "rimraf build",
     "build:typescript": "tsc",
     "build:copy-files": "copyfiles \"src/**/!(*.ts)\" package*.json tsconfig.json LICENSE build",
@@ -62,6 +62,7 @@
     "knex": "^0.21.1",
     "lodash": "^4.17.15",
     "morgan": "^1.10.0",
+    "npm-run-all": "^4.1.5",
     "objection": "^2.2.0",
     "objection-cursor": "^1.2.3",
     "passport": "^0.4.1",

@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.9.0
   aws-cli: circleci/aws-cli@1.1.0
-  # Uncomment the slack steps on each job if you plan to use Slack Webhooks
+  # Uncomment the slack notify slack steps on each job if you plan to use Slack Webhooks
   # slack: circleci/slack@3.4.2
 
 commands:
@@ -55,6 +55,17 @@ commands:
           command: |
             aws elasticbeanstalk update-environment --application-name << parameters.application-name >> --environment-id << parameters.environment-id >> --version-label << parameters.version-label >>
 
+  notify_slack_command:
+    parameters:
+      fail-only:
+        type: boolean
+        default: false
+    steps:
+      - slack/status:
+          fail_only: << parameters.fail-only >>
+          success_message: ':tada: *"$CIRCLE_JOB"* job has *succeeded* for branch: *"$CIRCLE_BRANCH"*'
+          failure_message: ':red_circle: *"$CIRCLE_JOB"* job has *failed* for branch: *"$CIRCLE_BRANCH"*'
+
 executors:
   docker_node_executor:
     docker:
@@ -77,8 +88,8 @@ jobs:
             npm install
       - save_cache_command
       - persist_workspace_command
-      # - slack/status:
-      #     fail_only: true
+      # - notify_slack_command:
+      #     fail-only: true
 
   # Fan-out (split each step as a job) if it gets big and can afford :)
   tests:
@@ -97,8 +108,7 @@ jobs:
           name: Run tests
           command: |
             npm run test
-      # - slack/status:
-      #     fail_only: true
+      # - notify_slack_command
 
   build_and_push_image_production:
     executor: machine_ubuntu_executor
@@ -108,8 +118,7 @@ jobs:
           tag: 'production,$CIRCLE_SHA1'
           dockerfile: Dockerfile
           path: .
-      # - slack/status:
-      #     fail_only: true
+      # - notify_slack_command
 
   build_and_push_image_staging:
     executor: machine_ubuntu_executor
@@ -119,8 +128,7 @@ jobs:
           tag: 'staging'
           dockerfile: Dockerfile
           path: .
-      # - slack/status:
-      #     fail_only: true
+      # - notify_slack_command
 
   build_and_push_image_test:
     executor: machine_ubuntu_executor
@@ -130,8 +138,7 @@ jobs:
           tag: 'test'
           dockerfile: Dockerfile
           path: .
-      # - slack/status:
-      #     fail_only: true
+      # - notify_slack_command
 
   update_elastic_beanstalk_production:
     executor: aws-cli/default
@@ -140,8 +147,7 @@ jobs:
           application-name: $AWS_EB_APP_NAME_PRODUCTION
           environment-id: $AWS_EB_ENV_ID_PRODUCTION
           version-label: $AWS_EB_VERSION_LABEL_PRODUCTION
-      # - slack/status:
-      #     fail_only: true
+      # - notify_slack_command
 
   update_elastic_beanstalk_staging:
     executor: aws-cli/default
@@ -150,8 +156,7 @@ jobs:
           application-name: $AWS_EB_APP_NAME_STAGING
           environment-id: $AWS_EB_ENV_ID_STAGING
           version-label: $AWS_EB_VERSION_LABEL_STAGING
-      # - slack/status:
-      #     fail_only: true
+      # - notify_slack_command
 
   update_elastic_beanstalk_test:
     executor: aws-cli/default
@@ -160,8 +165,7 @@ jobs:
           application-name: $AWS_EB_APP_NAME_TEST
           environment-id: $AWS_EB_ENV_ID_TEST
           version-label: $AWS_EB_VERSION_LABEL_TEST
-      # - slack/status:
-      #     fail_only: true
+      # - notify_slack_command
 
 workflows:
   version: 2

@@ -22,7 +22,8 @@
     "import-name": false,
     "prefer-array-literal": false,
     "no-object-literal-type-assertion": true,
-    "array-type": false
+    "array-type": false,
+    "ban": [true, { "name": ["*", "forEach"], "message": "Use a for...of loop instead." }]
   },
   "rulesDirectory": []
 }

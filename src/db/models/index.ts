@@ -1,2 +1,2 @@
-export * from './User.model';
-export * from './SystemRole.model';
+export * from './user.model';
+export * from './system-role.model';

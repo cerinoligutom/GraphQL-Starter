@@ -1,7 +1,7 @@
 import * as Knex from 'knex';
 import { bcryptUtil } from '@app/utils';
 import { User } from '../models';
-import { SystemRole } from '../models/SystemRole.model';
+import { SystemRole } from '../models/system-role.model';
 import { PartialModelObject } from 'objection';
 
 const USERS_TABLE_NAME = 'users';

@@ -1,7 +1,7 @@
 import { BaseModel } from './common/BaseModel';
 import * as yup from 'yup';
 import { RelationMappings, Model } from 'objection';
-import { User } from './User.model';
+import { User } from './user.model';
 
 export class SystemRole extends BaseModel {
   static tableName = 'system_roles';

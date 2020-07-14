@@ -1,8 +1,7 @@
 import { BaseModel } from './common/BaseModel';
 import * as yup from 'yup';
 import { RelationMappings, Model } from 'objection';
-import { SystemRole } from './SystemRole.model';
-import { Maybe } from 'graphql-resolvers';
+import { SystemRole } from './system-role.model';
 
 export class User extends BaseModel {
   static tableName = 'users';

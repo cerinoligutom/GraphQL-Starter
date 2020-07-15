@@ -1,4 +1,4 @@
-import { BaseModel } from './common/BaseModel';
+import { BaseModel } from './common/base-model';
 import * as yup from 'yup';
 import { RelationMappings, Model } from 'objection';
 import { User } from './user.model';

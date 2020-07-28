@@ -73,9 +73,9 @@ commands:
         command: |
           echo 'export COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")' >> $BASH_ENV
           source $BASH_ENV
-    - run:
-        name: Lint commit message
-        command: echo "$COMMIT_MESSAGE" | npx commitlint
+      - run:
+          name: Lint commit message
+          command: echo "$COMMIT_MESSAGE" | npx commitlint
 
 executors:
   docker_node_executor:

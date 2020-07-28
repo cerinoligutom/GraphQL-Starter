@@ -66,6 +66,17 @@ commands:
           success_message: ':tada: *$CIRCLE_JOB* job has *succeeded* for branch: *$CIRCLE_BRANCH*'
           failure_message: ':red_circle: *$CIRCLE_JOB* job has *failed* for branch: *$CIRCLE_BRANCH*'
 
+  lint_commit_message:
+    steps:
+      - run:
+        name: Define environment variable with latest commit message
+        command: |
+          echo 'export COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")' >> $BASH_ENV
+          source $BASH_ENV
+    - run:
+        name: Lint commit message
+        command: echo "$COMMIT_MESSAGE" | npx commitlint
+
 executors:
   docker_node_executor:
     docker:
@@ -96,6 +107,7 @@ jobs:
     executor: docker_node_executor
     steps:
       - attach_workspace_command
+      - lint_commit_message
       - run:
           name: Run linter
           command: |

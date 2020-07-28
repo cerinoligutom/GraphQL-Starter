@@ -72,6 +72,8 @@
     "yup": "^0.29.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1",
     "@graphql-codegen/cli": "1.15.1",
     "@graphql-codegen/typescript": "1.15.1",
     "@graphql-codegen/typescript-resolvers": "1.15.1",

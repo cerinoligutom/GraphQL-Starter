@@ -2,6 +2,7 @@
   "name": "graphql-starter",
   "description": "GraphQL Starter",
   "scripts": {
+    "release": "standard-version",
     "start": "concurrently -n \"api,codegen\" -c \"bgCyan.bold,bgMagenta.bold\" \"npm run nodemon\" \"npm run generate:gql-types\" ",
     "production": "node ./src/app.js",
     "build": "run-s build:clean build:typescript build:copy-files",
@@ -101,6 +102,7 @@
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
+    "standard-version": "^8.0.2",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.2",
     "tslint-config-airbnb": "^5.11.2",

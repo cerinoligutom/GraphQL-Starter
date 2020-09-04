@@ -5,7 +5,8 @@ export const cursorArgsSchema = yup.object().shape({
   before: yup.string(),
   after: yup.string().test({
     message: `Define either 'before' or 'after' only.`,
-    test(value: string) {
+    
+    test(value: unknown): boolean {
       if (!value) return true;
 
       return !(value && this.parent.before);

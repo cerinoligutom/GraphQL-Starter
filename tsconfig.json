@@ -53,6 +53,7 @@
       "@app/core/interfaces": ["./src/core/interfaces"],
       "@app/core/types/*": ["./src/core/types/*"],
       "@app/core/enums": ["./src/core/enums"],
+      "@app/core/factories/graphql": ["./src/core/factories/graphql"],
       "@app/graphql": ["./src/graphql"],
       "@app/graphql/pubsub": ["./src/graphql-pubsub"],
       "@app/yup-schemas": ["./src/graphql-shield/yup-validation-schemas"],

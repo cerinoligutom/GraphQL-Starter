@@ -10,7 +10,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Project Structure](#project-structure)
 - [List of Packages](#list-of-packages)
 - [Sample Environment File](#sample-environment-file)
-- [Suggested Workflow](#suggested-workflow)
+- [Recommended Workflow](#recommended-workflow)
 - [Naming Convention](#naming-convention)
 - [Deployment](#deployment)
 - [CircleCI Config](#circleci-config)
@@ -115,8 +115,9 @@ Credentials:
 | **src/core/\*\***/\*.ts                                                                         | Business Logic Layer files.                                                                                                                                                                                                        |
 | **src/core**/authorization/`<ability-name>`.ability.ts                                          | CASL Ability (Authorization) files.                                                                                                                                                                                                |
 | **src/core**/enums/`<enum-name>`.enum.ts                                                        | Enum files.                                                                                                                                                                                                                        |
-| **src/core**/error-handler/error-handler.ts                                                     | Centralized error handlng logic                                                                                                                                                                                                    |
+| **src/core**/error-handler/error-handler.ts                                                     | Centralized error handling logic                                                                                                                                                                                                   |
 | **src/core**/error-handler/errors/`<name>Error`.ts                                              | Custom errors                                                                                                                                                                                                                      |
+| **src/core**/factories/graphql/\*.ts                                                            | Factory functions for mapping your database models into graphql objects                                                                                                                                                            |
 | **src/core**/interfaces/\*.ts                                                                   | Interfaces that are shared by many and cannot be owned by one module goes here.                                                                                                                                                    |
 | **src/core**/services/`<service-name>`/`<service-name>`.service.ts                              | Business Logic services.                                                                                                                                                                                                           |
 | **src/core**/types/\*.ts                                                                        | Custom types.                                                                                                                                                                                                                      |
@@ -258,7 +259,7 @@ Currently there are 4 environments supported. Make sure the corresponding `.env`
 | TEST        | `.env.test`        |
 | DEVELOPMENT | `.env.development` |
 
-## Suggested Workflow
+## Recommended Workflow
 
 Keep in mind this layered architecture.
 
@@ -269,19 +270,19 @@ The folder structure of this project is mainly functionality-based so it should 
 ### Create a migration script with KnexJS for your database table
 
 1. Run `npm run migrate:make <script_name>`.
-2. Go to the generated script at `src/db/migrations/<your_script>.ts`.
-3. Populate the script accordingly. Use the `addTimestamps.ts` helper if you need timestamps for your table.
+1. Go to the generated script at `src/db/migrations/<your_script>.ts`.
+1. Populate the script accordingly. Use the `addTimestamps.ts` helper if you need timestamps for your table.
 
 ### (Optional) Create a seed script with KnexJS
 
 1. Run `npm run seed:make <script_name>`.
-2. Go to the generated script at `src/db/seeds/<your_script>.ts`.
-3. Populate the script accordingly.
+1. Go to the generated script at `src/db/seeds/<your_script>.ts`.
+1. Populate the script accordingly.
 
 ### Create the corresponding ObjectionJS model
 
 1. Create a TS file at `src/db/models/`.
-2. Populate the file accordingly.
+1. Populate the file accordingly.
    - Make sure to set the static `tableName` property.
    - (Optional) Set the static `relationMappings` property if applicable. See ObjectionJS docs for more details.
    - (Recommended) Create a static `yupSchema` property for a centralized schema validation for that model. See existing models for example. This will later be used on in graphql-shield for graphql input validations.
@@ -290,8 +291,8 @@ The folder structure of this project is mainly functionality-based so it should 
 ### Create a service (Business Logic)
 
 1. Create a new folder at `src/core/services/<service_name>`.
-2. Create the service file under the new folder.
-3. Populate it with the basic stuffs you'll need.
+1. Create the service file under the new folder.
+1. Populate it with the basic stuffs you'll need.
    - Such as the basic CRUD methods.
 
 **Note:** Your Interface Layer shouldn't do any DB Operations directly.
@@ -299,18 +300,34 @@ The folder structure of this project is mainly functionality-based so it should 
 ### Create the GraphQL type definitions for your entity
 
 1. Create a GraphQL file at `src/graphql/typeDefs/`.
-2. Define your GraphQL typedef that you want to expose on your schema.
-3. Think in graphs.
-   - So that your GraphQL schema wouldn't look like a reflection of your database schema.
+1. Define your GraphQL typedef that you want to expose on your schema.
+1. Think in graphs.
+   - Your schema shouldn't necessarily look like a reflection of your database schema.
+
+### Create a GraphQL factory for your entity
+
+1. Create a graphql factory file at `src/core/factories/graphql/`
+   - Recommended file name should be in the format: `<objection-model-name>.graphql-factory.ts`
+1. Create the main factory function inside the file:
+
+   - Recommended function name should be in the format: `<objection-model-name>ToGQLObject`
+   - Make sure to specify the return type of this function to the equivalent GraphQL Object Type.
+   - Example:
+
+     ```ts
+     export userModelToGQLObject(user: UserModel): GQL_User {
+       // ...
+     }
+     ```
 
 ### Create your GraphQL resolvers based on the GraphQL TypeDefs
 
 1. Create a new folder under `src/graphql/resolvers/<entity_name>`.
    - I'd like to group the resolvers by their `type`.
-2. Create an `index.ts` file under that
+1. Create an `index.ts` file under that
    - **Note:** This is important as `schema.ts` uses the `index` barrels (TS files) to get the resolvers.
-3. Create the `query/mutation/subscription` resolver file under the folder.
-4. Implement. Refer to the resolvers under `user` for examples.
+1. Create the `query/mutation/subscription` resolver file under the folder.
+1. Implement. Refer to the resolvers under `user` for examples.
 
 **Tip:** Keep your resolvers thin by making the business logic layer services do the actual work and call those functions in the resolvers.
 
@@ -332,16 +349,16 @@ Generally, use `snake-case`.
 
 In some cases, we include the file `functionality` in its file name in the format:
 
-`file-name.<functionality>.<extension>`
+`<file-name>.<functionality>.<extension>`
 
 For example:
 
 - user`.service`.ts
 - sort-direction`.enum`.ts
-- User`.model`.ts
+- user`.model`.ts
 - async-handler`.util`.ts
 
-TypeScript `interface` and `type` file names should match their definition name.
+TypeScript `Interface` and `Type` file names should match their definition name.
 
 For example:
 
@@ -425,9 +442,7 @@ This is more advanced and can get pretty long so I'll assume you have prepared t
 The workflow would be:
 
 1. Make a PR to a configured branch as per config. Currently `master`, `staging` and `test`.
-
 1. CircleCI would process the pipeline as per config (build, test, deploy).
-
 1. CircleCI would then push the image artifact to AWS ECR then notify AWS Elastic Beanstalk to pull that image and update the environment.
 
 ## CircleCI Config
@@ -480,7 +495,7 @@ Make sure to set these environment variables on your CircleCI project (or contex
 
 ## Pro Tips
 
-- When resolver types are generated by GraphQL Code Generator, the type of the 1st parameter of a **field resolver** is the parent type by default. This is not always true because at runtime, what the parent resolver returns is the actual type/object that will arrive in the field resolver 1st (parent) parameter. In cases like this, you'd need to type assert the parent. See `fullName.query.ts`.
+- When resolver types are generated by GraphQL Code Generator, the type of the 1st parameter of a **field resolver** is the parent type by default. This is not always true because at runtime, what the parent resolver returns is the actual type/object that will arrive in the field resolver 1st (parent) parameter. In cases like this, you'd need to type assert the parent. See `full-name.query.ts`.
 
   - Another example for this is let's say we have a `pets` table and a pet has an `ownerId` but in your GraphQL Schema, what you expose is `owner` and not `ownerId`. You won't have access to the `ownerId` in your resolver because GraphQL Code Generator generated what you defined in the schema. You'll have then to type assert in your resolver the type you know you returned.
 

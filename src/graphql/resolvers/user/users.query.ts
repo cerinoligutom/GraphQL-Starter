@@ -1,7 +1,8 @@
 import { GQL_QueryResolvers, GQL_UserConnection, GQL_UserEdge } from 'graphql-resolvers';
 import { UserSortField, SortDirection } from '@app/core/enums';
+import { userModelToGQLObject } from '@app/core/factories/graphql';
 
-export const usersResolver: GQL_QueryResolvers['users'] = async (parent, args, { services }) => {
+export const usersResolver: GQL_QueryResolvers['users'] = async (root, args, { services }) => {
   const { userService } = services;
 
   if (!args.sortBy) {
@@ -22,7 +23,7 @@ export const usersResolver: GQL_QueryResolvers['users'] = async (parent, args, {
   const userConnection: GQL_UserConnection = {
     edges: result.results.map<GQL_UserEdge>((x) => ({
       cursor: x.cursor,
-      node: x.data,
+      node: userModelToGQLObject(x.data),
     })),
     nodes: result.results.map((x) => x.data),
     pageInfo: result.pageInfo,

@@ -25,7 +25,7 @@ export const usersResolver: GQL_QueryResolvers['users'] = async (root, args, { s
       cursor: x.cursor,
       node: userModelToGQLObject(x.data),
     })),
-    nodes: result.results.map((x) => x.data),
+    nodes: result.results.map((x) => userModelToGQLObject(x.data)),
     pageInfo: result.pageInfo,
     totalCount: result.totalCount,
   };

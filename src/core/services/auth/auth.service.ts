@@ -1,11 +1,11 @@
-import { User } from '@app/db/models';
+import { UserModel } from '@app/db/models';
 import { bcryptUtil } from '@app/utils';
 import { GQL_RegisterInput } from 'graphql-resolvers';
 import { EmailAlreadyTakenError } from '@app/error-handler/errors/EmailAlreadyTakenError';
 import { UsernameAlreadyTakenError } from '@app/error-handler/errors/UsernameAlreadyTakenError';
 
-async function login(usernameOrEmail: string, password: string): Promise<User> {
-  const user = await User.query().where('username', usernameOrEmail).orWhere('email', usernameOrEmail).first();
+async function login(usernameOrEmail: string, password: string): Promise<UserModel> {
+  const user = await UserModel.query().where('username', usernameOrEmail).orWhere('email', usernameOrEmail).first();
 
   if (user) {
     const isValidPassword = await bcryptUtil.verify(password, user.hash, user.salt);
@@ -18,23 +18,23 @@ async function login(usernameOrEmail: string, password: string): Promise<User> {
   throw new Error('Invalid username/email or password');
 }
 
-async function register(input: GQL_RegisterInput): Promise<User> {
+async function register(input: GQL_RegisterInput): Promise<UserModel> {
   const { firstName, middleName, lastName, email, password, username } = input;
 
   const salt = await bcryptUtil.generateSalt();
   const hash = await bcryptUtil.generateHash(password, salt);
 
-  const existingUsername = await User.query().where('username', username).first();
+  const existingUsername = await UserModel.query().where('username', username).first();
   if (existingUsername) {
     throw new UsernameAlreadyTakenError();
   }
 
-  const existingEmail = await User.query().where('email', email).first();
+  const existingEmail = await UserModel.query().where('email', email).first();
   if (existingEmail) {
     throw new EmailAlreadyTakenError();
   }
 
-  const form: User = new User();
+  const form: UserModel = new UserModel();
   form.set({
     firstName,
     middleName,
@@ -45,7 +45,7 @@ async function register(input: GQL_RegisterInput): Promise<User> {
     salt,
   });
 
-  return User.query().insertAndFetch(form);
+  return UserModel.query().insertAndFetch(form);
 }
 
 export const authService = {

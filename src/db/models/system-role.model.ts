@@ -1,7 +1,7 @@
 import { BaseModel } from './common/base-model';
 import * as yup from 'yup';
 import { RelationMappings, Model } from 'objection';
-import { User } from './user.model';
+import { UserModel } from './user.model';
 
 export class SystemRole extends BaseModel {
   static tableName = 'system_roles';
@@ -33,5 +33,5 @@ export class SystemRole extends BaseModel {
   createdAt!: Date;
   updatedAt!: Date;
 
-  users?: User[];
+  users?: UserModel[];
 }

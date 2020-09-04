@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { User } from '@app/db/models';
+import { UserModel } from '@app/db/models';
 
 export const loginSchema = yup.object({
   input: yup.object({
@@ -9,7 +9,7 @@ export const loginSchema = yup.object({
       .test({
         message: 'Username/Email does not exist.',
         test: async (value: string) => {
-          const user = await User.query().where('username', value).orWhere('email', value).first();
+          const user = await UserModel.query().where('username', value).orWhere('email', value).first();
 
           return !!user;
         },

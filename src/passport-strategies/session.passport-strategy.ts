@@ -1,5 +1,5 @@
 import passport from 'passport';
-import { User as DB_User } from '@app/db/models';
+import { UserModel as DB_User } from '@app/db/models';
 import { userService } from '@app/core/services';
 
 passport.serializeUser((user: DB_User, done) => {

@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { RelationMappings, Model } from 'objection';
 import { SystemRole } from './system-role.model';
 
-export class User extends BaseModel {
+export class UserModel extends BaseModel {
   static tableName = 'users';
   static readonly modelName = 'User';
 

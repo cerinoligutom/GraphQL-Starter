@@ -1,5 +1,5 @@
 import { GQL_QueryResolvers, Maybe, GQL_User } from 'graphql-resolvers';
-import { User as DB_User } from '@app/db/models';
+import { UserModel as DB_User } from '@app/db/models';
 import { getNodeType } from '@app/utils';
 
 type User = GQL_User & DB_User;

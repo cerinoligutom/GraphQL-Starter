@@ -1,7 +1,7 @@
 import * as yup from 'yup';
-import { User } from '@app/db/models';
+import { UserModel } from '@app/db/models';
 
-const { firstName, middleName, lastName, username, email } = User.yupSchema;
+const { firstName, middleName, lastName, username, email } = UserModel.yupSchema;
 
 export const registerSchema = yup.object({
   input: yup.object({

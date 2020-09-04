@@ -1,7 +1,6 @@
 import * as Knex from 'knex';
 import { bcryptUtil } from '@app/utils';
-import { User } from '../models';
-import { SystemRole } from '../models/system-role.model';
+import { UserModel, SystemRole } from '@app/db/models';
 import { PartialModelObject } from 'objection';
 
 const USERS_TABLE_NAME = 'users';
@@ -25,7 +24,7 @@ export async function seed(knex: Knex): Promise<any> {
   const defaultPassword = 'password';
   const salt = await bcryptUtil.generateSalt();
   const hash = await bcryptUtil.generateHash(defaultPassword, salt);
-  const superadmin: PartialModelObject<User> = {
+  const superadmin: PartialModelObject<UserModel> = {
     hash,
     salt,
     username: 'superadmin',

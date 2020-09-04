@@ -1,15 +1,15 @@
-import { User } from '@app/db/models';
+import { UserModel } from '@app/db/models';
 import { OrderByDirection } from 'objection';
 import { ICursorPaginationResult } from '@app/core/interfaces';
 import { UserSortField } from '@app/core/enums';
 import { Maybe } from 'graphql-resolvers';
 
-async function getById(id: string): Promise<User> {
-  return User.query().findById(id);
+async function getById(id: string): Promise<UserModel> {
+  return UserModel.query().findById(id);
 }
 
-async function getByIds(ids: string[]): Promise<User[]> {
-  return User.query().findByIds(ids);
+async function getByIds(ids: string[]): Promise<UserModel[]> {
+  return UserModel.query().findByIds(ids);
 }
 
 interface IUserCursorPaginatedArgs {
@@ -19,10 +19,10 @@ interface IUserCursorPaginatedArgs {
   sortDirection: OrderByDirection;
   sortField: UserSortField;
 }
-async function getCursorPaginated(args: IUserCursorPaginatedArgs): Promise<ICursorPaginationResult<User>> {
+async function getCursorPaginated(args: IUserCursorPaginatedArgs): Promise<ICursorPaginationResult<UserModel>> {
   const { before, after, first, sortDirection, sortField } = args;
 
-  const query = User.query().orderBy(sortField, sortDirection).limit(first);
+  const query = UserModel.query().orderBy(sortField, sortDirection).limit(first);
 
   if (before) {
     return query.previousCursorPage(before);

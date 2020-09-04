@@ -1,13 +1,13 @@
 // tslint:disable: no-any
 
 import { AbilityBuilder, InferSubjects, Ability } from '@casl/ability';
-import { User } from '@app/db/models';
+import { UserModel } from '@app/db/models';
 import { createAbility } from './common/casl-helpers';
 import { rolePermissions } from './role-permissions';
 
 // Modify these as per your needs
 type Action = 'manage' | 'create' | 'read' | 'update' | 'delete';
-type Subject = typeof User;
+type Subject = typeof UserModel;
 
 // Do not touch
 export type SystemAbilityAction = Action;
@@ -22,7 +22,7 @@ export async function defineSystemAbilitiesFor(userId?: string) {
     return createAbility<SystemAbilityAction, SystemAbilitySubject>(rules);
   }
 
-  const user = await User.query().findById(userId).withGraphFetched('roles');
+  const user = await UserModel.query().findById(userId).withGraphFetched('roles');
   if (!user) {
     throw new Error(`Failed to create abilities. User ID "${userId}" does not exist.`);
   }

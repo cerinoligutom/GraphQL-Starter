@@ -1,6 +1,6 @@
 import * as Knex from 'knex';
 import { bcryptUtil } from '@app/utils';
-import { UserModel, SystemRole } from '@app/db/models';
+import { UserModel, SystemRoleModel } from '@app/db/models';
 import { PartialModelObject } from 'objection';
 
 const USERS_TABLE_NAME = 'users';
@@ -10,7 +10,7 @@ const USER_ROLES_TABLE_NAME = 'user_system_roles';
 // tslint:disable-next-line: no-any
 export async function seed(knex: Knex): Promise<any> {
   // Create Super Admin Role
-  const superadminRole: PartialModelObject<SystemRole> = {
+  const superadminRole: PartialModelObject<SystemRoleModel> = {
     // Note:
     // If you plan to change the name of the superadmin role, make sure to change also the value in the SystemRole enum
     name: 'Super Administrator',

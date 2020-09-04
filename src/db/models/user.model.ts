@@ -1,7 +1,7 @@
 import { BaseModel } from './common/base-model';
 import * as yup from 'yup';
 import { RelationMappings, Model } from 'objection';
-import { SystemRole } from './system-role.model';
+import { SystemRoleModel } from './system-role.model';
 
 export class UserModel extends BaseModel {
   static tableName = 'users';
@@ -10,7 +10,7 @@ export class UserModel extends BaseModel {
   static relationMappings: RelationMappings = {
     roles: {
       relation: Model.ManyToManyRelation,
-      modelClass: `${__dirname}/SystemRole.model`,
+      modelClass: `${__dirname}/system-role.model`,
       join: {
         from: 'users.id',
         through: {
@@ -45,5 +45,5 @@ export class UserModel extends BaseModel {
   createdAt!: Date;
   updatedAt!: Date;
 
-  roles?: SystemRole[];
+  roles?: SystemRoleModel[];
 }

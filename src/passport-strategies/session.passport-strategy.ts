@@ -1,8 +1,8 @@
 import passport from 'passport';
-import { UserModel as DB_User } from '@app/db/models';
+import { UserModel } from '@app/db/models';
 import { userService } from '@app/core/services';
 
-passport.serializeUser((user: DB_User, done) => {
+passport.serializeUser((user: UserModel, done) => {
   done(null, user.id);
 });
 
@@ -20,6 +20,6 @@ passport.deserializeUser(async (userId: string, done) => {
 declare global {
   namespace Express {
     // tslint:disable-next-line: no-empty-interface
-    interface User extends DB_User {}
+    interface User extends UserModel {}
   }
 }

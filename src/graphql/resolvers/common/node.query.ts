@@ -1,8 +1,8 @@
 import { GQL_QueryResolvers, Maybe, GQL_User } from 'graphql-resolvers';
-import { UserModel as DB_User } from '@app/db/models';
+import { UserModel } from '@app/db/models';
 import { getNodeType } from '@app/utils';
 
-type User = GQL_User & DB_User;
+type User = GQL_User & UserModel;
 
 export const nodeResolver: GQL_QueryResolvers['node'] = async (parent, { id }, { loaders }, info) => {
   const nodeType = getNodeType(info.fieldNodes[0]);

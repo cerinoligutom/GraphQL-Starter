@@ -3,13 +3,13 @@ import * as yup from 'yup';
 import { RelationMappings, Model } from 'objection';
 import { UserModel } from './user.model';
 
-export class SystemRole extends BaseModel {
+export class SystemRoleModel extends BaseModel {
   static tableName = 'system_roles';
 
   static relationMappings: RelationMappings = {
     users: {
       relation: Model.ManyToManyRelation,
-      modelClass: `${__dirname}/User.model`,
+      modelClass: `${__dirname}/user.model`,
       join: {
         from: 'system_roles.id',
         through: {

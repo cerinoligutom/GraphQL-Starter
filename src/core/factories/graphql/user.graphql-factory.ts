@@ -10,8 +10,10 @@ import { GQL_User } from 'graphql-resolvers';
 // IMPORTANT:
 // Make sure to set the return type of the factory functions!
 
-export function userModelToGQLObject(user: UserModel): GQL_User {
+export function createGQL_User(user: UserModel): GQL_User {
   return {
+    ...user,
+
     id: user.id,
     firstName: user.firstName,
     middleName: user.middleName,

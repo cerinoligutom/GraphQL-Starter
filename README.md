@@ -117,7 +117,7 @@ Credentials:
 | **src/core**/enums/`<enum-name>`.enum.ts                                                        | Enum files.                                                                                                                                                                                                                        |
 | **src/core**/error-handler/error-handler.ts                                                     | Centralized error handling logic                                                                                                                                                                                                   |
 | **src/core**/error-handler/errors/`<name>Error`.ts                                              | Custom errors                                                                                                                                                                                                                      |
-| **src/core**/factories/graphql/\*.ts                                                            | Factory functions for mapping your database models into graphql objects                                                                                                                                                            |
+| **src/core**/factories/graphql/\*.graphql-factory.ts                                            | Factory functions for mapping your database models into graphql objects                                                                                                                                                            |
 | **src/core**/interfaces/\*.ts                                                                   | Interfaces that are shared by many and cannot be owned by one module goes here.                                                                                                                                                    |
 | **src/core**/services/`<service-name>`/`<service-name>`.service.ts                              | Business Logic services.                                                                                                                                                                                                           |
 | **src/core**/types/\*.ts                                                                        | Custom types.                                                                                                                                                                                                                      |
@@ -147,7 +147,7 @@ Credentials:
 | **src/routes**/`<api-version>`/`<router-name>`.routes.ts                                        | Node Express Router files.                                                                                                                                                                                                         |
 | **src/routes**/index.ts                                                                         | Node Express Routes initialization.                                                                                                                                                                                                |
 | **src/utils**/`<utility-name>`.util.ts                                                          | Utility files.                                                                                                                                                                                                                     |
-| **src/utils**/asyncHandler.util.ts                                                              | Async wrapper for Node Express middlewares/controllers.                                                                                                                                                                            |
+| **src/utils**/async-handler.util.ts                                                             | Async wrapper for Node Express middlewares/controllers.                                                                                                                                                                            |
 | **src/utils**/bcrypt.util.ts                                                                    | Utility for generating salt/hash and verifying passwords.                                                                                                                                                                          |
 | **src/utils**/jwt.util.ts                                                                       | Utility for JWT verification and generation.                                                                                                                                                                                       |
 | **src/utils**/logger.util.ts                                                                    | Logging utility. Make sure to use the `logger` function if you want logs go to the `logs/*.log`.                                                                                                                                   |
@@ -307,15 +307,15 @@ The folder structure of this project is mainly functionality-based so it should 
 ### Create a GraphQL factory for your entity
 
 1. Create a graphql factory file at `src/core/factories/graphql/`
-   - Recommended file name should be in the format: `<objection-model-name>.graphql-factory.ts`
+   - Recommended file name should be in the format: `<graphql-object-type-name>.graphql-factory.ts`
 1. Create the main factory function inside the file:
 
-   - Recommended function name should be in the format: `<objection-model-name>ToGQLObject`
-   - Make sure to specify the return type of this function to the equivalent GraphQL Object Type.
+   - Recommended function name should be in the format: `createGQL_<graphql-object-type-name>`
+   - Make sure to specify the return type of this function to the equivalent GraphQL Object Type generated by GraphQL Code Generator.
    - Example:
 
      ```ts
-     export userModelToGQLObject(user: UserModel): GQL_User {
+     export createGQL_User(user: UserModel): GQL_User {
        // ...
      }
      ```

@@ -1,1 +1,1 @@
-export * from './user-model.graphql-factory';
+export * from './user.graphql-factory';

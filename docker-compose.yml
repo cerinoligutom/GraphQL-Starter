@@ -37,12 +37,12 @@ services:
   redis:
     image: redis:5-alpine
     restart: always
+    volumes:
+      - redis-data:/data
 
   redis-commander:
     image: rediscommander/redis-commander:latest
     restart: always
-    volumes:
-      - redis-data:/data
     ports:
       - '8889:8081'
     environment:

@@ -11,7 +11,7 @@ type UserConnection {
 
 type UserEdge {
   cursor: String!
-  node: User
+  node: User!
 }
 
 input UserSort {

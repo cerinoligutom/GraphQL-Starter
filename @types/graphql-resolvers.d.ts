@@ -4,7 +4,9 @@ import { FileUpload } from '../src/graphql/scalars/Upload.scalar';
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { IGraphQLContext } from '../src/graphql/index';
 export type Maybe<T> = T | null | undefined;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
+export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -17,6 +19,7 @@ export type Scalars = {
   Time: Date;
   Upload: FileUpload;
   GUID: string;
+  JSON: any;
 };
 
 export type GQL_Mutation = {
@@ -140,6 +143,7 @@ export type GQL_DummySubscriptionPayload = {
 
 
 
+
 export type GQL_User = GQL_Node & {
   __typename?: 'User';
   id: Scalars['GUID'];
@@ -151,6 +155,7 @@ export type GQL_User = GQL_Node & {
   email?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  permissions?: Maybe<Scalars['JSON']>;
 };
 
 export type GQL_UserConnection = {
@@ -164,7 +169,7 @@ export type GQL_UserConnection = {
 export type GQL_UserEdge = {
   __typename?: 'UserEdge';
   cursor: Scalars['String'];
-  node?: Maybe<GQL_User>;
+  node: GQL_User;
 };
 
 export type GQL_UserSort = {
@@ -272,6 +277,7 @@ export type GQL_ResolversTypes = {
   Time: ResolverTypeWrapper<Scalars['Time']>;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
   GUID: ResolverTypeWrapper<Scalars['GUID']>;
+  JSON: ResolverTypeWrapper<Scalars['JSON']>;
   User: ResolverTypeWrapper<GQL_User>;
   UserConnection: ResolverTypeWrapper<GQL_UserConnection>;
   UserEdge: ResolverTypeWrapper<GQL_UserEdge>;
@@ -292,7 +298,6 @@ export type GQL_ResolversParentTypes = {
   Int: Scalars['Int'];
   Node: GQL_ResolversParentTypes['User'];
   PageInfo: GQL_PageInfo;
-  SortDirection: SortDirection;
   File: GQL_File;
   Subscription: {};
   DummySubscriptionPayload: GQL_DummySubscriptionPayload;
@@ -301,11 +306,11 @@ export type GQL_ResolversParentTypes = {
   Time: Scalars['Time'];
   Upload: Scalars['Upload'];
   GUID: Scalars['GUID'];
+  JSON: Scalars['JSON'];
   User: GQL_User;
   UserConnection: GQL_UserConnection;
   UserEdge: GQL_UserEdge;
   UserSort: GQL_UserSort;
-  UserSortField: UserSortField;
 };
 
 export type GQL_MutationResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['Mutation'] = GQL_ResolversParentTypes['Mutation']> = {
@@ -350,6 +355,8 @@ export type GQL_PageInfoResolvers<ContextType = IGraphQLContext, ParentType exte
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
+export type GQL_SortDirectionResolvers = EnumResolverSignature<{ ASC?: any, DESC?: any }, GQL_ResolversTypes['SortDirection']>;
+
 export type GQL_FileResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['File'] = GQL_ResolversParentTypes['File']> = {
   filename?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>;
   mimetype?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>;
@@ -386,6 +393,10 @@ export interface GQL_GuidScalarConfig extends GraphQLScalarTypeConfig<GQL_Resolv
   name: 'GUID';
 }
 
+export interface GQL_JsonScalarConfig extends GraphQLScalarTypeConfig<GQL_ResolversTypes['JSON'], any> {
+  name: 'JSON';
+}
+
 export type GQL_UserResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['User'] = GQL_ResolversParentTypes['User']> = {
   id?: Resolver<GQL_ResolversTypes['GUID'], ParentType, ContextType>;
   firstName?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
@@ -396,6 +407,7 @@ export type GQL_UserResolvers<ContextType = IGraphQLContext, ParentType extends 
   email?: Resolver<Maybe<GQL_ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<GQL_ResolversTypes['DateTime']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<GQL_ResolversTypes['DateTime']>, ParentType, ContextType>;
+  permissions?: Resolver<Maybe<GQL_ResolversTypes['JSON']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -409,17 +421,20 @@ export type GQL_UserConnectionResolvers<ContextType = IGraphQLContext, ParentTyp
 
 export type GQL_UserEdgeResolvers<ContextType = IGraphQLContext, ParentType extends GQL_ResolversParentTypes['UserEdge'] = GQL_ResolversParentTypes['UserEdge']> = {
   cursor?: Resolver<GQL_ResolversTypes['String'], ParentType, ContextType>;
-  node?: Resolver<Maybe<GQL_ResolversTypes['User']>, ParentType, ContextType>;
+  node?: Resolver<GQL_ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
+
+export type GQL_UserSortFieldResolvers = EnumResolverSignature<{ CREATED_AT?: any, UPDATED_AT?: any }, GQL_ResolversTypes['UserSortField']>;
 
 export type GQL_Resolvers<ContextType = IGraphQLContext> = {
   Mutation?: GQL_MutationResolvers<ContextType>;
   RegisterPayload?: GQL_RegisterPayloadResolvers<ContextType>;
   LoginPayload?: GQL_LoginPayloadResolvers<ContextType>;
   Query?: GQL_QueryResolvers<ContextType>;
-  Node?: GQL_NodeResolvers;
+  Node?: GQL_NodeResolvers<ContextType>;
   PageInfo?: GQL_PageInfoResolvers<ContextType>;
+  SortDirection?: GQL_SortDirectionResolvers;
   File?: GQL_FileResolvers<ContextType>;
   Subscription?: GQL_SubscriptionResolvers<ContextType>;
   DummySubscriptionPayload?: GQL_DummySubscriptionPayloadResolvers<ContextType>;
@@ -428,9 +443,11 @@ export type GQL_Resolvers<ContextType = IGraphQLContext> = {
   Time?: GraphQLScalarType;
   Upload?: GraphQLScalarType;
   GUID?: GraphQLScalarType;
+  JSON?: GraphQLScalarType;
   User?: GQL_UserResolvers<ContextType>;
   UserConnection?: GQL_UserConnectionResolvers<ContextType>;
   UserEdge?: GQL_UserEdgeResolvers<ContextType>;
+  UserSortField?: GQL_UserSortFieldResolvers;
 };
 
 

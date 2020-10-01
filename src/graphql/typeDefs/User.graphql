@@ -8,4 +8,5 @@ type User implements Node {
   email: String
   createdAt: DateTime
   updatedAt: DateTime
+  permissions: JSON
 }

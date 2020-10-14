@@ -10,7 +10,7 @@ enum Environment {
 // NOTE: Modify this variable to switch environments during local development
 const CURRENT_ENVIRONMENT = Environment.DEVELOPMENT;
 
-const { APP_ENV, NODE_ENV } = initEnvironment(CURRENT_ENVIRONMENT);
+const { APP_ENV, isProduction } = initEnvironment(CURRENT_ENVIRONMENT);
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -26,7 +26,7 @@ interface IEnvironmentConfig {
 }
 
 export const env: IEnvironmentConfig = {
-  isProduction: ['production', 'staging'].includes(NODE_ENV),
+  isProduction,
   app: {
     environment: APP_ENV,
     port: +process.env.APP_PORT! || 8080,
@@ -48,33 +48,29 @@ console.info(`${'='.repeat(40)}`);
 //////////////////////////////////////////////////////////////////////////////
 
 function initEnvironment(currentEnvironment: Environment) {
-  // Check if NODE_ENV is valid
-  const VALID_NODE_ENVIRONMENTS = ['development', 'production'];
-  const nodeEnvironment = process.env.NODE_ENV;
-  if (nodeEnvironment && !VALID_NODE_ENVIRONMENTS.includes(nodeEnvironment)) {
-    throw new Error(`Invalid NODE_ENV value: ${nodeEnvironment}`);
-  }
+  // tslint:disable-next-line: no-shadowed-variable
+  let isProduction = false;
 
-  // Prioritize NODE_ENV
-  const appEnvironment = (process.env.NODE_ENV ?? currentEnvironment).toLowerCase() as Environment;
+  // Load dotenv based on app environment
+  dotenv.config({
+    path: `.env.${currentEnvironment}`,
+  });
+
+  const appEnvironment = (process.env.NODE_ENV ?? currentEnvironment) as Environment;
 
   // Set NODE_ENV to "production" for production-like environments
   switch (appEnvironment) {
     case Environment.PRODUCTION:
     case Environment.STAGING:
       process.env.NODE_ENV = 'production';
+      isProduction = true;
       break;
     default:
       process.env.NODE_ENV = 'development';
   }
 
-  // Load dotenv based on app environment
-  dotenv.config({
-    path: `.env.${appEnvironment}`,
-  });
-
   return {
-    APP_ENV: appEnvironment,
-    NODE_ENV: nodeEnvironment!,
+    isProduction,
+    APP_ENV: currentEnvironment,
   };
 }

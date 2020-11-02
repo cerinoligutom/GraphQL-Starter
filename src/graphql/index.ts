@@ -81,7 +81,7 @@ export const initApolloGraphqlServer = async (app: Express) => {
 
     engine: {
       apiKey: apolloOptions.apolloKey,
-      schemaTag: env.app.environment,
+      graphVariant: env.app.environment,
       /**
        * Note:
        * You can control what gets sent over to Apollo Graph Manager thru this function.

@@ -368,7 +368,7 @@ For example:
 | `ICursorResult`           | `ICursorResult`.ts           |
 | `IPageInfo`               | `IPageInfo`.ts               |
 | `Await`                   | `Await`.ts                   |
-| `ExcludeMaybe`            | `ExcludeMaybe`.ts            |
+| `Maybe`                   | `Maybe`.ts                   |
 
 ## Deployment
 

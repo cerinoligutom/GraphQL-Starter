@@ -1,8 +1,7 @@
-import { ExcludeMaybe } from '@app/core/types/ExcludeMaybe';
 import { GQL_ResolversParentTypes, Maybe } from 'graphql-resolvers';
 import { FieldNode, InlineFragmentNode } from 'graphql';
 
-type ValidNodeType = ExcludeMaybe<GQL_ResolversParentTypes['Node']['__typename']>;
+type ValidNodeType = NonNullable<GQL_ResolversParentTypes['Node']['__typename']>;
 export function getNodeType(fieldNode: Maybe<FieldNode>): ValidNodeType | null {
   if (!fieldNode?.selectionSet) {
     return null;

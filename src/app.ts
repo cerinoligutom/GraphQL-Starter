@@ -1,7 +1,7 @@
 import 'tsconfig-paths/register';
 import { env } from '@app/config/environment';
 
-import { errorMiddleware, httpLogger, expressStatusMonitor, corsMiddleware, sessionMiddleware } from '@app/middleware';
+import { errorMiddleware, httpLogger, expressStatusMonitorMiddleware, corsMiddleware, sessionMiddleware } from '@app/middleware';
 import { ping as pingPostgresDatabase } from './db/knex';
 import { pingRedisDatabase } from './redis/client';
 import { initRoutes } from './routes';
@@ -46,7 +46,7 @@ const app = express();
   app.use(cookieParser());
   app.use(sessionMiddleware());
   app.use(compression());
-  app.use(expressStatusMonitor());
+  app.use(expressStatusMonitorMiddleware());
   app.use(httpLogger);
   app.use(passport.initialize());
   app.use(passport.session());

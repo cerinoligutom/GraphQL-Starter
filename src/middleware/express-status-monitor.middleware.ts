@@ -14,7 +14,7 @@ const commonHealthCheckItemArgs: Partial<IHealthCheckItem> = {
   port: `${env.app.port}`,
 };
 
-export const expressStatusMonitor = () => {
+export const expressStatusMonitorMiddleware = () => {
   return require('express-status-monitor')({
     title: 'API Status',
     healthChecks: [

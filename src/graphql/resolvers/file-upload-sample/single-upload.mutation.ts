@@ -1,4 +1,5 @@
-import { GQL_MutationResolvers } from 'graphql-resolvers';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { GQL_MutationResolvers } from '@app/graphql-schema-types';
 
 export const singleUploadResolver: GQL_MutationResolvers['singleUpload'] = async (_, { file }) => {
   const { createReadStream, filename, mimetype, encoding } = await file;

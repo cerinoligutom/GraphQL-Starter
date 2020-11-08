@@ -3,7 +3,7 @@ import config from '../../knexfile';
 
 const knex = Knex(config);
 
-export const ping = async () => {
+export const ping = async (): Promise<void> => {
   try {
     await knex.raw('select 1+1 as result');
     console.info('[OK] PG DB');

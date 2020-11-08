@@ -1,7 +1,7 @@
-import { shield, allow, deny, and, IRules } from 'graphql-shield';
+import { shield, allow, and, IRules } from 'graphql-shield';
 import { isAuthenticated, yupRule, can } from './rules';
 import { loginSchema, registerSchema, cursorArgsSchema } from './yup-validation-schemas';
-import { GQL_Resolvers, StitchingResolver } from 'graphql-resolvers';
+import { GQL_Resolvers, StitchingResolver } from '@app/graphql-schema-types';
 
 /**
  * Read more about `GraphQL Shield` if this doesn't make sense to you.
@@ -58,9 +58,10 @@ export const schemaPermissions = shield(rules as IRules, {
  */
 type WildcardRule = { '*': IRules };
 type GraphQLShieldRule = IRules | WildcardRule;
+// eslint-disable-next-line @typescript-eslint/ban-types
 type ModifyShapeType<S> = S extends {}
   ? {
-      // tslint:disable-next-line: no-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       [k in keyof S]: ModifyShapeType<Exclude<S[k], StitchingResolver<any, any, any, any>>>;
     }
   : GraphQLShieldRule;

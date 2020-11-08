@@ -18,8 +18,9 @@ passport.deserializeUser(async (userId: string, done) => {
 
 // We extend the global Express User interface with our User model
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
-    // tslint:disable-next-line: no-empty-interface
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
     interface User extends UserModel {}
   }
 }

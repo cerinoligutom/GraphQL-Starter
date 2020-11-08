@@ -1,6 +1,6 @@
 import * as Knex from 'knex';
 
-export const addTimeStamps = async (knex: Knex, tableName: string) => {
+export const addTimeStamps = async (knex: Knex, tableName: string): Promise<any> => {
   return knex.schema
     .alterTable(tableName, (t) => {
       t.timestamp('createdAt', { precision: 3 }).defaultTo(knex.fn.now());

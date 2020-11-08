@@ -1,4 +1,5 @@
-import { GQL_MutationResolvers } from 'graphql-resolvers';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { GQL_MutationResolvers } from '@app/graphql-schema-types';
 
 export const multipleUploadResolver: GQL_MutationResolvers['multipleUpload'] = async (_, { files }) => {
   const multipleFiles = await Promise.all(

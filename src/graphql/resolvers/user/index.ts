@@ -1,4 +1,4 @@
-import { GQL_Resolvers } from 'graphql-resolvers';
+import { GQL_Resolvers } from '@app/graphql-schema-types';
 import { usersResolver } from './users.query';
 import { fullNameResolver } from './full-name.query';
 import { userPermissionsResolver } from './permissions.query';

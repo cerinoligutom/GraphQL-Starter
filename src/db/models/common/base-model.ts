@@ -1,12 +1,14 @@
-// tslint:disable: max-classes-per-file
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable max-classes-per-file */
 import Objection, { compose, PartialModelObject } from 'objection';
 import knex from '../../knex';
-
-const cursorMixin = require('objection-cursor');
 import { mapToCursorPaginationResult } from './objection-cursor.plugin-helper';
 import { Ability } from '@casl/ability';
 import { SystemAbilityAction, SystemAbilitySubject } from '@app/core/authorization';
 import { screenPermittedFields } from '@app/utils';
+
+const cursorMixin = require('objection-cursor');
 
 // Attach knex to objection model
 Objection.Model.knex(knex);
@@ -37,7 +39,6 @@ export class BaseModel extends EnhancedModel {
   static get QueryBuilder() {
     return class<M extends Objection.Model, R = M[]> extends EnhancedModel.QueryBuilder<M, R> {
       cursorPage(cursor?: string | null, before = false) {
-        // tslint:disable-next-line: no-any
         return super.cursorPage(cursor, before).runAfter((result) => mapToCursorPaginationResult(result as any));
       }
     };

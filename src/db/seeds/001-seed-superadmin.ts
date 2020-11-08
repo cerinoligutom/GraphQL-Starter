@@ -7,7 +7,6 @@ const USERS_TABLE_NAME = 'users';
 const ROLES_TABLE_NAME = 'system_roles';
 const USER_ROLES_TABLE_NAME = 'user_system_roles';
 
-// tslint:disable-next-line: no-any
 export async function seed(knex: Knex): Promise<any> {
   // Create Super Admin Role
   const superadminRole: PartialModelObject<SystemRoleModel> = {
@@ -58,6 +57,4 @@ export async function seed(knex: Knex): Promise<any> {
     },
   ]);
   await knex.raw('? ON CONFLICT DO NOTHING', [assignRoleToUserQuery]);
-
-  return;
 }

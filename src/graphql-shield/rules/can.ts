@@ -2,6 +2,7 @@ import { SystemAbilityAction, SystemAbilitySubject } from '@app/core/authorizati
 import { rule } from 'graphql-shield';
 import { IGraphQLContext } from '@app/graphql';
 import { ForbiddenError } from '@casl/ability';
+import { Rule } from 'graphql-shield/dist/rules';
 
 /**
  * Refer to system ability in authorization for the valid actions and subjects.
@@ -12,7 +13,7 @@ import { ForbiddenError } from '@casl/ability';
  * not always match your database column names so it's better
  * to do it after this layer.
  */
-export const can = (action: SystemAbilityAction, subject: Extract<SystemAbilitySubject, string>) =>
+export const can = (action: SystemAbilityAction, subject: Extract<SystemAbilitySubject, string>): Rule =>
   rule()(async (parent, args, { ability }: IGraphQLContext) => {
     ForbiddenError.from(ability).throwUnlessCan(action, subject);
 

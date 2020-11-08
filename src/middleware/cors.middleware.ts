@@ -1,7 +1,8 @@
 import cors, { CorsOptions } from 'cors';
 import { env } from '@app/config/environment';
+import { RequestHandler } from 'express';
 
-export const corsMiddleware = () => {
+export const corsMiddleware = (): RequestHandler => {
   // Refer to the docs on what works for your use cases. https://github.com/expressjs/cors#readme
   const whitelist = [];
 

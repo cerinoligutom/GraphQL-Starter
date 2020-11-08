@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { ErrorRequestHandler } from 'express';
 import { env } from '@app/config/environment';
 import { handleError } from '@app/error-handler/error-handler';
 
-export const errorMiddleware = () => (err: Error, req: Request, res: Response, next: NextFunction) => {
+export const errorMiddleware = (): ErrorRequestHandler => (err, req, res, next) => {
   if (!err) {
     next();
     return;

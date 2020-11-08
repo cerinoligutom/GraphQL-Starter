@@ -6,6 +6,7 @@ import { applyMiddleware } from 'graphql-middleware';
 import { schemaPermissions } from '../graphql-shield';
 import * as scalars from './scalars';
 import * as enums from './enums';
+import { GraphQLSchema } from 'graphql';
 
 const getTypeDefs = async () => {
   return loadFiles(path.join(__dirname, 'typeDefs/*.graphql'));
@@ -15,7 +16,7 @@ const getResolvers = async () => {
   return loadFiles(path.join(__dirname, 'resolvers/**/index.*'), { ignoreIndex: false, extensions: ['.js', '.ts'] });
 };
 
-export const initializeSchema = async () => {
+export const initializeSchema = async (): Promise<GraphQLSchema> => {
   // Create schema
   const resolvers = {
     ...mergeResolvers(await getResolvers()),

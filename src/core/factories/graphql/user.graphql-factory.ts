@@ -1,5 +1,5 @@
 import { UserModel } from '@app/db/models';
-import { GQL_User } from 'graphql-resolvers';
+import { GQL_User } from '@app/graphql-schema-types';
 
 // NOTE:
 // We need this factory function mainly for type safety and assuring
@@ -29,7 +29,7 @@ export function createGQL_User(user: UserModel): GQL_User {
      * pretty much like how eager loaded fields are separated in our objection models.
      */
 
-    // tslint:disable-next-line: no-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fullName: null as any,
   };
 }

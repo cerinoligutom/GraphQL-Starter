@@ -1,6 +1,6 @@
 import { PubSubEngine } from 'graphql-subscriptions';
-import { PubSubTriggers } from '.';
-import { GQL_DummySubscriptionPayload } from 'graphql-resolvers';
+import { GQL_DummySubscriptionPayload } from '@app/graphql-schema-types';
+import { PubSubTrigger } from './pubsub-trigger';
 
 // NOTE:
 // This is basically an action creator to prevent the user from passing
@@ -13,6 +13,6 @@ import { GQL_DummySubscriptionPayload } from 'graphql-resolvers';
 // be handled here as well or on the "resolve" field of the
 // subscription resolver. The latter is recommended for visibility and to
 // leave this function as a pure action creator (single responsibility).
-export const publishDummyEvent = (pubsub: PubSubEngine) => async (payload: GQL_DummySubscriptionPayload) => {
-  await pubsub.publish(PubSubTriggers.DUMMY_EVENT, payload);
+export const publishDummyEvent = (pubsub: PubSubEngine) => async (payload: GQL_DummySubscriptionPayload): Promise<void> => {
+  await pubsub.publish(PubSubTrigger.DUMMY_EVENT, payload);
 };

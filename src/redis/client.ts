@@ -6,7 +6,7 @@ import { env } from '@app/config/environment';
 
 export const redisClient = new Redis(env.redisConnectionUrl);
 
-export async function pingRedisDatabase() {
+export async function pingRedisDatabase(): Promise<void> {
   try {
     await redisClient.ping();
     console.info('[OK] Redis DB');

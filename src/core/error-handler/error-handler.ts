@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { GraphQLError } from 'graphql';
 import { logger } from '@app/utils';
 import { ValidationError as YupValidationError } from 'yup';
@@ -25,7 +26,7 @@ export function handleError(error: Error): Error {
     /**
      * Convert Yup ValidationError to Apollo GraphQL UserInputError
      */
-    case error instanceof YupValidationError:
+    case error instanceof YupValidationError: {
       const { inner } = error as YupValidationError;
       const validationErrors = inner.map((x) => ({
         path: x.path,
@@ -37,24 +38,26 @@ export function handleError(error: Error): Error {
       });
       userInputError.httpStatusCode = 422;
       return userInputError;
-
+    }
     /**
      * Convert CASL ForbiddenError to Apollo GraphQL ForbiddenError
      */
-    case error instanceof CaslForbiddenError:
+    case error instanceof CaslForbiddenError: {
       const forbiddenError = new GraphQLForbiddenError(error.message);
       forbiddenError.httpStatusCode = 403;
       return forbiddenError;
-
+    }
     /**
      * GraphQL Errors
      */
-    case error instanceof AuthenticationError:
+    case error instanceof AuthenticationError: {
       error.httpStatusCode = 401;
       return error;
-    case error instanceof GraphQLForbiddenError:
+    }
+    case error instanceof GraphQLForbiddenError: {
       error.httpStatusCode = 403;
       return error;
+    }
 
     /**
      * This could either be a truly unhandled Internal Server Error
@@ -95,13 +98,13 @@ function toGraphQLError(handledError: Error, gqlError: GraphQLError) {
   );
 }
 
-export function handleGraphQLError(error: GraphQLError) {
+export function handleGraphQLError(error: GraphQLError): GraphQLError | ApolloError {
   /**
    * Note:
    * "originalError" property only gets populated from errors thrown in our resolvers.
    */
   if (error.originalError instanceof Error) {
-    return toGraphQLError(handleError(error.originalError!), error);
+    return toGraphQLError(handleError(error.originalError), error);
   }
 
   /**

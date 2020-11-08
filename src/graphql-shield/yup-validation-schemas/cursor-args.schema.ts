@@ -4,8 +4,8 @@ export const cursorArgsSchema = yup.object().shape({
   first: yup.number().required().min(0),
   before: yup.string(),
   after: yup.string().test({
-    message: `Define either 'before' or 'after' only.`,
-    
+    message: 'Define either "before" or "after" only.',
+
     test(value: unknown): boolean {
       if (!value) return true;
 

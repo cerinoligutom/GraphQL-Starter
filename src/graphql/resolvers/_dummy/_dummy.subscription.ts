@@ -1,5 +1,10 @@
-import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from 'graphql-resolvers';
-import { pubsub, PubSubTriggers } from '@app/graphql/pubsub';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/naming-convention */
+
+import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from '@app/graphql-schema-types';
+import { pubsub, PubSubTrigger } from '@app/graphql-pubsub';
+// import { PubSubTrigger } from '@app/graphql-pubsub-trigger';
 
 export const _dummyResolver: GQL_SubscriptionResolvers['_dummy'] = {
   resolve: (value: GQL_DummySubscriptionPayload) => {
@@ -26,7 +31,7 @@ export const _dummyResolver: GQL_SubscriptionResolvers['_dummy'] = {
     // things that needs to be done when this resolver is hit.
     startTicker();
 
-    return pubsub.asyncIterator(PubSubTriggers.DUMMY_EVENT);
+    return pubsub.asyncIterator(PubSubTrigger.DUMMY_EVENT);
   },
 };
 
@@ -36,7 +41,7 @@ let count = 0;
 function startTicker(): void {
   if (!timeout) {
     timeout = setInterval(async () => {
-      count = count + 1;
+      count += 1;
 
       const publishedValue = `Dummy Subscription Resolver Tick # ${count}`;
       console.info(`Publishing: ${publishedValue}`);

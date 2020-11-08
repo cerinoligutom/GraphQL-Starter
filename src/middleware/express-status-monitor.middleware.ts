@@ -1,4 +1,7 @@
 import { env } from '@app/config/environment';
+import { RequestHandler } from 'express';
+
+const expressStatusMonitor = require('express-status-monitor');
 
 // https://www.npmjs.com/package/express-status-monitor#health-checks
 interface IHealthCheckItem {
@@ -14,8 +17,8 @@ const commonHealthCheckItemArgs: Partial<IHealthCheckItem> = {
   port: `${env.app.port}`,
 };
 
-export const expressStatusMonitorMiddleware = () => {
-  return require('express-status-monitor')({
+export const expressStatusMonitorMiddleware = (): RequestHandler => {
+  return expressStatusMonitor({
     title: 'API Status',
     healthChecks: [
       {

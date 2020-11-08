@@ -1,4 +1,4 @@
-import { GQL_UserResolvers, GQL_User } from 'graphql-resolvers';
+import { GQL_UserResolvers, GQL_User } from '@app/graphql-schema-types';
 import { UserModel } from '@app/db/models';
 
 export const fullNameResolver: GQL_UserResolvers['fullName'] = async (parent) => {

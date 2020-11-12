@@ -1,4 +1,4 @@
-import { GQL_Resolvers } from 'graphql-resolvers';
+import { GQL_Resolvers } from '@app/graphql-schema-types';
 import { nodeResolver } from './node.query';
 import { nodeInterfaceResolveType } from './node.interface';
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { SortDirection } from '../src/graphql/enums/index';
 import { UserSortField } from '../src/graphql/enums/index';
 import { FileUpload } from '../src/graphql/scalars/Upload.scalar';

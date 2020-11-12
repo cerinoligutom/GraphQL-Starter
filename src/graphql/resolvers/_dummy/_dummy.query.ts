@@ -1,5 +1,6 @@
-import { GQL_QueryResolvers } from 'graphql-resolvers';
+import { GQL_QueryResolvers } from '@app/graphql-schema-types';
 
-export const _dummyResolver: GQL_QueryResolvers['_dummy'] = async (parent, args, context, gqlResolveInfo) => {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const _dummyResolver: GQL_QueryResolvers['_dummy'] = async () => {
   return 'Dummy Query Resolver';
 };

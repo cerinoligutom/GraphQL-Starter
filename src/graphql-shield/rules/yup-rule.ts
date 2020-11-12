@@ -1,10 +1,10 @@
-import { UserInputError } from 'apollo-server-core';
 import * as yup from 'yup';
 import { rule } from 'graphql-shield';
 import * as _ from 'lodash';
+import { Rule } from 'graphql-shield/dist/rules';
 
-// tslint:disable-next-line: no-any
-export const yupRule = (schema: yup.Schema<any>) =>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const yupRule = (schema: yup.Schema<any>): Rule =>
   rule()(async (parent, args) => {
     try {
       const validatedArgs = await schema.validate(args, { abortEarly: false });

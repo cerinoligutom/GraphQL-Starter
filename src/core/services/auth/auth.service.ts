@@ -1,6 +1,6 @@
 import { UserModel } from '@app/db/models';
 import { bcryptUtil } from '@app/utils';
-import { GQL_RegisterInput } from 'graphql-resolvers';
+import { GQL_RegisterInput } from '@app/graphql-schema-types';
 import { EmailAlreadyTakenError } from '@app/error-handler/errors/EmailAlreadyTakenError';
 import { UsernameAlreadyTakenError } from '@app/error-handler/errors/UsernameAlreadyTakenError';
 

@@ -1,4 +1,4 @@
-import { GQL_MutationResolvers } from 'graphql-resolvers';
+import { GQL_MutationResolvers } from '@app/graphql-schema-types';
 import { AuthenticationError } from 'apollo-server-core';
 import { logger } from '@app/utils';
 import { createGQL_User } from '@app/core/factories/graphql';

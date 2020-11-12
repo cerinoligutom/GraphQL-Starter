@@ -1,23 +1,16 @@
-import { GQL_QueryResolvers, GQL_UserConnection, GQL_UserEdge } from 'graphql-resolvers';
+import { GQL_QueryResolvers, GQL_UserConnection, GQL_UserEdge } from '@app/graphql-schema-types';
 import { UserSortField, SortDirection } from '@app/core/enums';
 import { createGQL_User } from '@app/core/factories/graphql';
 
 export const usersResolver: GQL_QueryResolvers['users'] = async (root, args, { services }) => {
   const { userService } = services;
 
-  if (!args.sortBy) {
-    args.sortBy = {
-      field: UserSortField.CREATED_AT,
-      direction: SortDirection.ASC,
-    };
-  }
-
   const result = await userService.getCursorPaginated({
     before: args.before,
     after: args.after,
     first: args.first,
-    sortDirection: args.sortBy.direction,
-    sortField: args.sortBy.field,
+    sortDirection: args.sortBy?.direction ?? SortDirection.ASC,
+    sortField: args.sortBy?.field ?? UserSortField.CREATED_AT,
   });
 
   const userConnection: GQL_UserConnection = {

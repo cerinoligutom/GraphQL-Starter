@@ -1,7 +1,5 @@
-import 'tsconfig-paths/register';
-
-import { Config, MySqlConnectionConfig } from 'knex';
-import { env } from '@app/config/environment';
+import { Config } from 'knex';
+import { env } from './src/config/environment';
 
 const config: Config = {
   client: 'pg',

@@ -2,7 +2,7 @@ import { UserModel } from '@app/db/models';
 import { OrderByDirection } from 'objection';
 import { ICursorPaginationResult } from '@app/core/interfaces';
 import { UserSortField } from '@app/core/enums';
-import { Maybe } from 'graphql-resolvers';
+import { Maybe } from '@app/graphql-schema-types';
 
 async function getById(id: string): Promise<UserModel> {
   return UserModel.query().findById(id);

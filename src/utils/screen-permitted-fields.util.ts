@@ -10,9 +10,9 @@ interface IScreenPermittedFieldsArgs {
   action: SystemAbilityAction;
 }
 
-export const screenPermittedFields = <T extends object>(data: T, { ability, subject, action }: IScreenPermittedFieldsArgs): Partial<T> => {
+export const screenPermittedFields = <T>(data: T, { ability, subject, action }: IScreenPermittedFieldsArgs): Partial<T> => {
   if (Array.isArray(data)) {
-    throw new Error(`"data" is an array. "data" must be of type object.`);
+    throw new Error('"data" is an array. "data" must be of type object.');
   }
 
   const fields: string[] = permittedFieldsOf(ability, action, subject);

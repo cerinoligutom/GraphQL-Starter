@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Express, Request, Response } from 'express';
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
@@ -18,7 +19,7 @@ export interface IGraphQLContext {
   ability: Await<ReturnType<typeof defineSystemAbilitiesFor>>;
 }
 
-export const initApolloGraphqlServer = async (app: Express) => {
+export const initApolloGraphqlServer = async (app: Express): Promise<ApolloServer> => {
   const server = new ApolloServer({
     schema: await initializeSchema(),
 

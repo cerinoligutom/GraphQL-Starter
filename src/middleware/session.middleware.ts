@@ -3,9 +3,11 @@ import { env } from '@app/config/environment';
 import { sessionOptions } from '@app/config/session-options';
 import { redisClient } from '../redis/client';
 import { RedisStore as IRedisStore } from 'connect-redis';
+import { RequestHandler } from 'express';
+
 const RedisStore: IRedisStore = require('connect-redis')(session);
 
-export const sessionMiddleware = () => {
+export const sessionMiddleware = (): RequestHandler => {
   return session({
     secret: sessionOptions.secret,
     saveUninitialized: false,

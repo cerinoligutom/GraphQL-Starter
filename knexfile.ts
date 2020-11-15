@@ -7,6 +7,7 @@ const config: Config = {
   useNullAsDefault: true,
   migrations: {
     directory: './src/db/migrations',
+    loadExtensions: ['.js', '.ts'],
   },
   seeds: {
     directory: './src/db/seeds',

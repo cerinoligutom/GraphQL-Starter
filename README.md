@@ -44,11 +44,6 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Docker](https://www.docker.com/)
 - [NodeJS](https://nodejs.org/)
 - TypeScript
-- TSLint
-- (Optional) Extensions/Plugins:
-  - Apollo GraphQL
-  - Docker
-  - TSLint
 
 ## Getting Started
 
@@ -152,8 +147,10 @@ Credentials:
 | **src/utils**/jwt.util.ts                                                                       | Utility for JWT verification and generation.                                                                                                                                                                                       |
 | **src/utils**/logger.util.ts                                                                    | Logging utility. Make sure to use the `logger` function if you want logs go to the `logs/*.log`.                                                                                                                                   |
 | **src/app.ts**                                                                                  | Main application file.                                                                                                                                                                                                             |
-| **types**/graphql-resolvers.d.ts                                                                | Auto generated types and interfaces by GraphQL Code Generator based on GraphQL Schema files defined at `src/graphql/typeDefs`.                                                                                                     |
-| .dockerignore                                                                                   | Folder and files ignored by docker usage.                                                                                                                                                                                          |
+| **types**/app-graphql-schema-types.d.ts                                                         | Auto generated types and interfaces by GraphQL Code Generator based on GraphQL Schema files defined at `src/graphql/typeDefs`.                                                                                                     |
+| .dockerignore                                                                                   | Folder and files ignored by Docker.                                                                                                                                                                                                |
+| .eslintignore                                                                                   | Folder and files ignored by ESLint.                                                                                                                                                                                                |
+| .eslintrc                                                                                       | ESLint rules.                                                                                                                                                                                                                      |
 | .gitignore                                                                                      | Folder and files ignored by git.                                                                                                                                                                                                   |
 | .huskyrc                                                                                        | Husky config.                                                                                                                                                                                                                      |
 | .lintstagedrc                                                                                   | Lint-staged config git.                                                                                                                                                                                                            |
@@ -169,7 +166,6 @@ Credentials:
 | package.json                                                                                    | NPM dependencies.                                                                                                                                                                                                                  |
 | package-lock.json                                                                               | Contains exact versions of NPM dependencies in package.json.                                                                                                                                                                       |
 | tsconfig.json                                                                                   | Contains typescript configuration for this project.                                                                                                                                                                                |
-| tslint.json                                                                                     | Rules for TSLint linter. Configured to use airbnb style guide and is integrated with prettier formatter.                                                                                                                           |
 
 **Note:** This project structure makes use of **barrel files**, those **index.ts** you see on most of the folders. These barrel files are then used by the `paths` property in `tsconfig.json` for pretty imports. Make sure not to forget this by always exporting the newly created files to their respective **barrel files (index.ts)** if applicable!
 
@@ -214,24 +210,23 @@ Credentials:
 
 ### Dev Dependencies
 
-| Package                               | Description                                                                                                       |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| @graphql-codegen/cli                  | GraphQL Code Generator CLI.                                                                                       |
-| @graphql-codegen/introspection        | GraphQL Code Generator introspection plugin.                                                                      |
-| @graphql-codegen/typescript           | GraphQL Code Generator typescript plugin.                                                                         |
-| @graphql-codegen/typescript-resolvers | GraphQL Code typescript-resolvers plugin.                                                                         |
-| concurrently                          | For running multiple commands concurrently.                                                                       |
-| copyfiles                             | For copying files. Currently used in the build toolchain. Particularly, to copy files needed for the final build. |
-| husky                                 | Git hooks.                                                                                                        |
-| lint-staged                           | Run linters against staged git files.                                                                             |
-| nodemon                               | File watcher.                                                                                                     |
-| prettier                              | File formatter.                                                                                                   |
-| rimraf                                | For deleting folders and/or files.                                                                                |
-| ts-node                               | TypeScript Node environment.                                                                                      |
-| tslint                                | TypeScript linter.                                                                                                |
-| tslint-config-airbnb                  | Airbnb TypeScript style guide configuration for TSLint.                                                           |
-| tslint-config-prettier                | Integration for prettier to use rules defined in TSLint.                                                          |
-| typescript                            | TypeScript compiler.                                                                                              |
+| Package               | Description                                                                                                        |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| @graphql-codegen/\*   | GraphQL Code Generator dependencies.                                                                               |
+| @types/\*             | TypeScript definition files for libs/dependencies written in JS.                                                   |
+| @typescript-eslint/\* | For linting TypeScript with ESLint.                                                                                |
+| concurrently          | For running multiple commands concurrently.                                                                        |
+| copyfiles             | For copying files. Currently used in the build tool chain. Particularly, to copy files needed for the final build. |
+| eslint                | JavaScript linter.                                                                                                 |
+| eslint-\*             | ESLint plugins/modules/etc.                                                                                        |
+| husky                 | Git hooks.                                                                                                         |
+| lint-staged           | Run linters against staged git files.                                                                              |
+| nodemon               | File watcher.                                                                                                      |
+| prettier              | File formatter.                                                                                                    |
+| rimraf                | For deleting folders and/or files.                                                                                 |
+| standard-version      | For SemVer with git tags and auto generated changelog.                                                             |
+| ts-node               | TypeScript Node environment.                                                                                       |
+| typescript            | TypeScript compiler.                                                                                               |
 
 ## Sample Environment File
 
@@ -491,7 +486,6 @@ Make sure to set these environment variables on your CircleCI project (or contex
 ## Future Plans
 
 - Testing
-- Move from TSLint to ESLint
 
 ## Pro Tips
 

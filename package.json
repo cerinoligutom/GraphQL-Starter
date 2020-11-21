@@ -10,7 +10,7 @@
     "build:typescript": "tsc",
     "build:copy-files": "copyfiles \"src/**/!(*.ts)\" package*.json tsconfig.json LICENSE build",
     "ts-node": "ts-node",
-    "nodemon": "nodemon -L",
+    "nodemon": "nodemon",
     "lint": "eslint ./src",
     "prettier": "prettier --write \"src/**/*.{js,ts,json,css,scss,md}\"",
     "migrate:make": "knex --knexfile ./knexfile.* migrate:make -x ts",

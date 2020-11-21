@@ -514,6 +514,8 @@ Make sure to set these environment variables on your CircleCI project (or contex
   2. Then map it to GraphQL Code Generator by adding scalars config in `codegen.yml` such that it points to its corresponding scalar file.
      - Format is: `<Scalar_Name_in_GQL_Schema>: <path_to_custom_type>#<name_of_type>`
 
+- If you're using this repo template with Docker Windows, you'll notice that when you save any file, the watchers aren't reacting. This has something to do with Linux not being able to detect file changes from Windows because the file system events are not being propagated down to Linux. You'll have to resort to polling mechanisms in that case for any tools that watches file changes. I recommend using WSL and developing inside WSL instead.
+
 ## Contributing
 
 If something is unclear, confusing, or needs to be refactored, please let me know. Pull requests are always welcome but do consider the opinionated nature of this project. Please open an issue before submitting a pull request.

@@ -16,7 +16,7 @@ export type SystemAbility = Ability<[SystemAbilityAction, SystemAbilitySubject]>
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function defineSystemAbilitiesFor(userId?: string) {
-  const abilityBuilder = new AbilityBuilder<SystemAbility>();
+  const abilityBuilder = new AbilityBuilder<SystemAbility>(Ability);
   const { rules } = abilityBuilder;
 
   if (!userId) {

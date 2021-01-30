@@ -12,7 +12,7 @@ passport.deserializeUser(async (userId: string, done) => {
     const authenticatedUser = await userService.getById(userId);
     done(null, authenticatedUser);
   } catch (err) {
-    done(err, null);
+    done(err, undefined);
   }
 });
 

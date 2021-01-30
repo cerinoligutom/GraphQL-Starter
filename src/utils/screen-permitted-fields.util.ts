@@ -15,7 +15,14 @@ export const screenPermittedFields = <T>(data: T, { ability, subject, action }: 
     throw new Error('"data" is an array. "data" must be of type object.');
   }
 
-  const fields: string[] = permittedFieldsOf(ability, action, subject);
+  // https://casl.js.org/v5/en/api/casl-ability-extra#permitted-fields-of
+  const fields: string[] = permittedFieldsOf(ability, action, subject, {
+    fieldsFrom: (rule) =>
+      rule.fields ||
+      [
+        /* list of all fields for the model */
+      ],
+  });
 
   if (fields.length === 0 || fields.includes('*')) {
     return data;

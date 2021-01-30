@@ -1,10 +1,10 @@
-import * as yup from 'yup';
+import { SchemaOf } from 'yup';
 import { rule } from 'graphql-shield';
 import * as _ from 'lodash';
 import { Rule } from 'graphql-shield/dist/rules';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const yupRule = (schema: yup.Schema<any>): Rule =>
+export const yupRule = (schema: SchemaOf<any>): Rule =>
   rule()(async (parent, args) => {
     try {
       const validatedArgs = await schema.validate(args, { abortEarly: false });

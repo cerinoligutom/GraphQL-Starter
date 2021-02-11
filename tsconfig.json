@@ -14,9 +14,9 @@
     "noImplicitReturns": true,
 
     "baseUrl": ".",
-    "typeRoots": ["@types", "node_modules/@types"],
+    "typeRoots": ["./@types", "./node_modules/@types"],
     "paths": {
-      "*": ["*", "@types/*"],
+      "@/*": ["./src/*"],
       "@app/graphql-schema-types": ["@types/app-graphql-schema-types"],
       "@app/config/*": ["./src/config/*"],
       "@app/middleware": ["./src/middleware"],

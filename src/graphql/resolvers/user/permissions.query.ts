@@ -1,4 +1,4 @@
-import { GQL_UserResolvers } from '@app/graphql-schema-types';
+import { GQL_UserResolvers } from '@/generated/graphql';
 import { packRules } from '@casl/ability/extra';
 
 export const userPermissionsResolver: GQL_UserResolvers['permissions'] = async (parent, args, { ability, req }) => {

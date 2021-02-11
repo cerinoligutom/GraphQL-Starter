@@ -1,4 +1,4 @@
-import { GQL_QueryResolvers } from '@app/graphql-schema-types';
+import { GQL_QueryResolvers } from '@/generated/graphql';
 import { getNodeType } from '@app/utils';
 import { createGQL_User } from '@app/core/factories/graphql';
 

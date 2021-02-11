@@ -1,4 +1,4 @@
-import { GQL_Resolvers } from '@app/graphql-schema-types';
+import { GQL_Resolvers } from '@/generated/graphql';
 import { singleUploadResolver } from './single-upload.mutation';
 import { multipleUploadResolver } from './multiple-upload.mutation';
 

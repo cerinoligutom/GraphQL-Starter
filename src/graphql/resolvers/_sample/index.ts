@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { GQL_QueryResolvers, GQL_Resolvers } from '@app/graphql-schema-types';
+import { GQL_QueryResolvers, GQL_Resolvers } from '@/generated/graphql';
 import { ForbiddenError } from '@casl/ability';
 
 const _authorizedOnlyQuery: GQL_QueryResolvers['_authorizedOnlyQuery'] = (_, __, ctx) => {

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from '@app/graphql-schema-types';
+import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from '@/generated/graphql';
 import { pubsub, PubSubTrigger } from '@app/graphql-pubsub';
 // import { PubSubTrigger } from '@app/graphql-pubsub-trigger';
 

@@ -1,4 +1,4 @@
-import { GQL_Resolvers } from '@app/graphql-schema-types';
+import { GQL_Resolvers } from '@/generated/graphql';
 import { loginResolver } from './login.mutation';
 import { registerResolver } from './register.mutation';
 import { logoutResolver } from './logout.mutation';

@@ -1,5 +1,5 @@
 import { PubSubEngine } from 'graphql-subscriptions';
-import { GQL_DummySubscriptionPayload } from '@app/graphql-schema-types';
+import { GQL_DummySubscriptionPayload } from '@/generated/graphql';
 import { PubSubTrigger } from './pubsub-trigger';
 
 // NOTE:

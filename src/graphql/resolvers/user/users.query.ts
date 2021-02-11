@@ -1,4 +1,4 @@
-import { GQL_QueryResolvers, GQL_UserConnection, GQL_UserEdge } from '@app/graphql-schema-types';
+import { GQL_QueryResolvers, GQL_UserConnection, GQL_UserEdge } from '@/generated/graphql';
 import { UserSortField, SortDirection } from '@app/core/enums';
 import { createGQL_User } from '@app/core/factories/graphql';
 

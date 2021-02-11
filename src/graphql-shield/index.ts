@@ -1,7 +1,7 @@
 import { shield, allow, and, IRules } from 'graphql-shield';
 import { isAuthenticated, yupRule, can } from './rules';
 import { loginSchema, registerSchema, cursorArgsSchema } from './yup-validation-schemas';
-import { GQL_Resolvers, StitchingResolver } from '@app/graphql-schema-types';
+import { GQL_Resolvers, StitchingResolver } from '@/generated/graphql';
 
 /**
  * Read more about `GraphQL Shield` if this doesn't make sense to you.

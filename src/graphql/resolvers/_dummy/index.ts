@@ -1,4 +1,4 @@
-import { GQL_Resolvers } from '@app/graphql-schema-types';
+import { GQL_Resolvers } from '@/generated/graphql';
 import { _dummyResolver as _dummyQueryResolver } from './_dummy.query';
 import { _dummyResolver as _dummyMutationResolver } from './_dummy.mutation';
 import { _dummyResolver as _dummySubscriptionResolver } from './_dummy.subscription';

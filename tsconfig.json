@@ -17,8 +17,6 @@
     "typeRoots": ["./@types", "./node_modules/@types"],
     "paths": {
       "@/*": ["./src/*"],
-      "@app/middleware": ["./src/middleware"],
-      "@app/utils": ["./src/utils"],
       "@app/controllers": ["./src/controllers"],
       "@app/db/models": ["./src/db/models"],
       "@app/core/authorization": ["./src/core/authorization"],

@@ -6,7 +6,7 @@ import knex from '../../knex';
 import { mapToCursorPaginationResult } from './objection-cursor.plugin-helper';
 import { Ability } from '@casl/ability';
 import { SystemAbilityAction, SystemAbilitySubject } from '@app/core/authorization';
-import { screenPermittedFields } from '@app/utils';
+import { screenPermittedFields } from '@/utils';
 
 const cursorMixin = require('objection-cursor');
 

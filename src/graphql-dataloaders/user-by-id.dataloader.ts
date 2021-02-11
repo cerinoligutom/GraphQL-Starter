@@ -1,4 +1,4 @@
-import { createDataLoader } from '@app/utils';
+import { createDataLoader } from '@/utils';
 import * as coreServices from '@app/core/services';
 
 export const userByIdLoader = ({ userService }: typeof coreServices) => {

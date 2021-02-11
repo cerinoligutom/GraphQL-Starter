@@ -1,5 +1,5 @@
 import { GQL_QueryResolvers } from '@/generated/graphql';
-import { getNodeType } from '@app/utils';
+import { getNodeType } from '@/utils';
 import { createGQL_User } from '@app/core/factories/graphql';
 
 export const nodeResolver: GQL_QueryResolvers['node'] = async (parent, { id }, { loaders }, info) => {

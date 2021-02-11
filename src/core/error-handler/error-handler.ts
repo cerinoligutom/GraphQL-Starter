@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { GraphQLError } from 'graphql';
-import { logger } from '@app/utils';
+import { logger } from '@/utils';
 import { ValidationError as YupValidationError } from 'yup';
 import { UserInputError, AuthenticationError, ForbiddenError as GraphQLForbiddenError, ApolloError } from 'apollo-server-express';
 import { ForbiddenError as CaslForbiddenError } from '@casl/ability';

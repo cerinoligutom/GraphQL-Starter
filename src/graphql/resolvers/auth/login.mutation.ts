@@ -1,6 +1,6 @@
 import { GQL_MutationResolvers } from '@/generated/graphql';
 import { AuthenticationError } from 'apollo-server-core';
-import { logger } from '@app/utils';
+import { logger } from '@/utils';
 import { createGQL_User } from '@app/core/factories/graphql';
 
 export const loginResolver: GQL_MutationResolvers['login'] = async (_, args, { services, req }) => {

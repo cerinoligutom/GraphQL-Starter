@@ -1,7 +1,7 @@
 import 'tsconfig-paths/register';
 import { env } from '@/config/environment';
 
-import { errorMiddleware, httpLogger, expressStatusMonitorMiddleware, corsMiddleware, sessionMiddleware } from '@app/middleware';
+import { errorMiddleware, httpLogger, expressStatusMonitorMiddleware, corsMiddleware, sessionMiddleware } from '@/middleware';
 import { ping as pingPostgresDatabase } from './db/knex';
 import { pingRedisDatabase } from './redis/client';
 import { initRoutes } from './routes';

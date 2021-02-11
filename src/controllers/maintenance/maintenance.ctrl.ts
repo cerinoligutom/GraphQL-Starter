@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { ping as pingPostgresDatabase } from '../../db/knex';
-import { logger } from '@app/utils';
+import { logger } from '@/utils';
 import { pingRedisDatabase } from '../../redis/client';
 
 const healthCheck: RequestHandler = async (req, res) => {

@@ -1,5 +1,5 @@
 import 'tsconfig-paths/register';
-import { env } from '@app/config/environment';
+import { env } from '@/config/environment';
 
 import { errorMiddleware, httpLogger, expressStatusMonitorMiddleware, corsMiddleware, sessionMiddleware } from '@app/middleware';
 import { ping as pingPostgresDatabase } from './db/knex';

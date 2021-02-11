@@ -1,6 +1,6 @@
 import session from 'express-session';
-import { env } from '@app/config/environment';
-import { sessionOptions } from '@app/config/session-options';
+import { env } from '@/config/environment';
+import { sessionOptions } from '@/config/session-options';
 import { redisClient } from '../redis/client';
 import { RedisStore as IRedisStore } from 'connect-redis';
 import { RequestHandler } from 'express';

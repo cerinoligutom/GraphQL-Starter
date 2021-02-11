@@ -1,5 +1,5 @@
 import cors, { CorsOptions } from 'cors';
-import { env } from '@app/config/environment';
+import { env } from '@/config/environment';
 import { RequestHandler } from 'express';
 
 export const corsMiddleware = (): RequestHandler => {

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable max-classes-per-file */
 import Objection, { compose, PartialModelObject } from 'objection';
-import knex from '../../knex';
+import knex from '@/db/knex';
 import { mapToCursorPaginationResult } from './objection-cursor.plugin-helper';
 import { Ability } from '@casl/ability';
 import { SystemAbilityAction, SystemAbilitySubject } from '@/core/authorization';

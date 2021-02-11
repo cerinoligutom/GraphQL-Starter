@@ -3,7 +3,7 @@ import { Express, Request, Response } from 'express';
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import { initializeSchema } from './schema';
-import { initLoaders } from '../graphql-dataloaders';
+import { initLoaders } from '@/graphql-dataloaders';
 import { env } from '@/config/environment';
 import * as services from '@/core/services';
 import { apolloOptions } from '@/config/apollo-options';

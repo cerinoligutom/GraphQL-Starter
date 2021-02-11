@@ -1,4 +1,3 @@
-import 'tsconfig-paths/register';
 import { env } from '@/config/environment';
 
 import { errorMiddleware, httpLogger, expressStatusMonitorMiddleware, corsMiddleware, sessionMiddleware } from '@/middleware';

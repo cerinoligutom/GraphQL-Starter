@@ -1,4 +1,4 @@
-import { UserModel } from '@app/db/models';
+import { UserModel } from '@/db/models';
 import { GQL_User } from '@/generated/graphql';
 
 // NOTE:

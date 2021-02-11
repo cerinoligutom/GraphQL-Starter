@@ -1,4 +1,4 @@
-import { UserModel } from '@app/db/models';
+import { UserModel } from '@/db/models';
 import { bcryptUtil } from '@/utils';
 import { GQL_RegisterInput } from '@/generated/graphql';
 import { EmailAlreadyTakenError } from '@app/error-handler/errors/EmailAlreadyTakenError';

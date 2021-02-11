@@ -1,4 +1,4 @@
-import { UserModel } from '@app/db/models';
+import { UserModel } from '@/db/models';
 import { OrderByDirection } from 'objection';
 import { ICursorPaginationResult } from '@app/core/interfaces';
 import { UserSortField } from '@app/core/enums';

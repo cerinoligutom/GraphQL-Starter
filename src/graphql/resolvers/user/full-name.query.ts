@@ -1,5 +1,5 @@
 import { GQL_UserResolvers, GQL_User } from '@/generated/graphql';
-import { UserModel } from '@app/db/models';
+import { UserModel } from '@/db/models';
 
 export const fullNameResolver: GQL_UserResolvers['fullName'] = async (parent) => {
   const user = parent as GQL_User & UserModel;

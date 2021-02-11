@@ -1,4 +1,4 @@
-import { maintenanceController } from '@app/controllers';
+import { maintenanceController } from '@/controllers';
 import express from 'express';
 import { asyncHandler } from '@/utils';
 

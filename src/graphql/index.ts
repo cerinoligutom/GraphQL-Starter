@@ -5,11 +5,11 @@ import depthLimit from 'graphql-depth-limit';
 import { initializeSchema } from './schema';
 import { initLoaders } from '../graphql-dataloaders';
 import { env } from '@/config/environment';
-import * as services from '@app/core/services';
+import * as services from '@/core/services';
 import { apolloOptions } from '@/config/apollo-options';
-import { defineSystemAbilitiesFor } from '@app/core/authorization';
-import { Await } from '@app/core/types/Await';
-import { handleGraphQLError } from '@app/error-handler/error-handler';
+import { defineSystemAbilitiesFor } from '@/core/authorization';
+import { Await } from '@/core/types/Await';
+import { handleGraphQLError } from '@/core/error-handler/error-handler';
 
 export interface IGraphQLContext {
   services: typeof services;

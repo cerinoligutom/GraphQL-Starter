@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from '@/generated/graphql';
-import { pubsub, PubSubTrigger } from '@app/graphql-pubsub';
-// import { PubSubTrigger } from '@app/graphql-pubsub-trigger';
+import { pubsub, PubSubTrigger } from '@/graphql-pubsub';
+// import { PubSubTrigger } from '@/graphql-pubsub-trigger';
 
 export const _dummyResolver: GQL_SubscriptionResolvers['_dummy'] = {
   resolve: (value: GQL_DummySubscriptionPayload) => {

@@ -1,6 +1,6 @@
-import { SystemAbilityAction, SystemAbilitySubject } from '@app/core/authorization';
+import { SystemAbilityAction, SystemAbilitySubject } from '@/core/authorization';
 import { rule } from 'graphql-shield';
-import { IGraphQLContext } from '@app/graphql';
+import { IGraphQLContext } from '@/graphql';
 import { ForbiddenError } from '@casl/ability';
 import { Rule } from 'graphql-shield/dist/rules';
 

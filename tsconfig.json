@@ -16,17 +16,7 @@
     "baseUrl": ".",
     "typeRoots": ["./@types", "./node_modules/@types"],
     "paths": {
-      "@/*": ["./src/*"],
-      "@app/core/authorization": ["./src/core/authorization"],
-      "@app/core/services": ["./src/core/services"],
-      "@app/core/interfaces": ["./src/core/interfaces"],
-      "@app/core/types/*": ["./src/core/types/*"],
-      "@app/core/enums": ["./src/core/enums"],
-      "@app/core/factories/graphql": ["./src/core/factories/graphql"],
-      "@app/graphql-pubsub": ["./src/graphql-pubsub"],
-      "@app/graphql": ["./src/graphql"],
-      "@app/yup-schemas": ["./src/graphql-shield/yup-validation-schemas"],
-      "@app/error-handler/*": ["./src/core/error-handler/*"]
+      "@/*": ["./src/*"]
     },
 
     "esModuleInterop": true,

@@ -1,7 +1,7 @@
 import { UserModel } from '@/db/models';
 import { OrderByDirection } from 'objection';
-import { ICursorPaginationResult } from '@app/core/interfaces';
-import { UserSortField } from '@app/core/enums';
+import { ICursorPaginationResult } from '@/core/interfaces';
+import { UserSortField } from '@/core/enums';
 import { Maybe } from '@/generated/graphql';
 
 async function getById(id: string): Promise<UserModel> {

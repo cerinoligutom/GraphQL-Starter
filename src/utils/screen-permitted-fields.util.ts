@@ -2,7 +2,7 @@
 import { Ability } from '@casl/ability';
 import { permittedFieldsOf } from '@casl/ability/extra';
 import { pick } from 'lodash';
-import { SystemAbilityAction, SystemAbilitySubject } from '@app/core/authorization';
+import { SystemAbilityAction, SystemAbilitySubject } from '@/core/authorization';
 
 interface IScreenPermittedFieldsArgs {
   ability: Ability;

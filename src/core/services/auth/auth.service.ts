@@ -1,8 +1,8 @@
-import { UserModel } from '@app/db/models';
-import { bcryptUtil } from '@app/utils';
-import { GQL_RegisterInput } from '@app/graphql-schema-types';
-import { EmailAlreadyTakenError } from '@app/error-handler/errors/EmailAlreadyTakenError';
-import { UsernameAlreadyTakenError } from '@app/error-handler/errors/UsernameAlreadyTakenError';
+import { UserModel } from '@/db/models';
+import { bcryptUtil } from '@/utils';
+import { GQL_RegisterInput } from '@/generated/graphql';
+import { EmailAlreadyTakenError } from '@/core/error-handler/errors/EmailAlreadyTakenError';
+import { UsernameAlreadyTakenError } from '@/core/error-handler/errors/UsernameAlreadyTakenError';
 
 async function login(usernameOrEmail: string, password: string): Promise<UserModel> {
   const user = await UserModel.query().where('username', usernameOrEmail).orWhere('email', usernameOrEmail).first();

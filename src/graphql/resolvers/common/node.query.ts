@@ -1,6 +1,6 @@
-import { GQL_QueryResolvers } from '@app/graphql-schema-types';
-import { getNodeType } from '@app/utils';
-import { createGQL_User } from '@app/core/factories/graphql';
+import { GQL_QueryResolvers } from '@/generated/graphql';
+import { getNodeType } from '@/utils';
+import { createGQL_User } from '@/core/factories/graphql';
 
 export const nodeResolver: GQL_QueryResolvers['node'] = async (parent, { id }, { loaders }, info) => {
   const nodeType = getNodeType(info.fieldNodes[0]);

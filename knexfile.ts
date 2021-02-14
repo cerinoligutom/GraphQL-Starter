@@ -1,5 +1,6 @@
+import 'tsconfig-paths/register';
 import { Config } from 'knex';
-import { env } from './src/config/environment';
+import { env } from '@/config/environment';
 
 const config: Config = {
   client: 'pg',
@@ -17,5 +18,4 @@ const config: Config = {
   debug: false,
 };
 
-export default config; // For application use
-module.exports = config; // For CLI use
+export default config;

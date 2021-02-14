@@ -1,4 +1,4 @@
-import { SystemRole } from '@app/core/enums';
+import { SystemRole } from '@/core/enums';
 import { AbilityBuilder } from '@casl/ability';
 import { SystemAbility } from './system.ability';
 

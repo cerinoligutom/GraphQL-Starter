@@ -1,4 +1,4 @@
-import { env } from '@app/config/environment';
+import { env } from '@/config/environment';
 import { RequestHandler } from 'express';
 
 const expressStatusMonitor = require('express-status-monitor');

@@ -7,7 +7,7 @@ services:
     command: npm start
     restart: always
     volumes:
-      - .:/usr/src/app
+      - ./:/usr/src/app
       # NOTE: If you are using Windows, you might want to uncomment this
       # - /usr/src/app/node_modules # https://stackoverflow.com/a/32785014
     depends_on:

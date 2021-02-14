@@ -1,5 +1,5 @@
 import Redis from 'ioredis';
-import { env } from '@app/config/environment';
+import { env } from '@/config/environment';
 
 // Note:
 // Call the `exec()` method to get a Promise-based return

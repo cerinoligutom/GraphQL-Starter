@@ -1,6 +1,6 @@
 import passport from 'passport';
-import { UserModel } from '@app/db/models';
-import { userService } from '@app/core/services';
+import { UserModel } from '@/db/models';
+import { userService } from '@/core/services';
 
 passport.serializeUser((user: UserModel, done) => {
   done(null, user.id);
@@ -15,12 +15,3 @@ passport.deserializeUser(async (userId: string, done) => {
     done(err, undefined);
   }
 });
-
-// We extend the global Express User interface with our User model
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Express {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface User extends UserModel {}
-  }
-}

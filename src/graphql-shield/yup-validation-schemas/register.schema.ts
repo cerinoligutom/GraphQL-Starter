@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { UserModel } from '@app/db/models';
+import { UserModel } from '@/db/models';
 
 const { firstName, middleName, lastName, username, email } = UserModel.yupSchema;
 

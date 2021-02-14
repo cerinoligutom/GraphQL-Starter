@@ -1,7 +1,7 @@
 // tslint:disable: no-any
 
 import { AbilityBuilder, InferSubjects, Ability } from '@casl/ability';
-import { UserModel } from '@app/db/models';
+import { UserModel } from '@/db/models';
 import { createAbility } from './common/casl-helpers';
 import { rolePermissions } from './role-permissions';
 

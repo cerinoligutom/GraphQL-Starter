@@ -1,6 +1,6 @@
-import { maintenanceController } from '@app/controllers';
+import { maintenanceController } from '@/controllers';
 import express from 'express';
-import { asyncHandler } from '@app/utils';
+import { asyncHandler } from '@/utils';
 
 const router = express.Router();
 

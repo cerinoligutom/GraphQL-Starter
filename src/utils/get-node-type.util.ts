@@ -1,4 +1,4 @@
-import { GQL_ResolversParentTypes, Maybe } from '@app/graphql-schema-types';
+import { GQL_ResolversParentTypes, Maybe } from '@/generated/graphql';
 import { FieldNode, InlineFragmentNode } from 'graphql';
 
 type ValidNodeType = NonNullable<GQL_ResolversParentTypes['Node']['__typename']>;

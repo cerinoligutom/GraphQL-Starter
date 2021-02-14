@@ -1,5 +1,5 @@
-import { UserModel } from '@app/db/models';
-import { GQL_User } from '@app/graphql-schema-types';
+import { UserModel } from '@/db/models';
+import { GQL_User } from '@/generated/graphql';
 
 // NOTE:
 // We need this factory function mainly for type safety and assuring

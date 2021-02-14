@@ -7,8 +7,8 @@
     "production": "node ./src/app.js",
     "build": "run-s build:clean build:typescript build:copy-files",
     "build:clean": "rimraf build",
-    "build:typescript": "tsc",
-    "build:copy-files": "copyfiles \"src/**/!(*.ts)\" package*.json tsconfig.json LICENSE build",
+    "build:typescript": "tsc && npx tsc-alias",
+    "build:copy-files": "copyfiles \"src/**/!(*.ts)\" package*.json LICENSE build",
     "ts-node": "ts-node",
     "nodemon": "nodemon",
     "lint": "eslint ./src",
@@ -68,7 +68,6 @@
     "objection-cursor": "1.2.4",
     "passport": "0.4.1",
     "pg": "8.5.1",
-    "tsconfig-paths": "3.9.0",
     "winston": "3.3.3",
     "yup": "0.32.8"
   },
@@ -107,6 +106,7 @@
     "rimraf": "3.0.2",
     "standard-version": "9.1.0",
     "ts-node": "9.1.1",
+    "tsc-alias": "^1.2.6",
     "typescript": "4.1.3"
   }
 }

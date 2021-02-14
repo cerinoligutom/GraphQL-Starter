@@ -1,6 +1,6 @@
 import * as Knex from 'knex';
-import { bcryptUtil } from '@app/utils';
-import { UserModel, SystemRoleModel } from '@app/db/models';
+import { bcryptUtil } from '@/utils';
+import { UserModel, SystemRoleModel } from '@/db/models';
 import { PartialModelObject } from 'objection';
 
 const USERS_TABLE_NAME = 'users';

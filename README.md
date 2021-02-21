@@ -263,6 +263,8 @@ This is also true to scalars at `src/graphql/scalars`.
 1. Create a route handler file under that folder.
    - Recommended file name should be in the format: `<graphql-object-type-name>.handler.ts`
 1. Implement. Refer to the route handlers under `user` for examples.
+1. Add this route handler to your router.
+   - Make sure to wrap this with the async handler util.
 
 ## Naming Convention
 

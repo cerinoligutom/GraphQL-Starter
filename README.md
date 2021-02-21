@@ -34,6 +34,8 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - Input schema validation with Yup
 - GraphQL Subscription and File Upload examples
 
+**Note:** If your project has authorization needs, I recommend using [CASL](https://casl.js.org/).
+
 ## Setup
 
 ![image](https://user-images.githubusercontent.com/6721822/108613174-7aa4c800-742a-11eb-9b1b-0c6fdda9c582.png)

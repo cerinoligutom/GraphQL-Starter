@@ -12,6 +12,8 @@ RUN npm install
 # Copy files from host to container
 COPY ./ ./
 
+RUN npm run generate:gql-types
+
 RUN ls -al
 
 EXPOSE 8080

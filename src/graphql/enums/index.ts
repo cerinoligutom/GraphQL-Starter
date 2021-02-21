@@ -2,4 +2,5 @@
 // expose to the GraphQL Schema, just export them directly here and it'll
 // be resolved as per configuration from "src/graphql/schema.ts".
 
-export { SortDirection, UserSortField } from '@/core/enums';
+export { SortDirection } from '@/shared/enums';
+export { UserSortField } from '@/modules/user/enums/user-sort-field.enum';

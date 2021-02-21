@@ -4,9 +4,8 @@
 import Objection, { compose, PartialModelObject } from 'objection';
 import knex from '@/db/knex';
 import { mapToCursorPaginationResult } from './objection-cursor.plugin-helper';
-import { Ability } from '@casl/ability';
-import { SystemAbilityAction, SystemAbilitySubject } from '@/core/authorization';
-import { screenPermittedFields } from '@/utils';
+import { UniqueID } from '@/shared/types';
+import { v4 as uuidV4 } from 'uuid';
 
 const cursorMixin = require('objection-cursor');
 
@@ -29,13 +28,7 @@ const EnhancedModel = compose([
   }),
 ])(Objection.Model);
 
-interface ISetOptions {
-  ability: Ability;
-  action: SystemAbilityAction;
-}
-type ModelName = Exclude<Extract<SystemAbilitySubject, string>, 'all'>;
-
-export class BaseModel extends EnhancedModel {
+export class ObjectionModel extends EnhancedModel {
   static get QueryBuilder() {
     return class<M extends Objection.Model, R = M[]> extends EnhancedModel.QueryBuilder<M, R> {
       cursorPage(cursor?: string | null, before = false) {
@@ -45,33 +38,24 @@ export class BaseModel extends EnhancedModel {
   }
 
   /**
-   * For CASL Ability Subject
-   */
-  static readonly modelName: ModelName;
-
-  private get _modelName(): ModelName {
-    const model = this.constructor as typeof BaseModel;
-    return model.modelName;
-  }
-
-  /**
    * Set this object's property values. Internally calls `Objection.Model.$set()` method but with
    * auto completion based on this model's properties.
    *
    * Related: https://github.com/Vincit/objection.js/issues/1716
    */
-  set(values: PartialModelObject<this>, options?: ISetOptions): this {
-    if (!options) {
-      return this.$set(values);
-    }
+  set(values: PartialModelObject<this>): void {
+    this.$set(values);
+  }
+}
 
-    const { ability, action } = options;
-    const screenedValues = screenPermittedFields(values, {
-      ability,
-      action,
-      subject: this._modelName,
-    });
+// If you have an associative (or junction) table, extend the Objection Model class directly
+export class BaseModel extends ObjectionModel {
+  static idColumn = 'id';
 
-    return this.$set(screenedValues);
+  id!: UniqueID;
+
+  constructor() {
+    super();
+    this.id = uuidV4();
   }
 }

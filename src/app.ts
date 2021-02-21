@@ -1,19 +1,18 @@
 import { env } from '@/config/environment';
 
-import { errorMiddleware, httpLogger, expressStatusMonitorMiddleware, corsMiddleware, sessionMiddleware } from '@/middleware';
-import { ping as pingPostgresDatabase } from './db/knex';
-import { pingRedisDatabase } from './redis/client';
-import { initRoutes } from './routes';
-import { initApolloGraphqlServer } from './graphql';
+import { errorMiddleware, expressStatusMonitorMiddleware, corsMiddleware } from '@/middlewares';
+import { ping as pingPostgresDatabase } from '@/db/knex';
+import { ping as pingRedisDatabase } from '@/redis/client';
+import { initApolloGraphqlServer } from '@/graphql';
 
 import { createServer } from 'http';
 import compression from 'compression';
 import helmet from 'helmet';
-import cookieParser from 'cookie-parser';
 import express from 'express';
 
-import passport from 'passport';
-import './passport-strategies';
+import { userRouter } from '@/modules/user/routes';
+import { maintenanceRouter } from '@/modules/maintenance/routes';
+import { authRouter } from '@/modules/auth/routes';
 
 const app = express();
 
@@ -32,7 +31,7 @@ const app = express();
     return;
   }
 
-  // Note:
+  // IMPORTANT:
   // In case your app is running behind a proxy, you should configure this.
   // Elastic Beanstalk instances for example has an nginx proxy by default.
   // Read more at https://expressjs.com/en/guide/behind-proxies.html
@@ -42,15 +41,11 @@ const app = express();
   app.use(corsMiddleware());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-  app.use(cookieParser());
-  app.use(sessionMiddleware());
   app.use(compression());
   app.use(expressStatusMonitorMiddleware());
-  app.use(httpLogger);
-  app.use(passport.initialize());
-  app.use(passport.session());
 
-  initRoutes(app);
+  // IMPORTANT: Add app routers here
+  app.use([maintenanceRouter, authRouter, userRouter]);
 
   app.use(errorMiddleware());
   const apolloServer = await initApolloGraphqlServer(app);

@@ -1,5 +1,5 @@
 import { IObjectionCursorResult } from 'objection-cursor';
-import { ICursorPaginationResult } from '@/core/interfaces';
+import { ICursorPaginationResult } from '@/shared/interfaces';
 
 export function mapToCursorPaginationResult<M>({ nodes, pageInfo }: IObjectionCursorResult<M>): ICursorPaginationResult<M> {
   const result: ICursorPaginationResult<M> = {

@@ -10,7 +10,7 @@ const USER_ROLES_TABLE_NAME = 'user_system_roles';
 export async function seed(knex: Knex): Promise<any> {
   // Create Super Admin Role
   const superadminRole: PartialModelObject<SystemRoleModel> = {
-    // Note:
+    // IMPORTANT:
     // If you plan to change the name of the superadmin role, make sure to change also the value in the SystemRole enum
     name: 'Super Administrator',
     description: 'Admin of all admins',
@@ -26,7 +26,6 @@ export async function seed(knex: Knex): Promise<any> {
   const superadmin: PartialModelObject<UserModel> = {
     hash,
     salt,
-    username: 'superadmin',
     firstName: 'superadmin',
     lastName: 'sa',
     email: 'superadmin@app.com',

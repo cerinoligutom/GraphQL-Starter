@@ -1,26 +1,16 @@
 import * as Knex from 'knex';
 
-export const addTimeStamps = async (knex: Knex, tableName: string): Promise<any> => {
-  return knex.schema
-    .alterTable(tableName, (t) => {
+interface IAddTimeStamps {
+  createdAt: boolean;
+  updatedAt: boolean;
+}
+export const addTimeStamps = async (knex: Knex, tableName: string, timestamps: IAddTimeStamps): Promise<any> => {
+  return knex.schema.alterTable(tableName, (t) => {
+    if (timestamps.createdAt) {
       t.timestamp('createdAt', { precision: 3 }).defaultTo(knex.fn.now());
+    }
+    if (timestamps.updatedAt) {
       t.timestamp('updatedAt', { precision: 3 }).defaultTo(knex.fn.now());
-    })
-    .then(() => {
-      // We need to ensure the function exists, then add the table trigger
-      return knex.raw(`
-        CREATE OR REPLACE FUNCTION update_modified_column()
-        RETURNS TRIGGER AS $$
-        BEGIN
-          NEW."updatedAt" = now();
-          RETURN NEW;
-        END;
-        $$ language 'plpgsql';
-
-        CREATE TRIGGER update_${tableName}_updated_at
-        BEFORE UPDATE ON "${tableName}"
-        FOR EACH ROW
-        EXECUTE PROCEDURE update_modified_column();
-      `);
-    });
+    }
+  });
 };

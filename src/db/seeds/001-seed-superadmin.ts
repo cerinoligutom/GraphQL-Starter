@@ -1,7 +1,7 @@
 import * as Knex from 'knex';
 import { bcryptUtil } from '@/utils';
 import { UserModel, SystemRoleModel } from '@/db/models';
-import { PartialModelObject } from 'objection';
+import { SystemRoleID } from '@/shared/enums';
 
 const USERS_TABLE_NAME = 'users';
 const ROLES_TABLE_NAME = 'system_roles';
@@ -9,12 +9,13 @@ const USER_ROLES_TABLE_NAME = 'user_system_roles';
 
 export async function seed(knex: Knex): Promise<any> {
   // Create Super Admin Role
-  const superadminRole: PartialModelObject<SystemRoleModel> = {
-    // IMPORTANT:
-    // If you plan to change the name of the superadmin role, make sure to change also the value in the SystemRole enum
+
+  const superadminRole = new SystemRoleModel();
+  superadminRole.set({
+    id: SystemRoleID.SUPER_ADMINISTRATOR,
     name: 'Super Administrator',
-    description: 'Admin of all admins',
-  };
+    description: 'The chosen ones',
+  });
 
   const createSuperadminRoleQuery = knex(ROLES_TABLE_NAME).insert([superadminRole]);
   const createSuperadminRoleQueryResult = await knex.raw('? ON CONFLICT DO NOTHING RETURNING id', [createSuperadminRoleQuery]);
@@ -23,13 +24,15 @@ export async function seed(knex: Knex): Promise<any> {
   const defaultPassword = 'password';
   const salt = await bcryptUtil.generateSalt();
   const hash = await bcryptUtil.generateHash(defaultPassword, salt);
-  const superadmin: PartialModelObject<UserModel> = {
+
+  const superadmin = new UserModel();
+  superadmin.set({
     hash,
     salt,
     firstName: 'superadmin',
     lastName: 'sa',
     email: 'superadmin@app.com',
-  };
+  });
 
   const createSuperadminUserQuery = knex(USERS_TABLE_NAME).insert([superadmin]);
   const createSuperadminUserQueryResult = await knex.raw('? ON CONFLICT DO NOTHING RETURNING id', [createSuperadminUserQuery]);

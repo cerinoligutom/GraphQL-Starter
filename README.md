@@ -52,6 +52,9 @@ If the nature of your app isn't CRUDy (for a lack of a better word), you probabl
 # Install dependencies for the host
 npm install
 
+# Generate GraphQL Types
+npm run generate:gql-types
+
 # Build the project for the first time or when you add dependencies
 docker-compose build
 

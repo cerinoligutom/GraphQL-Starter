@@ -64,4 +64,4 @@ typings/
 build
 
 # generated
-generated/graphql
+generated

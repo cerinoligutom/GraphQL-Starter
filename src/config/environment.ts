@@ -17,11 +17,12 @@ interface IEnvironmentConfig {
 }
 
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() ?? 'development';
+const isProduction = NODE_ENV === 'production';
 
 export const env: IEnvironmentConfig = {
-  isProduction: NODE_ENV === 'production',
+  isProduction,
   app: {
-    environment: process.env.APP_ENV ?? NODE_ENV,
+    environment: NODE_ENV,
     port: +process.env.APP_PORT! || 8080,
   },
   postgresConnectionUrl: process.env.POSTGRES_CONNECTION_URL,
@@ -29,9 +30,11 @@ export const env: IEnvironmentConfig = {
 };
 
 // Environment defaults
-env.postgresConnectionUrl ??= 'postgresql://postgres:password@db:5432/db';
-env.redisConnectionUrl ??= 'redis://redis';
+if (!isProduction) {
+  env.postgresConnectionUrl = env.postgresConnectionUrl || 'postgresql://postgres:password@db:5432/db';
+  env.redisConnectionUrl = env.redisConnectionUrl || 'redis://redis';
+}
 
-console.info(`${'='.repeat(20)}`);
+console.info(`${'='.repeat(30)}`);
 console.info(`NODE_ENV: ${env.app.environment}`);
-console.info(`${'='.repeat(20)}`);
+console.info(`${'='.repeat(30)}`);

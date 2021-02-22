@@ -1,1 +1,1 @@
-export * from './unique-id.type';
+export * from './UniqueID';

@@ -195,7 +195,7 @@ See files inside `src/config/*` that uses `process.env`. Those are the environme
 
 1. Create one under the `src/modules/<module_name>` directory.
 
-### Create a Use Case
+### Create a Use Case (and/or Services)
 
 1. Create a use case TS file under your module.
    - Should be under `src/modules/<module_name>/use-cases/<use_case_name>.use-case.ts`

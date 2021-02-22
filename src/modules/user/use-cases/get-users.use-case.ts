@@ -1,7 +1,7 @@
 import { UserModel } from '@/db/models';
 import { Maybe } from '@/generated/graphql';
 import { SortDirection, UserSortField } from '@/graphql/enums';
-import { checkAuthentication } from '@/modules/auth/helpers/check-authenticated';
+import { checkAuthentication } from '@/modules/auth/helpers/check-authentication';
 import { IContext, ICursorPaginationResult } from '@/shared/interfaces';
 import { cursorArgsSchema } from '@/shared/yup-schema';
 import { createSchemaValidator } from '@/utils';
@@ -23,7 +23,7 @@ const schema = yup.object().shape({
 const validateDTO = createSchemaValidator<IGetUsersDTO>(schema);
 
 export async function getUsersUseCase(dto: IGetUsersDTO, ctx: IContext): Promise<ICursorPaginationResult<UserModel>> {
-  checkAuthentication(ctx);
+  await checkAuthentication(ctx);
 
   const { first, after, before, sortDirection, sortField } = await validateDTO(dto);
 

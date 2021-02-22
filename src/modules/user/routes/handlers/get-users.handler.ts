@@ -23,6 +23,9 @@ export const getUsersHandler: RequestHandler = async (req, res) => {
     },
   );
 
+  // IMPORTANT:
+  // Your return here doesn't necessarily have to be the same as your GraphQL API.
+  // Adjust to your needs. For demo purposes, I just reused the graphql factories here.
   const userConnection: GQL_UserConnection = {
     edges: result.results.map<GQL_UserEdge>((x) => ({
       cursor: x.cursor,

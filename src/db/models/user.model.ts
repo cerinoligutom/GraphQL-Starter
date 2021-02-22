@@ -1,7 +1,8 @@
 import { BaseModel } from './common/base-model';
 import * as yup from 'yup';
-import { RelationMappings, Model } from 'objection';
+import { RelationMappings, Model, QueryContext, ModelOptions, ToJsonOptions, ModelObject } from 'objection';
 import { SystemRoleModel } from './system-role.model';
+import { UniqueID } from '@/shared/types';
 
 export class UserModel extends BaseModel {
   static tableName = 'users';
@@ -29,13 +30,36 @@ export class UserModel extends BaseModel {
 
     lastName: yup.string().min(2).required(),
 
-    username: yup.string().min(4).max(32).required(),
-
     email: yup.string().email().required(),
+
+    password: yup.string().min(8).required(),
   };
 
-  id!: string;
-  username!: string;
+  $beforeInsert(queryContext: QueryContext): void {
+    super.$beforeInsert(queryContext);
+
+    const now = new Date();
+    this.createdAt = now;
+    this.updatedAt = now;
+  }
+  $beforeUpdate(opt: ModelOptions, queryContext: QueryContext): void {
+    super.$beforeUpdate(opt, queryContext);
+
+    this.updatedAt = new Date();
+  }
+
+  toJSON(opt?: ToJsonOptions): ModelObject<this> {
+    // Type assertion to "any" here due to: https://github.com/Vincit/objection.js/issues/1861
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = super.toJSON(opt) as any;
+
+    delete result.hash;
+    delete result.salt;
+
+    return result;
+  }
+
+  id!: UniqueID;
   firstName!: string;
   middleName!: string | null;
   lastName!: string;

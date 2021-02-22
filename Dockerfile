@@ -18,6 +18,8 @@ RUN npm ci
 COPY ./ ./
 RUN ls -al
 
+RUN npm run generate:gql-types
+
 # Build project
 RUN npm run build
 
@@ -45,4 +47,4 @@ RUN ls -al
 
 EXPOSE 8080
 
-CMD ["npm", "run", "production"]
+CMD ["npm", "run", "start:production"]

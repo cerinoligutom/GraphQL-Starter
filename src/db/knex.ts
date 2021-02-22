@@ -7,11 +7,11 @@ export const ping = async (): Promise<void> => {
   try {
     await knex.raw('select 1+1 as result');
     console.info('[OK] PG DB');
-    return Promise.resolve();
+    return await Promise.resolve();
   } catch (err) {
     console.error('[FAIL] PG DB');
     console.error(err);
-    return Promise.reject(err);
+    return await Promise.reject(err);
   }
 };
 

@@ -1,6 +1,6 @@
 import { BaseModel } from './common/base-model';
 import * as yup from 'yup';
-import { RelationMappings, Model } from 'objection';
+import { RelationMappings, Model, QueryContext, ModelOptions } from 'objection';
 import { UserModel } from './user.model';
 
 export class SystemRoleModel extends BaseModel {
@@ -27,7 +27,19 @@ export class SystemRoleModel extends BaseModel {
     description: yup.string().required(),
   };
 
-  id!: string;
+  $beforeInsert(queryContext: QueryContext): void {
+    super.$beforeInsert(queryContext);
+
+    const now = new Date();
+    this.createdAt = now;
+    this.updatedAt = now;
+  }
+  $beforeUpdate(opt: ModelOptions, queryContext: QueryContext): void {
+    super.$beforeUpdate(opt, queryContext);
+
+    this.updatedAt = new Date();
+  }
+
   name!: string;
   description!: string;
   createdAt!: Date;

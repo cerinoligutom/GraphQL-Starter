@@ -1,5 +1,5 @@
 overwrite: true
-schema: './src/graphql/typeDefs/*.graphql'
+schema: './src/modules/**/*.graphql'
 documents: null
 require:
   - ts-node/register
@@ -16,7 +16,7 @@ generates:
         DateTime: Date
         Time: Date
         Date: Date
-        GUID: string
+        ID: '@/shared/types/unique-id.type#UniqueID'
       namingConvention:
         enumValues: constant-case#constantCase
     plugins:
@@ -28,3 +28,7 @@ generates:
     hooks:
       afterOneFileWrite:
         - prettier --write
+
+  ./src/generated/graphql/introspection.json:
+    plugins:
+      - introspection

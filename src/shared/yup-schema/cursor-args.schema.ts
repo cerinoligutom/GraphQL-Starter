@@ -1,0 +1,15 @@
+import * as yup from 'yup';
+
+export const cursorArgsSchema = {
+  first: yup.number().required().min(0),
+  before: yup.string(),
+  after: yup.string().test({
+    message: 'Define either "before" or "after" only.',
+
+    test(value: unknown): boolean {
+      if (!value) return true;
+
+      return !(value && this.parent.before);
+    },
+  }),
+};

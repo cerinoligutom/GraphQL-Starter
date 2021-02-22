@@ -6,7 +6,6 @@ export class UnauthenticatedError extends BaseError {
       errorCodename: 'UNAUTHENTICATED',
       httpStatusCode: 401,
       message: message ?? 'Unauthenticated. Please try logging in again.',
-      payload: {test: 1}
     });
 
     this.name = 'UnauthenticatedError';

@@ -33,5 +33,5 @@ export const getUsersHandler: RequestHandler = async (req, res) => {
     totalCount: result.totalCount,
   };
 
-  res.status(200).send(userConnection);
+  res.send(userConnection);
 };

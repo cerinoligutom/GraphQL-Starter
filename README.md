@@ -34,7 +34,10 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - Input schema validation with Yup
 - GraphQL Subscription and File Upload examples
 
-**Note:** If your project has authorization needs, I recommend using [CASL](https://casl.js.org/).
+### Important notes
+
+- If your project has authorization needs, I recommend using [CASL](https://casl.js.org/).
+- For SQL Transactions, please read the [ObjectionJS doc](https://vincit.github.io/objection.js/guide/transactions.html#transactions) and pick how you want to handle yours.
 
 ## Setup
 

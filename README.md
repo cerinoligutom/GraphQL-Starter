@@ -445,6 +445,8 @@ Make sure to set these environment variables on your CircleCI project (or contex
 
 - If you're using this repo template with Docker Windows, you'll notice that when you save any file, the watchers aren't reacting. This has something to do with Linux not being able to detect file changes from Windows because the file system events are not being propagated down to Linux. You'll have to resort to polling mechanisms in that case for any tools that watches file changes. I recommend using WSL and developing inside WSL instead.
 
+- If you want to boost your knowledge about GraphQL, I highly recommend reading the e-book: [Production Ready GraphQL](https://book.productionreadygraphql.com/) by Marc-Andre Giroux.
+
 ## Contributing
 
 If something is unclear, confusing, or needs to be refactored, please let me know. Pull requests are always welcome but do consider the opinionated nature of this project. Please open an issue before submitting a pull request.

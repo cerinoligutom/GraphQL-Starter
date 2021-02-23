@@ -26,7 +26,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - Node Express REST endpoint examples
 - Apollo GraphQL as middleware for Node Express
 - Centralized error handling
-  - See `src/errors/base.error.ts` and `src/helpers/error-handler/index.ts`.
+  - See `src/errors/base.error.ts` and `src/errors/error-handler/index.ts`.
   - For GraphQL, see `src/graphql/index.ts` and look for the `formatError` of Apollo.
   - For REST, see `src/middlewares/error.middleware.ts`.
 - Automatic type code generation for GraphQL resolvers with GraphQL Code Generator

@@ -16,7 +16,7 @@ generates:
         DateTime: Date
         Time: Date
         Date: Date
-        ID: '@/shared/types/unique-id.type#UniqueID'
+        ID: '@/shared/types/UniqueID#UniqueID'
       namingConvention:
         enumValues: constant-case#constantCase
     plugins:

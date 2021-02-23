@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Express, Request, Response } from 'express';
-import { ApolloError, ApolloServer, AuthenticationError } from 'apollo-server-express';
+import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import { initializeSchema } from './schema';
 import { env } from '@/config/environment';
@@ -10,7 +10,7 @@ import { apolloOptions } from '@/config/apollo-options';
 import { UniqueID } from '@/shared/types';
 import { initLoaders } from './init-loaders';
 import { processAccessTokenFromAuthHeader } from '@/shared/helpers';
-import { BaseError } from '@/errors/base.error';
+import { handleError } from '@/errors';
 
 export interface IGraphQLContext {
   loaders: ReturnType<typeof initLoaders>;
@@ -51,17 +51,18 @@ export const initApolloGraphqlServer = async (app: Express): Promise<ApolloServe
       return graphqlContext;
     },
 
-    formatError: (error) => {
-      const probablyBaseError = error.originalError as BaseError;
+    formatError: (gqlError) => {
+      // Read more here: https://www.apollographql.com/docs/apollo-server/data/errors/#for-the-client-response
+      const err = handleError(gqlError);
 
       // BaseError props goes to "extensions.exception" so we remove that always
-      delete error.extensions!.exception;
+      delete gqlError.extensions!.exception;
 
-      error.extensions!.code = probablyBaseError?.errorCodename ?? 'INTERNAL_SERVER_ERROR';
-      error.extensions!.data = probablyBaseError?.payload;
-      error.extensions!.stacktrace = env.isProduction ? undefined : probablyBaseError?.stack;
+      gqlError.extensions!.code = err.errorCodename;
+      gqlError.extensions!.data = err.payload;
+      gqlError.extensions!.stacktrace = err.stack;
 
-      return error;
+      return gqlError;
     },
 
     validationRules: [depthLimit(10)],

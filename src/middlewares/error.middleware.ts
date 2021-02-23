@@ -1,21 +1,19 @@
 import { ErrorRequestHandler } from 'express';
-import { env } from '@/config/environment';
-import { BaseError } from '@/errors/base.error';
+import { handleError } from '@/errors';
 
-export const errorMiddleware = (): ErrorRequestHandler => (err: BaseError, req, res, next) => {
-  if (!err) {
+export const errorMiddleware = (): ErrorRequestHandler => (unknownError, req, res, next) => {
+  if (!unknownError) {
     next();
     return;
   }
 
-  // All HTTP requests must have a response, so let's send back an error with its status code and message
-  const httpStatusCode = err?.httpStatusCode ?? 500;
-  res.status(httpStatusCode).send({
-    // Obscure internal server errors only on production
-    message: env.isProduction && httpStatusCode === 500 ? 'Oops! Something went wrong.' : err.message,
+  const err = handleError(unknownError);
+
+  res.status(err.httpStatusCode).send({
+    message: err.message,
     errorCodename: err.errorCodename,
     data: err.payload,
-    stacktrace: env.isProduction ? undefined : err.stack,
+    stacktrace: err.stack,
   });
 
   next(err);

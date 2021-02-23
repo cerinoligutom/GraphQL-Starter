@@ -8,6 +8,7 @@
     "dataloaders",
     "deserialize",
     "dockerignore",
+    "dockerized",
     "gitignore",
     "graphql",
     "maxsize",

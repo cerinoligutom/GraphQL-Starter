@@ -7,7 +7,5 @@ export class UnauthorizedError extends BaseError {
       httpStatusCode: 403,
       message: message ?? 'Unauthorized. You are not allowed to perform this action.',
     });
-
-    this.name = 'UnauthorizedError';
   }
 }

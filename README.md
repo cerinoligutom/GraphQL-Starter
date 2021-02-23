@@ -22,8 +22,13 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 ## Features
 
 - JWT Based Authentication using Email and Password
-- Node Express REST endpoints
+  - Signed with asymmetric keys
+- Node Express REST endpoint examples
 - Apollo GraphQL as middleware for Node Express
+- Centralized error handling
+  - See `src/errors/base.error.ts` and `src/helpers/error-handler/index.ts`.
+  - For GraphQL, see `src/graphql/index.ts` and look for the `formatError` of Apollo.
+  - For REST, see `src/middlewares/error.middleware.ts`.
 - Automatic type code generation for GraphQL resolvers with GraphQL Code Generator
 - Facebook Dataloader for caching and batching
 - PostgreSQL Database
@@ -33,6 +38,8 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - Pre-commit hook for auto formatting files with Husky, Lint-Staged and Prettier
 - Input schema validation with Yup
 - GraphQL Subscription and File Upload examples
+- Dockerized containers for both development and production
+  - Multi-stage build for production
 
 ### Important notes
 
@@ -189,7 +196,7 @@ See files inside `src/config/*` that uses `process.env`. Those are the environme
 1. Populate the file accordingly.
    - Make sure to set the static `tableName` property.
    - (Optional) Set the static `relationMappings` property if applicable. See ObjectionJS docs for more details.
-   - (Recommended) Create a static `yupSchema` property for a centralized schema validation for that model. See existing models for example. This will later be used on in graphql-shield for graphql input validations.
+   - (Recommended) Create a static `yupSchema` property for a centralized schema validation definition for that model. See existing models for example.
    - Setup the model's properties based on your database table schema.
 
 ### Create a folder for your Feature Module

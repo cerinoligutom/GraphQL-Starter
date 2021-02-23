@@ -8,7 +8,5 @@ export class BadInputError extends BaseError {
       message: 'The server cannot process your input.',
       payload,
     });
-
-    this.name = 'BadInputError';
   }
 }

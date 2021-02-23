@@ -292,7 +292,7 @@ For example:
 | `ICursorPaginationResult` | `ICursorPaginationResult`.ts |
 | `ICursorResult`           | `ICursorResult`.ts           |
 | `IPageInfo`               | `IPageInfo`.ts               |
-| `Await`                   | `Await`.ts                   |
+| `UniqueID`                | `UniqueID`.ts                |
 | `Maybe`                   | `Maybe`.ts                   |
 
 ## Deployment

@@ -437,7 +437,7 @@ Make sure to set these environment variables on your CircleCI project (or contex
     - Because if you do, the files that references the to-be-renamed field will break and TypeScript will fail to compile.
     - GraphQL Code Generator only generates what's defined in the schema and overwrites the generated file so the old name that was previously being referenced is now missing.
   - What you **SHOULD DO** instead is:
-    - Rename first the field in the generated graphql resolver type definition file then apply the new name in the GraphQL schema file.
+    - Rename first the field in the generated graphql type definition file by GraphQL Code Generator at `src/generated/graphql/index.ts` then apply the new name in the GraphQL schema file.
       - Saves your time and sanity.
 
 - When trying to auto import a GraphQL resolver to its respective index barrel (`index.ts` file), you might notice you're not getting code completion when typing the resolver name in the `export default` object. This is normal because your IDE thinks you're typing the key/property name (remember key-value pair).

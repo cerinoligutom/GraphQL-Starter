@@ -3,6 +3,7 @@
   "description": "GraphQL Starter",
   "scripts": {
     "release": "standard-version",
+    "postinstall": "husky install",
     "start": "concurrently -n \"api,codegen\" -c \"bgCyan.bold,bgMagenta.bold\" \"npm run nodemon\" \"npm run generate:gql-types --watch\" ",
     "start:production": "node ./src/app.js",
     "build": "run-s build:clean build:typescript build:copy-files",
@@ -91,7 +92,7 @@
     "eslint-config-airbnb-typescript": "12.3.1",
     "eslint-config-prettier": "7.2.0",
     "eslint-plugin-import": "2.22.1",
-    "husky": "5.0.9",
+    "husky": "5.1.2",
     "lint-staged": "10.5.4",
     "nodemon": "2.0.7",
     "prettier": "2.2.1",

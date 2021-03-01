@@ -6,15 +6,7 @@ module.exports = {
     project: ['./tsconfig.json'],
   },
   plugins: ['@typescript-eslint'],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-
-    'airbnb-typescript/base',
-
-    'prettier',
-    'prettier/@typescript-eslint',
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'airbnb-typescript/base', 'prettier'],
   rules: {
     'no-console': ['warn', { allow: ['info', 'error'] }],
     quotes: ['error', 'single'],

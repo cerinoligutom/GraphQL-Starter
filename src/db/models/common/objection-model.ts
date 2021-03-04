@@ -29,7 +29,7 @@ const EnhancedModel = compose([
 export class ObjectionModel extends EnhancedModel {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   static get QueryBuilder() {
-    return class<M extends Objection.Model, R = M[]> extends EnhancedModel.QueryBuilder<M, R> {
+    return class ObjectionModelQueryBuilder<M extends Objection.Model, R = M[]> extends EnhancedModel.QueryBuilder<M, R> {
       cursorPage(cursor?: string | null, before = false) {
         return super.cursorPage(cursor, before).runAfter((result) => mapToCursorPaginationResult(result as any));
       }

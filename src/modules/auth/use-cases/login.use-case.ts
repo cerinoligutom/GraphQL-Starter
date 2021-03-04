@@ -26,7 +26,7 @@ export async function loginUseCase(dto: ILoginDTO, ctx: IContext): Promise<ILogi
   const user = await UserModel.query().where('email', email).first();
 
   if (user) {
-    const isValidPassword = await bcryptUtil.verify(password, user.hash, user.salt);
+    const isValidPassword = await bcryptUtil.verify(password, user.hash);
 
     if (isValidPassword) {
       const token = createAccessToken({ userId: user.id });

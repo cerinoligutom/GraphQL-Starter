@@ -54,7 +54,6 @@ export class UserModel extends BaseModel {
     const result = super.toJSON(opt) as any;
 
     delete result.hash;
-    delete result.salt;
 
     return result;
   }
@@ -65,7 +64,6 @@ export class UserModel extends BaseModel {
   lastName!: string;
   email!: string;
   hash!: string;
-  salt!: string;
   createdAt!: Date;
   updatedAt!: Date;
 

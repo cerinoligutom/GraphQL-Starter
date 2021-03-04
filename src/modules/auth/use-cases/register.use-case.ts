@@ -27,8 +27,7 @@ interface IRegisterUseCaseResult {
 export async function registerUseCase(dto: IRegisterDTO, ctx: IContext): Promise<IRegisterUseCaseResult> {
   const { firstName, middleName, lastName, email, password } = await validateDTO(dto);
 
-  const salt = await bcryptUtil.generateSalt();
-  const hash = await bcryptUtil.generateHash(password, salt);
+  const hash = await bcryptUtil.generateHash(password);
 
   const existingEmail = await UserModel.query().where('email', email).first();
   if (existingEmail) {
@@ -42,7 +41,6 @@ export async function registerUseCase(dto: IRegisterDTO, ctx: IContext): Promise
     lastName,
     email,
     hash,
-    salt,
   });
 
   const user = await UserModel.query().insertAndFetch(form);

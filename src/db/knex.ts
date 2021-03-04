@@ -11,7 +11,7 @@ export const ping = async (): Promise<void> => {
   } catch (err) {
     console.error('[FAIL] PG DB');
     console.error(err);
-    return await Promise.reject(err);
+    return Promise.reject(err);
   }
 };
 

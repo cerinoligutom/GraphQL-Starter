@@ -17,6 +17,6 @@ export async function ping(): Promise<void> {
   } catch (err) {
     console.error('[FAIL] Redis DB');
     console.error(err);
-    return await Promise.reject(err);
+    return Promise.reject(err);
   }
 }

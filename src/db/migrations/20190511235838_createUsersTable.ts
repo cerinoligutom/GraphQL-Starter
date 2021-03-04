@@ -15,7 +15,6 @@ export async function up(knex: Knex): Promise<any> {
         t.string('lastName').notNullable();
         t.string('email').unique().notNullable();
         t.string('hash').notNullable();
-        t.string('salt').notNullable();
       })
       .then(async () => {
         await addTimeStamps(knex, TABLE_NAME, {

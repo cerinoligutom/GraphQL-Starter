@@ -22,13 +22,11 @@ export async function seed(knex: Knex): Promise<any> {
 
   // Create Super Admin User
   const defaultPassword = 'password';
-  const salt = await bcryptUtil.generateSalt();
-  const hash = await bcryptUtil.generateHash(defaultPassword, salt);
+  const hash = await bcryptUtil.generateHash(defaultPassword);
 
   const superadmin = new UserModel();
   superadmin.set({
     hash,
-    salt,
     firstName: 'superadmin',
     lastName: 'sa',
     email: 'superadmin@app.com',

@@ -56,7 +56,7 @@ export class BaseError extends Error {
     this.stack = `ErrorID: ${this.errorId}\n${this.stack}`;
 
     if (this.originalError) {
-      this.stack = `${this.stack}\n${this.originalError.stack}`;
+      this.stack += `\n${this.originalError.stack}`;
     }
 
     // If desired, you could notify certain channels

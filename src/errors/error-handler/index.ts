@@ -13,22 +13,22 @@ import { env } from '@/config/environment';
  * This function should only be called on the edges of your interface layer.
  * When it's about to respond to your client for errors.
  *
- * @param err Any instance of the Error class.
+ * @param unknownError Any instance of the Error class.
  */
-export function handleError(err: Error): BaseError {
-  let unknownError: Error = err;
+export function handleError(unknownError: Error): BaseError {
+  let error: Error = unknownError;
 
   // Extract the original error from Apollo GraphQL errors.
-  if (err instanceof ApolloError || err instanceof GraphQLError) {
-    const { originalError } = err;
+  if (unknownError instanceof ApolloError || unknownError instanceof GraphQLError) {
+    const { originalError } = unknownError;
 
-    unknownError = originalError;
+    error = originalError;
   }
 
   // If it still isn't a known Error, meaning it doesn't inherit BaseError,
   // try our custom error handlers which normalizes 3rd party errors into
   // our custom errors.
-  if (!(unknownError instanceof BaseError)) {
+  if (!(error instanceof BaseError)) {
     // Only pass custom error handlers here to keep this file clean
     // and maintain single responsibility. Do not handle unknown
     // errors on your custom error handlers. Instead, return "null"
@@ -36,33 +36,33 @@ export function handleError(err: Error): BaseError {
     const errorHandlers: ErrorHandler[] = [objectionDbErrorHandler];
 
     for (const errorHandler of errorHandlers) {
-      const normalizedError = errorHandler(unknownError);
+      const normalizedError = errorHandler(error);
 
       if (normalizedError) {
-        unknownError = normalizedError;
+        error = normalizedError;
         break;
       }
     }
   }
 
-  // After passing through our custom handlers, if "unknownError" is finally
-  // an instance of our BaseError, then we can do final touches here.
-  if (unknownError instanceof BaseError) {
-    const baseError = unknownError;
-
-    if (env.isProduction) {
-      // Such as obscuring Database Errors on production
-      if (baseError instanceof DatabaseError) {
-        baseError.message = 'Oops! Something went wrong in the database.';
-      }
-
-      // And not returning the stacktrace
-      baseError.stack = undefined;
-    }
-
-    return baseError;
+  // If the unknown error doesn't normalize into our BaseError
+  if (!(error instanceof BaseError)) {
+    // Then it's a truly unknown and unhandled error so we normalize it
+    // into our custom InternalServerError.
+    error = new InternalServerError(error);
   }
 
-  // Otherwise, it's a truly unknown and unhandled error
-  return new InternalServerError(unknownError);
+  // During production, you might want to do something with the error object.
+  if (env.isProduction) {
+    // Such as obscuring Database Errors on production
+    if (error instanceof DatabaseError) {
+      error.message = 'Oops! Something went wrong in the database.';
+    }
+
+    // Not returning the stacktrace
+    error.stack = undefined;
+  }
+
+  // At this point, we're confident it'll be a BaseError so we'll assert it.
+  return error as BaseError;
 }

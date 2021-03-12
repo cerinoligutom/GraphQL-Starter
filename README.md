@@ -32,8 +32,8 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - Automatic type code generation for GraphQL resolvers with GraphQL Code Generator
 - Facebook Dataloader for caching and batching
 - PostgreSQL Database
-- Adminer for managing DB Database
-- Redis for Caching
+- Adminer for managing the PostgreSQL Database
+- Redis for Caching and GraphQL Subscription
 - RedisCommander for managing the Redis Database
 - Pre-commit hook for auto formatting files with Husky, Lint-Staged and Prettier
 - Input schema validation with Yup

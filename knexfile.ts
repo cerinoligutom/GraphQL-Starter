@@ -1,8 +1,8 @@
 import 'tsconfig-paths/register';
-import { Config } from 'knex';
+import { Knex } from 'knex';
 import { env } from '@/config/environment';
 
-const config: Config = {
+const config: Knex.Config = {
   client: 'pg',
   connection: env.postgresConnectionUrl,
   useNullAsDefault: true,

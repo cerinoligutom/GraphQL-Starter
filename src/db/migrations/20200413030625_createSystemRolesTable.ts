@@ -1,4 +1,4 @@
-import * as Knex from 'knex';
+import { Knex } from 'knex';
 import { addTimeStamps } from '../helpers/add-timestamps';
 
 const TABLE_NAME = 'system_roles';

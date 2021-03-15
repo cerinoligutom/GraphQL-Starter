@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import Objection, { compose, PartialModelObject } from 'objection';
-import knex from '@/db/knex';
+import knexInstance from '@/db/knex';
 import { mapToCursorPaginationResult } from './objection-cursor.plugin-helper';
 
 const cursorMixin = require('objection-cursor');
 
 // Attach knex to objection model
-Objection.Model.knex(knex);
+Objection.Model.knex(knexInstance);
 
 // Insert plugin/mixin if there's any, e.g. objection-timestamps
 // but timestamps should be generated

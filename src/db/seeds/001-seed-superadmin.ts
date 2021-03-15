@@ -1,4 +1,4 @@
-import * as Knex from 'knex';
+import { Knex } from 'knex';
 import { bcryptUtil } from '@/utils';
 import { UserModel, SystemRoleModel } from '@/db/models';
 import { SystemRoleID } from '@/shared/enums';

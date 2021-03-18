@@ -43,7 +43,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 
 ### Important notes
 
-- If your project has authorization needs, I recommend using [CASL](https://casl.js.org/).
+- If your project has authorization needs, I recommend using [CASL](https://casl.js.org/). If you want to spin your own but not sure how, here's a [good article](https://css-tricks.com/handling-user-permissions-in-javascript/) to get the ideas down.
 - For SQL Transactions, please read the [ObjectionJS doc](https://vincit.github.io/objection.js/guide/transactions.html#transactions) and pick how you want to handle yours.
 
 ## Setup

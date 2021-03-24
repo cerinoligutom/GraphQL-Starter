@@ -48,7 +48,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 
 ## Setup
 
-![image](https://user-images.githubusercontent.com/6721822/108613174-7aa4c800-742a-11eb-9b1b-0c6fdda9c582.png)
+![image](https://user-images.githubusercontent.com/6721822/112299294-a093e580-8cd2-11eb-8aee-cd98c6f84952.png)
 
 If the nature of your app isn't CRUDy (for a lack of a better word), you probably need domain models and a good amount of layering + mappers. Here's a [good article on the topic](https://blog.ploeh.dk/2012/02/09/IsLayeringWorththeMapping/). Otherwise, proceed.
 

@@ -423,7 +423,9 @@ Make sure to set these environment variables on your CircleCI project (or contex
 
 ## Future Plans
 
-- Testing
+- Migrate from CircleCI to GitHub Actions
+- Migrate from bcrypt to argon2
+- Tests with Jest
 
 ## Pro Tips
 

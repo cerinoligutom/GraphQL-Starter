@@ -1,6 +1,6 @@
 import { env } from '@/config/environment';
 
-import { errorMiddleware, expressStatusMonitorMiddleware, corsMiddleware } from '@/middlewares';
+import { errorMiddleware, corsMiddleware } from '@/middlewares';
 import { ping as pingPostgresDatabase } from '@/db/knex';
 import { ping as pingRedisDatabase } from '@/redis/client';
 import { initApolloGraphqlServer } from '@/graphql';
@@ -42,7 +42,6 @@ const app = express();
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(compression());
-  app.use(expressStatusMonitorMiddleware());
 
   // IMPORTANT: Add app routers here
   app.use([maintenanceRouter, authRouter, userRouter]);

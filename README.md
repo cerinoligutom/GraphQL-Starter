@@ -106,10 +106,6 @@ Credentials:
 
 [http://localhost:8080/api/v1/maintenance/health-check](http://localhost:8080/api/v1/maintenance/health-check)
 
-### Node Express Status Monitor endpoint
-
-[http://localhost:8080/status](http://localhost:8080/status)
-
 **Note:** If you prefer a different port, container name, or anything docker environment related. Just modify the `docker-compose.yml` file and adjust to your setup needs.
 
 ## Project Structure

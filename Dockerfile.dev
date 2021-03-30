@@ -12,7 +12,7 @@ RUN npm install
 # Copy files from host to container
 COPY ./ ./
 
-RUN npm run generate:gql-types
+RUN npm run build
 
 RUN ls -al
 

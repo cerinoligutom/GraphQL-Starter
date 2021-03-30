@@ -4,7 +4,6 @@
     "module": "commonjs",
     "lib": ["ESNext"],
 
-    "incremental": true,
     "outDir": "./build",
     "rootDir": "./",
 
@@ -25,6 +24,5 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true
   },
-  "include": ["src/**/*.ts", "knexfile.ts"],
-  "exclude": ["node_modules", "build"]
+  "exclude": ["node_modules", "build", "gulpfile.ts"]
 }

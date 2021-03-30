@@ -1,6 +1,0 @@
-{
-  "watch": ["src/**/*"],
-  "ext": "ts,graphql",
-  "exec": "npm run lint && node --inspect=0.0.0.0:9229 --require=ts-node/register --require=tsconfig-paths/register ./src/app.ts",
-  "inspect": true
-}

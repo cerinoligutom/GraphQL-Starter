@@ -148,7 +148,7 @@ Credentials:
 | Dockerfile                                              | `Production` Docker config file.                                                                                                                                                    |
 | Dockerfile.dev                                          | `Development` Docker config file used by `docker-compose`.                                                                                                                          |
 | knexfile.ts                                             | KnexJS config which contains the database config.                                                                                                                                   |
-| nodemon.json                                            | Nodemon (file watcher) config file.                                                                                                                                                 |
+| gulpfile.ts                                             | Gulp task runner config file.                                                                                                                                                       |
 | tsconfig.json                                           | Contains typescript config for this project.                                                                                                                                        |
 
 **Note:** This project structure makes use of **barrel files**, those **index.ts** you see on most of the folders. Make sure not to forget to export your newly created files to their respective **barrel files (index.ts)** if applicable!
@@ -357,7 +357,7 @@ If you're not using Docker, you can still get your hands on the build files. Nor
 Build the project:
 
 ```bash
-npm run build
+npm run build --prod
 ```
 
 This will create a `build` folder in the project directory which you can deploy.

@@ -5,15 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Docker: Attach to Nodemon",
+      "name": "Docker: Attach to Node",
       "type": "node",
       "request": "attach",
-      "localRoot": "${workspaceRoot}/src",
-      "remoteRoot": "/usr/src/app/src",
+      "sourceMaps": true,
+      "localRoot": "${workspaceRoot}",
+      "remoteRoot": "/usr/src/app",
       "protocol": "inspector",
       "address": "0.0.0.0",
       "port": 9229,
-      "restart": true
+      "restart": true,
+      "smartStep": true,
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }

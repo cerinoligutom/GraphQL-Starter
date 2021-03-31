@@ -11,6 +11,7 @@
     "dockerized",
     "gitignore",
     "graphql",
+    "gulpfile",
     "maxsize",
     "nginx",
     "npmrc",

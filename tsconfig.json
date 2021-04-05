@@ -12,6 +12,9 @@
     "strictNullChecks": true,
     "noImplicitReturns": true,
 
+    "incremental": true,
+    "tsBuildInfoFile": "./.tsbuildinfo",
+
     "baseUrl": ".",
     "typeRoots": ["./@types", "./node_modules/@types"],
     "paths": {

@@ -14,7 +14,7 @@ const PATHS = {
   ],
   srcGraphqlFiles: ['src/**/*.graphql'],
   srcNonTsFiles: ['src/**/*', '!src/**/*.ts'],
-  configFiles: ['package*.json', 'LICENSE'],
+  configFiles: ['package*.json', '.env*', 'LICENSE'],
   destinationDir: 'build',
 };
 
@@ -85,8 +85,8 @@ process.on('exit', () => {
 
 export async function dev(): Promise<void> {
   await cleanBuildDir();
-  await copyConfigFiles();
 
+  watch(PATHS.configFiles, { ignoreInitial: false }, copyConfigFiles);
   watch(PATHS.srcNonTsFiles, { ignoreInitial: false }, copyNonTypeScriptFiles);
   watch(PATHS.srcGraphqlFiles, { ignoreInitial: false }, generateGqlTsFiles);
   watch(PATHS.srcTsFiles, { ignoreInitial: false }, parallel(lint, series(compileTsFiles, compileTsPaths, runApp)));

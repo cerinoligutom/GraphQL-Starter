@@ -65,6 +65,3 @@ build
 
 # generated
 generated
-
-# TypeScript build cache
-*.tsbuildinfo

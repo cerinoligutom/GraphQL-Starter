@@ -26,7 +26,6 @@
     "serializers",
     "superadmin",
     "tinymce",
-    "tsbuildinfo",
     "unopinionated"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib"

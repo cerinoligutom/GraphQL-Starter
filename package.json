@@ -57,6 +57,7 @@
     "objection": "2.2.14",
     "objection-cursor": "1.2.4",
     "pg": "8.6.0",
+    "supertokens-node": "^4.3.3",
     "tsconfig-paths": "^3.9.0",
     "uuid": "^8.3.2",
     "yup": "0.32.9"

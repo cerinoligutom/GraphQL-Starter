@@ -25,7 +25,9 @@
     "serializer",
     "serializers",
     "superadmin",
+    "supertokens",
     "tinymce",
+    "unauthorised",
     "unopinionated"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib"

@@ -21,8 +21,9 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 
 ## Features
 
-- JWT Based Authentication using Email and Password
-  - Signed with asymmetric keys
+- Login with Email and Password
+  - Cookie Based Authentication (Access Token + Rotating Refresh Tokens) using [SuperTokens](https://supertokens.io/).
+  - [SuperTokens](https://supertokens.io/) is only used for [Session Management](https://supertokens.io/docs/session/introduction) with this setup. If you need OAuth, read more on the SuperTokens docs on how to setup one easily.
 - Node Express REST endpoint examples
 - Apollo GraphQL as middleware for Node Express
 - Centralized error handling

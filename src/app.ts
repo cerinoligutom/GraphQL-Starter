@@ -1,5 +1,9 @@
 import { env } from '@/config/environment';
 
+import SuperTokens from 'supertokens-node';
+import Session from 'supertokens-node/recipe/session';
+import '@/supertokens';
+
 import { errorMiddleware, corsMiddleware } from '@/middlewares';
 import { ping as pingPostgresDatabase } from '@/db/knex';
 import { ping as pingRedisDatabase } from '@/redis/client';
@@ -39,14 +43,19 @@ const app = express();
 
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(corsMiddleware());
+  app.use(SuperTokens.middleware());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(compression());
 
+  app.use(['/api', '/graphql'], Session.verifySession({ sessionRequired: false }));
+
   // IMPORTANT: Add app routers here
   app.use([maintenanceRouter, authRouter, userRouter]);
 
+  app.use(SuperTokens.errorHandler());
   app.use(errorMiddleware());
+
   const apolloServer = await initApolloGraphqlServer(app);
 
   // For the subscription server

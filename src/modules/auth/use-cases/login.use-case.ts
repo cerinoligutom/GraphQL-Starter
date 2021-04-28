@@ -3,7 +3,7 @@ import { UnauthenticatedError } from '@/errors';
 import { IContext } from '@/shared/interfaces';
 import { bcryptUtil, createSchemaValidator } from '@/utils';
 import * as yup from 'yup';
-import { createAccessToken } from '../helpers/create-access-token';
+import Session from 'supertokens-node/recipe/session';
 
 export interface ILoginDTO {
   email: string;
@@ -18,7 +18,6 @@ const validateDTO = createSchemaValidator<ILoginDTO>(schema);
 
 interface ILoginUseCaseResult {
   user: UserModel;
-  token: string;
 }
 export async function loginUseCase(dto: ILoginDTO, ctx: IContext): Promise<ILoginUseCaseResult> {
   const { email, password } = await validateDTO(dto);
@@ -29,11 +28,13 @@ export async function loginUseCase(dto: ILoginDTO, ctx: IContext): Promise<ILogi
     const isValidPassword = await bcryptUtil.verify(password, user.hash);
 
     if (isValidPassword) {
-      const token = createAccessToken({ userId: user.id });
+      // IMPORTANT:
+      // If you need to store session data, read more from the link below:
+      // https://supertokens.io/docs/session/common-customizations/sessions/new-session#storing-session-information
+      await Session.createNewSession(ctx.res, user.id.toString());
 
       return {
         user,
-        token,
       };
     }
   }

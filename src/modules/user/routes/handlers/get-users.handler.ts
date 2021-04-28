@@ -19,7 +19,6 @@ export const getUsersHandler: RequestHandler = async (req, res) => {
     {
       req,
       res,
-      userId: req.userId,
     },
   );
 

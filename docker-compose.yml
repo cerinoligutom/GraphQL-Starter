@@ -55,7 +55,7 @@ services:
       # IMPORTANT:
       # Make sure to adjust this accordingly if you plan to test
       # other than the local database
-      POSTGRESQL_CONNECTION_URI: '${POSTGRES_CONNECTION_URL}'
+      POSTGRESQL_CONNECTION_URI: 'postgresql://postgres:password@db:5432/db'
       POSTGRESQL_TABLE_NAMES_PREFIX: 'supertokens'
 
       # IMPORTANT:

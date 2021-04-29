@@ -9,7 +9,6 @@ import { env } from '@/config/environment';
 import { apolloOptions } from '@/config/apollo-options';
 import { UniqueID } from '@/shared/types';
 import { initLoaders } from './init-loaders';
-import { processAccessTokenFromAuthHeader } from '@/shared/helpers';
 import { handleError } from '@/errors';
 
 export interface IGraphQLContext {
@@ -24,13 +23,11 @@ export const initApolloGraphqlServer = async (app: Express): Promise<ApolloServe
     schema: await initializeSchema(),
 
     context: async ({ req, res, connection }) => {
-      const payload = processAccessTokenFromAuthHeader(req);
-
       const graphqlContext: IGraphQLContext = {
         req,
         res,
         loaders: initLoaders(),
-        userId: payload?.userId,
+        userId: req.session?.getUserId(),
       };
 
       if (connection) {

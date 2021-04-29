@@ -14,7 +14,6 @@ export const usersResolver: GQL_QueryResolvers['users'] = async (root, args, ctx
     {
       req: ctx.req,
       res: ctx.res,
-      userId: ctx.userId,
     },
   );
 

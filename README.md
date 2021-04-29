@@ -21,8 +21,9 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 
 ## Features
 
-- JWT Based Authentication using Email and Password
-  - Signed with asymmetric keys
+- Login with Email and Password
+- Session Management (Access Token + Rotating Refresh Tokens) with [SuperTokens](https://supertokens.io/).
+  - [SuperTokens](https://supertokens.io/) is only used for [Session Management](https://supertokens.io/docs/session/introduction) with this setup but it can do more than that. If you need OAuth, read more on the SuperTokens docs on how to setup one easily.
 - Node Express REST endpoint examples
 - Apollo GraphQL as middleware for Node Express
 - Centralized error handling
@@ -57,6 +58,10 @@ If the nature of your app isn't CRUDy (for a lack of a better word), you probabl
 - [Docker](https://www.docker.com/)
 - [NodeJS](https://nodejs.org/)
 - TypeScript
+- [supertokens-website](https://www.npmjs.com/package/supertokens-website) on your frontend app.
+  - For the client-side session management.
+  - Read more [here](https://supertokens.io/docs/session/common-customizations/sessions/cookie-consent#cookie-consent) for more info about the specific cookies being used by `SuperTokens`.
+  - If you don't use JS for your frontend app, you'll have to make the HTTP requests that `supertokens-website` heavy lifts yourself, such as [refreshing the session when it expires](https://github.com/supertokens/frontend-driver-interface/blob/master/v1.7.1.md#refresh-session).
 
 ## Getting Started
 
@@ -208,11 +213,15 @@ See files inside `src/config/*` that uses `process.env`. Those are the environme
 1. Check for auth requirements if applicable.
 1. Validate DTO.
 1. Write your business logic for the use case.
-   - If some operation warrants a service, don't hesitate to create one.
+   - If some operations warrants a service, don't hesitate to create one.
 1. Make sure to return an object-like data on your use case functions so that you can easily extend the results if needed.
    - Unless it's a write operation and is idempotent in nature, then you might not need to return anything.
 
-**Note:** Your Interface Layer shouldn't do any DB Operations directly.
+**Important:**
+
+- Your Interface Layer shouldn't do any DB Operations directly.
+- Use cases should never call another use case. There will be tight coupling if you do that. In the case you decide to change a parameter or behavior on the child use case, the dependent use case would've to adjust accordingly.
+- If you foresee an operation that you think will be reused whether by the same module or other modules, put it in a service and let this service be called by the module that wants to use it.
 
 ### GraphQL - Create the type definitions for your entity
 
@@ -300,6 +309,14 @@ For example:
 | `Maybe`                   | `Maybe`.ts                   |
 
 ## Deployment
+
+### **SuperTokens Core**
+
+Read more on the SuperTokens [docs based on your infrastructure](https://supertokens.io/docs/session/quick-setup/core/with-docker).
+
+Make sure to configure the [database setup](https://supertokens.io/docs/session/quick-setup/database-setup/postgresql).
+
+### **Node App**
 
 There are a few ways to go about this and can vary based on your setup.
 
@@ -460,7 +477,7 @@ If something is unclear, confusing, or needs to be refactored, please let me kno
 
 MIT License
 
-Copyright (c) 2019 Cerino O. Ligutom III
+Copyright (c) 2019-2021 Cerino O. Ligutom III
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

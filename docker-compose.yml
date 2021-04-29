@@ -49,6 +49,22 @@ services:
     environment:
       - REDIS_HOSTS=local:redis:6379
 
+  supertokens:
+    image: supertokens/supertokens-postgresql:3.4
+    environment:
+      # IMPORTANT:
+      # Make sure to adjust this accordingly if you plan to test
+      # other than the local database
+      POSTGRESQL_CONNECTION_URI: '${POSTGRES_CONNECTION_URL}'
+      POSTGRESQL_TABLE_NAMES_PREFIX: 'supertokens'
+
+      # IMPORTANT:
+      # On Production, make sure to set a secure API KEY
+      # Read more here: https://supertokens.io/docs/session/common-customizations/core/api-keys
+      API_KEYS: 'graphql-starter-supertokens-api-key'
+    ports:
+      - '3567:3567'
+
 volumes:
   postgres12-data:
   redis6-data:

@@ -3,7 +3,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
-    project: ['./tsconfig.json'],
+    project: ['./tsconfig.eslint.json'],
   },
   plugins: ['@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'airbnb-typescript/base', 'prettier'],

@@ -13,7 +13,6 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Recommended Workflow](#recommended-workflow)
 - [Naming Convention](#naming-convention)
 - [Deployment](#deployment)
-- [CircleCI Config](#circleci-config)
 - [Future Plans](#future-plans)
 - [Pro Tips](#pro-tips)
 - [Contributing](#contributing)
@@ -338,6 +337,8 @@ Then push the image you just built from your local machine (or from your CI tool
 docker push <typically_a_url_to_your_docker_image_repository>
 ```
 
+Let your host server pull this image and run it from there.
+
 **Note:** Typically, the `tag` for the image you built should match the `url` to your docker image repository. Refer to your image repository provider for specific details.
 
 **Extra:** If you want to test the image you just built with your local setup, then configure the docker-compose file such that it points to your image instead of building from a Dockerfile. For example:
@@ -381,62 +382,9 @@ This will create a `build` folder in the project directory which you can deploy.
 
 **Note:** You might need to manually install the dependencies yourself if you're using a VPS. Otherwise, your cloud provider's NodeJS container will typically just need a `package.json` from the root folder and they'll do the installation on every deploy.
 
-### Deploy to AWS Elastic Beanstalk w/ AWS ECR and CircleCI
-
-This is more advanced and can get pretty long so I'll assume you have prepared the AWS Resources and CircleCI account needed to make things work. Refer to the [CircleCI Config](#circleci-config) for which variables you need to set.
-
-The workflow would be:
-
-1. Make a PR to a configured branch as per config. Currently `master`, `staging` and `test`.
-1. CircleCI would process the pipeline as per config (build, test, deploy).
-1. CircleCI would then push the image artifact to AWS ECR then notify AWS Elastic Beanstalk to pull that image and update the environment.
-
-## CircleCI Config
-
-Currently uses 2 orbs:
-
-- aws-ecr
-- aws-cli
-
-Make sure to set these environment variables on your CircleCI project (or context):
-
-### Orbs
-
-| Variable                | Required by      | Description                                    |
-| ----------------------- | ---------------- | ---------------------------------------------- |
-| AWS_ACCESS_KEY_ID       | aws-ecr, aws-cli | AWS Account Access Key ID                      |
-| AWS_SECRET_ACCESS_KEY   | aws-ecr, aws-cli | AWS Secret Access Key                          |
-| AWS_REGION              | aws-ecr          | AWS Resources Region                           |
-| AWS_ECR_REPOSITORY_NAME | aws-ecr          | AWS Elastic Container Registry Repository Name |
-| AWS_ECR_ACCOUNT_URL     | aws-ecr          | AWS Elastic Container Registry Account URL     |
-| AWS_DEFAULT_REGION      | aws-cli          | AWS Resources Region                           |
-
-### Production
-
-| Variable                   | Description                        |
-| -------------------------- | ---------------------------------- |
-| AWS_EB_APP_NAME_PRODUCTION | Elastic Beanstalk Application Name |
-| AWS_EB_ENV_ID_PRODUCTION   | Elastic Beanstalk Environment ID   |
-
-### Staging
-
-| Variable                | Description                        |
-| ----------------------- | ---------------------------------- |
-| AWS_EB_APP_NAME_STAGING | Elastic Beanstalk Application Name |
-| AWS_EB_ENV_ID_STAGING   | Elastic Beanstalk Environment ID   |
-
-### Test
-
-| Variable             | Description                        |
-| -------------------- | ---------------------------------- |
-| AWS_EB_APP_NAME_TEST | Elastic Beanstalk Application Name |
-| AWS_EB_ENV_ID_TEST   | Elastic Beanstalk Environment ID   |
-
-**Tip:** You might want to enable the `Only build pull requests` and `Auto-cancel redundant builds` on your CircleCI project settings.
-
 ## Future Plans
 
-- Migrate from CircleCI to GitHub Actions
+- Use GitHub Actions for CI/CD
 - Migrate from bcrypt to argon2
 - Tests with Jest
 

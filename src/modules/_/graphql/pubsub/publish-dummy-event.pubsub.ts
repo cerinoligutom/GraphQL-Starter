@@ -11,8 +11,8 @@ import { GQL_DummySubscriptionPayload } from '@/generated/graphql';
 // be handled here as well or on the "resolve" field of the
 // subscription resolver. The latter is recommended for visibility and to
 // leave this function as a pure action creator (single responsibility).
-export const createPublishDummyEventPubSub = (pubsub: PubSubEngine, triggerName: string) => async (
-  payload: GQL_DummySubscriptionPayload,
-): Promise<void> => {
-  await pubsub.publish(triggerName, payload);
-};
+export const createPublishDummyEventPubSub =
+  (pubsub: PubSubEngine, triggerName: string) =>
+  async (payload: GQL_DummySubscriptionPayload): Promise<void> => {
+    await pubsub.publish(triggerName, payload);
+  };

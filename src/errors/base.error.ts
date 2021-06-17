@@ -39,6 +39,10 @@ export class BaseError extends Error {
 
   constructor(args: IBaseErrorConstructorArgs) {
     super(args.message);
+    // IMPORTANT:
+    // If you decide to use ts-node to run this project and transpile on the fly,
+    // this will not work due to a breaking change since TypeScript 2.1. Read more:
+    // https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
     this.name = this.constructor.name;
 
     // For tracing on backend logs

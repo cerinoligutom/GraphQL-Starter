@@ -11,7 +11,7 @@ export const errorMiddleware = (): ErrorRequestHandler => (unknownError, req, re
 
   res.status(err.httpStatusCode).send({
     message: err.message,
-    errorCodename: err.errorCodename,
+    code: err.errorCodename,
     data: err.payload,
     stacktrace: err.stack,
   });

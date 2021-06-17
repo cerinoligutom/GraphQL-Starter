@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
 import { bcryptUtil } from '@/utils';
 import { UserModel, SystemRoleModel } from '@/db/models';
-import { SystemRoleID } from '@/shared/enums';
+import { SystemRoleID } from '@/shared/constants';
 
 const USERS_TABLE_NAME = 'users';
 const ROLES_TABLE_NAME = 'system_roles';

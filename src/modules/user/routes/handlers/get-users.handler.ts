@@ -1,7 +1,7 @@
 import { GQL_UserConnection, GQL_UserEdge } from '@/generated/graphql';
-import { SortDirection } from '@/shared/enums';
+import { SortDirection } from '@/shared/constants';
 import { RequestHandler } from 'express';
-import { UserSortField } from '../../enums/user-sort-field.enum';
+import { UserSortField } from '../../constants/user-sort-field.enum';
 import { createGQLUser } from '../../factories/user.graphql-factory';
 import { getUsersUseCase } from '../../use-cases/get-users.use-case';
 

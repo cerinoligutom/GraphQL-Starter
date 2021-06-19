@@ -234,8 +234,8 @@ See files inside `src/config/*` that uses `process.env`. Those are the environme
 ### GraphQL - Create a factory for your entity type
 
 1. If not yet present, create a new folder named `factories` under `src/modules/<module_name>/`.
-1. Create a graphql factory file under that folder.
-   - Recommended file name should be in the format: `<graphql-object-type-name>.graphql-factory.ts`
+1. Create a factory file under that folder.
+   - Recommended file name should be in the format: `<graphql-object-type-name>.factory.ts`
 1. Create the main factory function inside the file:
 
    - Recommended function name should be in the format: `createGQL_<graphql-object-type-name>`

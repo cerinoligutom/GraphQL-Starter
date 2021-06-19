@@ -56,7 +56,7 @@ module.exports = {
       },
     },
     {
-      files: ['./src/**/*.error.ts', './src/**/*.handler.ts', './src/**/*.util.ts', './src/**/*.graphql-factory.ts'],
+      files: ['./src/**/*.error.ts', './src/**/*.handler.ts', './src/**/*.util.ts', './src/**/*.factory.ts'],
       rules: {
         '@typescript-eslint/no-explicit-any': 'off',
       },

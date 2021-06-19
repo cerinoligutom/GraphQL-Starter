@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { registerUseCase } from '../../use-cases/register.use-case';
 
-export const registerHandler: RequestHandler = async (req, res) => {
+export const registerHandler: RequestHandler<any, undefined, any, any> = async (req, res) => {
   const { email, firstName, lastName, password, middleName } = req.body as any;
 
   await registerUseCase(
@@ -15,5 +15,5 @@ export const registerHandler: RequestHandler = async (req, res) => {
     { req, res },
   );
 
-  res.send({ success: true });
+  res.send();
 };

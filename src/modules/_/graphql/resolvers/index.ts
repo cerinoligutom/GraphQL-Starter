@@ -5,6 +5,9 @@ import { _dummyResolver as _dummySubscriptionResolver } from './_dummy.subscript
 import { singleUploadResolver } from './single-upload.mutation';
 import { multipleUploadResolver } from './multiple-upload.mutation';
 import { nodeInterfaceResolveType } from './node.interface';
+import { _dateResolver } from './_date.query';
+import { _datetimeResolver } from './_datetime.query';
+import { _timeResolver } from './_time.query';
 
 const resolvers: GQL_Resolvers = {
   Node: {
@@ -12,6 +15,9 @@ const resolvers: GQL_Resolvers = {
   },
   Query: {
     _dummy: _dummyQueryResolver,
+    _date: _dateResolver,
+    _datetime: _datetimeResolver,
+    _time: _timeResolver,
   },
   Mutation: {
     _dummy: _dummyMutationResolver,

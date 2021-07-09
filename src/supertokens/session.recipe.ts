@@ -15,7 +15,12 @@ export const SessionRecipe = Session.init({
       next(new UnauthenticatedError());
     },
   },
-  signOutFeature: {
-    disableDefaultImplementation: true,
+  // https://supertokens.io/docs/session/advanced-customizations/apis-override/usage
+  override: {
+    apis: (originalImplementation) => ({
+      ...originalImplementation,
+      // https://supertokens.io/docs/session/advanced-customizations/apis-override/disabling
+      signOutPOST: undefined,
+    }),
   },
 });

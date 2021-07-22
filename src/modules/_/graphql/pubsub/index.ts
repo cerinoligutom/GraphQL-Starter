@@ -1,5 +1,5 @@
 import { pubSubEngine } from '@/graphql/pubsub';
-import { PubSubEngine } from 'apollo-server-express';
+import { PubSubEngine } from 'graphql-subscriptions';
 import { createPublishDummyEventPubSub } from './publish-dummy-event.pubsub';
 
 enum CommonPubSubTrigger {

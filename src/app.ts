@@ -56,11 +56,11 @@ const app = express();
   app.use(SuperTokens.errorHandler());
   app.use(errorMiddleware());
 
-  const apolloServer = await initApolloGraphqlServer(app);
-
-  // For the subscription server
+  // For the subscription server. Read more from the link below:
+  // https://www.apollographql.com/docs/apollo-server/migration/#subscriptions
   const httpServer = createServer(app);
-  apolloServer.installSubscriptionHandlers(httpServer);
+
+  await initApolloGraphqlServer(app, httpServer);
 
   httpServer.listen(env.app.port, () => {
     console.info(`Server is now up @ ${env.app.port}`);

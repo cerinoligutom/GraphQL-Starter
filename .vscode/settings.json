@@ -3,7 +3,6 @@
     "casl",
     "codegen",
     "commitlint",
-    "copyfiles",
     "dataloader",
     "dataloaders",
     "datetime",

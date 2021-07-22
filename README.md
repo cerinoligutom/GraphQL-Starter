@@ -170,9 +170,6 @@ APP_PORT=
 # DB Connection URLs
 POSTGRES_CONNECTION_URL=
 REDIS_CONNECTION_URL=
-
-# Apollo Graph Manager
-APOLLO_KEY=
 ```
 
 See files inside `src/config/*` that uses `process.env`. Those are the environment variables that you can configure.

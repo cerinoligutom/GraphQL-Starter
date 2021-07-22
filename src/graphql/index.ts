@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Express, Request, Response } from 'express';
-import { ApolloServer, AuthenticationError } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import { initializeSchema } from './schema';
 import { env } from '@/config/environment';
@@ -10,6 +10,10 @@ import { apolloOptions } from '@/config/apollo-options';
 import { UniqueID } from '@/shared/types';
 import { initLoaders } from './init-loaders';
 import { handleError } from '@/errors';
+import { Server } from 'http';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { execute, subscribe } from 'graphql';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 export interface IGraphQLContext {
   loaders: ReturnType<typeof initLoaders>;
@@ -18,32 +22,19 @@ export interface IGraphQLContext {
   userId?: UniqueID;
 }
 
-export const initApolloGraphqlServer = async (app: Express): Promise<ApolloServer> => {
-  const server = new ApolloServer({
-    schema: await initializeSchema(),
+export const initApolloGraphqlServer = async (app: Express, httpServer: Server): Promise<void> => {
+  const schema = await initializeSchema();
 
-    context: async ({ req, res, connection }) => {
+  const server = new ApolloServer({
+    schema,
+
+    context: async ({ req, res }) => {
       const graphqlContext: IGraphQLContext = {
         req,
         res,
         loaders: initLoaders(),
         userId: req.session?.getUserId(),
       };
-
-      if (connection) {
-        // Subscription Resolver
-
-        // Possibly check connection for metadata.
-
-        // "context" value is the return value of "onConnect()"
-        // in the "subscriptions" property below.
-        const { context } = connection;
-
-        return {
-          ...graphqlContext,
-          ...context,
-        };
-      }
 
       return graphqlContext;
     },
@@ -64,50 +55,24 @@ export const initApolloGraphqlServer = async (app: Express): Promise<ApolloServe
 
     validationRules: [depthLimit(10)],
 
-    subscriptions: {
-      onConnect: (connectionParams, webSocket) => {
-        // https://www.apollographql.com/docs/graphql-subscriptions/authentication/
-        console.info('connected');
-
-        // The value returned here goes to "connection.context" in "context" property above.
-        const context: Partial<IGraphQLContext> = {};
-        return context;
-      },
-      onDisconnect: (webSocket, context) => {
-        console.info('disconnected');
-      },
-    },
-
     introspection: !env.isProduction,
 
-    uploads: {
+    plugins: [],
+  });
+
+  // This middleware should be added before calling `applyMiddleware`.
+  app.use(
+    graphqlUploadExpress({
       // Limits here should be stricter than config for surrounding
       // infrastructure such as Nginx so errors can be handled elegantly by
       // graphql-upload:
       // https://github.com/jaydenseric/graphql-upload#type-uploadoptions
       maxFileSize: apolloOptions.maxFileSize,
       maxFiles: apolloOptions.maxFiles,
-    },
+    }),
+  );
 
-    engine: {
-      apiKey: apolloOptions.apolloKey,
-      graphVariant: env.app.environment,
-      /**
-       * You can control what gets sent over to Apollo Graph Manager thru this function.
-       *
-       * Read more: https://www.apollographql.com/docs/apollo-server/data/errors/#for-apollo-graph-manager-reporting
-       */
-      rewriteError: (err) => {
-        // Return `null` to avoid reporting `AuthenticationError`s
-        if (err instanceof AuthenticationError) {
-          return null;
-        }
-
-        // All other errors will be reported.
-        return err;
-      },
-    },
-  });
+  await server.start();
 
   server.applyMiddleware({
     app,
@@ -115,5 +80,35 @@ export const initApolloGraphqlServer = async (app: Express): Promise<ApolloServe
     cors: false,
   });
 
-  return server;
+  const subscriptionServer = SubscriptionServer.create(
+    {
+      schema,
+      execute,
+      subscribe,
+      onConnect: (connectionParams: Record<string, unknown>, webSocket: Record<string, unknown>) => {
+        // https://www.apollographql.com/docs/graphql-subscriptions/authentication/
+        console.info('connected');
+
+        // The value returned here goes to "connection.context" in "context" property above.
+        const context: Partial<IGraphQLContext> = {};
+        return context;
+      },
+      onDisconnect: (webSocket: Record<string, unknown>, context: Record<string, unknown>) => {
+        console.info('disconnected');
+      },
+    },
+    {
+      server: httpServer,
+      path: server.graphqlPath,
+    },
+  );
+
+  // Shut down in the case of interrupt and termination signals
+  // We expect to handle this more cleanly in the future. See (#5074)[https://github.com/apollographql/apollo-server/issues/5074] for reference.
+  ['SIGINT', 'SIGTERM'].forEach((signal) => {
+    process.on(signal, () => {
+      httpServer.close();
+      subscriptionServer.close();
+    });
+  });
 };

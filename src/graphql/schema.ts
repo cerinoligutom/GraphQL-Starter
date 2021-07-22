@@ -2,7 +2,7 @@
 
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import { loadFiles } from '@graphql-tools/load-files';
-import { makeExecutableSchema } from 'apollo-server-express';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import * as scalars from './scalars';
 import * as enums from './enums';
 import { GraphQLSchema } from 'graphql';

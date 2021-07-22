@@ -61,25 +61,13 @@ async function generateGqlTsFiles() {
   return run(command)();
 }
 
-// https://gist.github.com/webdesserts/5632955
-let nodeProcess: ChildProcess | null;
+let hasInitNodemon = false;
 async function runApp() {
-  nodeProcess?.kill();
-  nodeProcess = spawn('node', ['--inspect=0.0.0.0:9229', './src/app.js'], {
-    cwd: './build',
-    stdio: 'inherit',
-  });
-  nodeProcess.on('close', function (code) {
-    if (code !== null) {
-      console.info(`[gulp] Node process closed with exit code ${code}`);
-    }
-  });
+  if (hasInitNodemon) return;
+  hasInitNodemon = true;
+  run('nodemon')();
+  return;
 }
-
-// Cleanup
-process.on('exit', () => {
-  nodeProcess?.kill();
-});
 
 // PUBLIC COMMANDS //
 

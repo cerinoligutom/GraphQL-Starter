@@ -20,9 +20,7 @@ export function handleError(unknownError: Error): BaseError {
 
   // Extract the original error from Apollo GraphQL errors.
   if (unknownError instanceof ApolloError || unknownError instanceof GraphQLError) {
-    const { originalError } = unknownError;
-
-    error = originalError;
+    error = unknownError.originalError as Error;
   }
 
   // If it still isn't a known Error, meaning it doesn't inherit BaseError,

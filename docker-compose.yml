@@ -18,13 +18,13 @@ services:
     tty: true
 
   db:
-    image: postgres:12.4-alpine
+    image: postgres:13-alpine
     restart: always
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: db
     volumes:
-      - postgres12-data:/var/lib/postgresql/data
+      - postgres13-data:/var/lib/postgresql/data
 
   adminer:
     image: adminer:latest
@@ -66,6 +66,6 @@ services:
       - '3567:3567'
 
 volumes:
-  postgres12-data:
+  postgres13-data:
   redis6-data:
     # external: true # https://github.com/docker/for-win/issues/445#issuecomment-405185621

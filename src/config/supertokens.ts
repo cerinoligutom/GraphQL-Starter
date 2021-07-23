@@ -1,4 +1,4 @@
-import { env } from './environment';
+import { env } from '@/config/environment';
 
 interface ISuperTokensConfig {
   connectionUrl: string;

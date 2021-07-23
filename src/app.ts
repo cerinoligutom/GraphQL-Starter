@@ -21,6 +21,10 @@ import { authRouter } from '@/modules/auth/routes';
 const app = express();
 
 (async () => {
+  console.info(`${'='.repeat(30)}`);
+  console.info(`NODE_ENV: ${env.app.environment}`);
+  console.info(`${'='.repeat(30)}`);
+
   // Test Postgres DB
   try {
     await pingPostgresDatabase();

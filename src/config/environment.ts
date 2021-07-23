@@ -34,7 +34,3 @@ if (!isProduction) {
   env.postgresConnectionUrl ||= 'postgresql://postgres:password@db:5432/db';
   env.redisConnectionUrl ||= 'redis://redis';
 }
-
-console.info(`${'='.repeat(30)}`);
-console.info(`NODE_ENV: ${env.app.environment}`);
-console.info(`${'='.repeat(30)}`);

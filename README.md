@@ -32,7 +32,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - Automatic type code generation for GraphQL resolvers with GraphQL Code Generator
 - Facebook Dataloader for caching and batching
 - PostgreSQL Database
-- Adminer for managing the PostgreSQL Database
+- pgAdmin for managing the PostgreSQL Database
 - Redis for Caching and GraphQL Subscription
 - RedisCommander for managing the Redis Database
 - Pre-commit hook for auto formatting files with Husky, Lint-Staged and Prettier
@@ -88,19 +88,29 @@ If docker compose have bootstrapped all services successfully, you should be abl
 
 [http://localhost:8080/graphql](http://localhost:8080/graphql)
 
-### Adminer endpoint
+### pgAdmin endpoint
 
 [http://localhost:8888/](http://localhost:8888/)
 
-Credentials:
+Login to the pgAdmin page using the credentials below:
 
-| Field    | Value      | Notes                                                                                        |
-| -------- | ---------- | -------------------------------------------------------------------------------------------- |
-| System   | PostgreSQL | `docker-compose.yml` config is using Postgres as the SQL Database so we pick PostgreSQL here |
-| Server   | db         | Service name in `docker-compose.yml` file for our Database service is named `db`             |
-| Username | postgres   | Default username is `postgres`                                                               |
-| Password | password   | As defined in the `docker-compose.yml` config                                                |
-| Database | db         | As defined in the `docker-compose.yml` config                                                |
+| Field    | Value            |
+| -------- | ---------------- |
+| email    | admin@domain.com |
+| password | password         |
+
+If first time setting up:
+
+- Right click on the `Servers` then create a new server.
+- In the `General` tab, give this server connection a name.
+- Switch over to the `Connection` tab.
+- Fill in the fields below.
+
+| Field             | Value    | Notes                                                                            |
+| ----------------- | -------- | -------------------------------------------------------------------------------- |
+| Host name/address | db       | Service name in `docker-compose.yml` file for our Database service is named `db` |
+| Username          | postgres | Default username is `postgres`                                                   |
+| Password          | password | As defined in the `docker-compose.yml` config                                    |
 
 ### Redis Commander endpoint
 

@@ -26,14 +26,15 @@ services:
     volumes:
       - postgres13-data:/var/lib/postgresql/data
 
-  adminer:
-    image: adminer:latest
+  # https://www.pgadmin.org/docs/pgadmin4/5.5/container_deployment.html
+  pgadmin:
+    image: dpage/pgadmin4:5.5
     restart: always
     ports:
-      - '8888:8080'
+      - '8888:80'
     environment:
-      ADMINER_PLUGINS: 'tables-filter tinymce'
-      ADMINER_DESIGN: 'price'
+      PGADMIN_DEFAULT_EMAIL: admin@domain.com
+      PGADMIN_DEFAULT_PASSWORD: password
 
   redis:
     image: redis:6-alpine

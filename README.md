@@ -180,6 +180,13 @@ APP_PORT=
 # DB Connection URLs
 POSTGRES_CONNECTION_URL=
 REDIS_CONNECTION_URL=
+
+# SuperTokens
+SUPERTOKENS_CONNECTION_URL=
+SUPERTOKENS_API_KEY=
+SUPERTOKENS_APP_NAME=
+SUPERTOKENS_API_DOMAIN=
+SUPERTOKENS_WEBSITE_DOMAIN=
 ```
 
 See files inside `src/config/*` that uses `process.env`. Those are the environment variables that you can configure.

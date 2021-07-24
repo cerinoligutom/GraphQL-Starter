@@ -4,7 +4,7 @@
 import { watch, parallel, series, src, dest } from 'gulp';
 // Read Gulp@4 support: https://www.npmjs.com/package/gulp-run-command#faq
 import run from 'gulp-run-command';
-import { ChildProcess, spawn } from 'child_process';
+import os from 'os';
 
 const PATHS = {
   srcTsFiles: [
@@ -65,7 +65,14 @@ let hasInitNodemon = false;
 async function runApp() {
   if (hasInitNodemon) return;
   hasInitNodemon = true;
-  run('nodemon')();
+
+  let command = 'npx nodemon';
+
+  // See tips from README file.
+  // https://github.com/remy/nodemon#application-isnt-restarting
+  if (os.platform() === 'win32') command += ' -L';
+
+  run(command)();
   return;
 }
 

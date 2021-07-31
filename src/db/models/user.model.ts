@@ -24,6 +24,8 @@ export class UserModel extends BaseModel {
   };
 
   static yupSchema = {
+    id: yup.string().required(),
+
     firstName: yup.string().min(2).trim().required(),
 
     middleName: yup.string().nullable(),

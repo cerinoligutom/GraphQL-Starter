@@ -6,7 +6,6 @@ import { UniqueID } from '@/shared/types';
 
 export class UserModel extends BaseModel {
   static tableName = 'users';
-  static readonly modelName = 'User';
 
   static relationMappings: RelationMappings = {
     roles: {

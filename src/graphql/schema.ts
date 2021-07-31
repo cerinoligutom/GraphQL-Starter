@@ -27,7 +27,6 @@ export const initializeSchema = async (): Promise<GraphQLSchema> => {
   const graphqlSchema = makeExecutableSchema({
     typeDefs,
     resolvers,
-    logger: { log: (e) => console.info(e) },
   });
 
   return graphqlSchema;

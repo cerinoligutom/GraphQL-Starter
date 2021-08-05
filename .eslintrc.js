@@ -61,5 +61,11 @@ module.exports = {
         '@typescript-eslint/no-explicit-any': 'off',
       },
     },
+    {
+      files: ['./_templates/**/*.prompt.js'],
+      rules: {
+        'no-param-reassign': 'off',
+      },
+    },
   ],
 };

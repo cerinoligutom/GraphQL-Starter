@@ -1,18 +1,25 @@
 const inquirer = require('inquirer');
 
+const KEY = 'dbModel';
+
 module.exports = async (args) => {
-  args.dbModel = {};
+  args[KEY] = {};
 
   const answer = await inquirer.prompt([
     {
+      type: 'input',
+      name: `${KEY}.name`,
+      message: 'Model Name?',
+    },
+    {
       type: 'confirm',
-      name: 'dbModel.hasOwnId',
+      name: `${KEY}.hasOwnId`,
       message: 'Should this model have its own ID?',
     },
     {
       type: 'input',
-      name: 'dbModel.tableName',
-      message: 'What is the name of the table?',
+      name: `${KEY}.tableName`,
+      message: 'Database Table Name for this Model?',
     },
   ]);
 

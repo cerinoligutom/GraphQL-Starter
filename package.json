@@ -18,7 +18,8 @@
     "test": "echo \"No test specified\" && exit 0",
     "tsc-check": "npx tsc --noEmit",
     "generate:gql-types": "npx graphql-codegen",
-    "apollo:service:push": "npx apollo service:push"
+    "apollo:service:push": "npx apollo service:push",
+    "generate": "npx hygen generator generate"
   },
   "repository": {
     "type": "git",

@@ -6,17 +6,21 @@ import { GQL_MutationResolvers } from '@/generated/graphql';
 import { <%= h.changeCase.camel(locals.gqlResolver?.useCaseName) %>UseCase } from '../../use-cases/<%= h.changeCase.param(locals.gqlResolver?.useCaseName) %>.use-case';
 
 export const <%= h.changeCase.camel(locals.gqlResolver?.name) %>Resolver: GQL_MutationResolvers['<%= h.changeCase.camel(locals.gqlResolver?.name) %>'] = async (root, { input }, ctx) => {
-  const result = await <%= h.changeCase.camel(locals.gqlResolver?.useCaseName) %>UseCase(
+  const { foo } = await <%= h.changeCase.camel(locals.gqlResolver?.useCaseName) %>UseCase(
     {
       // TODO: Populate accordingly
+      foo: input.foo,
     },
     {
       req: ctx.req,
       res: ctx.res,
-    }
+    },
   );
 
   // TODO: 
   // Make sure to use a factory to transform the db model results into a response model 
   // from the use case result if there is any
-}
+  return {
+    foo,
+  };
+};

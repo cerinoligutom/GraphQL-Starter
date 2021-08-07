@@ -7,6 +7,6 @@ import express from 'express';
 
 const router = express.Router();
 
-// Define routes here
+// TODO: Define routes here
 
 export const <%= h.changeCase.camel(locals.module?.name) %>Router = router;

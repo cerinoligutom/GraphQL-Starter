@@ -9,9 +9,11 @@ extend type Mutation {
 }
 
 input <%= h.changeCase.pascal(locals.gqlResolver?.name) %>Input {
+  # TODO: Auto-generated code. Change accordingly.
   foo: String
 }
 
 type <%= h.changeCase.pascal(locals.gqlResolver?.name) %>Payload {
-  bar: String
+  # TODO: Auto-generated code. Change accordingly.
+  foo: String
 }

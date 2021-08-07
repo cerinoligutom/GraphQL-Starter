@@ -7,23 +7,27 @@ import { createSchemaValidator } from '@/utils';
 import * as yup from 'yup';
 
 export interface I<%= h.changeCase.pascal(locals.useCase?.name) %>DTO {
-
+  // TODO: Populate accordingly
+  foo: string;
 }
 
 const schema = yup.object().shape({
-
+  // TODO: Populate accordingly
+  foo: yup.string(),
 });
 const validateDTO = createSchemaValidator<I<%= h.changeCase.pascal(locals.useCase?.name) %>DTO>(schema);
 
 interface I<%= h.changeCase.pascal(locals.useCase?.name) %>UseCaseResult {
-
+  // TODO: Populate accordingly
+  foo: string;
 }
 export async function <%= h.changeCase.camel(locals.useCase?.name) %>UseCase(dto: I<%= h.changeCase.pascal(locals.useCase?.name) %>DTO, ctx: IContext): Promise<I<%= h.changeCase.pascal(locals.useCase?.name) %>UseCaseResult> {
   await checkAuthentication(ctx);
 
-  const { } = await validateDTO(dto);
+  const { foo } = await validateDTO(dto);
 
   return {
-
-  }
+    // TODO: Populate accordingly
+    foo,
+  };
 }

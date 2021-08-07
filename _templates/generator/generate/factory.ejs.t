@@ -8,7 +8,7 @@ function createGQL<%= h.changeCase.pascal(locals.factory?.modelName) %>(<%= h.ch
   const <%= h.changeCase.camel(locals.factory?.modelName) %>Json = <%= h.changeCase.camel(locals.factory?.modelName) %>.toJSON();
   return {
     ...<%= h.changeCase.camel(locals.factory?.modelName) %>Json,
-  }
+  };
 }
 
 export const <%= h.changeCase.camel(locals.factory?.name) %>Factory = {

@@ -3,6 +3,7 @@ const { pascalCase } = require('change-case');
 const modulePrompt = require('./module.prompt');
 
 const KEY = 'gqlResolver';
+const PROMPT_PREFIX = '? [GQL Resolver]';
 
 const ResolverType = {
   QUERY: 'Query',
@@ -21,24 +22,28 @@ module.exports = async (args) => {
       name: `${KEY}.gqlFileName`,
       message: 'GraphQL File Name?',
       default: args.module?.name,
+      prefix: PROMPT_PREFIX,
     },
     {
       type: 'input',
       name: `${KEY}.name`,
       message: 'GraphQL Resolver Name?',
       default: args.useCase?.name,
+      prefix: PROMPT_PREFIX,
     },
     {
       type: 'input',
       name: `${KEY}.useCaseName`,
       message: 'Use Case name for this Resolver?',
       default: args.useCase?.name,
+      prefix: PROMPT_PREFIX,
     },
     {
       type: 'list',
       name: `${KEY}.resolverType`,
       message: 'Resolver Type?',
       choices: Object.values(ResolverType),
+      prefix: PROMPT_PREFIX,
     },
     {
       when(answers) {
@@ -47,6 +52,7 @@ module.exports = async (args) => {
       type: 'input',
       name: `${KEY}.queryResolver.gqlReturnTypeName`,
       message: 'Return Type name of the GraphQL Query in the schema?',
+      prefix: PROMPT_PREFIX,
     },
     {
       when(answers) {
@@ -59,6 +65,7 @@ module.exports = async (args) => {
 
         return `Has the GraphQL type '${gqlReturnTypeName}' been already defined? If not, it will be generated.`;
       },
+      prefix: PROMPT_PREFIX,
     },
     {
       when(answers) {
@@ -79,6 +86,7 @@ module.exports = async (args) => {
           `[${gqlReturnTypeName}!]!`,
         ];
       },
+      prefix: PROMPT_PREFIX,
     },
   ]);
 

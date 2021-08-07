@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const modulePrompt = require('./module.prompt');
 
 const KEY = 'service';
+const PROMPT_PREFIX = '? [Service]';
 
 module.exports = async (args) => {
   args[KEY] = {};
@@ -14,12 +15,14 @@ module.exports = async (args) => {
       name: `${KEY}.name`,
       message: 'Service Name?',
       default: args.module?.name,
+      prefix: PROMPT_PREFIX,
     },
     {
       type: 'input',
       name: `${KEY}.modelName`,
       message: 'Model Name for this Service?',
       default: args.dbModel?.name,
+      prefix: PROMPT_PREFIX,
     },
   ]);
 

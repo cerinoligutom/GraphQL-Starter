@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const modulePrompt = require('./module.prompt');
 
 const KEY = 'restRouteHandler';
+const PROMPT_PREFIX = '? [REST Route Handler]';
 
 module.exports = async (args) => {
   args[KEY] = {};
@@ -14,12 +15,14 @@ module.exports = async (args) => {
       name: `${KEY}.name`,
       message: 'Route Handler Name?',
       default: args.useCase?.name,
+      prefix: PROMPT_PREFIX,
     },
     {
       type: 'input',
       name: `${KEY}.useCaseName`,
       message: 'Use Case Name for this Route Handler?',
       default: args.useCase?.name,
+      prefix: PROMPT_PREFIX,
     },
   ]);
 

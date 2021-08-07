@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const modulePrompt = require('./module.prompt');
 
 const KEY = 'useCase';
+const PROMPT_PREFIX = '? [Use Case]';
 
 module.exports = async (args) => {
   args[KEY] = {};
@@ -13,6 +14,7 @@ module.exports = async (args) => {
       type: 'input',
       name: `${KEY}.name`,
       message: 'Use Case Name?',
+      prefix: PROMPT_PREFIX,
     },
   ]);
 

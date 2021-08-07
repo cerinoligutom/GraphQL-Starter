@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 
 const KEY = 'module';
+const PROMPT_PREFIX = '? [Module]';
 
 module.exports = async (args) => {
   // Skip this prompt if it has been answered already.
@@ -13,6 +14,7 @@ module.exports = async (args) => {
       type: 'input',
       name: `${KEY}.name`,
       message: 'Module Name?',
+      prefix: PROMPT_PREFIX,
     },
   ]);
 

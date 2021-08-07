@@ -13,14 +13,14 @@ module.exports = async (args) => {
     {
       type: 'input',
       name: `${KEY}.name`,
-      message: 'Service Name?',
+      message: 'Service name?',
       default: args.module?.name,
       prefix: PROMPT_PREFIX,
     },
     {
       type: 'input',
       name: `${KEY}.modelName`,
-      message: 'Model Name for this Service?',
+      message: 'Model to import for this Service?',
       default: args.dbModel?.name,
       prefix: PROMPT_PREFIX,
     },

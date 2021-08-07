@@ -20,7 +20,7 @@ module.exports = async (args) => {
     {
       type: 'input',
       name: `${KEY}.modelName`,
-      message: 'Model Name for this Factory?',
+      message: 'Model to import for this Factory?',
       default: args.dbModel?.name,
       prefix: PROMPT_PREFIX,
     },

@@ -13,14 +13,14 @@ module.exports = async (args) => {
     {
       type: 'input',
       name: `${KEY}.name`,
-      message: 'Route Handler Name?',
+      message: 'Route Handler name?',
       default: args.useCase?.name,
       prefix: PROMPT_PREFIX,
     },
     {
       type: 'input',
       name: `${KEY}.useCaseName`,
-      message: 'Use Case Name for this Route Handler?',
+      message: 'Use Case to import for this Route Handler?',
       default: args.useCase?.name,
       prefix: PROMPT_PREFIX,
     },

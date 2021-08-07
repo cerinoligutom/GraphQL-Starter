@@ -8,7 +8,6 @@ const PROMPT_PREFIX = '? [GQL Resolver]';
 const ResolverType = {
   QUERY: 'Query',
   MUTATION: 'Mutation',
-  SUBSCRIPTION: 'Subscription',
 };
 
 module.exports = async (args) => {
@@ -20,21 +19,21 @@ module.exports = async (args) => {
     {
       type: 'input',
       name: `${KEY}.gqlFileName`,
-      message: 'GraphQL File Name?',
+      message: 'GraphQL File name?',
       default: args.module?.name,
       prefix: PROMPT_PREFIX,
     },
     {
       type: 'input',
       name: `${KEY}.name`,
-      message: 'GraphQL Resolver Name?',
+      message: 'GraphQL Resolver name?',
       default: args.useCase?.name,
       prefix: PROMPT_PREFIX,
     },
     {
       type: 'input',
       name: `${KEY}.useCaseName`,
-      message: 'Use Case name for this Resolver?',
+      message: 'Use Case to import for this Resolver?',
       default: args.useCase?.name,
       prefix: PROMPT_PREFIX,
     },

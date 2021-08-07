@@ -13,7 +13,7 @@ module.exports = async (args) => {
     {
       type: 'input',
       name: `${KEY}.name`,
-      message: 'Use Case Name?',
+      message: 'Use Case name?',
       prefix: PROMPT_PREFIX,
     },
   ]);

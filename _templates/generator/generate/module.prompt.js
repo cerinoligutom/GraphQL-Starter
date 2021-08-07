@@ -13,7 +13,7 @@ module.exports = async (args) => {
     {
       type: 'input',
       name: `${KEY}.name`,
-      message: 'Module Name?',
+      message: 'Module name?',
       prefix: PROMPT_PREFIX,
     },
   ]);

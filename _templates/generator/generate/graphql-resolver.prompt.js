@@ -8,6 +8,7 @@ const PROMPT_PREFIX = '? [GQL Resolver]';
 const ResolverType = {
   QUERY: 'Query',
   MUTATION: 'Mutation',
+  SUBSCRIPTION: 'Subscription',
 };
 
 module.exports = async (args) => {
@@ -20,7 +21,7 @@ module.exports = async (args) => {
       type: 'input',
       name: `${KEY}.gqlFileName`,
       message: 'GraphQL File name?',
-      default: args.module?.name,
+      default: pascalCase(args.module?.name),
       prefix: PROMPT_PREFIX,
     },
     {
@@ -31,6 +32,9 @@ module.exports = async (args) => {
       prefix: PROMPT_PREFIX,
     },
     {
+      when(answers) {
+        return [ResolverType.QUERY, ResolverType.MUTATION].includes(answers[KEY].resolverType);
+      },
       type: 'input',
       name: `${KEY}.useCaseName`,
       message: 'Use Case to import for this Resolver?',
@@ -46,35 +50,35 @@ module.exports = async (args) => {
     },
     {
       when(answers) {
-        return answers[KEY].resolverType === ResolverType.QUERY;
+        return [ResolverType.QUERY, ResolverType.SUBSCRIPTION].includes(answers[KEY].resolverType);
       },
       type: 'input',
-      name: `${KEY}.queryResolver.gqlReturnTypeName`,
+      name: `${KEY}.common.gqlReturnTypeName`,
       message: 'Return Type name of the GraphQL Query in the schema?',
       prefix: PROMPT_PREFIX,
     },
     {
       when(answers) {
-        return answers[KEY].resolverType === ResolverType.QUERY;
+        return [ResolverType.QUERY, ResolverType.SUBSCRIPTION].includes(answers[KEY].resolverType);
       },
       type: 'confirm',
-      name: `${KEY}.queryResolver.gqlReturnTypeExists`,
+      name: `${KEY}.common.gqlReturnTypeExists`,
       message(answers) {
-        const { gqlReturnTypeName } = answers[KEY].queryResolver;
+        const { gqlReturnTypeName } = answers[KEY].common;
 
-        return `Has the GraphQL type '${gqlReturnTypeName}' been already defined? If not, it will be generated.`;
+        return `Has the GraphQL type '${pascalCase(gqlReturnTypeName)}' been already defined? If not, it will be generated.`;
       },
       prefix: PROMPT_PREFIX,
     },
     {
       when(answers) {
-        return answers[KEY].resolverType === ResolverType.QUERY;
+        return [ResolverType.QUERY, ResolverType.SUBSCRIPTION].includes(answers[KEY].resolverType);
       },
       type: 'list',
-      name: `${KEY}.queryResolver.gqlReturnType`,
+      name: `${KEY}.common.gqlReturnType`,
       message: 'How should the Return Type look like?',
       choices(answers) {
-        const gqlReturnTypeName = pascalCase(answers[KEY].queryResolver.gqlReturnTypeName);
+        const gqlReturnTypeName = pascalCase(answers[KEY].common.gqlReturnTypeName);
 
         return [
           `${gqlReturnTypeName}`,
@@ -84,6 +88,18 @@ module.exports = async (args) => {
           `[${gqlReturnTypeName}!]`,
           `[${gqlReturnTypeName}!]!`,
         ];
+      },
+      prefix: PROMPT_PREFIX,
+    },
+    {
+      when(answers) {
+        return answers[KEY].resolverType === ResolverType.SUBSCRIPTION;
+      },
+      type: 'input',
+      name: `${KEY}.subscriptionResolver.eventName`,
+      message: 'PubSub Trigger/Event name?',
+      default(answers) {
+        return answers[KEY].name;
       },
       prefix: PROMPT_PREFIX,
     },

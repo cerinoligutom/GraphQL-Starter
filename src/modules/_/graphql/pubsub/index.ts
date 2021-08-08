@@ -2,18 +2,18 @@ import { pubSubEngine } from '@/graphql/pubsub';
 import { PubSubEngine } from 'graphql-subscriptions';
 import { createPublishDummyEventPubSub } from './publish-dummy-event.pubsub';
 
-enum CommonPubSubTrigger {
-  DUMMY_EVENT = 'DUMMY_EVENT',
+enum PubSubTrigger {
+  DUMMY_EVENT = 'Dummy - DUMMY',
 }
 
-function createCommonPubSub(pubsub: PubSubEngine) {
+function createDummyPubSub(pubsub: PubSubEngine) {
   return {
-    get Triggers() {
-      return CommonPubSubTrigger;
+    get Trigger() {
+      return PubSubTrigger;
     },
-    asyncIterator: <T>(triggers: CommonPubSubTrigger | CommonPubSubTrigger[]): AsyncIterator<T> => pubsub.asyncIterator<T>(triggers),
-    publishDummyEvent: createPublishDummyEventPubSub(pubsub, CommonPubSubTrigger.DUMMY_EVENT),
+    asyncIterator: <T>(triggers: string | string[]): AsyncIterator<T> => pubsub.asyncIterator<T>(triggers),
+    publishDummyEvent: createPublishDummyEventPubSub(pubsub, PubSubTrigger.DUMMY_EVENT),
   };
 }
 
-export const commonPubSub = createCommonPubSub(pubSubEngine);
+export const dummyPubSub = createDummyPubSub(pubSubEngine);

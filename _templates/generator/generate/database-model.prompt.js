@@ -1,4 +1,6 @@
 const inquirer = require('inquirer');
+const { pluralize } = require('inflection');
+const { snakeCase } = require('change-case');
 
 const KEY = 'dbModel';
 const PROMPT_PREFIX = '? [DB Model]';
@@ -23,6 +25,9 @@ module.exports = async (args) => {
       type: 'input',
       name: `${KEY}.tableName`,
       message: 'Database Table Name for this Model?',
+      default(answers) {
+        return snakeCase(pluralize(answers[KEY].name));
+      },
       prefix: PROMPT_PREFIX,
     },
   ]);

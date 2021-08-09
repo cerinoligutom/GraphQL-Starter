@@ -1,6 +1,6 @@
 ---
 inject: true
-to: '<%= locals.gqlResolver?.resolverType === "Query" ? `src/modules/${h.changeCase.param(locals.module?.name)}/graphql/${h.changeCase.pascal(locals.gqlResolver?.gqlFileName)}.graphql` : null %>'
+to: '<%= locals.gqlResolver?.resolverType === "Query" ? `src/modules/${h.changeCase.param(locals.module?.name)}/graphql/${h.changeCase.pascal(locals.gqlResolver?.gqlSchemaFileName)}.graphql` : null %>'
 append: true
 skip_if: <%= h.changeCase.camel(locals.gqlResolver?.name) %>
 ---

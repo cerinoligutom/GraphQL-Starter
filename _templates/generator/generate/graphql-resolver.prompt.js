@@ -19,8 +19,8 @@ module.exports = async (args) => {
   const answer = await inquirer.prompt([
     {
       type: 'input',
-      name: `${KEY}.gqlFileName`,
-      message: 'GraphQL File name?',
+      name: `${KEY}.gqlSchemaFileName`,
+      message: 'GraphQL Schema File name?',
       default: pascalCase(args.module?.name),
       prefix: PROMPT_PREFIX,
     },

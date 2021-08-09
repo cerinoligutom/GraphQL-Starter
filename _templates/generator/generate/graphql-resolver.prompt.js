@@ -32,20 +32,22 @@ module.exports = async (args) => {
       prefix: PROMPT_PREFIX,
     },
     {
+      type: 'list',
+      name: `${KEY}.resolverType`,
+      message: 'Resolver Type?',
+      choices: Object.values(ResolverType),
+      prefix: PROMPT_PREFIX,
+    },
+    {
       when(answers) {
+        [ResolverType.QUERY, ResolverType.MUTATION].includes(answers[KEY].resolverType);
+
         return [ResolverType.QUERY, ResolverType.MUTATION].includes(answers[KEY].resolverType);
       },
       type: 'input',
       name: `${KEY}.useCaseName`,
       message: 'Use Case to import for this Resolver?',
       default: args.useCase?.name,
-      prefix: PROMPT_PREFIX,
-    },
-    {
-      type: 'list',
-      name: `${KEY}.resolverType`,
-      message: 'Resolver Type?',
-      choices: Object.values(ResolverType),
       prefix: PROMPT_PREFIX,
     },
     {

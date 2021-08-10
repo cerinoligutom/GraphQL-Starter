@@ -1,6 +1,8 @@
 /* eslint-disable no-await-in-loop */
 const inquirer = require('inquirer');
 
+const dbMigrationScript = require('./database-migration-script.prompt');
+const dbSeedScript = require('./database-seed-script.prompt');
 const dbModelPrompt = require('./database-model.prompt');
 const useCasePrompt = require('./use-case.prompt');
 const graphqlResolverPrompt = require('./graphql-resolver.prompt');
@@ -9,6 +11,8 @@ const servicePrompt = require('./service.prompt');
 const factoryPrompt = require('./factory.prompt');
 
 const ScaffoldType = {
+  DB_MIGRATION_SCRIPT: 'Database Migration Script',
+  DB_SEED_SCRIPT: 'Database Seed Script',
   DB_MODEL: 'Database Model',
   USE_CASE: 'Use Case',
   GQL_RESOLVER: 'GraphQL Resolver',
@@ -30,6 +34,16 @@ module.exports = {
 
     for (const scaffoldType of scaffoldTypes) {
       switch (scaffoldType) {
+        case ScaffoldType.DB_MIGRATION_SCRIPT: {
+          await dbMigrationScript(args);
+          break;
+        }
+
+        case ScaffoldType.DB_SEED_SCRIPT: {
+          await dbSeedScript(args);
+          break;
+        }
+
         case ScaffoldType.DB_MODEL: {
           await dbModelPrompt(args);
           break;

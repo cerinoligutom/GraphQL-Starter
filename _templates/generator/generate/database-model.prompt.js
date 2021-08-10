@@ -26,7 +26,7 @@ module.exports = async (args) => {
       name: `${KEY}.tableName`,
       message: 'Database Table Name for this Model?',
       default(answers) {
-        return snakeCase(pluralize(answers[KEY].name));
+        return args.dbMigration?.tableName || snakeCase(pluralize(answers[KEY].name));
       },
       prefix: PROMPT_PREFIX,
     },

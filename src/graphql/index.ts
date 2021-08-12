@@ -85,12 +85,15 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
       schema,
       execute,
       subscribe,
+
+      // See https://www.apollographql.com/docs/graphql-subscriptions/lifecycle-events/
       onConnect: (connectionParams: Record<string, unknown>, webSocket: Record<string, unknown>) => {
         // https://www.apollographql.com/docs/graphql-subscriptions/authentication/
         console.info('connected');
 
-        // The value returned here goes to "connection.context" in "context" property above.
-        const context: Partial<IGraphQLContext> = {};
+        // TODO: Do authentication checks here
+        const context: Partial<Omit<IGraphQLContext, 'req' | 'res'>> = {};
+
         return context;
       },
       onDisconnect: (webSocket: Record<string, unknown>, context: Record<string, unknown>) => {

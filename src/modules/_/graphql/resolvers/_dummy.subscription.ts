@@ -6,14 +6,17 @@ import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from '@/gener
 import { commonPubSub } from '../pubsub';
 
 export const _dummyResolver: GQL_SubscriptionResolvers['_dummy'] = {
-  // eslint-disable-next-line arrow-body-style
   resolve: (value: GQL_DummySubscriptionPayload) => {
-    // The "value" argument here is what gets published, for this example,
-    // we're expecting a string to be published so we give it that type
-    // If you need the value to be transformed in any way, the resolve
-    // field is one way to do it.
+    // The "value" parameter's value here would be the published value
+    // from the pubsub.publish() method.
 
-    return value;
+    // If you need the value to be transformed before sending it,
+    // you can do it here.
+    const preprocessedValue = value;
+
+    // What we return here is what gets published. Just make sure it conforms
+    // to the return type you defined in the schema.
+    return preprocessedValue;
   },
   subscribe: (parent, args, context) => {
     // If you need filtering in subscription, use withFilter() from graphql-subscriptions

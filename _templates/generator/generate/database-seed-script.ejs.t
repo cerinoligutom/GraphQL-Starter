@@ -9,7 +9,7 @@ export async function seed(knex: Knex): Promise<void> {
   await knex(<%= h.changeCase.pascal(locals.dbSeed?.modelName) %>Model.tableName).del();
 
   // Inserts seed entries
-  const entry = <%= h.changeCase.pascal(locals.dbSeed?.modelName) %>Model();
+  const entry = new <%= h.changeCase.pascal(locals.dbSeed?.modelName) %>Model();
   
   // TODO: Change accordingly
   entry.set({ id: 'foo' });

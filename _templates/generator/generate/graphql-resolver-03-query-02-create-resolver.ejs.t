@@ -11,10 +11,7 @@ export const <%= h.changeCase.camel(locals.gqlResolver?.name) %>Resolver: GQL_Qu
       // TODO: Populate accordingly
       foo: args.foo,
     },
-    {
-      req: ctx.req,
-      res: ctx.res,
-    },
+    ctx,
   );
 
   // TODO: 

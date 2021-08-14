@@ -20,7 +20,7 @@ export const <%= h.changeCase.camel(locals.restRouteHandler?.name) %>Handler: Re
       // TODO: Populate accordingly
       foo,
     },
-    { req, res },
+    req.context,
   );
 
   res.send({

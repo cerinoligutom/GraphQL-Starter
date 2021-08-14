@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.get('/api/v1/users', asyncHandler(getUsersHandler));
 
-router.get('/api/v1/user', asyncHandler(getUserHandler));
+router.get('/api/v1/users/:userId', asyncHandler(getUserHandler));
 
 export const userRouter = router;

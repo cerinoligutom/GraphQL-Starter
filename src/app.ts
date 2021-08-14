@@ -4,7 +4,7 @@ import SuperTokens from 'supertokens-node';
 import Session from 'supertokens-node/recipe/session';
 import '@/supertokens';
 
-import { errorMiddleware, corsMiddleware } from '@/middlewares';
+import { errorMiddleware, corsMiddleware, createContextMiddleware } from '@/middlewares';
 import { ping as pingPostgresDatabase } from '@/db/knex';
 import { ping as pingRedisDatabase } from '@/redis/client';
 import { initApolloGraphqlServer } from '@/graphql';
@@ -12,7 +12,7 @@ import { initApolloGraphqlServer } from '@/graphql';
 import { createServer } from 'http';
 import compression from 'compression';
 import helmet from 'helmet';
-import express from 'express';
+import express, { Router } from 'express';
 
 import { userRouter } from '@/modules/user/routes';
 import { maintenanceRouter } from '@/modules/maintenance/routes';
@@ -53,9 +53,15 @@ const app = express();
   app.use(compression());
 
   app.use(['/api', '/graphql'], Session.verifySession({ sessionRequired: false }));
+  app.use(createContextMiddleware());
 
-  // IMPORTANT: Add app routers here
-  app.use([maintenanceRouter, authRouter, userRouter]);
+  const routers: Router[] = [
+    // IMPORTANT: Add app routers here
+    maintenanceRouter,
+    authRouter,
+    userRouter,
+  ];
+  app.use(routers);
 
   app.use(SuperTokens.errorHandler());
   app.use(errorMiddleware());

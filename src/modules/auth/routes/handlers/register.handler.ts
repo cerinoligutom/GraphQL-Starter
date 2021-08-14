@@ -12,7 +12,7 @@ export const registerHandler: RequestHandler<any, undefined, any, any> = async (
       lastName,
       password,
     },
-    { req, res },
+    req.context,
   );
 
   res.send();

@@ -47,7 +47,7 @@ export function handleError(unknownError: Error): BaseError {
   if (!(error instanceof BaseError)) {
     // Then it's a truly unknown and unhandled error so we normalize it
     // into our custom InternalServerError.
-    error = new InternalServerError(error);
+    error = new InternalServerError('An unhandled error has occurred', error);
   }
 
   // During production, you might want to do something with the error object.

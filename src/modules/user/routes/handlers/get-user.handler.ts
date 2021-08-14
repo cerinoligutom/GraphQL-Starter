@@ -10,10 +10,7 @@ export const getUserHandler: RequestHandler<any, IResponseUserFull, any, any> = 
     {
       userId,
     },
-    {
-      req,
-      res,
-    },
+    req.context,
   );
 
   res.send(userFactory.toFullResponse(user));

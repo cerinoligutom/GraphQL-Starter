@@ -14,7 +14,7 @@ export const loginHandler: RequestHandler<any, ILoginResponse, any, any> = async
       email,
       password,
     },
-    { req, res },
+    req.context,
   );
 
   res.send({

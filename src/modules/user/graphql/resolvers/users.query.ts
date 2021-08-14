@@ -11,10 +11,7 @@ export const usersResolver: GQL_QueryResolvers['users'] = async (root, args, ctx
       sortDirection: args.sortBy?.direction ?? SortDirection.ASC,
       sortField: args.sortBy?.field ?? UserSortField.CREATED_AT,
     },
-    {
-      req: ctx.req,
-      res: ctx.res,
-    },
+    ctx,
   );
 
   const userConnection: GQL_UserConnection = {

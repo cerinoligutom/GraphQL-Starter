@@ -3,7 +3,7 @@ import { IContext } from '@/shared/interfaces';
 
 export const checkAuthentication = async (ctx: IContext): Promise<void> => {
   // If needed, you can also check whether the user still exists in the database here
-  if (!ctx.req.session?.getUserId()) {
+  if (!ctx.userId) {
     throw new UnauthenticatedError();
   }
 

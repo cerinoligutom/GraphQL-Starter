@@ -17,10 +17,7 @@ export const getUsersHandler: RequestHandler<any, IResponsePaginated<IResponseUs
       sortDirection: sortDirection ?? SortDirection.ASC,
       sortField: sortField ?? UserSortField.CREATED_AT,
     },
-    {
-      req,
-      res,
-    },
+    req.context,
   );
 
   // IMPORTANT:

@@ -1,25 +1,37 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Express, Request, Response } from 'express';
+import { Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import { initializeSchema } from './schema';
 import { env } from '@/config/environment';
 import { apolloOptions } from '@/config/apollo-options';
-import { UniqueID } from '@/shared/types';
 import { initLoaders } from './init-loaders';
 import { handleError } from '@/errors';
 import { Server } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 import { graphqlUploadExpress } from 'graphql-upload';
+import { IContext, ISessionData } from '@/shared/interfaces';
+import { UniqueID } from '@/shared/types';
+import Session from 'supertokens-node/recipe/session';
 
-export interface IGraphQLContext {
+export interface IGraphQLContext extends IContext {
   loaders: ReturnType<typeof initLoaders>;
-  req: Request;
-  res: Response;
-  userId?: UniqueID;
+}
+
+export interface IGraphQLSubscriptionContext extends Pick<IContext, 'userId'> {
+  readonly userId: UniqueID | null;
+}
+
+interface IGraphQLSubscriptionConnectionParams {
+  /**
+   * If you want to determine who is making the request and do AuthN/AuthZ checks based on that user,
+   * make sure the frontend client passes the `sessionHandle` variable which they can retrieve by
+   * reading the JWT Payload from the frontend client using the `supertokens-website` SDK.
+   * */
+  sessionHandle?: string;
 }
 
 export const initApolloGraphqlServer = async (app: Express, httpServer: Server): Promise<void> => {
@@ -28,12 +40,10 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
   const server = new ApolloServer({
     schema,
 
-    context: async ({ req, res }) => {
+    context: async ({ req }) => {
       const graphqlContext: IGraphQLContext = {
-        req,
-        res,
+        ...req.context,
         loaders: initLoaders(),
-        userId: req.session?.getUserId(),
       };
 
       return graphqlContext;
@@ -87,17 +97,43 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
       subscribe,
 
       // See https://www.apollographql.com/docs/graphql-subscriptions/lifecycle-events/
-      onConnect: (connectionParams: Record<string, unknown>, webSocket: Record<string, unknown>) => {
-        // https://www.apollographql.com/docs/graphql-subscriptions/authentication/
-        console.info('connected');
+      onConnect: async (
+        connectionParams: IGraphQLSubscriptionConnectionParams,
+        webSocket: Record<string, unknown>,
+        connectionContext: Record<string, unknown>,
+      ) => {
+        if (!env.isProduction) console.info('connected');
 
-        // TODO: Do authentication checks here
-        const context: Partial<Omit<IGraphQLContext, 'req' | 'res'>> = {};
+        // https://www.apollographql.com/docs/graphql-subscriptions/authentication/
+        // If you've checked the link above, Apollo's example centralizes the authentication logic in here.
+        // However, you need to think about your requirements. For example, you have a chat feature
+        // and the user can be kicked out of the chat any time and cannot read chat anymore.
+        // Then the approach from Apollo's example wouldn't work because the socket connection would
+        // still be alive since this lifecycle event will only be called once. You could set the `keepAlive`
+        // property an interval value so that they get disconnected based on that but that isn't recommended
+        // either. So how should you go about handling it?
+
+        // There are multiple ways to go about this depending on your requirements. I suggest
+        // checking this repo: https://github.com/viktor-br/gql-subscriptions-auth
+        // Just keep in mind that as of Apollo Server 3, the subscription server has been separated
+        // from the apollo server so the "context" approach will not work anymore (marker "D") from
+        // https://github.com/viktor-br/gql-subscriptions-auth#authentication-and-authorization
+
+        let userId: UniqueID | null = null;
+        if (connectionParams.sessionHandle) {
+          // https://supertokens.io/docs/nodejs/session/getsessiondata
+          const sessionData: ISessionData | undefined = await Session.getSessionData(connectionParams.sessionHandle).catch();
+          userId = sessionData?.userId ?? null;
+        }
+
+        const context: IGraphQLSubscriptionContext = {
+          userId,
+        };
 
         return context;
       },
       onDisconnect: (webSocket: Record<string, unknown>, context: Record<string, unknown>) => {
-        console.info('disconnected');
+        if (!env.isProduction) console.info('disconnected');
       },
     },
     {

@@ -1,11 +1,11 @@
 import { BaseError } from './base.error';
 
 export class InternalServerError extends BaseError {
-  constructor(originalError: Error) {
+  constructor(message: string, originalError?: Error) {
     super({
       errorCodename: 'INTERNAL_SERVER_ERROR',
       httpStatusCode: 500,
-      message: 'An unknown error has occurred.',
+      message,
       originalError,
     });
 

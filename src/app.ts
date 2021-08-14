@@ -14,9 +14,9 @@ import compression from 'compression';
 import helmet from 'helmet';
 import express, { Router } from 'express';
 
-import { userRouter } from '@/modules/user/routes';
 import { maintenanceRouter } from '@/modules/maintenance/routes';
 import { authRouter } from '@/modules/auth/routes';
+import { userRouter } from '@/modules/user/routes';
 
 const app = express();
 

@@ -28,7 +28,7 @@ services:
 
   # https://www.pgadmin.org/docs/pgadmin4/5.5/container_deployment.html
   pgadmin:
-    image: dpage/pgadmin4:5.5
+    image: dpage/pgadmin4:5.6
     restart: always
     ports:
       - '8888:80'

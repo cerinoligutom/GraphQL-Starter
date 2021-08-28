@@ -13,6 +13,7 @@ import { createServer } from 'http';
 import compression from 'compression';
 import helmet from 'helmet';
 import express, { Router } from 'express';
+import cookieParser from 'cookie-parser';
 
 import { maintenanceRouter } from '@/modules/maintenance/routes';
 import { authRouter } from '@/modules/auth/routes';
@@ -46,10 +47,11 @@ const app = express();
   app.set('trust proxy', true);
 
   app.use(helmet({ contentSecurityPolicy: false }));
-  app.use(corsMiddleware());
-  app.use(SuperTokens.middleware());
+  app.use(cookieParser());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(corsMiddleware());
+  app.use(SuperTokens.middleware());
   app.use(compression());
 
   app.use(['/api', '/graphql'], Session.verifySession({ sessionRequired: false }));

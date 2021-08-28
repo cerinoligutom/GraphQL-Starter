@@ -4,7 +4,7 @@
 
 import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from '@/generated/graphql';
 import { IGraphQLSubscriptionContext } from '@/graphql';
-import { commonPubSub } from '../pubsub';
+import { dummyPubSub } from '../pubsub';
 
 export const _dummyResolver: GQL_SubscriptionResolvers['_dummy'] = {
   resolve: (value: GQL_DummySubscriptionPayload, args: unknown, ctx: IGraphQLSubscriptionContext) => {
@@ -41,7 +41,7 @@ export const _dummyResolver: GQL_SubscriptionResolvers['_dummy'] = {
     // things that needs to be done when this resolver is hit.
     startTicker();
 
-    return commonPubSub.asyncIterator(commonPubSub.Triggers.DUMMY_EVENT);
+    return dummyPubSub.asyncIterator(dummyPubSub.Trigger.DUMMY_EVENT);
   },
 };
 
@@ -55,7 +55,7 @@ function startTicker(): void {
 
       const publishedValue = `Dummy Subscription Resolver Tick # ${count}`;
       console.info(`Publishing: ${publishedValue}`);
-      await commonPubSub.publishDummyEvent({
+      await dummyPubSub.publishDummyEvent({
         dummy: publishedValue,
       });
     }, 1000);

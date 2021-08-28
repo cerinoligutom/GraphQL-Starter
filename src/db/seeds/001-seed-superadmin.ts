@@ -3,11 +3,9 @@ import { bcryptUtil } from '@/utils';
 import { UserModel, SystemRoleModel } from '@/db/models';
 import { SystemRoleID } from '@/shared/constants';
 
-const USERS_TABLE_NAME = 'users';
-const ROLES_TABLE_NAME = 'system_roles';
 const USER_ROLES_TABLE_NAME = 'user_system_roles';
 
-export async function seed(knex: Knex): Promise<any> {
+export async function seed(knex: Knex): Promise<void> {
   // Create Super Admin Role
 
   const superadminRole = new SystemRoleModel();
@@ -17,7 +15,7 @@ export async function seed(knex: Knex): Promise<any> {
     description: 'The chosen ones',
   });
 
-  const createSuperadminRoleQuery = knex(ROLES_TABLE_NAME).insert([superadminRole]);
+  const createSuperadminRoleQuery = knex(SystemRoleModel.tableName).insert([superadminRole]);
   const createSuperadminRoleQueryResult = await knex.raw('? ON CONFLICT DO NOTHING RETURNING id', [createSuperadminRoleQuery]);
 
   // Create Super Admin User
@@ -32,7 +30,7 @@ export async function seed(knex: Knex): Promise<any> {
     email: 'superadmin@app.com',
   });
 
-  const createSuperadminUserQuery = knex(USERS_TABLE_NAME).insert([superadmin]);
+  const createSuperadminUserQuery = knex(UserModel.tableName).insert([superadmin]);
   const createSuperadminUserQueryResult = await knex.raw('? ON CONFLICT DO NOTHING RETURNING id', [createSuperadminUserQuery]);
 
   // Skip the association of the records if one of the query result has a row count of 0.

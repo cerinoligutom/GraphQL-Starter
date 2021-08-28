@@ -51,7 +51,7 @@ services:
       - REDIS_HOSTS=local:redis:6379
 
   supertokens:
-    image: supertokens/supertokens-postgresql:3.4
+    image: supertokens/supertokens-postgresql:3.5
     environment:
       # IMPORTANT:
       # Make sure to adjust this accordingly if you plan to test

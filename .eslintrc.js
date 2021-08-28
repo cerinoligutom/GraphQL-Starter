@@ -6,7 +6,7 @@ module.exports = {
     project: ['./tsconfig.eslint.json'],
   },
   plugins: ['@typescript-eslint'],
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'airbnb-typescript/base', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'airbnb-base', 'airbnb-typescript/base', 'prettier'],
   rules: {
     'no-console': ['warn', { allow: ['info', 'error'] }],
     quotes: ['error', 'single'],
@@ -18,6 +18,7 @@ module.exports = {
     'import/order': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/no-cycle': 'off',
+    'import/extensions': 'off',
 
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-explicit-any': 'error',

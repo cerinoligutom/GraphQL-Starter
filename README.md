@@ -406,6 +406,7 @@ This will create a `build` folder in the project directory which you can deploy.
 - Use GitHub Actions for CI/CD
 - Migrate from bcrypt to argon2
 - Tests with Jest
+- Improve local environment setup (e.g. deleting a file should reflect accordingly)
 
 ## Pro Tips
 
@@ -435,6 +436,8 @@ This will create a `build` folder in the project directory which you can deploy.
 - If you're using this repo template with Docker Windows, you'll notice that when you save any file, the watchers aren't reacting. This has something to do with Linux not being able to detect file changes from Windows because the file system events are not being propagated down to Linux. You'll have to resort to polling mechanisms in that case for any tools that watches file changes. I recommend using WSL and developing inside WSL instead.
 
 - If you want to boost your knowledge about GraphQL, I highly recommend reading the e-book: [Production Ready GraphQL](https://book.productionreadygraphql.com/) by Marc-Andre Giroux.
+
+- When deleting a file or switching to another git branch, previously transpiled TS files will remain behind in the `/build` folder. This is problematic as you can imagine. For the meantime, delete the `/build` folder and trigger the build process again (e.g. run the build script or just save any typescript file since gulp is watching those). Currently looking for a solution that works on both Linux and Windows file systems.
 
 ## Contributing
 

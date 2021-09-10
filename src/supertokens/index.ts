@@ -3,6 +3,7 @@ import SuperTokens from 'supertokens-node';
 import { SessionRecipe } from './session.recipe';
 
 SuperTokens.init({
+  framework: 'express',
   supertokens: {
     connectionURI: superTokensConfig.connectionUrl,
     apiKey: superTokensConfig.apiKey,

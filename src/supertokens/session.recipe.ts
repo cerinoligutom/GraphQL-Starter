@@ -3,16 +3,14 @@ import { UnauthenticatedError, UnauthorizedError } from '@/errors';
 
 export const SessionRecipe = Session.init({
   errorHandlers: {
-    onTokenTheftDetected: (sessionHandle, userId, req, res, next) => {
-      next(
-        new UnauthorizedError('Token theft detected.', {
-          sessionHandle,
-          userId,
-        }),
-      );
+    onTokenTheftDetected: (sessionHandle, userId, req, res) => {
+      throw new UnauthorizedError('Token theft detected.', {
+        sessionHandle,
+        userId,
+      });
     },
-    onUnauthorised: (message, req, res, next) => {
-      next(new UnauthenticatedError());
+    onUnauthorised: (_, req, res) => {
+      throw new UnauthenticatedError();
     },
   },
   // https://supertokens.io/docs/session/advanced-customizations/apis-override/usage

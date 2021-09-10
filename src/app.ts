@@ -1,7 +1,7 @@
 import { env } from '@/config/environment';
 
-import SuperTokens from 'supertokens-node';
-import Session from 'supertokens-node/recipe/session';
+import { verifySession } from 'supertokens-node/recipe/session/framework/express';
+import { middleware as superTokensMiddleware, errorHandler as superTokensErrorHandler } from 'supertokens-node/framework/express';
 import '@/supertokens';
 
 import { errorMiddleware, corsMiddleware, createContextMiddleware } from '@/middlewares';
@@ -51,10 +51,10 @@ const app = express();
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(corsMiddleware());
-  app.use(SuperTokens.middleware());
+  app.use(superTokensMiddleware());
   app.use(compression());
 
-  app.use(['/api', '/graphql'], Session.verifySession({ sessionRequired: false }));
+  app.use(['/api', '/graphql'], verifySession({ sessionRequired: false }));
   app.use(createContextMiddleware());
 
   const routers: Router[] = [
@@ -65,7 +65,7 @@ const app = express();
   ];
   app.use(routers);
 
-  app.use(SuperTokens.errorHandler());
+  app.use(superTokensErrorHandler());
   app.use(errorMiddleware());
 
   // For the subscription server. Read more from the link below:

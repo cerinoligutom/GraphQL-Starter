@@ -10,7 +10,6 @@ import { ping as pingRedisDatabase } from '@/redis/client';
 import { initApolloGraphqlServer } from '@/graphql';
 
 import { createServer } from 'http';
-import compression from 'compression';
 import helmet from 'helmet';
 import express, { Router } from 'express';
 import cookieParser from 'cookie-parser';
@@ -52,7 +51,6 @@ const app = express();
   app.use(express.urlencoded({ extended: true }));
   app.use(corsMiddleware());
   app.use(superTokensMiddleware());
-  app.use(compression());
 
   app.use(['/api', '/graphql'], verifySession({ sessionRequired: false }));
   app.use(createContextMiddleware());

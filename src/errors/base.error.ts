@@ -30,20 +30,21 @@ export interface IBaseErrorConstructorArgs {
    */
   originalError?: Error;
 }
+/**
+ * Few things to keep in mind when extending the Error Class and using TypeScript with it.
+ *
+ * - https://www.dannyguo.com/blog/how-to-fix-instanceof-not-working-for-custom-errors-in-typescript/
+ * - https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
+ */
 export class BaseError extends Error {
   readonly errorId: string;
   readonly httpStatusCode: number;
-  readonly payload?: Readonly<IDefaultPayload> & Record<string, any>;
+  readonly payload: Readonly<IDefaultPayload> & Record<string, any>;
   readonly errorCodename: string;
   readonly originalError?: Error;
 
   constructor(args: IBaseErrorConstructorArgs) {
     super(args.message);
-    // IMPORTANT:
-    // If you decide to use ts-node to run this project and transpile on the fly,
-    // this will not work due to a breaking change since TypeScript 2.1. Read more:
-    // https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
-    this.name = this.constructor.name;
 
     // For tracing on backend logs
     this.errorId = uuidV4();

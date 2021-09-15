@@ -148,6 +148,7 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
     process.on(signal, () => {
       httpServer.close();
       subscriptionServer.close();
+      process.exit();
     });
   });
 };

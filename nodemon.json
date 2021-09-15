@@ -1,6 +1,0 @@
-{
-  "watch": ["./build/**/**"],
-  "ignore": ["src/"],
-  "exec": "node -r ts-node/register --inspect=0.0.0.0:9229 ./build/src/app.js",
-  "delay": 1000
-}

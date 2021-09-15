@@ -61,16 +61,12 @@ async function generateGqlTsFiles() {
   return run(command)();
 }
 
-let hasInitNodemon = false;
 async function runApp() {
-  if (hasInitNodemon) return;
-  hasInitNodemon = true;
+  let nodeDevFlags = '';
+  if (os.platform() === 'win32') nodeDevFlags += ' --poll';
 
-  let command = 'npx nodemon';
-
-  // See tips from README file.
-  // https://github.com/remy/nodemon#application-isnt-restarting
-  if (os.platform() === 'win32') command += ' -L';
+  // https://github.com/fgnass/node-dev#passing-arguments-to-node
+  const command = `node-dev ${nodeDevFlags} -r ts-node/register -r tsconfig-paths/register --inspect=0.0.0.0:9229 ./src/app.ts`;
 
   run(command)();
   return;
@@ -86,7 +82,9 @@ export async function dev(): Promise<void> {
   watch(PATHS.configFiles, { ignoreInitial: true }, copyConfigFiles);
   watch(PATHS.srcNonTsFiles, { ignoreInitial: true }, copyNonTypeScriptFiles);
   watch(PATHS.srcGraphqlFiles, { ignoreInitial: true }, generateGqlTsFiles);
-  watch(PATHS.srcTsFiles, { ignoreInitial: false }, parallel(lint, series(compileTsFiles, compileTsPaths, runApp)));
+  watch(PATHS.srcTsFiles, { ignoreInitial: false }, lint);
+
+  runApp();
 }
 export default dev;
 

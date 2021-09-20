@@ -47,7 +47,7 @@ async function cleanBuildDir() {
 }
 
 async function lint() {
-  const command = 'npx tslint -p tsconfig.json';
+  const command = 'eslint --cache ./src';
 
   return run(command)();
 }

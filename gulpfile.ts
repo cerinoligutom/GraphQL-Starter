@@ -75,12 +75,9 @@ async function runApp() {
 // PUBLIC COMMANDS //
 
 export async function dev(): Promise<void> {
-  await copyConfigFiles();
-  await copyNonTypeScriptFiles();
   await generateGqlTsFiles();
 
-  watch(PATHS.configFiles, { ignoreInitial: true }, copyConfigFiles);
-  watch(PATHS.srcNonTsFiles, { ignoreInitial: true }, copyNonTypeScriptFiles);
+  // NOTE: when using windows, add usePolling: true
   watch(PATHS.srcGraphqlFiles, { ignoreInitial: true }, generateGqlTsFiles);
   watch(PATHS.srcTsFiles, { ignoreInitial: false }, lint);
 

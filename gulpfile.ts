@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { watch, parallel, series, src, dest } from 'gulp';
+import { watch, parallel, src, dest } from 'gulp';
 // Read Gulp@4 support: https://www.npmjs.com/package/gulp-run-command#faq
 import run from 'gulp-run-command';
 import os from 'os';
@@ -35,12 +35,20 @@ async function compileTsPaths() {
   return run('npx tsc-alias')();
 }
 
+async function tscCheck() {
+  const command = 'npx tsc --noEmit';
+
+  return run(command)();
+}
+
 async function cleanBuildDir() {
   return run('npx rimraf build')();
 }
 
 async function lint() {
-  return run('npm run lint')();
+  const command = 'npx tslint -p tsconfig.json';
+
+  return run(command)();
 }
 
 async function copyConfigFiles() {
@@ -52,10 +60,10 @@ async function copyNonTypeScriptFiles() {
 }
 
 async function generateGqlTsFiles() {
-  let command = 'npm run generate:gql-types';
+  let command = 'npx graphql-codegen';
 
   if (isProduction) {
-    command = `${command} -- -e`;
+    command = `${command} -e`;
   }
 
   return run(command)();
@@ -66,7 +74,7 @@ async function runApp() {
   if (os.platform() === 'win32') nodeDevFlags += ' --poll';
 
   // https://github.com/fgnass/node-dev#passing-arguments-to-node
-  const command = `node-dev ${nodeDevFlags} -r ts-node/register -r tsconfig-paths/register --inspect=0.0.0.0:9229 ./src/app.ts`;
+  const command = `node-dev ${nodeDevFlags} -r tsconfig-paths/register --inspect=0.0.0.0:9229 ./src/app.ts`;
 
   run(command)();
   return;
@@ -79,7 +87,7 @@ export async function dev(): Promise<void> {
 
   // NOTE: when using windows, add usePolling: true
   watch(PATHS.srcGraphqlFiles, { ignoreInitial: true }, generateGqlTsFiles);
-  watch(PATHS.srcTsFiles, { ignoreInitial: false }, lint);
+  watch(PATHS.srcTsFiles, { ignoreInitial: false }, parallel(lint, tscCheck));
 
   runApp();
 }

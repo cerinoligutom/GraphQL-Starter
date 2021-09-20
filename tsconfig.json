@@ -24,5 +24,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true
   },
-  "exclude": ["node_modules", "build", "gulpfile.ts"]
+  "exclude": ["node_modules", "build", "gulpfile.ts"],
+
+  "ts-node": {
+    "transpileOnly": true
+  }
 }

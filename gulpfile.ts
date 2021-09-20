@@ -19,6 +19,7 @@ const PATHS = {
 };
 
 const isProduction = process.argv.includes('--prod');
+const isWindowsPlatform = os.platform() === 'win32';
 
 async function compileTsFiles() {
   console.info('Compiling TypeScript...');
@@ -71,7 +72,7 @@ async function generateGqlTsFiles() {
 
 async function runApp() {
   let nodeDevFlags = '';
-  if (os.platform() === 'win32') nodeDevFlags += ' --poll';
+  if (isWindowsPlatform) nodeDevFlags += ' --poll';
 
   // https://github.com/fgnass/node-dev#passing-arguments-to-node
   const command = `node-dev ${nodeDevFlags} -r tsconfig-paths/register --inspect=0.0.0.0:9229 ./src/app.ts`;
@@ -85,9 +86,8 @@ async function runApp() {
 export async function dev(): Promise<void> {
   await generateGqlTsFiles();
 
-  // NOTE: when using windows, add usePolling: true
-  watch(PATHS.srcGraphqlFiles, { ignoreInitial: true }, generateGqlTsFiles);
-  watch(PATHS.srcTsFiles, { ignoreInitial: false }, parallel(lint, tscCheck));
+  watch(PATHS.srcGraphqlFiles, { ignoreInitial: true, usePolling: isWindowsPlatform }, generateGqlTsFiles);
+  watch(PATHS.srcTsFiles, { ignoreInitial: false, usePolling: isWindowsPlatform }, parallel(lint, tscCheck));
 
   runApp();
 }

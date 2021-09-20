@@ -35,6 +35,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@domain.com
       PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin5-data:/var/lib/pgadmin
 
   redis:
     image: redis:6-alpine
@@ -67,6 +69,7 @@ services:
       - '3567:3567'
 
 volumes:
+  pgadmin5-data:
   postgres13-data:
   redis6-data:
     # external: true # https://github.com/docker/for-win/issues/445#issuecomment-405185621

@@ -71,7 +71,7 @@ async function generateGqlTsFiles() {
 }
 
 async function runApp() {
-  let nodeDevFlags = '';
+  let nodeDevFlags = '--respawn';
   if (isWindowsPlatform) nodeDevFlags += ' --poll';
 
   // https://github.com/fgnass/node-dev#passing-arguments-to-node

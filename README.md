@@ -61,7 +61,7 @@ If the nature of your app isn't CRUDy (for a lack of a better word), you probabl
 - [supertokens-website](https://www.npmjs.com/package/supertokens-website) on your frontend app.
   - For the client-side session management.
   - Read more [here](https://supertokens.io/docs/session/common-customizations/sessions/cookie-consent#cookie-consent) for more info about the specific cookies being used by `SuperTokens`.
-  - If you don't use JS for your frontend app, you'll have to make the HTTP requests that `supertokens-website` heavy lifts yourself, such as [refreshing the session when it expires](https://github.com/supertokens/frontend-driver-interface/blob/master/v1.7.1.md#refresh-session).
+  - If you don't use JS for your frontend app, you'll have to make the HTTP requests that `supertokens-website` heavy lifts yourself, such as [refreshing the session when it expires](https://app.swaggerhub.com/apis/supertokens/FDI).
 
 ## Getting Started
 

@@ -5,7 +5,7 @@ append: true
 skip_if: '<%= h.changeCase.camel(locals.gqlResolver?.name) %>\(input'
 ---
 extend type Mutation {
-  <%= h.changeCase.camel(locals.gqlResolver?.name) %>(input: <%= h.changeCase.pascal(locals.gqlResolver?.name) %>Input): <%= h.changeCase.pascal(locals.gqlResolver?.name) %>Payload!
+  <%= h.changeCase.camel(locals.gqlResolver?.name) %>(input: <%= h.changeCase.pascal(locals.gqlResolver?.name) %>Input!): <%= h.changeCase.pascal(locals.gqlResolver?.name) %>Payload!
 }
 
 input <%= h.changeCase.pascal(locals.gqlResolver?.name) %>Input {

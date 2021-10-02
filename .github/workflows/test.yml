@@ -1,0 +1,30 @@
+name: Test
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  test:
+    name: 'Perform tests'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for "Build Source Code" job to succeed
+        uses: lewagon/wait-on-check-action@v1
+        with:
+          ref: ${{ github.sha }}
+          check-name: 'Build Source Code'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10 # seconds
+
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'npm'
+
+      ### Adjust this section to match your needs ###
+      - name: Run test
+        run: npm run test

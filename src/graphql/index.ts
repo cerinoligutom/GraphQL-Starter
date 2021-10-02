@@ -41,9 +41,13 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
     schema,
 
     context: async ({ req }) => {
-      const graphqlContext: IGraphQLContext = {
+      const context: IContext = {
         ...req.context,
-        loaders: initLoaders(),
+      };
+
+      const graphqlContext: IGraphQLContext = {
+        ...context,
+        loaders: initLoaders({ ...context }),
       };
 
       return graphqlContext;

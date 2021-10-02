@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for "Build Source Code" job to succeed
-        uses: lewagon/wait-on-check-action@v1
+        uses: lewagon/wait-on-check-action@v1.1.1
         with:
           ref: ${{ github.sha }}
           check-name: 'Build Source Code'

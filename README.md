@@ -403,7 +403,9 @@ This will create a `build` folder in the project directory which you can deploy.
 
 ## Future Plans
 
-- Use GitHub Actions for CI/CD
+- More examples for GitHub Actions
+  - Build a Docker Image and pushing to a Docker Image Repository (such as Docker Hub or AWS ECR)
+  - Deploy to a target environment (such as AWS Elastic Beanstalk or a VPS)
 - Migrate from bcrypt to argon2
 - Tests with Jest
 

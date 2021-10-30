@@ -57,7 +57,7 @@
     "ioredis": "4.27.9",
     "jsonwebtoken": "8.5.1",
     "knex": "0.95.4",
-    "objection": "2.2.14",
+    "objection": "2.2.16",
     "objection-cursor": "1.2.4",
     "pg": "8.7.1",
     "subscriptions-transport-ws": "0.9.19",

@@ -1,1 +1,1 @@
-export * from './cursor-args.schema';
+export * from './cursor-pagination-args.schema';

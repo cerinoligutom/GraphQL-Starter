@@ -30,6 +30,7 @@ module.exports = {
         argsIgnorePattern: 'ctx|args|req|res|next|^_',
       },
     ],
+    '@typescript-eslint/no-empty-interface': 'off',
   },
   overrides: [
     // Database

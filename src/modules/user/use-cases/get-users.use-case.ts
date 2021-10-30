@@ -1,24 +1,15 @@
 import { UserModel } from '@/db/models';
-import { Maybe } from '@/generated/graphql';
-import { SortDirection, UserSortField } from '@/graphql/enums';
+import { UserSortField } from '@/graphql/enums';
 import { checkAuthentication } from '@/modules/auth/helpers/check-authentication';
-import { IContext, ICursorPaginationResult } from '@/shared/interfaces';
-import { cursorArgsSchema } from '@/shared/yup-schema';
+import { IContext, ICursorPaginationArgs, ICursorPaginationResult } from '@/shared/interfaces';
+import { createCursorPaginationArgsSchema } from '@/shared/yup-schema';
 import { createSchemaValidator } from '@/utils';
 import * as yup from 'yup';
 
-export interface IGetUsersDTO {
-  first: number;
-  before?: Maybe<string>;
-  after?: Maybe<string>;
-  sortDirection: SortDirection;
-  sortField: UserSortField;
-}
+export interface IGetUsersDTO extends ICursorPaginationArgs<UserSortField> {}
 
 const schema = yup.object().shape({
-  ...cursorArgsSchema,
-  sortDirection: yup.string().oneOf(Object.values(SortDirection)).required(),
-  sortField: yup.string().oneOf(Object.values(UserSortField)).required(),
+  ...createCursorPaginationArgsSchema(UserSortField),
 });
 const validateDTO = createSchemaValidator<IGetUsersDTO>(schema);
 

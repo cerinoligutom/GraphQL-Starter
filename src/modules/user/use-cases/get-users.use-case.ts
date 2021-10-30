@@ -13,7 +13,8 @@ const schema = yup.object().shape({
 });
 const validateDTO = createSchemaValidator<IGetUsersDTO>(schema);
 
-export async function getUsersUseCase(dto: IGetUsersDTO, ctx: IContext): Promise<ICursorPaginationResult<UserModel>> {
+interface IGetUsersUseCaseResult extends ICursorPaginationResult<UserModel> {}
+export async function getUsersUseCase(dto: IGetUsersDTO, ctx: IContext): Promise<IGetUsersUseCaseResult> {
   await checkAuthentication(ctx);
 
   const { first, after, before, sortDirection, sortField } = await validateDTO(dto);

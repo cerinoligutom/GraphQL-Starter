@@ -1,10 +1,10 @@
 import { UserModel } from '@/db/models';
-import { UserSortField } from '@/graphql/enums';
 import { checkAuthentication } from '@/modules/auth/helpers/check-authentication';
 import { IContext, ICursorPaginationArgs, ICursorPaginationResult } from '@/shared/interfaces';
 import { createCursorPaginationArgsSchema } from '@/shared/yup-schema';
 import { createSchemaValidator } from '@/utils';
 import * as yup from 'yup';
+import { UserSortField } from '../constants/user-sort-field.enum';
 
 export interface IGetUsersDTO extends ICursorPaginationArgs<UserSortField> {}
 

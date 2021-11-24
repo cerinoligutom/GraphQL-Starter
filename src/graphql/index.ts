@@ -13,9 +13,9 @@ import { Server } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 import { graphqlUploadExpress } from 'graphql-upload';
-import { IContext, ISessionData } from '@/shared/interfaces';
+import { IContext } from '@/shared/interfaces';
 import { UniqueID } from '@/shared/types';
-import Session from 'supertokens-node/recipe/session';
+import Session, { SessionInformation } from 'supertokens-node/recipe/session';
 
 export interface IGraphQLContext extends IContext {
   loaders: ReturnType<typeof initLoaders>;
@@ -29,7 +29,7 @@ interface IGraphQLSubscriptionConnectionParams {
   /**
    * If you want to determine who is making the request and do AuthN/AuthZ checks based on that user,
    * make sure the frontend client passes the `sessionHandle` variable which they can retrieve by
-   * reading the JWT Payload from the frontend client using the `supertokens-website` SDK.
+   * reading the Access Token Payload from the frontend client using the `supertokens-website` SDK.
    * */
   sessionHandle?: string;
 }
@@ -125,9 +125,10 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
 
         let userId: UniqueID | null = null;
         if (connectionParams.sessionHandle) {
-          // https://supertokens.io/docs/nodejs/session/getsessiondata
-          const sessionData: ISessionData | undefined = await Session.getSessionData(connectionParams.sessionHandle).catch();
-          userId = sessionData?.userId ?? null;
+          const sessionInformation: SessionInformation | undefined = await Session.getSessionInformation(
+            connectionParams.sessionHandle,
+          ).catch();
+          userId = sessionInformation?.userId ?? null;
         }
 
         const context: IGraphQLSubscriptionContext = {

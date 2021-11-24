@@ -61,7 +61,7 @@
     "objection-cursor": "1.2.4",
     "pg": "8.7.1",
     "subscriptions-transport-ws": "0.11.0",
-    "supertokens-node": "7.0.0",
+    "supertokens-node": "8.2.0",
     "tsconfig-paths": "3.12.0",
     "uuid": "8.3.2",
     "yup": "0.32.11"

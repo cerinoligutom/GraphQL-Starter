@@ -12,6 +12,7 @@ type PageInfo {
   # When paginating backwards, are there more items?
   hasPreviousPage: Boolean!
 
+  # When paginating backwards, the cursor to continue.
   startCursor: String
 }
 

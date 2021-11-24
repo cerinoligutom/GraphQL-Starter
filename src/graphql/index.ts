@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
@@ -10,12 +11,16 @@ import { apolloOptions } from '@/config/apollo-options';
 import { initLoaders } from './init-loaders';
 import { handleError } from '@/errors';
 import { Server } from 'http';
-import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { IContext } from '@/shared/interfaces';
 import { UniqueID } from '@/shared/types';
 import Session, { SessionInformation } from 'supertokens-node/recipe/session';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+import { GRAPHQL_TRANSPORT_WS_PROTOCOL } from 'graphql-ws';
+import { SubscriptionServer, GRAPHQL_WS } from 'subscriptions-transport-ws';
+import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 
 export interface IGraphQLContext extends IContext {
   loaders: ReturnType<typeof initLoaders>;
@@ -37,7 +42,7 @@ interface IGraphQLSubscriptionConnectionParams {
 export const initApolloGraphqlServer = async (app: Express, httpServer: Server): Promise<void> => {
   const schema = await initializeSchema();
 
-  const server = new ApolloServer({
+  const apolloServer = new ApolloServer({
     schema,
 
     context: async ({ req }) => {
@@ -71,7 +76,7 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
 
     introspection: !env.isProduction,
 
-    plugins: [],
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
   });
 
   // This middleware should be added before calling `applyMiddleware`.
@@ -86,15 +91,71 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
     }),
   );
 
-  await server.start();
+  await apolloServer.start();
 
-  server.applyMiddleware({
+  apolloServer.applyMiddleware({
     app,
     // We'll handle cors on the express app
     cors: false,
   });
 
-  const subscriptionServer = SubscriptionServer.create(
+  /**
+   * It'll get messy below but there's an issue currently with the state of the protocols that can be used (subscriptions-transport-ws vs graphql-ws).
+   * Read more from: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#the-graphql-ws-transport-library
+   *
+   * Bottomline is, if we use the newer and actively maintained `graphql-ws` lib, then the GraphQL Playground will not work because it uses the old protocol.
+   *
+   * The approach below tries to support both based on the template provided here but adjusted for our setup here.
+   * https://github.com/enisdenjo/graphql-ws#ws-backwards-compat
+   */
+
+  async function createContextFromConnectionParams(
+    connectionParams: IGraphQLSubscriptionConnectionParams,
+  ): Promise<IGraphQLSubscriptionContext> {
+    let userId: UniqueID | null = null;
+    if (connectionParams.sessionHandle) {
+      const sessionInformation: SessionInformation | undefined = await Session.getSessionInformation(
+        connectionParams.sessionHandle,
+      ).catch();
+      userId = sessionInformation?.userId ?? null;
+    }
+
+    const context: IGraphQLSubscriptionContext = {
+      userId,
+    };
+
+    return context;
+  }
+
+  // graphql-ws
+  const graphqlWs = new WebSocketServer({
+    path: apolloServer.graphqlPath,
+    noServer: true,
+  });
+  useServer(
+    {
+      schema,
+      execute,
+      subscribe,
+
+      // https://github.com/enisdenjo/graphql-ws/issues/189#issuecomment-851008738
+      context: (ctx) => ctx.extra.context,
+      onConnect: ({ connectionParams, extra }) => {
+        if (!env.isProduction) console.info('connected');
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        extra.context = createContextFromConnectionParams(connectionParams as IGraphQLSubscriptionConnectionParams);
+      },
+      onDisconnect: ({ connectionParams }) => {
+        if (!env.isProduction) console.info('disconnected');
+      },
+    },
+    graphqlWs,
+  );
+
+  // subscriptions-transport-ws
+  const subscriptionTransportWs = SubscriptionServer.create(
     {
       schema,
       execute,
@@ -123,36 +184,45 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
         // from the apollo server so the "context" approach will not work anymore (marker "D") from
         // https://github.com/viktor-br/gql-subscriptions-auth#authentication-and-authorization
 
-        let userId: UniqueID | null = null;
-        if (connectionParams.sessionHandle) {
-          const sessionInformation: SessionInformation | undefined = await Session.getSessionInformation(
-            connectionParams.sessionHandle,
-          ).catch();
-          userId = sessionInformation?.userId ?? null;
-        }
-
-        const context: IGraphQLSubscriptionContext = {
-          userId,
-        };
-
-        return context;
+        return createContextFromConnectionParams(connectionParams);
       },
       onDisconnect: (webSocket: Record<string, unknown>, context: Record<string, unknown>) => {
         if (!env.isProduction) console.info('disconnected');
       },
     },
     {
-      server: httpServer,
-      path: server.graphqlPath,
+      path: apolloServer.graphqlPath,
+      noServer: true,
     },
   );
+
+  // listen for upgrades and delegate requests according to the WS subprotocol
+  httpServer.on('upgrade', (req, socket, head) => {
+    // extract websocket subprotocol from header
+    const protocol = req.headers['sec-websocket-protocol'];
+    const protocols = Array.isArray(protocol) ? protocol : protocol?.split(',').map((p: string) => p.trim());
+
+    // decide which websocket server to use
+    const wss =
+      protocols?.includes(GRAPHQL_WS) && // subscriptions-transport-ws subprotocol
+      !protocols.includes(GRAPHQL_TRANSPORT_WS_PROTOCOL) // graphql-ws subprotocol
+        ? subscriptionTransportWs.server
+        : // graphql-ws will welcome its own subprotocol and
+          // gracefully reject invalid ones. if the client supports
+          // both transports, graphql-ws will prevail
+          graphqlWs;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    wss.handleUpgrade(req, socket as any /* believe lol */, head, (ws) => {
+      wss.emit('connection', ws, req);
+    });
+  });
 
   // Shut down in the case of interrupt and termination signals
   // We expect to handle this more cleanly in the future. See (#5074)[https://github.com/apollographql/apollo-server/issues/5074] for reference.
   ['SIGINT', 'SIGTERM'].forEach((signal) => {
     process.on(signal, () => {
       httpServer.close();
-      subscriptionServer.close();
       process.exit();
     });
   });

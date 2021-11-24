@@ -9,7 +9,6 @@ import { ping as pingPostgresDatabase } from '@/db/knex';
 import { ping as pingRedisDatabase } from '@/redis/client';
 import { initApolloGraphqlServer } from '@/graphql';
 
-import { createServer } from 'http';
 import helmet from 'helmet';
 import express, { Router } from 'express';
 import cookieParser from 'cookie-parser';
@@ -66,13 +65,9 @@ const app = express();
   app.use(superTokensErrorHandler());
   app.use(errorMiddleware());
 
-  // For the subscription server. Read more from the link below:
-  // https://www.apollographql.com/docs/apollo-server/migration/#subscriptions
-  const httpServer = createServer(app);
-
-  await initApolloGraphqlServer(app, httpServer);
-
-  httpServer.listen(env.app.port, () => {
+  const httpServer = app.listen(env.app.port, () => {
     console.info(`Server is now up @ ${env.app.port}`);
   });
+
+  await initApolloGraphqlServer(app, httpServer);
 })();

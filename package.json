@@ -48,7 +48,7 @@
     "dataloader": "2.0.0",
     "dotenv": "10.0.0",
     "express": "4.17.1",
-    "graphql": "15.7.2",
+    "graphql": "16.0.1",
     "graphql-depth-limit": "1.1.0",
     "graphql-redis-subscriptions": "2.4.2",
     "graphql-scalars": "1.13.6",

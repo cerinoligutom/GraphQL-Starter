@@ -20,7 +20,7 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { GRAPHQL_TRANSPORT_WS_PROTOCOL } from 'graphql-ws';
 import { SubscriptionServer, GRAPHQL_WS } from 'subscriptions-transport-ws';
-import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
+import { ApolloServerPluginLandingPageDisabled, ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 
 export interface IGraphQLContext extends IContext {
   loaders: ReturnType<typeof initLoaders>;
@@ -76,7 +76,16 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
 
     introspection: !env.isProduction,
 
-    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    // https://www.apollographql.com/docs/apollo-server/migration/#reenabling-graphql-playground
+    plugins: [
+      env.isProduction
+        ? ApolloServerPluginLandingPageDisabled()
+        : ApolloServerPluginLandingPageGraphQLPlayground({
+            settings: {
+              'request.credentials': 'include',
+            },
+          }),
+    ],
   });
 
   // This middleware should be added before calling `applyMiddleware`.

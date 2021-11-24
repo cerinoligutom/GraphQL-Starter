@@ -8,7 +8,8 @@ FROM node:${NODE_IMAGE_VERSION} as builder
 WORKDIR /usr/src/app
 
 # https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md#node-gyp-alpine
-RUN apk add --no-cache --virtual .gyp python make g++
+RUN apk add --no-cache --virtual python
+RUN apk add --no-cache --virtual .gyp make g++
 
 # Prepare dependencies
 COPY package*.json ./

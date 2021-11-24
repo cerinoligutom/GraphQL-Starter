@@ -1,0 +1,11 @@
+diff --git a/node_modules/graphql-subscriptions/dist/pubsub-engine.d.ts b/node_modules/graphql-subscriptions/dist/pubsub-engine.d.ts
+index 58fa1b1..37ae4cf 100644
+--- a/node_modules/graphql-subscriptions/dist/pubsub-engine.d.ts
++++ b/node_modules/graphql-subscriptions/dist/pubsub-engine.d.ts
+@@ -2,5 +2,5 @@ export declare abstract class PubSubEngine {
+     abstract publish(triggerName: string, payload: any): Promise<void>;
+     abstract subscribe(triggerName: string, onMessage: Function, options: Object): Promise<number>;
+     abstract unsubscribe(subId: number): any;
+-    asyncIterator<T>(triggers: string | string[]): AsyncIterator<T>;
++    asyncIterator<T>(triggers: string | string[]): AsyncIterable<T>;
+ }

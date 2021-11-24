@@ -1,0 +1,13 @@
+diff --git a/node_modules/graphql-redis-subscriptions/dist/redis-pubsub.d.ts b/node_modules/graphql-redis-subscriptions/dist/redis-pubsub.d.ts
+index af38928..4b45043 100644
+--- a/node_modules/graphql-redis-subscriptions/dist/redis-pubsub.d.ts
++++ b/node_modules/graphql-redis-subscriptions/dist/redis-pubsub.d.ts
+@@ -20,7 +20,7 @@ export declare class RedisPubSub implements PubSubEngine {
+     publish<T>(trigger: string, payload: T): Promise<void>;
+     subscribe<T = any>(trigger: string, onMessage: OnMessage<T>, options?: unknown): Promise<number>;
+     unsubscribe(subId: number): void;
+-    asyncIterator<T>(triggers: string | string[], options?: unknown): AsyncIterator<T>;
++    asyncIterator<T>(triggers: string | string[], options?: unknown): AsyncIterable<T>;
+     getSubscriber(): RedisClient;
+     getPublisher(): RedisClient;
+     close(): Promise<Ok[]>;

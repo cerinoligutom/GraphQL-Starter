@@ -11,7 +11,7 @@ function createDummyPubSub(pubsub: PubSubEngine) {
     get Trigger() {
       return PubSubTrigger;
     },
-    asyncIterator: <T>(triggers: string | string[]): AsyncIterator<T> => pubsub.asyncIterator<T>(triggers),
+    asyncIterator: <T>(triggers: string | string[]): AsyncIterable<T> => pubsub.asyncIterator<T>(triggers),
     publishDummyEvent: createPublishDummyEventPubSub(pubsub, PubSubTrigger.DUMMY_EVENT),
   };
 }

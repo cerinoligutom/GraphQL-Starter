@@ -12,7 +12,7 @@ export const redisCheckHandler: RequestHandler<any, IRedisCheckResponse, any, an
       status: 'OK',
       message: 'Looks good.',
     });
-  } catch (err) {
+  } catch (err: any) {
     res.status(503).send({
       status: 'FAIL',
       message: err.message,

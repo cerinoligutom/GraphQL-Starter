@@ -16,6 +16,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Future Plans](#future-plans)
 - [Pro Tips](#pro-tips)
 - [Contributing](#contributing)
+- [Known Dependency Issues](#known-dependency-issues)
 - [License](#license)
 
 ## Features
@@ -441,6 +442,13 @@ This will create a `build` folder in the project directory which you can deploy.
 ## Contributing
 
 If something is unclear, confusing, or needs to be refactored, please let me know. Pull requests are always welcome but do consider the opinionated nature of this project. Please open an issue before submitting a pull request.
+
+## Known dependency issues
+
+It might not look good to list it here but I think it's important for you to be aware of the issues currently being worked on (and hopefully get a fix from their respective authors/maintainers soon) as you'd still end up with these issues if you were to implement these yourself and use the same dependencies.
+
+- Wrong TypeScript types from Apollo's `graphql-subscriptions` vs `graphql-codegen`. [More info.](https://github.com/cerino-ligutom/GraphQL-Starter/issues/20#issuecomment-978072791)
+- Protocol differences between `subscriptions-transport-ws` (old and not maintained) vs `graphql-ws` (took over and is actively maintained). [More info.](https://github.com/cerino-ligutom/GraphQL-Starter/issues/20#issuecomment-978192577)
 
 ## License
 

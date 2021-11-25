@@ -5,21 +5,16 @@ ARG NODE_IMAGE_VERSION=16-alpine
 
 FROM node:${NODE_IMAGE_VERSION} as builder
 
+USER node
 WORKDIR /usr/src/app
 
-# https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md#node-gyp-alpine
-RUN apk add --no-cache --virtual python
-RUN apk add --no-cache --virtual .gyp make g++
-
-# Prepare dependencies
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node patches ./patches
+RUN ls -al
 RUN npm ci
 
-# Execute patch-package
-RUN npm run postinstall
-
 # Copy files from host to container then list it
-COPY ./ ./
+COPY --chown=node:node ./ ./
 RUN ls -al
 
 # Build project
@@ -28,25 +23,26 @@ RUN npm run build:prod
 # List files under build directory for reference
 RUN ls -al build
 
-
 ### Final Stage ###
 
 FROM node:${NODE_IMAGE_VERSION} as app
 
+ENV NODE_ENV=production
+
+EXPOSE 8080
+
+USER node
 WORKDIR /usr/src/app
 
-# https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md#node-gyp-alpine
-RUN apk add --no-cache --virtual .gyp python make g++
-
 # Copy the necessary files from the builder stage to this stage
-COPY --from=builder /usr/src/app/build .
+COPY --chown=node:node --from=builder /usr/src/app/build .
 
+# https://typicode.github.io/husky/#/?id=with-npm
+RUN npm set-script prepare ""
 # Install production dependencies only
 RUN npm ci --production
 
-# List the directory on this build stage
+# List the final directory for reference
 RUN ls -al
-
-EXPOSE 8080
 
 CMD ["node", "./src/app.js"]

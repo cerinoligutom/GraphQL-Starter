@@ -10,6 +10,9 @@ COPY package*.json ./
 
 RUN npm install
 
+# Execute patch-package
+RUN npm run postinstall
+
 # Copy files from host to container
 COPY ./ ./
 

@@ -15,6 +15,9 @@ RUN apk add --no-cache --virtual .gyp make g++
 COPY package*.json ./
 RUN npm ci
 
+# Execute patch-package
+RUN npm run postinstall
+
 # Copy files from host to container then list it
 COPY ./ ./
 RUN ls -al

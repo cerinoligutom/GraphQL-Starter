@@ -96,10 +96,10 @@ If docker compose have bootstrapped all services successfully, you should be abl
 
 Login to the pgAdmin page using the credentials below:
 
-| Field    | Value            |
-| -------- | ---------------- |
-| email    | admin@domain.com |
-| password | password         |
+| Field    | Value       |
+| -------- | ----------- |
+| email    | dev@app.com |
+| password | password    |
 
 If first time setting up:
 

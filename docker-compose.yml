@@ -31,15 +31,15 @@ services:
 
   # https://www.pgadmin.org/docs/pgadmin4/5.5/container_deployment.html
   pgadmin:
-    image: dpage/pgadmin4:5.6
+    image: dpage/pgadmin4:6.4
     restart: always
     ports:
       - '8888:80'
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@domain.com
+      PGADMIN_DEFAULT_EMAIL: dev@app.com
       PGADMIN_DEFAULT_PASSWORD: password
     volumes:
-      - pgadmin5-data:/var/lib/pgadmin
+      - pgadmin4-data:/var/lib/pgadmin
 
   redis:
     image: redis:6-alpine
@@ -77,7 +77,6 @@ services:
 volumes:
   # IMPORTANT: If you are using Windows, you might want to uncomment "api_node_modules" below.
   # api_node_modules:
-  pgadmin5-data:
+  pgadmin4-data:
   postgres13-data:
-  redis6-data:
-    # external: true # https://github.com/docker/for-win/issues/445#issuecomment-405185621
+  redis6-data: # external: true # https://github.com/docker/for-win/issues/445#issuecomment-405185621

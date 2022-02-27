@@ -19,6 +19,7 @@ on:
 env:
   # https://typicode.github.io/husky/#/?id=with-env-variables
   HUSKY: '0'
+  IMAGE_NAME: $(echo 'console.log("${{ github.repository }}".toLowerCase())' | node -)
 
 jobs:
   build-source-code:
@@ -50,7 +51,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Docker Image
-        run: docker build -f Dockerfile -t ${{ github.repository }}:build .
+        run: docker build -f Dockerfile -t ${{ env.IMAGE_NAME }}:build .
 
       ### Uncomment the step below if you want to be notified on Slack ###
       ### Just make sure your secrets are configured ###

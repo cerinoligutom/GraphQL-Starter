@@ -7,6 +7,8 @@ EXPOSE 8080
 USER node
 WORKDIR /usr/src/app
 
+COPY package*.json ./
+COPY patches ./patches
 RUN npm install
 
 # Copy files from host to container

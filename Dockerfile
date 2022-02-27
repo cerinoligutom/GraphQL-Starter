@@ -8,6 +8,8 @@ FROM node:${NODE_IMAGE_VERSION} as builder
 USER node
 WORKDIR /usr/src/app
 
+COPY package*.json ./
+COPY patches ./patches
 RUN ls -al
 RUN npm ci
 

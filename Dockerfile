@@ -5,7 +5,6 @@ ARG NODE_IMAGE_VERSION=16-alpine
 
 FROM node:${NODE_IMAGE_VERSION} as builder
 
-USER node
 WORKDIR /usr/src/app
 
 COPY package*.json ./

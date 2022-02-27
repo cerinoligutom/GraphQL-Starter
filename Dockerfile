@@ -30,7 +30,6 @@ ENV NODE_ENV=production
 
 EXPOSE 8080
 
-USER node
 WORKDIR /usr/src/app
 
 # Copy the necessary files from the builder stage to this stage
@@ -43,5 +42,8 @@ RUN npm ci --production
 
 # List the final directory for reference
 RUN ls -al
+
+# https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md#non-root-user
+USER node
 
 CMD ["node", "./src/app.js"]

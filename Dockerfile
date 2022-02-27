@@ -8,13 +8,11 @@ FROM node:${NODE_IMAGE_VERSION} as builder
 USER node
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json ./
-COPY --chown=node:node patches ./patches
 RUN ls -al
 RUN npm ci
 
 # Copy files from host to container then list it
-COPY --chown=node:node ./ ./
+COPY ./ ./
 RUN ls -al
 
 # Build project

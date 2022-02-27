@@ -7,12 +7,10 @@ EXPOSE 8080
 USER node
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json ./
-COPY --chown=node:node patches ./patches
 RUN npm install
 
 # Copy files from host to container
-COPY --chown=node:node ./ ./
+COPY ./ ./
 
 RUN npm run build
 

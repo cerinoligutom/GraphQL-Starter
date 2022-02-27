@@ -5,16 +5,15 @@ ARG NODE_IMAGE_VERSION=16-alpine
 
 FROM node:${NODE_IMAGE_VERSION} as builder
 
-USER node
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json ./
-COPY --chown=node:node patches ./patches
+COPY package*.json ./
+COPY patches ./patches
 RUN ls -al
 RUN npm ci
 
 # Copy files from host to container then list it
-COPY --chown=node:node ./ ./
+COPY ./ ./
 RUN ls -al
 
 # Build project
@@ -31,7 +30,6 @@ ENV NODE_ENV=production
 
 EXPOSE 8080
 
-USER node
 WORKDIR /usr/src/app
 
 # Copy the necessary files from the builder stage to this stage
@@ -44,5 +42,8 @@ RUN npm ci --production
 
 # List the final directory for reference
 RUN ls -al
+
+# https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md#non-root-user
+USER node
 
 CMD ["node", "./src/app.js"]

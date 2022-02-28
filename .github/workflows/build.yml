@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - 'main'
-      - 'master'
       - 'develop'
     paths-ignore:
       - '**/README.md'
@@ -11,7 +10,6 @@ on:
   pull_request:
     branches:
       - 'main'
-      - 'master'
       - 'develop'
     paths-ignore:
       - '**/README.md'

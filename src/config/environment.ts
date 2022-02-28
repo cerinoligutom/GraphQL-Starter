@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable spaced-comment */
-
 import dotenv from 'dotenv';
 
 dotenv.config();

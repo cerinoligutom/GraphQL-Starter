@@ -29,9 +29,9 @@ services:
     volumes:
       - postgres13-data:/var/lib/postgresql/data
 
-  # https://www.pgadmin.org/docs/pgadmin4/5.5/container_deployment.html
+  # https://www.pgadmin.org/docs/pgadmin4/6.5/container_deployment.html
   pgadmin:
-    image: dpage/pgadmin4:6.4
+    image: dpage/pgadmin4:6.5
     restart: always
     ports:
       - '8888:80'

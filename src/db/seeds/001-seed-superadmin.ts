@@ -3,8 +3,6 @@ import { bcryptUtil } from '@/utils';
 import { UserModel, SystemRoleModel } from '@/db/models';
 import { SystemRoleID } from '@/shared/constants';
 
-const USER_ROLES_TABLE_NAME = 'user_system_roles';
-
 export async function seed(knex: Knex): Promise<void> {
   // Create Super Admin Role
 

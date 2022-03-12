@@ -11,6 +11,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Project Structure](#project-structure)
 - [Sample Environment File](#sample-environment-file)
 - [Recommended Workflow](#recommended-workflow)
+- [Database Migrations and Seeding](#database-migrations-and-seeding)
 - [Naming Convention](#naming-convention)
 - [Deployment](#deployment)
 - [Future Plans](#future-plans)
@@ -297,6 +298,52 @@ This is also true to scalars at `src/graphql/scalars`.
 1. Implement. Refer to the route handlers under `user` for examples.
 1. Add this route handler to your router.
    - Make sure to wrap this with the async handler util.
+
+## Database Migrations and Seeding
+
+This boilerplate makes use of [KnexJS](https://github.com/knex/knex) to manage database migrations and seeding. Check the docs for specifics but this boilerplate provides a few npm scripts to help you get started.
+
+### Migrations
+
+Creating a migration script:
+
+```bash
+npm run migrate:make -- <your_script_name>
+
+# Or use the code generator by running:
+npm run generate
+```
+
+Running database migrations:
+
+```bash
+npm run migrate:latest
+```
+
+Rollback database migration:
+
+```bash
+npm run migrate:rollback
+```
+
+### Seeding
+
+Creating a seed script:
+
+```bash
+npm run seed:make -- <your_script_name>
+
+# Or use the code generator by running:
+npm run generate
+```
+
+Run seed scripts:
+
+```bash
+npm run seed
+```
+
+**Note:** If you're not using Docker to run this app, you need to configure the connection strings of the database servers (e.g. Redis, PostgreSQL) via the environment variables.
 
 ## Naming Convention
 

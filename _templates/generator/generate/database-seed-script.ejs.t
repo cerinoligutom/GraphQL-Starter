@@ -14,5 +14,5 @@ export async function seed(knex: Knex): Promise<void> {
   // TODO: Change accordingly
   entry.set({ id: 'foo' });
 
-  await knex(<%= h.changeCase.pascal(locals.dbSeed?.modelName) %>Model.tableName).insert([entry]);
+  await entry.$query(knex).insert();
 }

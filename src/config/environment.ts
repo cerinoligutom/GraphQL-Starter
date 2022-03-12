@@ -28,6 +28,6 @@ export const env: IEnvironmentConfig = {
 
 // Environment defaults
 if (!isProduction) {
-  env.postgresConnectionUrl ||= 'postgresql://postgres:password@db:5432/db';
-  env.redisConnectionUrl ||= 'redis://redis';
+  env.postgresConnectionUrl ||= 'postgresql://postgres:password@localhost:5432/db';
+  env.redisConnectionUrl ||= 'redis://localhost';
 }

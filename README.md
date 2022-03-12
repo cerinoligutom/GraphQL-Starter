@@ -442,7 +442,7 @@ If you're not using Docker, you can still get your hands on the build files. Nor
 Build the project:
 
 ```bash
-npm run build --prod
+npm run build:prod
 ```
 
 This will create a `build` folder in the project directory which you can deploy.
@@ -501,7 +501,7 @@ It might not look good to list it here but I think it's important for you to be 
 
 MIT License
 
-Copyright (c) 2019-2021 Cerino O. Ligutom III
+Copyright (c) 2019-Present Cerino O. Ligutom III
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -58,7 +58,7 @@
     "helmet": "5.0.2",
     "ioredis": "4.28.5",
     "jsonwebtoken": "8.5.1",
-    "knex": "1.0.3",
+    "knex": "0.95.14",
     "objection": "3.0.1",
     "objection-cursor": "1.2.5",
     "patch-package": "6.4.7",

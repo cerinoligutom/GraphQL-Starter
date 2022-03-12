@@ -304,6 +304,24 @@ This is also true to scalars at `src/graphql/scalars`.
 
 This boilerplate makes use of [KnexJS](https://github.com/knex/knex) to manage database migrations and seeding. Check the docs for specifics but this boilerplate provides a few npm scripts to help you get started.
 
+The environment variables (see `src/config/environment.ts` file) are currently configured with consideration to Docker so running the scripts below directly from the Host machine wouldn't work. As you can see from the file, the connection strings are pointing to addresses that are running inside Docker containers and the default Docker Network created from running `docker-compose up` makes this work. To run the scripts below, first you need to get inside the container. You can use _(1)_ the Docker extension from VS Code or _(2)_ do it via CLI by:
+
+First, identify the Container ID:
+
+```bash
+docker ps
+```
+
+Then run the following command:
+
+```bash
+docker exec -it <container_id> sh
+```
+
+**Tip:** You don't need to supply the entire Container ID, just the first few unique sequence. For example, your target Container ID is `dcc23f66554b`. You can just run `docker-exec -it dc sh` and you'll be inside the container.
+
+Once inside the container, you can run these migration/seed npm script helpers.
+
 ### Migrations
 
 Creating a migration script:

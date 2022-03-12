@@ -3,8 +3,6 @@ import { bcryptUtil } from '@/utils';
 import { UserModel, SystemRoleModel } from '@/db/models';
 import { SystemRoleID } from '@/shared/constants';
 
-const USER_ROLES_TABLE_NAME = 'user_system_roles';
-
 export async function seed(knex: Knex): Promise<void> {
   // Create Super Admin Role
 
@@ -15,44 +13,26 @@ export async function seed(knex: Knex): Promise<void> {
     description: 'The chosen ones',
   });
 
-  const createSuperadminRoleQuery = knex(SystemRoleModel.tableName).insert([superadminRole]);
-  const createSuperadminRoleQueryResult = await knex.raw('? ON CONFLICT DO NOTHING RETURNING id', [createSuperadminRoleQuery]);
+  await superadminRole.$query(knex).insertAndFetch().onConflict().ignore();
 
   // Create Super Admin User
+  const defaultEmail = 'superadmin@app.com';
   const defaultPassword = 'password';
   const hash = await bcryptUtil.generateHash(defaultPassword);
 
-  const superadmin = new UserModel();
-  superadmin.set({
-    hash,
-    firstName: 'superadmin',
-    lastName: 'sa',
-    email: 'superadmin@app.com',
-  });
-
-  const createSuperadminUserQuery = knex(UserModel.tableName).insert([superadmin]);
-  const createSuperadminUserQueryResult = await knex.raw('? ON CONFLICT DO NOTHING RETURNING id', [createSuperadminUserQuery]);
-
-  // Skip the association of the records if one of the query result has a row count of 0.
-  if (!createSuperadminRoleQueryResult.rowCount || !createSuperadminUserQueryResult.rowCount) {
-    // This simply means this has been done before so it's okay to skip.
-    return;
+  let superadmin = await UserModel.query(knex).findOne('email', defaultEmail);
+  if (!superadmin) {
+    superadmin = new UserModel();
+    superadmin.set({
+      hash,
+      firstName: 'superadmin',
+      lastName: 'sa',
+      email: defaultEmail,
+    });
   }
+  await superadmin.$query(knex).insertAndFetch().onConflict().ignore();
 
-  // Otherwise, Associate superadmin role to superadmin user
-  const {
-    rows: [{ id: superadminRoleId }],
-  } = createSuperadminRoleQueryResult;
+  // Add Super Admin Role to Super Admin User
 
-  const {
-    rows: [{ id: superadminUserId }],
-  } = createSuperadminUserQueryResult;
-
-  const assignRoleToUserQuery = knex(USER_ROLES_TABLE_NAME).insert([
-    {
-      roleId: superadminRoleId,
-      userId: superadminUserId,
-    },
-  ]);
-  await knex.raw('? ON CONFLICT DO NOTHING', [assignRoleToUserQuery]);
+  await superadmin.$relatedQuery('roles', knex).relate(superadminRole).onConflict().ignore();
 }

@@ -44,7 +44,9 @@ const app = express();
   // Read more at https://expressjs.com/en/guide/behind-proxies.html
   app.set('trust proxy', true);
 
-  app.use(helmet({ contentSecurityPolicy: false }));
+  // https://github.com/graphql/graphql-playground/issues/1283#issuecomment-1012913186
+  app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
+
   app.use(cookieParser());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));

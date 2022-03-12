@@ -12,6 +12,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Sample Environment File](#sample-environment-file)
 - [Recommended Workflow](#recommended-workflow)
 - [Database Migrations and Seeding](#database-migrations-and-seeding)
+- [Session Management with Supertokens](#session-management-with-supertokens)
 - [Naming Convention](#naming-convention)
 - [Deployment](#deployment)
 - [Future Plans](#future-plans)
@@ -23,8 +24,8 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 ## Features
 
 - Login with Email and Password
-- Session Management (Access Token + Rotating Refresh Tokens) with [SuperTokens](https://supertokens.io/).
-  - [SuperTokens](https://supertokens.io/) is only used for [Session Management](https://supertokens.io/docs/session/introduction) with this setup but it can do more than that. If you need OAuth, read more on the SuperTokens docs on how to setup one easily.
+- Session Management (Access Token + Rotating Refresh Tokens) with [SuperTokens](https://supertokens.com/).
+  - [SuperTokens](https://supertokens.com/) is only used for [Session Management](https://supertokens.com/docs/session/introduction) with this setup but it can do more than that. If you need OAuth, read more on the SuperTokens docs on how to setup one easily.
 - Node Express REST endpoint examples
 - Apollo GraphQL as middleware for Node Express
 - Centralized error handling
@@ -345,6 +346,58 @@ npm run seed
 
 **Note:** If you're not using Docker to run this app, you need to configure the connection strings of the database servers (e.g. Redis, PostgreSQL) via the environment variables.
 
+## Session Management with Supertokens
+
+This boilerplate makes use of [Supertokens](https://supertokens.com/) to handle sessions (with cookies) because security is very hard. The folks from Supertokens know really well what they're doing and it'd be in your best interest to know how this topic should be handled properly. Here are some relevant resources:
+
+- [Stop using JWT for sessions](http://cryto.net/~joepie91/blog/2016/06/19/stop-using-jwt-for-sessions-part-2-why-your-solution-doesnt-work/)
+- [The best way to securely manage user sessions](https://supertokens.com/blog/the-best-way-to-securely-manage-user-sessions)
+- [Detecting session hijacking using rotating refresh tokens - OSW 2020](https://www.youtube.com/watch?v=6Vzit514kZY&list=PLE5w09cAseKTIFCImkqFbSeYMHPzW7M_f&index=18)
+
+That said, see [Supertokens docs for specifics](https://supertokens.com/docs/session/introduction).
+
+### Unauthenticated requests
+
+When trying this boilerplate and heading to the playground right away to test some GraphQL queries, you'll probably get an Unauthenticated Error. Something like the one below for example when querying `users`:
+
+```json
+{
+  "errors": [
+    {
+      "message": "Unauthenticated. Please try logging in again.",
+      "locations": [
+        {
+          "line": 2,
+          "column": 3
+        }
+      ],
+      "path": ["users"],
+      "extensions": {
+        "code": "UNAUTHENTICATED",
+        "data": {
+          "$errorId": "801aecca-b19f-410c-9a7e-e9724b6f0e9f"
+        }
+      }
+    }
+  ],
+  "data": null
+}
+```
+
+This is because you're trying to request a resource that requires authentication (and in turn, you'll need a session). See this [issue](https://github.com/cerino-ligutom/GraphQL-Starter/issues/27#issuecomment-1065886375) for implementation details of this boilerplate. Basically, the idea is you need the session cookies to be attached on your requests and this can be done after logging in successfully.
+
+You can hit the `/api/v1/auth/login/superadmin` endpoint to login as superadmin and get a session cookie to make requests on the playground. Your access token might expire after some time so you'll need to refresh it. Under normal circumstances, the frontend SDK of Supertokens will handle this for you but since we're working purely on the backend side for this boilerplate, you'll have to clear the cookies manually and then hit the endpoint again.
+
+If sessions with cookies is not an option for you, Supertokens also has alternative solutions but do make sure to be aware of the tradeoffs you'll be facing when doing so. Below is their take, copied verbatim as of March 13, 2022:
+
+> Depending on your application setup, sessions with cookies may not work on certain browsers like Safari which disable cross domain cookies by default.
+>
+> To know if this is going to be a problem for you, please see [this GitHub issue](https://github.com/supertokens/supertokens-core/issues/280) (which also contains proposed solutions).
+>
+> You can also find one of the solutions [here](https://supertokens.com/docs/session/advanced-customizations/examples/localstorage/about).
+
+**Note:** If you're not using Docker to run this app or prefer using Supertokens' Managed Service, make sure to configure the environment variables. See `src/config/supertokens.ts`.
+
 ## Naming Convention
 
 ### For files and folders
@@ -378,9 +431,9 @@ For example:
 
 ### **SuperTokens Core**
 
-Read more on the SuperTokens [docs based on your infrastructure](https://supertokens.io/docs/session/quick-setup/core/with-docker).
+Read more on the SuperTokens [docs based on your infrastructure](https://supertokens.com/docs/session/quick-setup/core/with-docker).
 
-Make sure to configure the [database setup](https://supertokens.io/docs/session/quick-setup/database-setup/postgresql).
+Make sure to configure the [database setup](https://supertokens.com/docs/session/quick-setup/database-setup/postgresql).
 
 ### **Node App**
 

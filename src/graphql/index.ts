@@ -83,6 +83,8 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
         : ApolloServerPluginLandingPageGraphQLPlayground({
             settings: {
               'request.credentials': 'include',
+              'schema.polling.enable': false,
+              'schema.polling.interval': 60000,
             },
           }),
     ],

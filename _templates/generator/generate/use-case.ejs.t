@@ -22,7 +22,8 @@ interface I<%= h.changeCase.pascal(locals.useCase?.name) %>UseCaseResult {
   foo: string;
 }
 export async function <%= h.changeCase.camel(locals.useCase?.name) %>UseCase(dto: I<%= h.changeCase.pascal(locals.useCase?.name) %>DTO, ctx: IContext): Promise<I<%= h.changeCase.pascal(locals.useCase?.name) %>UseCaseResult> {
-  await checkAuthentication(ctx);
+  const { userId: ctxUserId } = await checkAuthentication(ctx);
+  console.info(`Requested by ${ctxUserId}`)
 
   const { foo } = await validateDTO(dto);
 

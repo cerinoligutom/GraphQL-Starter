@@ -3,7 +3,7 @@ import { env } from '@/config/environment';
 
 // Call the `exec()` method to get a Promise-based return
 
-export function createRedisClient(): Redis.Redis {
+export function createRedisClient(): Redis {
   return new Redis(env.redisConnectionUrl);
 }
 

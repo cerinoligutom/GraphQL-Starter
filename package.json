@@ -98,7 +98,7 @@
     "eslint-plugin-import": "2.26.0",
     "gulp": "4.0.2",
     "gulp-run-command": "0.0.10",
-    "husky": "7.0.4",
+    "husky": "8.0.1",
     "hygen": "6.2.0",
     "inquirer": "8.2.4",
     "lint-staged": "12.4.1",

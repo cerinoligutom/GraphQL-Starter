@@ -71,7 +71,7 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
-    "@commitlint/cli": "16.2.1",
+    "@commitlint/cli": "17.0.0",
     "@graphql-codegen/add": "3.1.1",
     "@graphql-codegen/cli": "2.6.2",
     "@graphql-codegen/introspection": "2.1.1",

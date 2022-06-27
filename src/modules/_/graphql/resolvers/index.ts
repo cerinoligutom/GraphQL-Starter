@@ -2,8 +2,6 @@ import { GQL_Resolvers } from '@/generated/graphql';
 import { _dummyResolver as _dummyQueryResolver } from './_dummy.query';
 import { _dummyResolver as _dummyMutationResolver } from './_dummy.mutation';
 import { _dummyResolver as _dummySubscriptionResolver } from './_dummy.subscription';
-import { singleUploadResolver } from './single-upload.mutation';
-import { multipleUploadResolver } from './multiple-upload.mutation';
 import { nodeInterfaceResolveType } from './node.interface';
 import { _dateResolver } from './_date.query';
 import { _datetimeResolver } from './_datetime.query';
@@ -21,8 +19,6 @@ const resolvers: GQL_Resolvers = {
   },
   Mutation: {
     _dummy: _dummyMutationResolver,
-    singleUpload: singleUploadResolver,
-    multipleUpload: multipleUploadResolver,
   },
   Subscription: {
     _dummy: _dummySubscriptionResolver,

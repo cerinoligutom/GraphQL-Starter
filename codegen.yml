@@ -12,7 +12,6 @@ generates:
       contextType: '@/graphql/index#IGraphQLContext'
       enumValues: '@/graphql/enums/index'
       scalars:
-        Upload: '@/graphql/scalars/Upload.scalar#FileUpload'
         DateTime: Date
         Time: Date
         Date: Date

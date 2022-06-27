@@ -7,12 +7,10 @@ import { ApolloServer } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import { initializeSchema } from './schema';
 import { env } from '@/config/environment';
-import { apolloOptions } from '@/config/apollo-options';
 import { initLoaders } from './init-loaders';
 import { handleError } from '@/errors';
 import { Server } from 'http';
 import { execute, subscribe } from 'graphql';
-import { graphqlUploadExpress } from 'graphql-upload';
 import { IContext } from '@/shared/interfaces';
 import { UniqueID } from '@/shared/types';
 import Session, { SessionInformation } from 'supertokens-node/recipe/session';
@@ -89,18 +87,6 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
           }),
     ],
   });
-
-  // This middleware should be added before calling `applyMiddleware`.
-  app.use(
-    graphqlUploadExpress({
-      // Limits here should be stricter than config for surrounding
-      // infrastructure such as Nginx so errors can be handled elegantly by
-      // graphql-upload:
-      // https://github.com/jaydenseric/graphql-upload#type-uploadoptions
-      maxFileSize: apolloOptions.maxFileSize,
-      maxFiles: apolloOptions.maxFiles,
-    }),
-  );
 
   await apolloServer.start();
 

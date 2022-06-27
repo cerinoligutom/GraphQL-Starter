@@ -40,7 +40,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - RedisCommander for managing the Redis Database
 - Pre-commit hook for auto formatting files with Husky, Lint-Staged and Prettier
 - Input schema validation with Yup
-- GraphQL Subscription and File Upload examples
+- GraphQL Subscription example
 - Dockerized containers for both development and production
   - Multi-stage build for production
 - Code Generator with Hygen. Just run `npm run generate` and answer the prompts based on your needs.
@@ -547,7 +547,7 @@ This will create a `build` folder in the project directory which you can deploy.
 
 - When trying to debug async functions in VSCode and the breakpoints on the inner lines won't hit, try adding `trace: true` to `launch.json` file.
 
-- Generated custom scalars by GraphQL Code Generator are given a type of `any`. As with TypeScript, if you can help it, give it a type/interface then map it to GraphQL Code Generator. See `Upload.scalar.ts` (the exported _type_) and `codegen.yml` (_scalars_ section) files. You can [read more here](https://graphql-code-generator.com/docs/plugins/typescript#scalars-scalarsmap). But basically:
+- Generated custom scalars by GraphQL Code Generator are given a type of `any`. As with TypeScript, if you can help it, give it a type/interface then map it to GraphQL Code Generator. You can [read more here](https://graphql-code-generator.com/docs/plugins/typescript#scalars). But basically:
 
   1. You define the type/interface in the corresponding scalar file and export it.
   2. Then map it to GraphQL Code Generator by adding scalars config in `codegen.yml` such that it points to its corresponding scalar file.
@@ -556,6 +556,8 @@ This will create a `build` folder in the project directory which you can deploy.
 - If you're using this repo template with Docker Windows, you'll notice that when you save any file, the watchers aren't reacting. This has something to do with Linux not being able to detect file changes from Windows because the file system events are not being propagated down to Linux. You'll have to resort to polling mechanisms in that case for any tools that watches file changes. I recommend using WSL and developing inside WSL instead.
 
 - If you want to boost your knowledge about GraphQL, I highly recommend reading the e-book: [Production Ready GraphQL](https://book.productionreadygraphql.com/) by Marc-Andre Giroux.
+
+- If you have a use case for File Uploads, I recommend reading [Apollo's blog post](https://www.apollographql.com/blog/backend/file-uploads/file-upload-best-practices/) for options. There used to be a simple example in this boilerplate but has been removed. See [Issue #42](https://github.com/cerino-ligutom/GraphQL-Starter/issues/42) and the associated pull request to see relevant code.
 
 ## Contributing
 

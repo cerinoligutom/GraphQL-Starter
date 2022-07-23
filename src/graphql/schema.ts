@@ -27,6 +27,7 @@ export const initializeSchema = async (): Promise<GraphQLSchema> => {
   const graphqlSchema = makeExecutableSchema({
     typeDefs,
     resolvers,
+    inheritResolversFromInterfaces: true, // https://stackoverflow.com/a/57218081/3783238
   });
 
   return graphqlSchema;

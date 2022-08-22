@@ -1,5 +1,5 @@
 # Declare a Docker build-time variable
-ARG NODE_IMAGE_VERSION=16-alpine
+ARG NODE_IMAGE_VERSION=16.14.2-alpine
 
 ### Builder Stage ###
 

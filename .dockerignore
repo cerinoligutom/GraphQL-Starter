@@ -3,3 +3,9 @@ logs
 npm-debug.log
 build
 .env*
+
+# docker volumes
+.docker_node_modules
+.docker_postgres
+.docker_pgadmin
+.docker_redis

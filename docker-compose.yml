@@ -13,6 +13,7 @@ services:
       # https://jdlm.info/articles/2019/09/06/lessons-building-node-app-docker.html#the-node_modules-volume-trick
       # - ./.docker_node_modules:/usr/src/app/node_modules # https://stackoverflow.com/a/32785014
     depends_on:
+      - supertokens
       - db
     ports:
       - '8080:8080'
@@ -63,7 +64,7 @@ services:
       - REDIS_HOSTS=local:redis:6379
 
   supertokens:
-    image: supertokens/supertokens-postgresql:3.14
+    image: supertokens/supertokens-postgresql:4.3
     user: root
     restart: always
     environment:

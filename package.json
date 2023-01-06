@@ -62,7 +62,7 @@
     "patch-package": "6.5.1",
     "pg": "8.8.0",
     "subscriptions-transport-ws": "0.11.0",
-    "supertokens-node": "11.1.1",
+    "supertokens-node": "12.1.4",
     "tsconfig-paths": "4.1.2",
     "uuid": "9.0.0",
     "ws": "8.11.0",

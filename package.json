@@ -56,7 +56,6 @@
     "graphql-ws": "5.11.2",
     "helmet": "6.0.1",
     "ioredis": "5.2.4",
-    "jsonwebtoken": "8.5.1",
     "knex": "2.3.0",
     "objection": "3.0.1",
     "objection-cursor": "1.2.6",

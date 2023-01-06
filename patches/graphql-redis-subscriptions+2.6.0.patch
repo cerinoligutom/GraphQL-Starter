@@ -1,5 +1,5 @@
 diff --git a/node_modules/graphql-redis-subscriptions/dist/redis-pubsub.d.ts b/node_modules/graphql-redis-subscriptions/dist/redis-pubsub.d.ts
-index 03d959d..41dc039 100644
+index 4fe658b..89b32e5 100644
 --- a/node_modules/graphql-redis-subscriptions/dist/redis-pubsub.d.ts
 +++ b/node_modules/graphql-redis-subscriptions/dist/redis-pubsub.d.ts
 @@ -24,7 +24,7 @@ export declare class RedisPubSub implements PubSubEngine {

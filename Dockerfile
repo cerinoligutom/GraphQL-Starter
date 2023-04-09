@@ -38,6 +38,8 @@ WORKDIR /usr/src/app
 # Copy the necessary files from the builder stage to this stage
 COPY --chown=node:node --from=builder /usr/src/app/build .
 
+RUN npm install -g pnpm
+
 # On npm@9, `npm set-script` has been removed: https://github.blog/changelog/2022-10-24-npm-v9-0-0-released/
 RUN npm pkg set scripts.prepare=" "
 # Install production dependencies only

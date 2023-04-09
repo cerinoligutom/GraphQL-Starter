@@ -67,7 +67,6 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.4.0",
     "@graphql-codegen/add": "3.2.3",
     "@graphql-codegen/cli": "2.16.3",
     "@graphql-codegen/introspection": "2.2.3",
@@ -84,7 +83,6 @@
     "@types/ws": "8.5.4",
     "@typescript-eslint/eslint-plugin": "5.48.0",
     "@typescript-eslint/parser": "5.48.0",
-    "@zeferinix/commitlint-config": "2.1.1",
     "eslint": "8.31.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-airbnb-typescript": "17.0.0",

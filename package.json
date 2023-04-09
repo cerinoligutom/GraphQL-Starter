@@ -3,7 +3,6 @@
   "description": "GraphQL Starter",
   "private": true,
   "scripts": {
-    "postinstall": "patch-package",
     "release": "standard-version",
     "prepare": "husky install",
     "start": "npx gulp dev",
@@ -59,7 +58,6 @@
     "knex": "2.3.0",
     "objection": "3.0.1",
     "objection-cursor": "1.2.6",
-    "patch-package": "6.5.1",
     "pg": "8.8.0",
     "subscriptions-transport-ws": "0.11.0",
     "supertokens-node": "12.1.4",
@@ -105,5 +103,11 @@
     "ts-node": "10.9.1",
     "tsc-alias": "1.8.2",
     "typescript": "4.9.4"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "graphql-redis-subscriptions@2.6.0": "patches/graphql-redis-subscriptions@2.6.0.patch",
+      "graphql-subscriptions@2.0.0": "patches/graphql-subscriptions@2.0.0.patch"
+    }
   }
 }

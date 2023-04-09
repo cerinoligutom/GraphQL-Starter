@@ -6,14 +6,17 @@ EXPOSE 8080
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+RUN npm install -g pnpm
+
+COPY package.json ./
+COPY pnpm-lock.yaml ./
 COPY patches ./patches
-RUN npm install
+RUN pnpm install
 
 # Copy files from host to container
 COPY ./ ./
 
-RUN npm run build
+RUN pnpm build
 
 RUN ls -al
 

@@ -7,17 +7,20 @@ FROM node:${NODE_IMAGE_VERSION} as builder
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+RUN npm install -g pnpm
+
+COPY package.json ./
+COPY pnpm-lock.yaml ./
 COPY patches ./patches
 RUN ls -al
-RUN npm ci
+RUN pnpm install --frozen-lockfile
 
 # Copy files from host to container then list it
 COPY ./ ./
 RUN ls -al
 
 # Build project
-RUN npm run build:prod
+RUN pnpm build:prod
 
 # List files under build directory for reference
 RUN ls -al build
@@ -38,7 +41,7 @@ COPY --chown=node:node --from=builder /usr/src/app/build .
 # https://typicode.github.io/husky/#/?id=with-npm
 RUN npm set-script prepare ""
 # Install production dependencies only
-RUN npm ci --production
+RUN pnpm install --frozen-lockfile --prod
 
 # List the final directory for reference
 RUN ls -al

@@ -59,7 +59,7 @@
     "pg": "8.8.0",
     "subscriptions-transport-ws": "0.11.0",
     "supertokens-node": "12.1.4",
-    "tsconfig-paths": "4.1.2",
+    "tsconfig-paths": "4.2.0",
     "uuid": "9.0.0",
     "ws": "8.11.0",
     "yup": "0.32.11"
@@ -79,13 +79,13 @@
     "@types/node": "18.11.18",
     "@types/uuid": "9.0.0",
     "@types/ws": "8.5.4",
-    "@typescript-eslint/eslint-plugin": "5.48.0",
-    "@typescript-eslint/parser": "5.48.0",
-    "eslint": "8.31.0",
+    "@typescript-eslint/eslint-plugin": "5.57.1",
+    "@typescript-eslint/parser": "5.57.1",
+    "eslint": "8.38.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-airbnb-typescript": "17.0.0",
-    "eslint-config-prettier": "8.6.0",
-    "eslint-plugin-import": "2.26.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-import": "2.27.5",
     "gulp": "4.0.2",
     "gulp-run-command": "0.0.10",
     "husky": "8.0.3",
@@ -94,8 +94,8 @@
     "prettier": "2.8.1",
     "rimraf": "3.0.2",
     "ts-node": "10.9.1",
-    "tsc-alias": "1.8.2",
-    "typescript": "4.9.4"
+    "tsc-alias": "1.8.5",
+    "typescript": "5.0.4"
   },
   "pnpm": {
     "patchedDependencies": {

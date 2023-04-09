@@ -19,7 +19,6 @@
     },
 
     "esModuleInterop": true,
-    "importsNotUsedAsValues": "preserve",
 
     "skipLibCheck": true,
     "skipDefaultLibCheck": true

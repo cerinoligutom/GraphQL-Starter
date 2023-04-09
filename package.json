@@ -3,7 +3,6 @@
   "description": "GraphQL Starter",
   "private": true,
   "scripts": {
-    "release": "standard-version",
     "prepare": "husky install",
     "start": "npx gulp dev",
     "build": "npx gulp build",
@@ -97,7 +96,6 @@
     "node-dev": "8.0.0",
     "prettier": "2.8.1",
     "rimraf": "3.0.2",
-    "standard-version": "9.5.0",
     "ts-node": "10.9.1",
     "tsc-alias": "1.8.2",
     "typescript": "4.9.4"

@@ -43,7 +43,6 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - GraphQL Subscription example
 - Dockerized containers for both development and production
   - Multi-stage build for production
-- Code Generator with Hygen. Just run `npm run generate` and answer the prompts based on your needs.
 
 ### Important notes
 
@@ -130,7 +129,6 @@ If first time setting up:
 
 | Name                                                    | Description                                                                                                                                                                         |
 | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **\_templates**/\*                                      | Contains the Hygen templates and prompt logic for code generation.                                                                                                                  |
 | **infrastructure**/\*                                   | Put all your infrastructure config files here.                                                                                                                                      |
 | **infrastructure**/elastic-beanstalk/Dockerrun.aws.json | Sample config for deploying a Docker app to AWS Elastic Beanstalk from a remote Docker repository (AWS ECR for this config). Make sure to replace the placeholders with your setup. |
 | **src/config**/\*                                       | Any app level environment configs should go here.                                                                                                                                   |

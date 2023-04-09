@@ -17,8 +17,7 @@
     "test": "echo \"No test specified\" && exit 0",
     "tsc-check": "npx tsc --noEmit",
     "generate:gql-types": "npx graphql-codegen",
-    "apollo:service:push": "npx apollo service:push",
-    "generate": "npx hygen generator generate"
+    "apollo:service:push": "npx apollo service:push"
   },
   "repository": {
     "type": "git",
@@ -90,8 +89,6 @@
     "gulp": "4.0.2",
     "gulp-run-command": "0.0.10",
     "husky": "8.0.3",
-    "hygen": "6.2.11",
-    "inquirer": "8.2.4",
     "lint-staged": "13.1.0",
     "node-dev": "8.0.0",
     "prettier": "2.8.1",

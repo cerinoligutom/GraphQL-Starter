@@ -12,24 +12,26 @@ function assertIsYupValidationError(err: any): asserts err is yup.ValidationErro
   }
 }
 
-export const createSchemaValidator = <T extends Record<string, any>>(schema: yup.AnySchema) => async (data: T): Promise<T> => {
-  try {
-    return await schema.validate(data, { abortEarly: false });
-  } catch (err) {
-    assertIsYupValidationError(err);
+export const createSchemaValidator =
+  <T extends Record<string, any>>(schema: yup.AnySchema) =>
+  async (data: T): Promise<T> => {
+    try {
+      return await schema.validate(data, { abortEarly: false });
+    } catch (err) {
+      assertIsYupValidationError(err);
 
-    const formattedInput = err.inner.reduce<Record<string, string[]>>((accumulator, currentError) => {
-      const key = currentError.path! as keyof typeof accumulator;
+      const formattedInput = err.inner.reduce<Record<string, string[]>>((accumulator, currentError) => {
+        const key = currentError.path! as keyof typeof accumulator;
 
-      if (accumulator[key]) {
-        accumulator[key].push(currentError.message);
-      } else {
-        accumulator[key] = [currentError.message];
-      }
+        if (accumulator[key]) {
+          accumulator[key].push(currentError.message);
+        } else {
+          accumulator[key] = [currentError.message];
+        }
 
-      return accumulator;
-    }, {});
+        return accumulator;
+      }, {});
 
-    throw new BadInputError(formattedInput);
-  }
-};
+      throw new BadInputError(formattedInput);
+    }
+  };

@@ -5,6 +5,7 @@ import Objection, { compose, PartialModelObject } from 'objection';
 import knexInstance from '@/db/knex';
 import { mapToCursorPaginationResult } from './objection-cursor.plugin-helper';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const cursorMixin = require('objection-cursor');
 
 // Attach knex to objection model

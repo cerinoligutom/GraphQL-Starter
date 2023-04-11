@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// TODO: Refactor this file with a schema validator
+
 interface IEnvironmentConfig {
   isProduction: boolean;
   app: {

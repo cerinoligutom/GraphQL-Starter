@@ -1,5 +1,7 @@
 import { env } from '@/config/environment';
 
+// TODO: Refactor this file with a schema validator
+
 interface ISuperTokensConfig {
   connectionUrl: string;
   apiKey?: string;

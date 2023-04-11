@@ -1,8 +1,10 @@
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution');
+
 module.exports = {
   root: true,
-  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 'latest',
     project: ['./tsconfig.eslint.json'],
   },
   plugins: ['@typescript-eslint'],

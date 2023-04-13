@@ -5,10 +5,10 @@
 
 import { RequestHandler } from 'express';
 
-interface ILogoutResponse {
+type ResponseBody = {
   message: string;
-}
-export const logoutHandler: RequestHandler<any, ILogoutResponse, any, any> = async (req, res) => {
+};
+export const logoutHandler: RequestHandler<any, ResponseBody, any, any> = async (req, res) => {
   await req.session?.revokeSession();
 
   res.send({

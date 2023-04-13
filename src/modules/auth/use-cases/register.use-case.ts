@@ -1,49 +1,52 @@
-import { UserModel } from '@/db/models';
-import { BadInputError } from '@/errors';
+import { db } from '@/db';
+import { UserSchema } from '@/db/schema';
+import { User } from '@/db/types';
+import { BadInputError, InternalServerError } from '@/errors';
 import { IContext } from '@/shared/interfaces';
-import { bcryptUtil, createSchemaValidator } from '@/utils';
-import * as yup from 'yup';
+import { bcryptUtil } from '@/utils';
+import { Selectable } from 'kysely';
+import { z } from 'zod';
+import { v4 as uuidv4 } from 'uuid';
 
-export interface IRegisterDTO {
-  firstName: string;
-  middleName?: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
-const schema = yup.object().shape({
-  firstName: UserModel.yupSchema.firstName,
-  middleName: UserModel.yupSchema.middleName,
-  lastName: UserModel.yupSchema.lastName,
-  email: UserModel.yupSchema.email,
-  password: UserModel.yupSchema.password,
+const dtoSchema = z.object({
+  firstName: UserSchema.shape.firstName,
+  middleName: UserSchema.shape.middleName,
+  lastName: UserSchema.shape.lastName,
+  email: UserSchema.shape.email,
+  password: UserSchema.shape.password,
 });
-const validateDTO = createSchemaValidator<IRegisterDTO>(schema);
+type RegisterDTO = z.infer<typeof dtoSchema>;
 
-interface IRegisterUseCaseResult {
-  user: UserModel;
-}
-export async function registerUseCase(dto: IRegisterDTO, ctx: IContext): Promise<IRegisterUseCaseResult> {
-  const { firstName, middleName, lastName, email, password } = await validateDTO(dto);
+type RegisterUseCaseResult = {
+  user: Selectable<User>;
+};
+export async function registerUseCase(dto: RegisterDTO, ctx: IContext): Promise<RegisterUseCaseResult> {
+  const { firstName, middleName, lastName, email, password } = await dtoSchema.parse(dto);
 
   const hash = await bcryptUtil.generateHash(password);
 
-  const existingEmail = await UserModel.query().where('email', email).first();
+  const existingEmail = await db.selectFrom('users').select('email').where('email', '=', email).executeTakeFirst();
   if (existingEmail) {
     throw new BadInputError({ email: ['Email already taken'] });
   }
 
-  const form: UserModel = new UserModel();
-  form.set({
-    firstName,
-    middleName,
-    lastName,
-    email,
-    hash,
-  });
+  const user = await db
+    .insertInto('users')
+    .values({
+      id: uuidv4(),
+      firstName,
+      middleName,
+      lastName,
+      email,
+      hashedPassword: hash,
+      updatedAt: new Date(),
+    })
+    .returningAll()
+    .executeTakeFirst();
 
-  const user = await UserModel.query().insertAndFetch(form);
+  if (!user) {
+    throw new InternalServerError('Failed to create user');
+  }
 
   return { user };
 }

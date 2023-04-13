@@ -5,8 +5,6 @@ import { middleware as superTokensMiddleware, errorHandler as superTokensErrorHa
 import '@/supertokens';
 
 import { errorMiddleware, corsMiddleware, createContextMiddleware } from '@/middlewares';
-import { ping as pingPostgresDatabase } from '@/db/knex';
-import { ping as pingRedisDatabase } from '@/redis/client';
 import { initApolloGraphqlServer } from '@/graphql';
 
 import helmet from 'helmet';
@@ -21,22 +19,8 @@ const app = express();
 
 (async () => {
   console.info(`${'='.repeat(30)}`);
-  console.info(`NODE_ENV: ${env.app.environment}`);
+  console.info(`NODE_ENV: ${env.NODE_ENV}`);
   console.info(`${'='.repeat(30)}`);
-
-  // Test Postgres DB
-  try {
-    await pingPostgresDatabase();
-  } catch {
-    return;
-  }
-
-  // Test Redis DB
-  try {
-    await pingRedisDatabase();
-  } catch {
-    return;
-  }
 
   // IMPORTANT:
   // In case your app is running behind a proxy, you should configure this.
@@ -67,8 +51,8 @@ const app = express();
   app.use(superTokensErrorHandler());
   app.use(errorMiddleware());
 
-  const httpServer = app.listen(env.app.port, () => {
-    console.info(`Server is now up @ ${env.app.port}`);
+  const httpServer = app.listen(env.PORT, () => {
+    console.info(`Server is now up @ ${env.PORT}`);
   });
 
   await initApolloGraphqlServer(app, httpServer);

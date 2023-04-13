@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UniqueID } from '../types';
+import { UUIDv4 } from '../types';
 
 export interface IContext {
   req?: Request;
@@ -10,5 +10,5 @@ export interface IContext {
    *
    * This field will only be populated from the create context middleware.
    * */
-  readonly userId: UniqueID | null;
+  readonly userId: UUIDv4 | null;
 }

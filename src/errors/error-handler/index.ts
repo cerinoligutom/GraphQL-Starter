@@ -1,7 +1,6 @@
 import { InternalServerError } from '../internal-server.error';
 import { BaseError } from '../base.error';
 import { ApolloError } from 'apollo-server-express';
-import { objectionDbErrorHandler } from './objection-db.error-handler';
 import { ErrorHandler } from '@/shared/types';
 import { GraphQLError } from 'graphql';
 import { DatabaseError } from '../database.error';
@@ -31,7 +30,7 @@ export function handleError(unknownError: Error): BaseError {
     // and maintain single responsibility. Do not handle unknown
     // errors on your custom error handlers. Instead, return "null"
     // so that it gets inside our custom InternalServerError class.
-    const errorHandlers: ErrorHandler[] = [objectionDbErrorHandler];
+    const errorHandlers: ErrorHandler[] = [];
 
     for (const errorHandler of errorHandlers) {
       const normalizedError = errorHandler(error);

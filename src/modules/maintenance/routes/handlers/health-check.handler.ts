@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-interface IHealthCheckResponse {
+type HealthCheckResponse = {
   status: 'OK';
   serverTime: {
     utcTime: string;
@@ -8,8 +8,8 @@ interface IHealthCheckResponse {
     ms: number;
     iso: string;
   };
-}
-export const healthCheckHandler: RequestHandler<any, IHealthCheckResponse, any, any> = async (req, res) => {
+};
+export const healthCheckHandler: RequestHandler<any, HealthCheckResponse, any, any> = async (req, res) => {
   const now = new Date();
   res.send({
     status: 'OK',

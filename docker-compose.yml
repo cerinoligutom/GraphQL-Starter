@@ -73,6 +73,7 @@ services:
       # other than the local database
       POSTGRESQL_CONNECTION_URI: 'postgresql://postgres:password@db:5432/db'
       POSTGRESQL_TABLE_NAMES_PREFIX: 'supertokens'
+      POSTGRESQL_TABLE_SCHEMA: 'supertokens'
 
       # IMPORTANT:
       # On Production, make sure to set a secure API KEY

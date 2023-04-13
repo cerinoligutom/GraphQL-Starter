@@ -1,0 +1,62 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_CONNECTION_URL")
+  // INFO: Make sure to be mindful of SuperTokens' Database Schema especially once deployed. 
+  // It's "public" by default and if you leave it at that then run a prisma migrate, expect conflicts with Prisma because it considers the 
+  // SuperTokens server migrations as a drift when in fact it's not. SuperTokens manages its own schema so we shouldn't be concerned about it here.
+  // Locally, the SuperTokens' Docker image config's db schema is set to "supertokens" in the docker-compose file. Do be mindful however of this
+  // when self-hosting.
+  schemas  = ["public"]
+}
+
+generator kysely {
+  provider        = "prisma-kysely"
+  previewFeatures = ["multiSchema"]
+
+  // Optionally provide a destination directory for the generated file
+  // and a filename of your choice
+  output   = "../src/db"
+  fileName = "types.d.ts"
+
+  bigIntTypeOverride = "bigint"
+}
+
+model User {
+  id              String            @id @db.VarChar(36) // UUID length
+  firstName       String            @db.VarChar(100)
+  middleName      String?           @db.VarChar(100)
+  lastName        String            @db.VarChar(100)
+  email           String            @unique @db.VarChar(320)
+  hashedPassword  String            @db.Text
+  createdAt       DateTime          @default(now()) @db.Timestamptz(3)
+  /// We're using Kysely instead of Prisma Client so we have a responsibility to always update this value when the record is inserted/updated.
+  updatedAt       DateTime          @db.Timestamptz(3)
+  UserSystemRoles UserSystemRoles[]
+
+  @@map("users")
+  @@schema("public")
+}
+
+model SystemRole {
+  id              String            @id @db.VarChar(36)
+  name            String            @unique @db.VarChar(100)
+  description     String?
+  UserSystemRoles UserSystemRoles[]
+
+  @@map("system_roles")
+  @@schema("public")
+}
+
+// We need an explicit join model here for prisma-kysely to generate and Kysely to consume
+// https://www.prisma.io/docs/concepts/components/prisma-schema/relations/many-to-many-relations#explicit-many-to-many-relations
+model UserSystemRoles {
+  userId       String @db.VarChar(36)
+  systemRoleId String @db.VarChar(36)
+
+  user User       @relation(fields: [userId], references: [id])
+  role SystemRole @relation(fields: [systemRoleId], references: [id])
+
+  @@id([userId, systemRoleId])
+  @@map("user_system_roles")
+  @@schema("public")
+}

@@ -1,8 +1,8 @@
 import { UnauthenticatedError } from '@/errors';
 import { IContext } from '@/shared/interfaces';
-import { UniqueID } from '@/shared/types';
+import { UUIDv4 } from '@/shared/types';
 
-export const checkAuthentication = async (ctx: IContext): Promise<IContext & { readonly userId: UniqueID }> => {
+export const checkAuthentication = async (ctx: IContext): Promise<IContext & { readonly userId: UUIDv4 }> => {
   // If needed, you can also check whether the user still exists in the database here
   if (!ctx.userId) {
     throw new UnauthenticatedError();

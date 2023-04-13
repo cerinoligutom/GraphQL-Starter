@@ -1,28 +1,27 @@
-import { UserModel } from '@/db/models';
 import { checkAuthentication } from '@/modules/auth/helpers/check-authentication';
-import { IContext, ICursorPaginationArgs, ICursorPaginationResult } from '@/shared/interfaces';
-import { createCursorPaginationArgsSchema } from '@/shared/yup-schema';
-import { createSchemaValidator } from '@/utils';
-import * as yup from 'yup';
-import { UserSortField } from '../constants/user-sort-field.enum';
+import { IContext } from '@/shared/interfaces';
+import { z } from 'zod';
+import { db } from '@/db';
+import { Selectable } from 'kysely';
+import { User } from '@/db/types';
 
-export interface IGetUsersDTO extends ICursorPaginationArgs<UserSortField> {}
-
-const schema = yup.object().shape({
-  ...createCursorPaginationArgsSchema(UserSortField),
+const dtoSchema = z.object({
+  offset: z.number(),
+  limit: z.number().max(100),
 });
-const validateDTO = createSchemaValidator<IGetUsersDTO>(schema);
+export type GetUsersDTO = z.infer<typeof dtoSchema>;
 
-interface IGetUsersUseCaseResult extends ICursorPaginationResult<UserModel> {}
-export async function getUsersUseCase(dto: IGetUsersDTO, ctx: IContext): Promise<IGetUsersUseCaseResult> {
+type GetUsersUseCaseResult = {
+  data: Selectable<User>[];
+};
+export async function getUsersUseCase(dto: GetUsersDTO, ctx: IContext): Promise<GetUsersUseCaseResult> {
   await checkAuthentication(ctx);
 
-  const { first, after, before, sortDirection, sortField } = await validateDTO(dto);
+  const { offset, limit } = await dtoSchema.parse(dto);
 
-  const query = UserModel.query().orderBy(sortField, sortDirection).limit(first);
-  if (before) {
-    return query.previousCursorPage(before);
-  }
+  const users = await db.selectFrom('users').selectAll().offset(offset).limit(limit).execute();
 
-  return query.nextCursorPage(after);
+  return {
+    data: users,
+  };
 }

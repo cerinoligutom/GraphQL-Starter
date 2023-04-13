@@ -12,7 +12,7 @@ import { handleError } from '@/errors';
 import { Server } from 'http';
 import { execute, subscribe } from 'graphql';
 import { IContext } from '@/shared/interfaces';
-import { UniqueID } from '@/shared/types';
+import { UUIDv4 } from '@/shared/types';
 import Session, { SessionInformation } from 'supertokens-node/recipe/session';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
@@ -25,7 +25,7 @@ export interface IGraphQLContext extends IContext {
 }
 
 export interface IGraphQLSubscriptionContext extends Pick<IContext, 'userId'> {
-  readonly userId: UniqueID | null;
+  readonly userId: UUIDv4 | null;
 }
 
 interface IGraphQLSubscriptionConnectionParams {
@@ -109,7 +109,7 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
   async function createContextFromConnectionParams(
     connectionParams: IGraphQLSubscriptionConnectionParams,
   ): Promise<IGraphQLSubscriptionContext> {
-    let userId: UniqueID | null = null;
+    let userId: UUIDv4 | null = null;
     if (connectionParams.sessionHandle) {
       const sessionInformation: SessionInformation | undefined = await Session.getSessionInformation(
         connectionParams.sessionHandle,

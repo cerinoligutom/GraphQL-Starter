@@ -2,9 +2,10 @@ datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_CONNECTION_URL")
   // INFO: Make sure to be mindful of SuperTokens' Database Schema especially once deployed. 
-  // It's "public" by default and if you leave it at that then run a prisma migrate, expect conflicts with Prisma because it considers what the 
+  // It's "public" by default and if you leave it at that then run a prisma migrate, expect conflicts with Prisma because it considers the 
   // SuperTokens server migrations as a drift when in fact it's not. SuperTokens manages its own schema so we shouldn't be concerned about it here.
-  // Locally, the SuperTokens' Docker image config's db schema is set to "supertokens" in the docker-compose file.
+  // Locally, the SuperTokens' Docker image config's db schema is set to "supertokens" in the docker-compose file. Do be mindful however of this
+  // when self-hosting.
   schemas  = ["public"]
 }
 

@@ -12,6 +12,9 @@ dependencies:
   '@apollo/server':
     specifier: ^4.6.0
     version: 4.6.0(graphql@16.6.0)
+  '@godaddy/terminus':
+    specifier: ^4.11.2
+    version: 4.11.2
   '@graphql-tools/load-files':
     specifier: 6.6.1
     version: 6.6.1(graphql@16.6.0)
@@ -1026,6 +1029,12 @@ packages:
     resolution: {integrity: sha512-IoD2MfUnOV58ghIHCiil01PcohxjbYR/qCxsoC+xNgUwh1EY8jOOrYmu3d3a71+tJJ23uscEV4X2HJWMsPJu4g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@godaddy/terminus@4.11.2:
+    resolution: {integrity: sha512-e/kbOWpGKME42eltM/wXM3RxSUOrfureZxEd6Dt6NXyFoJ7E8lnmm7znXydJsL3B7ky4HRFZI+eHrep54NZbeQ==}
+    dependencies:
+      stoppable: 1.1.0
+    dev: false
 
   /@graphql-codegen/add@3.2.3(graphql@16.6.0):
     resolution: {integrity: sha512-sQOnWpMko4JLeykwyjFTxnhqjd/3NOG2OyMuvK76Wnnwh8DRrNf2VEs2kmSvLl7MndMlOj7Kh5U154dVcvhmKQ==}
@@ -7787,6 +7796,11 @@ packages:
   /statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
+    dev: false
+
+  /stoppable@1.1.0:
+    resolution: {integrity: sha512-KXDYZ9dszj6bzvnEMRYvxgeTHU74QBFL54XKtP3nyMuJ81CFYtABZ3bAzL2EdFUaEwJOBOgENyFj3R7oTzDyyw==}
+    engines: {node: '>=4', npm: '>=6'}
     dev: false
 
   /stream-exhaust@1.0.2:

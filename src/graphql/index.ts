@@ -45,7 +45,7 @@ interface IGraphQLSubscriptionConnectionParams {
 export const initApolloGraphqlServer = async (app: Express, httpServer: Server): Promise<void> => {
   const GRAPHQL_PATH = '/graphql';
 
-  const schema = await initializeSchema();
+  const schema = initializeSchema();
 
   const apolloServer = new ApolloServer<IGraphQLContext>({
     schema,

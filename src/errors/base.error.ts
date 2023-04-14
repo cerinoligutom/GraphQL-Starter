@@ -58,10 +58,10 @@ export class BaseError extends Error {
     this.originalError = args.originalError;
 
     // Always prepend the Error ID for tracing
-    this.stack = `ErrorID: ${this.errorId}\n${this.stack}`;
+    this.stack = `ErrorID: ${this.errorId}\n${this.stack}\n`;
 
     if (this.originalError) {
-      this.stack += `\n${this.originalError.stack}`;
+      this.stack += `Original Error Stack Trace: \n${this.originalError.stack}\n`;
     }
 
     // If desired, you could notify certain channels

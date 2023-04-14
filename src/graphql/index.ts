@@ -10,7 +10,7 @@ import { initializeSchema } from './schema';
 import { env } from '@/config/environment';
 import { initLoaders } from './init-loaders';
 import { handleError } from '@/errors';
-import { Server } from 'http';
+import type { Server } from 'http';
 import { execute, subscribe } from 'graphql';
 import { IContext } from '@/shared/interfaces';
 import { UUIDv4 } from '@/shared/types';

@@ -10,10 +10,14 @@ import { initApolloGraphqlServer } from '@/graphql';
 import helmet from 'helmet';
 import express, { Router } from 'express';
 import cookieParser from 'cookie-parser';
+import http from 'http';
+import { createTerminus } from '@godaddy/terminus';
 
 import { maintenanceRouter } from '@/modules/maintenance/routes';
 import { authRouter } from '@/modules/auth/routes';
 import { userRouter } from '@/modules/user/routes';
+import { db } from '@/db';
+import { disconnectRedisClients } from '@/redis/client';
 
 const app = express();
 
@@ -51,9 +55,19 @@ const app = express();
   app.use(superTokensErrorHandler());
   app.use(errorMiddleware());
 
-  const httpServer = app.listen(env.PORT, () => {
-    console.info(`Server is now up @ ${env.PORT}`);
-  });
+  const httpServer = http.createServer(app);
 
   await initApolloGraphqlServer(app, httpServer);
+
+  createTerminus(httpServer, {
+    async onSignal() {
+      console.info('server is starting cleanup');
+
+      return Promise.all([await db.destroy(), await disconnectRedisClients()]);
+    },
+  });
+
+  httpServer.listen(env.PORT, () => {
+    console.info(`Server is now up @ ${env.PORT}`);
+  });
 })();

@@ -3,7 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { Express } from 'express';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
 import depthLimit from 'graphql-depth-limit';
 import { initializeSchema } from './schema';
 import { env } from '@/config/environment';
@@ -18,7 +19,11 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { GRAPHQL_TRANSPORT_WS_PROTOCOL } from 'graphql-ws';
 import { SubscriptionServer, GRAPHQL_WS } from 'subscriptions-transport-ws';
-import { ApolloServerPluginLandingPageDisabled, ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault,
+} from '@apollo/server/plugin/landingPage/default';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 
 export interface IGraphQLContext extends IContext {
   loaders: ReturnType<typeof initLoaders>;
@@ -38,63 +43,62 @@ interface IGraphQLSubscriptionConnectionParams {
 }
 
 export const initApolloGraphqlServer = async (app: Express, httpServer: Server): Promise<void> => {
+  const GRAPHQL_PATH = '/graphql';
+
   const schema = await initializeSchema();
 
-  const apolloServer = new ApolloServer({
+  const apolloServer = new ApolloServer<IGraphQLContext>({
     schema,
 
-    context: async ({ req }) => {
-      const context: IContext = {
-        ...req.context,
+    formatError: (gqlFormattedError, error) => {
+      const err = handleError(error as Error);
+
+      return {
+        ...gqlFormattedError,
+        extensions: {
+          ...gqlFormattedError.extensions,
+          code: err.errorCodename,
+          data: err.payload,
+          stacktrace: err.stack,
+        },
       };
-
-      const graphqlContext: IGraphQLContext = {
-        ...context,
-        loaders: initLoaders({ ...context }),
-      };
-
-      return graphqlContext;
-    },
-
-    formatError: (gqlError) => {
-      // Read more here: https://www.apollographql.com/docs/apollo-server/data/errors/#for-the-client-response
-      const err = handleError(gqlError);
-
-      // BaseError props goes to "extensions.exception" so we remove that always
-      delete gqlError.extensions!.exception;
-
-      gqlError.extensions!.code = err.errorCodename;
-      gqlError.extensions!.data = err.payload;
-      gqlError.extensions!.stacktrace = err.stack;
-
-      return gqlError;
     },
 
     validationRules: [depthLimit(10)],
 
     introspection: !env.isProduction,
 
-    // https://www.apollographql.com/docs/apollo-server/migration/#reenabling-graphql-playground
     plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
       env.isProduction
-        ? ApolloServerPluginLandingPageDisabled()
-        : ApolloServerPluginLandingPageGraphQLPlayground({
-            settings: {
-              'request.credentials': 'include',
-              'schema.polling.enable': false,
-              'schema.polling.interval': 60000,
-            },
-          }),
+        ? ApolloServerPluginLandingPageProductionDefault()
+        : ApolloServerPluginLandingPageLocalDefault({ includeCookies: true }),
     ],
+
+    // Regression issue. Should be addressed in v5.
+    // https://www.apollographql.com/docs/apollo-server/migration/#appropriate-400-status-codes
+    status400ForVariableCoercionErrors: true,
   });
 
   await apolloServer.start();
 
-  apolloServer.applyMiddleware({
-    app,
-    // We'll handle cors on the express app
-    cors: false,
-  });
+  app.use(
+    GRAPHQL_PATH,
+    expressMiddleware(apolloServer, {
+      context: async ({ req }) => {
+        const context: IContext = {
+          ...req.context,
+        };
+
+        const graphqlContext: IGraphQLContext = {
+          ...context,
+          loaders: initLoaders({ ...context }),
+        };
+
+        return graphqlContext;
+      },
+    }),
+  );
 
   /**
    * It'll get messy below but there's an issue currently with the state of the protocols that can be used (subscriptions-transport-ws vs graphql-ws).
@@ -126,7 +130,7 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
 
   // graphql-ws
   const graphqlWs = new WebSocketServer({
-    path: apolloServer.graphqlPath,
+    path: GRAPHQL_PATH,
     noServer: true,
   });
   useServer(
@@ -188,7 +192,7 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
       },
     },
     {
-      path: apolloServer.graphqlPath,
+      path: GRAPHQL_PATH,
       noServer: true,
     },
   );

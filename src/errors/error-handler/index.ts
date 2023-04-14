@@ -1,10 +1,9 @@
 import { InternalServerError } from '../internal-server.error';
 import { BaseError } from '../base.error';
-import { ApolloError } from 'apollo-server-express';
 import { ErrorHandler } from '@/shared/types';
-import { GraphQLError } from 'graphql';
 import { DatabaseError } from '../database.error';
 import { env } from '@/config/environment';
+import { unwrapResolverError } from '@apollo/server/errors';
 
 /**
  * Handles the error and normalizes it to the application's `BaseError`.
@@ -17,10 +16,8 @@ import { env } from '@/config/environment';
 export function handleError(unknownError: Error): BaseError {
   let error: Error = unknownError;
 
-  // Extract the original error from Apollo GraphQL errors.
-  if (unknownError instanceof ApolloError || unknownError instanceof GraphQLError) {
-    error = unknownError.originalError as Error;
-  }
+  // Extract the original error from GraphQL Resolver errors.
+  error = unwrapResolverError(unknownError) as Error;
 
   // If it still isn't a known Error, meaning it doesn't inherit BaseError,
   // try our custom error handlers which normalizes 3rd party errors into

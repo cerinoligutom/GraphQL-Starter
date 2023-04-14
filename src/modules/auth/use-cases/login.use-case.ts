@@ -35,13 +35,13 @@ export async function loginUseCase(dto: LoginDTO, ctx: IContext): Promise<LoginU
       // IMPORTANT:
       // If you need to store session data, read more from the link below:
       // https://supertokens.io/docs/session/common-customizations/sessions/new-session#storing-session-information
-      const session = await Session.createNewSession(ctx.res, user.id);
+      const session = await Session.createNewSession(ctx.req, ctx.res, user.id);
 
       // We'll store the session handle in the Access Token payload. When making graphql subscription requests,
       // make sure to pass this variable in the `connectionParams` of the subscription client.
       // https://github.com/apollographql/subscriptions-transport-ws#constructorurl-options-websocketimpl
       const accessTokenPayload: IAccessTokenPayload = { sessionHandle: session.getHandle() };
-      await session.updateAccessTokenPayload(accessTokenPayload);
+      await session.mergeIntoAccessTokenPayload(accessTokenPayload);
 
       return {
         user,

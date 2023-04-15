@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { env } from './environment';
+import { env } from './environment.js';
 
 const SupertokensConfig = z.object({
   SUPERTOKENS_CONNECTION_URL: z

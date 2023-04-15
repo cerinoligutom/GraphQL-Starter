@@ -1,2 +1,2 @@
-export * from './DateTime.scalar';
-export * from './JSON.scalar';
+export * from './DateTime.scalar.js';
+export * from './JSON.scalar.js';

@@ -9,8 +9,8 @@ generates:
     config:
       typesPrefix: GQL_
       maybeValue: T | null | undefined
-      contextType: '@/graphql/index#IGraphQLContext'
-      enumValues: '@/graphql/enums/index'
+      contextType: '@/graphql/index.js#IGraphQLContext'
+      enumValues: '@/graphql/enums/index.js'
       scalars:
         DateTime: Date
         Time: Date

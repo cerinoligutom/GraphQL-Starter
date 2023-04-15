@@ -1,10 +1,10 @@
-import { env } from '@/config/environment';
-import { asyncHandler } from '@/utils';
+import { env } from '@/config/environment.js';
+import { asyncHandler } from '@/utils/index.js';
 import express from 'express';
-import { loginUseCase } from '../use-cases/login.use-case';
-import { loginHandler } from './handlers/login.handler';
-import { logoutHandler } from './handlers/logout.handler';
-import { registerHandler } from './handlers/register.handler';
+import { loginUseCase } from '../use-cases/login.use-case.js';
+import { loginHandler } from './handlers/login.handler.js';
+import { logoutHandler } from './handlers/logout.handler.js';
+import { registerHandler } from './handlers/register.handler.js';
 
 const router = express.Router();
 

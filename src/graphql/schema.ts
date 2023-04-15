@@ -3,8 +3,8 @@
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import * as scalars from './scalars';
-import * as enums from './enums';
+import * as scalars from './scalars/index.js';
+import * as enums from './enums/index.js';
 import { GraphQLSchema } from 'graphql';
 
 const getTypeDefs = () => {

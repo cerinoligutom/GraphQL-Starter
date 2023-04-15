@@ -1,6 +1,8 @@
-import { ErrorHandler } from '@/shared/types';
-import { DatabaseError as PostgresDatabaseError } from 'pg';
-import { DatabaseError } from '../database.error';
+import { ErrorHandler } from '@/shared/types/index.js';
+import pg from 'pg';
+import { DatabaseError } from '../database.error.js';
+
+const { DatabaseError: PostgresDatabaseError } = pg;
 
 // Refine this based on the database you're using and errors you want to handle.
 // For Postgres: https://www.postgresql.org/docs/current/errcodes-appendix.html

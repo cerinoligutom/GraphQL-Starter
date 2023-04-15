@@ -1,6 +1,6 @@
-import { asyncHandler } from '@/utils';
+import { asyncHandler } from '@/utils/index.js';
 import express from 'express';
-import { healthCheckHandler } from './handlers/health-check.handler';
+import { healthCheckHandler } from './handlers/health-check.handler.js';
 
 const router = express.Router();
 

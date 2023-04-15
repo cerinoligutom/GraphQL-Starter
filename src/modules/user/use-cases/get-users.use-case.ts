@@ -1,9 +1,9 @@
-import { checkAuthentication } from '@/modules/auth/helpers/check-authentication';
-import { IContext } from '@/shared/interfaces';
+import { checkAuthentication } from '@/modules/auth/helpers/check-authentication.js';
+import { IContext } from '@/shared/interfaces/index.js';
 import { z } from 'zod';
-import { db } from '@/db';
+import { db } from '@/db/index.js';
 import { Selectable } from 'kysely';
-import { User } from '@/db/types';
+import type { User } from '@/db/types.js';
 
 const dtoSchema = z.object({
   offset: z.number(),

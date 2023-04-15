@@ -1,1 +1,1 @@
-export * from './user-by-id.dataloader';
+export * from './user-by-id.dataloader.js';

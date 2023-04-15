@@ -1,2 +1,2 @@
-export * from './sort-direction.enum';
-export * from './system-role-id.enum';
+export * from './sort-direction.enum.js';
+export * from './system-role-id.enum.js';

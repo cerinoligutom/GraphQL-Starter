@@ -1,4 +1,4 @@
-import { BaseError } from './base.error';
+import { BaseError } from './base.error.js';
 
 export class BadInputError extends BaseError {
   constructor(payload: Record<string, string[]>) {

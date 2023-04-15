@@ -1,2 +1,2 @@
-export * from './IContext';
-export * from './IAccessTokenPayload';
+export * from './IContext.js';
+export * from './IAccessTokenPayload.js';

@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "lib": ["ES2020"],
+    "target": "ESNext",
+    "module": "NodeNext",
+    "lib": ["ESNext"],
 
     "outDir": "./build",
     "rootDir": "./",
@@ -23,9 +23,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true
   },
-  "exclude": ["node_modules", "build", "gulpfile.ts"],
+  "exclude": ["node_modules", "build", "gulpfile.js"],
 
   "ts-node": {
+    "esm": true,
     "transpileOnly": true
   }
 }

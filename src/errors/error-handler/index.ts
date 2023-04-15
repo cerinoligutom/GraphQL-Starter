@@ -1,10 +1,10 @@
-import { InternalServerError } from '../internal-server.error';
-import { BaseError } from '../base.error';
-import { ErrorHandler } from '@/shared/types';
-import { DatabaseError } from '../database.error';
-import { env } from '@/config/environment';
+import { InternalServerError } from '../internal-server.error.js';
+import { BaseError } from '../base.error.js';
+import { ErrorHandler } from '@/shared/types/index.js';
+import { DatabaseError } from '../database.error.js';
+import { env } from '@/config/environment.js';
 import { unwrapResolverError } from '@apollo/server/errors';
-import { pgErrorHandler } from './pg.error-handler';
+import { pgErrorHandler } from './pg.error-handler.js';
 
 /**
  * Handles the error and normalizes it to the application's `BaseError`.

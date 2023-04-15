@@ -1,6 +1,6 @@
-import { IContext } from '@/shared/interfaces';
-import { createDataLoader } from '@/utils';
-import { userService } from '../../services/user.service';
+import { IContext } from '@/shared/interfaces/index.js';
+import { createDataLoader } from '@/utils/create-dataloader.util.js';
+import { userService } from '../../services/user.service.js';
 
 export const userByIdLoader = (ctx: IContext) =>
   createDataLoader(async (ids: string[]) => {

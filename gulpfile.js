@@ -1,10 +1,14 @@
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-env node */
 
-import { watch, parallel, src, dest } from 'gulp';
+import gulp from 'gulp';
 // Read Gulp@4 support: https://www.npmjs.com/package/gulp-run-command#faq
-import run from 'gulp-run-command';
+import gulpRunCommand from 'gulp-run-command';
 import os from 'os';
+
+const { src, dest, watch, parallel } = gulp;
+const run = gulpRunCommand.default;
 
 const PATHS = {
   srcTsFiles: [
@@ -71,11 +75,7 @@ async function generateGqlTsFiles() {
 }
 
 async function runApp() {
-  let nodeDevFlags = '--respawn';
-  if (isWindowsPlatform) nodeDevFlags += ' --poll';
-
-  // https://github.com/fgnass/node-dev#passing-arguments-to-node
-  const command = `node-dev ${nodeDevFlags} -r tsconfig-paths/register --inspect=0.0.0.0:9229 ./src/app.ts`;
+  const command = 'tsx watch -r tsconfig-paths/register --inspect=0.0.0.0:9229 ./src/app.ts';
 
   run(command)();
   return;
@@ -83,7 +83,7 @@ async function runApp() {
 
 // PUBLIC COMMANDS //
 
-export async function dev(): Promise<void> {
+export async function dev() {
   await generateGqlTsFiles();
 
   watch(PATHS.srcGraphqlFiles, { ignoreInitial: true, usePolling: isWindowsPlatform }, generateGqlTsFiles);

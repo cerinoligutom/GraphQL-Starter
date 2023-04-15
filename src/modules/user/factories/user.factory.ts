@@ -1,7 +1,7 @@
-import { GQL_User } from '@/generated/graphql';
-import { ResponseUserFull, ResponseUserSimple } from '../responses/user.response';
+import { GQL_User } from '@/generated/graphql/index.js';
+import { ResponseUserFull, ResponseUserSimple } from '../responses/user.response.js';
 import { Selectable } from 'kysely';
-import { User } from '@/db/types';
+import { User } from '@/db/types.js';
 
 // We need this factory function mainly for type safety and assuring
 // that if there are any graphql schema changes, we only need to modify

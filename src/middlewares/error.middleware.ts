@@ -1,5 +1,5 @@
 import { ErrorRequestHandler } from 'express';
-import { handleError } from '@/errors';
+import { handleError } from '@/errors/index.js';
 
 export const errorMiddleware = (): ErrorRequestHandler => (unknownError, req, res, next) => {
   if (!unknownError) {

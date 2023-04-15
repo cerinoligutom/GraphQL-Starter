@@ -1,4 +1,4 @@
-import { GQL_QueryResolvers } from '@/generated/graphql';
+import { GQL_QueryResolvers } from '@/generated/graphql/index.js';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const _dateResolver: GQL_QueryResolvers['_date'] = async (_, { input }) => {

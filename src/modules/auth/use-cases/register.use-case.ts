@@ -1,9 +1,9 @@
-import { db } from '@/db';
-import { UserSchema } from '@/db/schema';
-import { User } from '@/db/types';
-import { BadInputError, InternalServerError } from '@/errors';
-import { IContext } from '@/shared/interfaces';
-import { bcryptUtil } from '@/utils';
+import { db } from '@/db/index.js';
+import { UserSchema } from '@/db/schema/index.js';
+import { User } from '@/db/types.js';
+import { BadInputError, InternalServerError } from '@/errors/index.js';
+import { IContext } from '@/shared/interfaces/index.js';
+import { bcryptUtil } from '@/utils/index.js';
 import { Selectable } from 'kysely';
 import { z } from 'zod';
 import { v4 as uuidv4 } from 'uuid';

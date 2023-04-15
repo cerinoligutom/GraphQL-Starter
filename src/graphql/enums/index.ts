@@ -12,5 +12,5 @@
 // Rationale being, I'd prefer for this file to grow rather than the
 // codegen config as the project gets bigger over time.
 
-export { SortDirection } from '@/shared/constants';
-export { UserSortField } from '@/modules/user/constants/user-sort-field.enum';
+export { SortDirection } from '@/shared/constants/index.js';
+export { UserSortField } from '@/modules/user/constants/user-sort-field.enum.js';

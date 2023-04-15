@@ -1,5 +1,5 @@
 import Session from 'supertokens-node/recipe/session';
-import { UnauthenticatedError, UnauthorizedError } from '@/errors';
+import { UnauthenticatedError, UnauthorizedError } from '@/errors/index.js';
 
 export const SessionRecipe = Session.init({
   errorHandlers: {

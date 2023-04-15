@@ -25,14 +25,6 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 'off',
   },
   overrides: [
-    // TODO: Revisit this rule when migration to Prisma and Kysely starts
-    // Database
-    {
-      files: ['./src/db/seeds/**/*.ts', './src/db/migrations/**/*.ts', './src/db/helpers/**/*.ts'],
-      rules: {
-        '@typescript-eslint/no-explicit-any': 'off',
-      },
-    },
     {
       files: ['./src/**/*.error.ts', './src/**/*.handler.ts', './src/**/*.factory.ts'],
       rules: {

@@ -22,6 +22,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 
 ## Features
 
+- ESM (ECMAScript Modules) support
 - Login with Email and Password
 - Session Management (Access Token + Rotating Refresh Tokens) with [SuperTokens](https://supertokens.com/).
   - [SuperTokens](https://supertokens.com/) is only used for [Session Management](https://supertokens.com/docs/session/introduction) with this setup but it can do more than that. If you need a different kind of Authentication (e.g. Social Login, Passwordless), read more on the SuperTokens docs on how to setup one easily.

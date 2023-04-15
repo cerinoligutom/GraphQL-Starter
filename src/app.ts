@@ -17,7 +17,7 @@ import { maintenanceRouter } from '@/modules/maintenance/routes';
 import { authRouter } from '@/modules/auth/routes';
 import { userRouter } from '@/modules/user/routes';
 import { db } from '@/db';
-import { disconnectRedisClients } from '@/redis/client';
+import { disconnectRedisClients } from '@/redis';
 
 const app = express();
 

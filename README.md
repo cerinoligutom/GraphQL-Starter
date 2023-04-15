@@ -25,7 +25,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 
 - Login with Email and Password
 - Session Management (Access Token + Rotating Refresh Tokens) with [SuperTokens](https://supertokens.com/).
-  - [SuperTokens](https://supertokens.com/) is only used for [Session Management](https://supertokens.com/docs/session/introduction) with this setup but it can do more than that. If you need OAuth, read more on the SuperTokens docs on how to setup one easily.
+  - [SuperTokens](https://supertokens.com/) is only used for [Session Management](https://supertokens.com/docs/session/introduction) with this setup but it can do more than that. If you need a different kind of Authentication (e.g. Social Login, Passwordless), read more on the SuperTokens docs on how to setup one easily.
 - Node Express REST endpoint examples
 - Apollo GraphQL as middleware for Node Express
 - Centralized error handling
@@ -39,15 +39,14 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - Redis for Caching and GraphQL Subscription
 - RedisCommander for managing the Redis Database
 - Pre-commit hook for auto formatting files with Husky, Lint-Staged and Prettier
-- Input schema validation with Yup
+- Schema validation with Zod
 - GraphQL Subscription example
 - Dockerized containers for both development and production
   - Multi-stage build for production
 
 ### Important notes
 
-- If your project has authorization needs, I recommend using [CASL](https://casl.js.org/). If you want to spin your own but not sure how, here's a [good article](https://css-tricks.com/handling-user-permissions-in-javascript/) to get the ideas down.
-- For SQL Transactions, please read the [ObjectionJS doc](https://vincit.github.io/objection.js/guide/transactions.html#transactions) and pick how you want to handle yours.
+- If your project has authorization needs and your frontend also uses JavaScript/TypeScript, I recommend using [CASL](https://casl.js.org/). If you want to spin your own but not sure how, here's a [good article](https://css-tricks.com/handling-user-permissions-in-javascript/) to get the ideas down. If you want a language-agnostic solution, there is [Permify](https://www.permify.co/).
 
 ## Setup
 

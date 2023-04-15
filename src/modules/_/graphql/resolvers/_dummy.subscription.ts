@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from '@/generated/graphql';
-import { IGraphQLSubscriptionContext } from '@/graphql';
-import { dummyPubSub } from '../pubsub';
+import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from '@/generated/graphql/index.js';
+import { IGraphQLSubscriptionContext } from '@/graphql/index.js';
+import { dummyPubSub } from '../pubsub/index.js';
 
 export const _dummyResolver: GQL_SubscriptionResolvers['_dummy'] = {
   resolve: (value: GQL_DummySubscriptionPayload, args: unknown, ctx: IGraphQLSubscriptionContext) => {

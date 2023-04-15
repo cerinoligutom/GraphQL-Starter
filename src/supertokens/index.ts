@@ -1,6 +1,6 @@
-import { superTokensConfig } from '@/config/supertokens';
+import { superTokensConfig } from '@/config/supertokens.js';
 import SuperTokens from 'supertokens-node';
-import { SessionRecipe } from './session.recipe';
+import { SessionRecipe } from './session.recipe.js';
 
 SuperTokens.init({
   framework: 'express',

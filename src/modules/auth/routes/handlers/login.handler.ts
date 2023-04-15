@@ -1,7 +1,7 @@
-import { userFactory } from '@/modules/user/factories/user.factory';
-import { ResponseUserFull } from '@/modules/user/responses/user.response';
+import { userFactory } from '@/modules/user/factories/user.factory.js';
+import { ResponseUserFull } from '@/modules/user/responses/user.response.js';
 import { RequestHandler } from 'express';
-import { loginUseCase } from '../../use-cases/login.use-case';
+import { loginUseCase } from '../../use-cases/login.use-case.js';
 
 type ResponseBody = {
   user: ResponseUserFull;

@@ -1,4 +1,4 @@
-import { BaseError, IBaseErrorConstructorArgs } from './base.error';
+import { BaseError, IBaseErrorConstructorArgs } from './base.error.js';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IDatabaseErrorConstructorArgs extends Omit<IBaseErrorConstructorArgs, 'errorCodename'> {}

@@ -1,10 +1,10 @@
-import { checkAuthentication } from '@/modules/auth/helpers/check-authentication';
-import { IContext } from '@/shared/interfaces';
+import { checkAuthentication } from '@/modules/auth/helpers/check-authentication.js';
+import type { IContext } from '@/shared/interfaces/index.js';
 import { z } from 'zod';
-import { userService } from '../services/user.service';
+import { userService } from '../services/user.service.js';
 import { Selectable } from 'kysely';
-import { User } from '@/db/types';
-import { UserSchema } from '@/db/schema';
+import type { User } from '@/db/types.js';
+import { UserSchema } from '@/db/schema/index.js';
 
 const dtoSchema = z.object({
   userId: UserSchema.shape.id,

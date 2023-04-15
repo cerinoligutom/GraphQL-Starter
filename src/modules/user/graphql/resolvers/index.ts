@@ -1,6 +1,6 @@
-import { GQL_Resolvers } from '@/generated/graphql';
-import { usersResolver } from './users.query';
-import { fullNameResolver } from './full-name.query';
+import { GQL_Resolvers } from '@/generated/graphql/index.js';
+import { usersResolver } from './users.query.js';
+import { fullNameResolver } from './full-name.query.js';
 
 const resolvers: GQL_Resolvers = {
   Query: {

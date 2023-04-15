@@ -1,5 +1,5 @@
-import Redis from 'ioredis';
-import { env } from '@/config/environment';
+import { Redis } from 'ioredis';
+import { env } from '@/config/environment.js';
 
 const redisClients: Redis[] = [];
 export async function disconnectRedisClients() {

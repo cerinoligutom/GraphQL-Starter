@@ -1,11 +1,11 @@
-import { env } from '@/config/environment';
+import { env } from '@/config/environment.js';
 
-import { verifySession } from 'supertokens-node/recipe/session/framework/express';
-import { middleware as superTokensMiddleware, errorHandler as superTokensErrorHandler } from 'supertokens-node/framework/express';
-import '@/supertokens';
+import { verifySession } from 'supertokens-node/recipe/session/framework/express/index.js';
+import { middleware as superTokensMiddleware, errorHandler as superTokensErrorHandler } from 'supertokens-node/framework/express/index.js';
+import '@/supertokens/index.js';
 
-import { errorMiddleware, corsMiddleware, createContextMiddleware } from '@/middlewares';
-import { initApolloGraphqlServer } from '@/graphql';
+import { errorMiddleware, corsMiddleware, createContextMiddleware } from '@/middlewares/index.js';
+import { initApolloGraphqlServer } from '@/graphql/index.js';
 
 import helmet from 'helmet';
 import express, { Router } from 'express';
@@ -13,11 +13,11 @@ import cookieParser from 'cookie-parser';
 import http from 'http';
 import { createTerminus } from '@godaddy/terminus';
 
-import { maintenanceRouter } from '@/modules/maintenance/routes';
-import { authRouter } from '@/modules/auth/routes';
-import { userRouter } from '@/modules/user/routes';
-import { db } from '@/db';
-import { disconnectRedisClients } from '@/redis';
+import { maintenanceRouter } from '@/modules/maintenance/routes/index.js';
+import { authRouter } from '@/modules/auth/routes/index.js';
+import { userRouter } from '@/modules/user/routes/index.js';
+import { db } from '@/db/index.js';
+import { disconnectRedisClients } from '@/redis/index.js';
 
 const app = express();
 

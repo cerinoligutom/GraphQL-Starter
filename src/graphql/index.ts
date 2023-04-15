@@ -6,13 +6,13 @@ import { Express } from 'express';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import depthLimit from 'graphql-depth-limit';
-import { initializeSchema } from './schema';
-import { env } from '@/config/environment';
-import { initLoaders } from './init-loaders';
-import { handleError } from '@/errors';
+import { initializeSchema } from './schema.js';
+import { env } from '@/config/environment.js';
+import { initLoaders } from './init-loaders.js';
+import { handleError } from '@/errors/index.js';
 import type { Server } from 'http';
-import { IContext } from '@/shared/interfaces';
-import Session, { SessionInformation } from 'supertokens-node/recipe/session';
+import { IContext } from '@/shared/interfaces/index.js';
+import Session, { SessionInformation } from 'supertokens-node/recipe/session/index.js';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import {
@@ -40,7 +40,7 @@ interface IGraphQLSubscriptionConnectionParams {
 
 export const initApolloGraphqlServer = async (app: Express, httpServer: Server): Promise<void> => {
   const GRAPHQL_PATH = '/graphql';
-  const schema = initializeSchema();
+  const schema = await initializeSchema();
 
   ///////////////////////////////////////
   // Setup GraphQL Subscription Server //

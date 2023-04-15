@@ -1,7 +1,7 @@
-import { asyncHandler } from '@/utils';
+import { asyncHandler } from '@/utils/index.js';
 import express from 'express';
-import { getUserHandler } from './handlers/get-user.handler';
-import { getUsersHandler } from './handlers/get-users.handler';
+import { getUserHandler } from './handlers/get-user.handler.js';
+import { getUsersHandler } from './handlers/get-users.handler.js';
 
 const router = express.Router();
 

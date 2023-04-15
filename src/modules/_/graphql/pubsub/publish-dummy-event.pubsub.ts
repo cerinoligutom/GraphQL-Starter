@@ -1,5 +1,5 @@
 import { PubSubEngine } from 'graphql-subscriptions';
-import { GQL_DummySubscriptionPayload } from '@/generated/graphql';
+import { GQL_DummySubscriptionPayload } from '@/generated/graphql/index.js';
 
 // This is basically an action creator to prevent the user from passing
 // the wrong payload to the wrong event.

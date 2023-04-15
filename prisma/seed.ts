@@ -1,6 +1,6 @@
-import { db } from '@/db';
-import { SystemRoleID } from '@/shared/constants';
-import { bcryptUtil } from '@/utils';
+import { db } from '@/db/index.js';
+import { SystemRoleID } from '@/shared/constants/index.js';
+import { bcryptUtil } from '@/utils/index.js';
 import { v4 as uuidv4 } from 'uuid';
 
 async function seed() {
@@ -32,7 +32,7 @@ async function seed() {
         .values({
           id: uuidv4(),
           email: 'superadmin@app.com',
-          hashedPassword: await bcryptUtil.generateHash('superadmin'),
+          hashedPassword: await bcryptUtil.generateHash('password'),
           firstName: 'Superadmin',
           lastName: 'SA',
           updatedAt: new Date(),

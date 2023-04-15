@@ -1,6 +1,6 @@
-import { pubSubEngine } from '@/graphql/pubsub';
+import { pubSubEngine } from '@/graphql/pubsub.js';
 import { PubSubEngine } from 'graphql-subscriptions';
-import { createPublishDummyEventPubSub } from './publish-dummy-event.pubsub';
+import { createPublishDummyEventPubSub } from './publish-dummy-event.pubsub.js';
 
 enum PubSubTrigger {
   DUMMY_EVENT = 'Dummy - DUMMY',

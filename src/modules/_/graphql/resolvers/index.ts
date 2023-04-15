@@ -1,11 +1,11 @@
-import { GQL_Resolvers } from '@/generated/graphql';
-import { _dummyResolver as _dummyQueryResolver } from './_dummy.query';
-import { _dummyResolver as _dummyMutationResolver } from './_dummy.mutation';
-import { _dummyResolver as _dummySubscriptionResolver } from './_dummy.subscription';
-import { nodeInterfaceResolveType } from './node.interface';
-import { _dateResolver } from './_date.query';
-import { _datetimeResolver } from './_datetime.query';
-import { _timeResolver } from './_time.query';
+import { GQL_Resolvers } from '@/generated/graphql/index.js';
+import { _dummyResolver as _dummyQueryResolver } from './_dummy.query.js';
+import { _dummyResolver as _dummyMutationResolver } from './_dummy.mutation.js';
+import { _dummyResolver as _dummySubscriptionResolver } from './_dummy.subscription.js';
+import { nodeInterfaceResolveType } from './node.interface.js';
+import { _dateResolver } from './_date.query.js';
+import { _datetimeResolver } from './_datetime.query.js';
+import { _timeResolver } from './_time.query.js';
 
 const resolvers: GQL_Resolvers = {
   Node: {

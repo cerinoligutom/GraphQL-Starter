@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
-import { userFactory } from '../../factories/user.factory';
-import { ResponseUserFull } from '../../responses/user.response';
-import { getUsersUseCase } from '../../use-cases/get-users.use-case';
+import { userFactory } from '../../factories/user.factory.js';
+import { ResponseUserFull } from '../../responses/user.response.js';
+import { getUsersUseCase } from '../../use-cases/get-users.use-case.js';
 
 type ResponseBody = {
   data: ResponseUserFull[];

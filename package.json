@@ -1,16 +1,17 @@
 {
   "name": "graphql-starter",
+  "type": "module",
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "start": "npx gulp dev",
-    "build": "npx gulp build",
-    "build:prod": "npx gulp build --prod",
+    "start": "gulp dev",
+    "build": "gulp build",
+    "build:prod": "gulp build --prod",
     "lint": "eslint ./src",
     "prettier": "prettier --write \"src/**/*.{js,ts,json,css,scss,md}\"",
     "test": "echo \"No test specified\" && exit 0",
-    "tsc-check": "npx tsc --noEmit",
-    "generate:gql-types": "npx graphql-codegen"
+    "tsc-check": "tsc --noEmit",
+    "generate:gql-types": "graphql-codegen"
   },
   "dependencies": {
     "@apollo/server": "^4.6.0",
@@ -68,11 +69,11 @@
     "gulp-run-command": "0.0.10",
     "husky": "8.0.3",
     "lint-staged": "13.2.1",
-    "node-dev": "8.0.0",
     "prettier": "2.8.7",
     "rimraf": "5.0.0",
     "ts-node": "10.9.1",
     "tsc-alias": "1.8.5",
+    "tsx": "^3.12.6",
     "typescript": "5.0.4"
   },
   "pnpm": {
@@ -82,6 +83,6 @@
     }
   },
   "prisma": {
-    "seed": "ts-node --transpile-only -r tsconfig-paths/register prisma/seed.ts"
+    "seed": "tsx -r tsconfig-paths/register prisma/seed.ts"
   }
 }

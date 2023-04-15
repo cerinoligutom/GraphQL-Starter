@@ -1,12 +1,12 @@
-import { InternalServerError, UnauthenticatedError } from '@/errors';
-import { IContext, IAccessTokenPayload } from '@/shared/interfaces';
-import { bcryptUtil } from '@/utils';
+import { InternalServerError, UnauthenticatedError } from '@/errors/index.js';
+import { IContext, IAccessTokenPayload } from '@/shared/interfaces/index.js';
+import { bcryptUtil } from '@/utils/index.js';
 import { z } from 'zod';
-import Session from 'supertokens-node/recipe/session';
-import { UserSchema } from '@/db/schema';
-import { db } from '@/db';
+import Session from 'supertokens-node/recipe/session/index.js';
+import { UserSchema } from '@/db/schema/index.js';
+import { db } from '@/db/index.js';
 import { Selectable } from 'kysely';
-import { User } from '@/db/types';
+import { User } from '@/db/types.js';
 
 const dtoSchema = z.object({
   email: UserSchema.shape.email,
@@ -26,9 +26,13 @@ export async function loginUseCase(dto: LoginDTO, ctx: IContext): Promise<LoginU
     const isValidPassword = await bcryptUtil.verify(password, user.hashedPassword);
 
     if (isValidPassword) {
-      if (!ctx.res) {
-        throw new InternalServerError('[User] Login - `res` object does not exist');
+      if (!ctx.res || !ctx.req) {
+        throw new InternalServerError('[User] Login - `req` or `res` object does not exist');
       }
+
+      // As of v13, this needs to be set. The Frontend SDK will automatically set this by default.
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      ctx.req!.headers['st-auth-mode'] = 'cookie';
 
       // IMPORTANT:
       // If you need to store session data, read more from the link below:

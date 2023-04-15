@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
-import { userFactory } from '../../factories/user.factory';
-import { ResponseUserFull } from '../../responses/user.response';
-import { getUserUseCase } from '../../use-cases/get-user.use-case';
+import { userFactory } from '../../factories/user.factory.js';
+import { ResponseUserFull } from '../../responses/user.response.js';
+import { getUserUseCase } from '../../use-cases/get-user.use-case.js';
 
 export const getUserHandler: RequestHandler<any, ResponseUserFull, any, any> = async (req, res) => {
   const { userId } = req.params;

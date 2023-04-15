@@ -1,5 +1,5 @@
-import { User } from '@/db/types';
-import { GQL_UserResolvers, GQL_User } from '@/generated/graphql';
+import { User } from '@/db/types.js';
+import { GQL_UserResolvers, GQL_User } from '@/generated/graphql/index.js';
 import { Selectable } from 'kysely';
 
 export const fullNameResolver: GQL_UserResolvers['fullName'] = async (parent) => {

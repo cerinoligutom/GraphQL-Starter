@@ -1,5 +1,5 @@
-import { UnauthenticatedError } from '@/errors';
-import { IContext } from '@/shared/interfaces';
+import { UnauthenticatedError } from '@/errors/index.js';
+import { IContext } from '@/shared/interfaces/index.js';
 
 export const checkAuthentication = async (ctx: IContext): Promise<IContext> => {
   // If needed, you can also check whether the user still exists in the database here

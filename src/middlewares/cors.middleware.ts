@@ -1,5 +1,5 @@
 import cors, { CorsOptions } from 'cors';
-import { env } from '@/config/environment';
+import { env } from '@/config/environment.js';
 import { RequestHandler } from 'express';
 import SuperTokens from 'supertokens-node';
 

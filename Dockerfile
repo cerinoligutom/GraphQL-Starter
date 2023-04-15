@@ -51,6 +51,7 @@ RUN pnpm install --frozen-lockfile --prod
 
 # List the final directory for reference
 RUN ls -al
+RUN ls ./src -al
 
 # https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md#non-root-user
 USER node

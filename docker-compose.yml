@@ -11,7 +11,7 @@ services:
       - ./:/usr/src/app
       # IMPORTANT: If you are using Windows, you might want to uncomment the entry below.
       # https://jdlm.info/articles/2019/09/06/lessons-building-node-app-docker.html#the-node_modules-volume-trick
-      # - ./.docker_node_modules:/usr/src/app/node_modules # https://stackoverflow.com/a/32785014
+      # - ./docker-volumes/node_modules:/usr/src/app/node_modules # https://stackoverflow.com/a/32785014
     depends_on:
       - supertokens
       - db
@@ -30,7 +30,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: db
     volumes:
-      - ./.docker_postgres:/var/lib/postgresql/data
+      - ./docker-volumes/postgres:/var/lib/postgresql/data
 
   # https://www.pgadmin.org/docs/pgadmin4/6.5/container_deployment.html
   pgadmin:
@@ -43,7 +43,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: dev@app.com
       PGADMIN_DEFAULT_PASSWORD: password
     volumes:
-      - ./.docker_pgadmin:/var/lib/pgadmin
+      - ./docker-volumes/pgadmin:/var/lib/pgadmin
 
   redis:
     image: redis:7-alpine
@@ -52,7 +52,7 @@ services:
     ports:
       - '6379:6379'
     volumes:
-      - ./.docker_redis:/data
+      - ./docker-volumes/redis:/data
 
   redis-commander:
     image: rediscommander/redis-commander:latest

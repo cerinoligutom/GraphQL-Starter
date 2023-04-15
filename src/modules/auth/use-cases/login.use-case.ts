@@ -22,8 +22,6 @@ export async function loginUseCase(dto: LoginDTO, ctx: IContext): Promise<LoginU
 
   const user = await db.selectFrom('users').selectAll().where('email', '=', email).executeTakeFirst();
 
-  // const user = await db.query().where('email', email).first();
-
   if (user) {
     const isValidPassword = await bcryptUtil.verify(password, user.hashedPassword);
 

@@ -1,6 +1,5 @@
 {
   "name": "graphql-starter",
-  "description": "GraphQL Starter",
   "private": true,
   "scripts": {
     "prepare": "husky install",
@@ -11,23 +10,8 @@
     "prettier": "prettier --write \"src/**/*.{js,ts,json,css,scss,md}\"",
     "test": "echo \"No test specified\" && exit 0",
     "tsc-check": "npx tsc --noEmit",
-    "generate:gql-types": "npx graphql-codegen",
-    "apollo:service:push": "npx apollo service:push"
+    "generate:gql-types": "npx graphql-codegen"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cerino-ligutom/GraphQL-Starter.git"
-  },
-  "author": {
-    "email": "zeferinix@gmail.com",
-    "name": "Cerino O. Ligutom III",
-    "url": "https://www.zeferinix.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cerino-ligutom/GraphQL-Starter/issues"
-  },
-  "homepage": "https://github.com/cerino-ligutom/GraphQL-Starter#readme",
   "dependencies": {
     "@apollo/server": "^4.6.0",
     "@godaddy/terminus": "^4.11.2",

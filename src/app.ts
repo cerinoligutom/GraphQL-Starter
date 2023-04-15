@@ -5,38 +5,26 @@ import { middleware as superTokensMiddleware, errorHandler as superTokensErrorHa
 import '@/supertokens';
 
 import { errorMiddleware, corsMiddleware, createContextMiddleware } from '@/middlewares';
-import { ping as pingPostgresDatabase } from '@/db/knex';
-import { ping as pingRedisDatabase } from '@/redis/client';
 import { initApolloGraphqlServer } from '@/graphql';
 
 import helmet from 'helmet';
 import express, { Router } from 'express';
 import cookieParser from 'cookie-parser';
+import http from 'http';
+import { createTerminus } from '@godaddy/terminus';
 
 import { maintenanceRouter } from '@/modules/maintenance/routes';
 import { authRouter } from '@/modules/auth/routes';
 import { userRouter } from '@/modules/user/routes';
+import { db } from '@/db';
+import { disconnectRedisClients } from '@/redis';
 
 const app = express();
 
 (async () => {
   console.info(`${'='.repeat(30)}`);
-  console.info(`NODE_ENV: ${env.app.environment}`);
+  console.info(`NODE_ENV: ${env.NODE_ENV}`);
   console.info(`${'='.repeat(30)}`);
-
-  // Test Postgres DB
-  try {
-    await pingPostgresDatabase();
-  } catch {
-    return;
-  }
-
-  // Test Redis DB
-  try {
-    await pingRedisDatabase();
-  } catch {
-    return;
-  }
 
   // IMPORTANT:
   // In case your app is running behind a proxy, you should configure this.
@@ -67,9 +55,19 @@ const app = express();
   app.use(superTokensErrorHandler());
   app.use(errorMiddleware());
 
-  const httpServer = app.listen(env.app.port, () => {
-    console.info(`Server is now up @ ${env.app.port}`);
-  });
+  const httpServer = http.createServer(app);
 
   await initApolloGraphqlServer(app, httpServer);
+
+  createTerminus(httpServer, {
+    async onSignal() {
+      console.info('server is starting cleanup');
+
+      return Promise.all([await db.destroy(), await disconnectRedisClients()]);
+    },
+  });
+
+  httpServer.listen(env.PORT, () => {
+    console.info(`Server is now up @ ${env.PORT}`);
+  });
 })();

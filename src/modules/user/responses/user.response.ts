@@ -1,15 +1,13 @@
-import { UniqueID } from '@/shared/types';
-
-export interface IResponseUserFull {
-  id: UniqueID;
+export type ResponseUserFull = {
+  id: string;
   firstName: string;
   middleName: string | null;
   lastName: string;
   email: string;
   createdAt: string;
   updatedAt: string;
-}
+};
 
-export interface IResponseUserSimple {
-  id: UniqueID;
-}
+export type ResponseUserSimple = {
+  id: string;
+};

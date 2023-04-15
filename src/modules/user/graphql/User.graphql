@@ -8,3 +8,7 @@ type User implements Node {
   createdAt: DateTime
   updatedAt: DateTime
 }
+
+extend type Query {
+  users(offset: Int, limit: Int = 10): [User!]!
+}

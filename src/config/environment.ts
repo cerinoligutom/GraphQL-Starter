@@ -1,42 +1,27 @@
+import { z } from 'zod';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-interface IEnvironmentConfig {
-  isProduction: boolean;
-  app: {
-    environment: string;
-    port: number;
-  };
+const isProduction = process.env.NODE_ENV === 'production';
 
-  postgresConnectionUrl: string;
-  redisConnectionUrl: string;
-}
+const EnvironmentConfigSchema = z.object({
+  NODE_ENV: z.coerce.string().toLowerCase().default('development'),
+  PORT: z.coerce.number().default(8080),
+  POSTGRES_CONNECTION_URL: z
+    .string()
+    .nonempty()
+    .default(() => (isProduction ? '' : 'postgresql://postgres:password@db:5432/db')),
+  REDIS_CONNECTION_URL: z
+    .string()
+    .nonempty()
+    .default(() => (isProduction ? '' : 'redis://redis')),
+});
+type EnvironmentConfig = z.infer<typeof EnvironmentConfigSchema> & { isProduction: boolean };
 
-const NODE_ENV = process.env.NODE_ENV?.toLowerCase() ?? 'development';
-const isProduction = NODE_ENV === 'production';
-
-export const env: IEnvironmentConfig = {
-  isProduction,
-  app: {
-    environment: NODE_ENV,
-    port: +process.env.APP_PORT! || 8080,
+export const env: EnvironmentConfig = {
+  ...EnvironmentConfigSchema.parse(process.env),
+  get isProduction() {
+    return this.NODE_ENV === 'production';
   },
-  postgresConnectionUrl: process.env.POSTGRES_CONNECTION_URL!,
-  redisConnectionUrl: process.env.REDIS_CONNECTION_URL!,
-};
-
-// Environment defaults
-if (!isProduction) {
-  env.postgresConnectionUrl ||= 'postgresql://postgres:password@db:5432/db';
-  env.redisConnectionUrl ||= 'redis://redis';
-}
-
-// Environment Guards
-if (!env.postgresConnectionUrl) {
-  throw new Error('POSTGRES_CONNECTION_URL is required');
-}
-
-if (!env.redisConnectionUrl) {
-  throw new Error('REDIS_CONNECTION_URL is required');
-}
+} as const;

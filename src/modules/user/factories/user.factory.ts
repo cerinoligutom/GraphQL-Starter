@@ -1,6 +1,7 @@
-import { UserModel } from '@/db/models';
 import { GQL_User } from '@/generated/graphql';
-import { IResponseUserFull, IResponseUserSimple } from '../responses/user.response';
+import { ResponseUserFull, ResponseUserSimple } from '../responses/user.response';
+import { Selectable } from 'kysely';
+import { User } from '@/db/types';
 
 // We need this factory function mainly for type safety and assuring
 // that if there are any graphql schema changes, we only need to modify
@@ -10,18 +11,15 @@ import { IResponseUserFull, IResponseUserSimple } from '../responses/user.respon
 // IMPORTANT:
 // Make sure to set the return type of the factory functions!
 
-function createGQLUser(user: UserModel): GQL_User {
-  const userJson = user.toJSON();
+function createGQLUser(user: Selectable<User>): GQL_User {
   return {
-    ...userJson,
-
-    id: userJson.id,
-    firstName: userJson.firstName,
-    middleName: userJson.middleName,
-    lastName: userJson.lastName,
-    email: userJson.email,
-    createdAt: userJson.createdAt,
-    updatedAt: userJson.updatedAt,
+    id: user.id,
+    firstName: user.firstName,
+    middleName: user.middleName,
+    lastName: user.lastName,
+    email: user.email,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
 
     /**
      * Fields that have their own field resolvers should be set to `null`
@@ -33,7 +31,7 @@ function createGQLUser(user: UserModel): GQL_User {
   };
 }
 
-function toFullResponse(user: UserModel): IResponseUserFull {
+function toFullResponse(user: Selectable<User>): ResponseUserFull {
   return {
     id: user.id,
     firstName: user.firstName,
@@ -45,7 +43,7 @@ function toFullResponse(user: UserModel): IResponseUserFull {
   };
 }
 
-function toSimpleResponse(user: UserModel): IResponseUserSimple {
+function toSimpleResponse(user: Selectable<User>): ResponseUserSimple {
   return {
     id: user.id,
   };

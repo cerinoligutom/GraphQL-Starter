@@ -1,0 +1,13 @@
+diff --git a/dist/redis-pubsub.d.ts b/dist/redis-pubsub.d.ts
+index 4fe658b1ec4afb1a69d702c0981a165e44f26f34..89b32e589a5813f647219615d496fb687242dfe0 100644
+--- a/dist/redis-pubsub.d.ts
++++ b/dist/redis-pubsub.d.ts
+@@ -24,7 +24,7 @@ export declare class RedisPubSub implements PubSubEngine {
+     publish<T>(trigger: string, payload: T): Promise<void>;
+     subscribe<T = any>(trigger: string, onMessage: OnMessage<T>, options?: unknown): Promise<number>;
+     unsubscribe(subId: number): void;
+-    asyncIterator<T>(triggers: string | string[], options?: unknown): AsyncIterator<T>;
++    asyncIterator<T>(triggers: string | string[], options?: unknown): AsyncIterable<T>;
+     getSubscriber(): RedisClient;
+     getPublisher(): RedisClient;
+     close(): Promise<'OK'[]>;

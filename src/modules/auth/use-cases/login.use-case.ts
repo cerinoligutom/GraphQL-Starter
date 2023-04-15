@@ -1,31 +1,29 @@
-import { UserModel } from '@/db/models';
 import { InternalServerError, UnauthenticatedError } from '@/errors';
 import { IContext, IAccessTokenPayload } from '@/shared/interfaces';
-import { bcryptUtil, createSchemaValidator } from '@/utils';
-import * as yup from 'yup';
+import { bcryptUtil } from '@/utils';
+import { z } from 'zod';
 import Session from 'supertokens-node/recipe/session';
+import { UserSchema } from '@/db/schema';
+import { db } from '@/db';
+import { Selectable } from 'kysely';
+import { User } from '@/db/types';
 
-export interface ILoginDTO {
-  email: string;
-  password: string;
-}
-
-const schema = yup.object().shape({
-  email: UserModel.yupSchema.email,
-  password: UserModel.yupSchema.password,
+const dtoSchema = z.object({
+  email: UserSchema.shape.email,
+  password: UserSchema.shape.password,
 });
-const validateDTO = createSchemaValidator<ILoginDTO>(schema);
+export type LoginDTO = z.infer<typeof dtoSchema>;
 
-interface ILoginUseCaseResult {
-  user: UserModel;
-}
-export async function loginUseCase(dto: ILoginDTO, ctx: IContext): Promise<ILoginUseCaseResult> {
-  const { email, password } = await validateDTO(dto);
+type LoginUseCaseResult = {
+  user: Selectable<User>;
+};
+export async function loginUseCase(dto: LoginDTO, ctx: IContext): Promise<LoginUseCaseResult> {
+  const { email, password } = await dtoSchema.parse(dto);
 
-  const user = await UserModel.query().where('email', email).first();
+  const user = await db.selectFrom('users').selectAll().where('email', '=', email).executeTakeFirst();
 
   if (user) {
-    const isValidPassword = await bcryptUtil.verify(password, user.hash);
+    const isValidPassword = await bcryptUtil.verify(password, user.hashedPassword);
 
     if (isValidPassword) {
       if (!ctx.res) {
@@ -35,13 +33,13 @@ export async function loginUseCase(dto: ILoginDTO, ctx: IContext): Promise<ILogi
       // IMPORTANT:
       // If you need to store session data, read more from the link below:
       // https://supertokens.io/docs/session/common-customizations/sessions/new-session#storing-session-information
-      const session = await Session.createNewSession(ctx.res, user.id.toString());
+      const session = await Session.createNewSession(ctx.req, ctx.res, user.id);
 
       // We'll store the session handle in the Access Token payload. When making graphql subscription requests,
       // make sure to pass this variable in the `connectionParams` of the subscription client.
       // https://github.com/apollographql/subscriptions-transport-ws#constructorurl-options-websocketimpl
       const accessTokenPayload: IAccessTokenPayload = { sessionHandle: session.getHandle() };
-      await session.updateAccessTokenPayload(accessTokenPayload);
+      await session.mergeIntoAccessTokenPayload(accessTokenPayload);
 
       return {
         user,

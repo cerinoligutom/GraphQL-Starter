@@ -15,7 +15,6 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - [Session Management with Supertokens](#session-management-with-supertokens)
 - [Naming Convention](#naming-convention)
 - [Deployment](#deployment)
-- [Future Plans](#future-plans)
 - [Pro Tips](#pro-tips)
 - [Contributing](#contributing)
 - [Known Dependency Issues](#known-dependency-issues)
@@ -25,7 +24,7 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 
 - Login with Email and Password
 - Session Management (Access Token + Rotating Refresh Tokens) with [SuperTokens](https://supertokens.com/).
-  - [SuperTokens](https://supertokens.com/) is only used for [Session Management](https://supertokens.com/docs/session/introduction) with this setup but it can do more than that. If you need OAuth, read more on the SuperTokens docs on how to setup one easily.
+  - [SuperTokens](https://supertokens.com/) is only used for [Session Management](https://supertokens.com/docs/session/introduction) with this setup but it can do more than that. If you need a different kind of Authentication (e.g. Social Login, Passwordless), read more on the SuperTokens docs on how to setup one easily.
 - Node Express REST endpoint examples
 - Apollo GraphQL as middleware for Node Express
 - Centralized error handling
@@ -39,20 +38,20 @@ A boilerplate for TypeScript + Node Express + Apollo GraphQL APIs.
 - Redis for Caching and GraphQL Subscription
 - RedisCommander for managing the Redis Database
 - Pre-commit hook for auto formatting files with Husky, Lint-Staged and Prettier
-- Input schema validation with Yup
+- Zod for schema validations
 - GraphQL Subscription example
 - Dockerized containers for both development and production
   - Multi-stage build for production
-- Code Generator with Hygen. Just run `npm run generate` and answer the prompts based on your needs.
+- Kysely for query building
+- Prisma for database migrations and seeding
 
 ### Important notes
 
-- If your project has authorization needs, I recommend using [CASL](https://casl.js.org/). If you want to spin your own but not sure how, here's a [good article](https://css-tricks.com/handling-user-permissions-in-javascript/) to get the ideas down.
-- For SQL Transactions, please read the [ObjectionJS doc](https://vincit.github.io/objection.js/guide/transactions.html#transactions) and pick how you want to handle yours.
+- If your project has authorization needs and your frontend also uses JavaScript/TypeScript, I recommend using [CASL](https://casl.js.org/). If you want to spin your own but not sure how, here's a [good article](https://css-tricks.com/handling-user-permissions-in-javascript/) to get the ideas down. If you want a language-agnostic solution, there is [Permify](https://www.permify.co/).
 
 ## Setup
 
-![image](https://user-images.githubusercontent.com/6721822/112299294-a093e580-8cd2-11eb-8aee-cd98c6f84952.png)
+![architecture](https://user-images.githubusercontent.com/6721822/232209335-d9cd5b7d-a6da-4f75-9a44-f4e56848b880.png)
 
 If the nature of your app isn't CRUDy (for a lack of a better word), you probably need domain models and a good amount of layering + mappers. Here's a [good article on the topic](https://blog.ploeh.dk/2012/02/09/IsLayeringWorththeMapping/). Otherwise, proceed.
 
@@ -70,16 +69,20 @@ If the nature of your app isn't CRUDy (for a lack of a better word), you probabl
 
 ```bash
 # Install dependencies for the host
-npm install
+pnpm install
 
 # Generate GraphQL Types
-npm run generate:gql-types
+pnpm generate:gql-types
 
 # Build the project for the first time or when you add dependencies
 docker-compose build
 
 # Start the application (or to restart after making changes to the source code)
 docker-compose up
+
+# Or run it in detached mode then listen only to this application's logs
+docker-compose up -d
+docker-compose logs -f api
 ```
 
 **Note:** You might be prompted to share your drive with Docker if you haven't done so previously. The drive letter you need to share in this case would be the drive letter of where this repository resides.
@@ -124,52 +127,43 @@ If first time setting up:
 
 [http://localhost:8080/api/v1/maintenance/health-check](http://localhost:8080/api/v1/maintenance/health-check)
 
-**Note:** If you prefer a different port, container name, or anything docker environment related. Just modify the `docker-compose.yml` file and adjust to your setup needs.
+**Note:** If you prefer a different port, container name, or anything docker environment related. Just modify the `docker-compose.yml` file and adjust to your preferred setup.
 
 ## Project Structure
 
-| Name                                                    | Description                                                                                                                                                                         |
-| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **\_templates**/\*                                      | Contains the Hygen templates and prompt logic for code generation.                                                                                                                  |
-| **infrastructure**/\*                                   | Put all your infrastructure config files here.                                                                                                                                      |
-| **infrastructure**/elastic-beanstalk/Dockerrun.aws.json | Sample config for deploying a Docker app to AWS Elastic Beanstalk from a remote Docker repository (AWS ECR for this config). Make sure to replace the placeholders with your setup. |
-| **src/config**/\*                                       | Any app level environment configs should go here.                                                                                                                                   |
-| **src/db**/helpers/\*.ts                                | Migration script helpers.                                                                                                                                                           |
-| **src/db**/helpers/add-timestamps.ts                    | Migration script for adding `createdAt` and `updatedAt` fields to a table.                                                                                                          |
-| **src/db**/migrations/\*.ts                             | Generated migration files by KnexJS goes here as per `knexfile.ts` config.                                                                                                          |
-| **src/db**/models/`<entity-name>`.model.ts              | Database Models.                                                                                                                                                                    |
-| **src/db**/seeds/\*.ts                                  | Generated seed files by KnexJS goes here as per `knexfile.ts` config.                                                                                                               |
-| **src/errors**/`<error-name>`.error.ts                  | Custom Errors.                                                                                                                                                                      |
-| **src/generated**/\*\*/\*.ts                            | Generated files.                                                                                                                                                                    |
-| **src/graphql**/scalars/`<scalar-name>`.scalar.ts       | Custom Scalars and their resolvers.                                                                                                                                                 |
-| **src/graphql**/enums/index.ts                          | GraphQL Enum resolvers and internal values.                                                                                                                                         |
-| **src/graphql**/index.ts                                | Apollo GraphQL setup.                                                                                                                                                               |
-| **src/graphql**/schema.ts                               | GraphQL Schema/Resolver builder script.                                                                                                                                             |
-| **src/graphql**/init-loaders.ts                         | Collect all dataloaders here.                                                                                                                                                       |
-| **src/graphql**/pubsub.ts                               | Initialize pubsub engine here.                                                                                                                                                      |
-| **src/middlewares**/`<middleware-name>`.middleware.ts   | Node Express Middleware files.                                                                                                                                                      |
-| **src/modules**/`<module-name>`/\*                      | Your feature modules.                                                                                                                                                               |
-| **src/modules**/\_/\*                                   | Reserved module. Contains root schema for graphql to work along with some sample resolvers.                                                                                         |
-| **src/redis**/client.ts                                 | Redis client is initialized here.                                                                                                                                                   |
-| **src/shared**/                                         | Anything that's shared (generic) throughout the app should be placed here.                                                                                                          |
-| **src/utils**/`<utility-name>`.util.ts                  | Utility files.                                                                                                                                                                      |
-| **src/app.ts**                                          | Main application file.                                                                                                                                                              |
-| .commitlintrc.json                                      | Commitlint config.                                                                                                                                                                  |
-| .dockerignore                                           | Folder and files ignored by Docker.                                                                                                                                                 |
-| .eslintignore                                           | Folder and files ignored by ESLint.                                                                                                                                                 |
-| .eslintrc.js                                            | Linter rules are defined here.                                                                                                                                                      |
-| .gitignore                                              | Folder and files that should be ignored by git.                                                                                                                                     |
-| .huskyrc                                                | Husky config. Git hooks made easy.                                                                                                                                                  |
-| .lintstagedrc                                           | Lint-Staged config. Run commands against staged git files.                                                                                                                          |
-| .prettierrc                                             | Prettier config. An opinionated code formatter.                                                                                                                                     |
-| apollo.config.js                                        | For apollo tooling. Read more [here](https://www.apollographql.com/docs/devtools/apollo-config/).                                                                                   |
-| codegen.yml                                             | GraphQL Code Generator (file watcher) config file.                                                                                                                                  |
-| docker-compose.yml                                      | Docker compose config file.                                                                                                                                                         |
-| Dockerfile                                              | `Production` Docker config file.                                                                                                                                                    |
-| Dockerfile.dev                                          | `Development` Docker config file used by `docker-compose`.                                                                                                                          |
-| knexfile.ts                                             | KnexJS config which contains the database config.                                                                                                                                   |
-| gulpfile.ts                                             | Gulp task runner config file.                                                                                                                                                       |
-| tsconfig.json                                           | Contains typescript config for this project.                                                                                                                                        |
+| Name                                                  | Description                                                                                 |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| **src/config**/\*                                     | Any app level environment configs should go here.                                           |
+| **src/db**/schema/index.ts                            | Zod Database schemas goes here.                                                             |
+| **src/db**/types.d.ts                                 | Generated types by `prisma-kysely`.                                                         |
+| **src/errors**/`<error-name>`.error.ts                | Custom Errors.                                                                              |
+| **src/generated**/\*\*/\*.ts                          | Generated files.                                                                            |
+| **src/graphql**/scalars/`<scalar-name>`.scalar.ts     | Custom Scalars and their resolvers.                                                         |
+| **src/graphql**/enums/index.ts                        | GraphQL Enum resolvers and internal values.                                                 |
+| **src/graphql**/index.ts                              | Apollo GraphQL setup.                                                                       |
+| **src/graphql**/schema.ts                             | GraphQL Schema/Resolver builder script.                                                     |
+| **src/graphql**/init-loaders.ts                       | Collect all dataloaders here.                                                               |
+| **src/graphql**/pubsub.ts                             | Initialize pubsub engine here.                                                              |
+| **src/middlewares**/`<middleware-name>`.middleware.ts | Node Express Middleware files.                                                              |
+| **src/modules**/`<module-name>`/\*                    | Your feature modules.                                                                       |
+| **src/modules**/\_/\*                                 | Reserved module. Contains root schema for graphql to work along with some sample resolvers. |
+| **src/redis**/index.ts                                | Default Redis client is initialized here along with some helpers.                           |
+| **src/shared**/                                       | Anything that's shared (generic) throughout the app should be placed here.                  |
+| **src/utils**/`<utility-name>`.util.ts                | Utility files.                                                                              |
+| **src/app.ts**                                        | Main application file.                                                                      |
+| .dockerignore                                         | Folder and files ignored by Docker.                                                         |
+| .eslintignore                                         | Folder and files ignored by ESLint.                                                         |
+| .eslintrc.js                                          | Linter rules are defined here.                                                              |
+| .gitignore                                            | Folder and files that should be ignored by git.                                             |
+| .huskyrc                                              | Husky config. Git hooks made easy.                                                          |
+| .lintstagedrc                                         | Lint-Staged config. Run commands against staged git files.                                  |
+| .prettierrc                                           | Prettier config. An opinionated code formatter.                                             |
+| codegen.yml                                           | GraphQL Code Generator (file watcher) config file.                                          |
+| docker-compose.yml                                    | Docker compose config file.                                                                 |
+| Dockerfile                                            | `Production` Docker config file.                                                            |
+| Dockerfile.dev                                        | `Development` Docker config file used by `docker-compose`.                                  |
+| gulpfile.ts                                           | Gulp task runner config file.                                                               |
+| tsconfig.json                                         | Contains typescript config for this project.                                                |
 
 **Note:** This project structure makes use of **barrel files**, those **index.ts** you see on most of the folders. Make sure not to forget to export your newly created files to their respective **barrel files (index.ts)** if applicable!
 
@@ -198,28 +192,21 @@ See files inside `src/config/*` that uses `process.env`. Those are the environme
 
 ## Recommended Workflow
 
-**Note:** I recommend reading this section in order to understand how to best use this boilerplate. Once you've familiarized it, you can streamline the whole process by utilizing the code generator. Run `npm run generate` in your terminal and answer the prompts based on your needs.
+### Update your database models in the Prisma Schema
 
-### Create a migration script with KnexJS for your database table
+If your feature requires modifications to the database, update the Prisma Schema accordingly then run `pnpx prisma migrate dev`.
 
-1. Run `npm run migrate:make <script_name>`.
-1. Go to the generated script at `src/db/migrations/<your_script>.ts`.
-1. Populate the script accordingly. Use the `addTimestamps.ts` helper if you need timestamps for your table.
+See [docs](https://www.prisma.io/docs/concepts/components/prisma-migrate/migrate-development-production) if you're unfamiliar with this command.
 
-### (Optional) Create a seed script with KnexJS
+Since we have `prisma-kysely` configured, this should also generate the corresponding typescript types for your database models and should be usable with Kysely right away for your database queries.
 
-1. Run `npm run seed:make <script_name>`.
-1. Go to the generated script at `src/db/seeds/<your_script>.ts`.
-1. Populate the script accordingly.
+### (Optional) Update the seed script
 
-### Create the corresponding ObjectionJS model
+If you want to seed data, update the seed file at `prisma/seed.ts` accordingly.
 
-1. Create a TS file at `src/db/models/`.
-1. Populate the file accordingly.
-   - Make sure to set the static `tableName` property.
-   - (Optional) Set the static `relationMappings` property if applicable. See ObjectionJS docs for more details.
-   - (Recommended) Create a static `yupSchema` property for a centralized schema validation definition for that model. See existing models for example.
-   - Setup the model's properties based on your database table schema.
+### Create/Update the corresponding Zod schema for your database model
+
+Based on your database model changes, make sure to reflect your schema changes as well in the `src/db/schema/index.ts` file.
 
 ### Create a folder for your Feature Module
 
@@ -229,20 +216,20 @@ See files inside `src/config/*` that uses `process.env`. Those are the environme
 
 1. Create a use case TS file under your module.
    - Should be under `src/modules/<module_name>/use-cases/<use_case_name>.use-case.ts`
-1. Create the DTO interface for your use case.
-1. Create a schema validator for your DTO.
-1. Check for auth requirements if applicable.
-1. Validate DTO.
-1. Write your business logic for the use case.
-   - If some operations warrants a service, don't hesitate to create one.
-1. Make sure to return an object-like data on your use case functions so that you can easily extend the results if needed.
+2. Create a Zod schema for your DTO.
+3. Infer the DTO type based on the Zod schema for your use case.
+4. Check for auth requirements if applicable.
+5. Validate DTO.
+6. Write your business logic for the use case.
+   - If some operations warrants creating a service, don't hesitate to create one.
+7. Make sure to return an object-like data on your use case functions so that you can easily extend the results if needed.
    - Unless it's a write operation and is idempotent in nature, then you might not need to return anything.
 
 **Important:**
 
 - Your Interface Layer shouldn't do any DB Operations directly.
-- Use cases should never call another use case. There will be tight coupling if you do that. In the case you decide to change a parameter or behavior on the child use case, the dependent use case would've to adjust accordingly.
-- If you foresee an operation that you think will be reused whether by the same module or other modules, put it in a service and let this service be called by the module that wants to use it.
+- Use cases should never call another use case. There will be tight coupling if you do that. In the case you decide to change a parameter or behavior on the child use case, the dependent use case would've to adjust accordingly. Instead, create a service that both use cases can use.
+- If you foresee an operation that you think will be reused whether by the same or other modules, put it in a service and let this service be called by the module that wants to use it.
 
 ### GraphQL - Create the type definitions for your entity
 
@@ -256,15 +243,15 @@ See files inside `src/config/*` that uses `process.env`. Those are the environme
 
 1. If not yet present, create a new folder named `factories` under `src/modules/<module_name>/`.
 1. Create a factory file under that folder.
-   - Recommended file name should be in the format: `<graphql-object-type-name>.factory.ts`
+   - Recommended file name should be in the format: `<entity-name>.factory.ts`
 1. Create the main factory function inside the file:
 
-   - Recommended function name should be in the format: `createGQL_<graphql-object-type-name>`
+   - Recommended function name should be in the format: `createGQL<graphql-object-type-name>`
    - Make sure to specify the return type of this function to the equivalent GraphQL Object Type generated by GraphQL Code Generator.
    - Example:
 
      ```ts
-     export createGQL_User(user: UserModel): GQL_User {
+     function createGQLUser(user: Selectable<User>): GQL_User {
        // ...
      }
      ```
@@ -302,9 +289,11 @@ This is also true to scalars at `src/graphql/scalars`.
 
 ## Database Migrations and Seeding
 
-This boilerplate makes use of [KnexJS](https://github.com/knex/knex) to manage database migrations and seeding. Check the docs for specifics but this boilerplate provides a few npm scripts to help you get started.
+Migrations and Seeding is handled by Prisma. Refer to [docs](https://www.prisma.io/docs/guides/migrate/developing-with-prisma-migrate) on how to work with this.
 
-The environment variables (see `src/config/environment.ts` file) are currently configured with consideration to Docker so running the scripts below directly from the Host machine wouldn't work. As you can see from the file, the connection strings are pointing to addresses that are running inside Docker containers and the default Docker Network created from running `docker-compose up` makes this work. To run the scripts below, first you need to get inside the container. You can use _(1)_ the Docker extension from VS Code or _(2)_ do it via CLI by:
+The environment variables (see `src/config/environment.ts` file) are currently configured with consideration to a running Docker container so running the scripts below directly from the Host machine wouldn't work. As you can see from the file, the connection strings are pointing to addresses that based on the Docker containers name (defined in `docker-compose.yml`) and the default Docker Network created from running `docker-compose up` makes this work.
+
+This means you should run the Prisma commands within the Docker container. You can do this in two simple ways, either use _(1)_ the Docker extension from VS Code or _(2)_ do it via CLI by:
 
 First, identify the Container ID:
 
@@ -318,61 +307,31 @@ Then run the following command:
 docker exec -it <container_id> sh
 ```
 
-**Tip:** You don't need to supply the entire Container ID, just the first few unique sequence. For example, your target Container ID is `dcc23f66554b`. You can just run `docker-exec -it dc sh` and you'll be inside the container.
+**Tip:** You don't need to supply the entire Container ID, just the first few unique sequence. For example, your target Container ID is `dc123f66554b`. You can just run `docker-exec -it dc sh` and you'll be inside the container.
 
-Once inside the container, you can run these migration/seed npm script helpers.
+Once inside the container, you can run your prisma commands.
 
-### Migrations
-
-Creating a migration script:
+### To create a migration and/or run migrations
 
 ```bash
-npm run migrate:make -- <your_script_name>
-
-# Or use the code generator by running:
-npm run generate
+pnpx prisma migrate dev
 ```
 
-Running database migrations:
+This will run database migrations. If there are changes in the Prisma Schema before you run this command, it will create a migration file and you will be prompted for a name for the migration. Make sure to double check the output.
 
-```bash
-npm run migrate:latest
-```
+**Note:** This executes the seeding process every time you run this command. You can pass the `--skip-seed` flag to skip the seeding process.
 
-Rollback database migration:
-
-```bash
-npm run migrate:rollback
-```
-
-### Seeding
-
-Creating a seed script:
-
-```bash
-npm run seed:make -- <your_script_name>
-
-# Or use the code generator by running:
-npm run generate
-```
-
-Run seed scripts:
-
-```bash
-npm run seed
-```
-
-**Note:** If you're not using Docker to run this app, you need to configure the connection strings of the database servers (e.g. Redis, PostgreSQL) via the environment variables.
+**Important:** If you're not using Docker to run this app, you need to configure the connection strings of the database servers (e.g. Redis, PostgreSQL) via the environment variables.
 
 ## Session Management with Supertokens
 
-This boilerplate makes use of [Supertokens](https://supertokens.com/) to handle sessions (with cookies) because security is very hard. The folks from Supertokens know really well what they're doing and it'd be in your best interest to know how this topic should be handled properly. Here are some relevant resources:
+This boilerplate makes use of [SuperTokens](https://supertokens.com/) to handle sessions (with cookies) because security is very hard. The folks from Supertokens know really well what they're doing and it'd be in your best interest to know how this topic should be handled properly. Here are some relevant resources:
 
 - [Stop using JWT for sessions](http://cryto.net/~joepie91/blog/2016/06/19/stop-using-jwt-for-sessions-part-2-why-your-solution-doesnt-work/)
 - [The best way to securely manage user sessions](https://supertokens.com/blog/the-best-way-to-securely-manage-user-sessions)
 - [Detecting session hijacking using rotating refresh tokens - OSW 2020](https://www.youtube.com/watch?v=6Vzit514kZY&list=PLE5w09cAseKTIFCImkqFbSeYMHPzW7M_f&index=18)
 
-That said, see [Supertokens docs for specifics](https://supertokens.com/docs/session/introduction).
+That said, see [SuperTokens docs for specifics](https://supertokens.com/docs/session/introduction).
 
 ### Unauthenticated requests
 
@@ -406,13 +365,7 @@ This is because you're trying to request a resource that requires authentication
 
 You can hit the `/api/v1/auth/login/superadmin` endpoint to login as superadmin and get a session cookie to make requests on the playground. Your access token might expire after some time so you'll need to refresh it. Under normal circumstances, the frontend SDK of Supertokens will handle this for you but since we're working purely on the backend side for this boilerplate, you'll have to clear the cookies manually and then hit the endpoint again.
 
-If sessions with cookies is not an option for you, Supertokens also has alternative solutions but do make sure to be aware of the tradeoffs you'll be facing when doing so. Below is their take, copied verbatim as of March 13, 2022:
-
-> Depending on your application setup, sessions with cookies may not work on certain browsers like Safari which disable cross domain cookies by default.
->
-> To know if this is going to be a problem for you, please see [this GitHub issue](https://github.com/supertokens/supertokens-core/issues/280) (which also contains proposed solutions).
->
-> You can also find one of the solutions [here](https://supertokens.com/docs/session/advanced-customizations/examples/localstorage/about).
+If sessions with cookies is not an option for you, Supertokens also supports header-based sessions (basically token-based). See [this link](https://supertokens.com/docs/session/common-customizations/sessions/token-transfer-method) for specifics.
 
 **Note:** If you're not using Docker to run this app or prefer using Supertokens' Managed Service, make sure to configure the environment variables. See `src/config/supertokens.ts`.
 
@@ -437,13 +390,12 @@ TypeScript `Interface` and `Type` file names should match their definition name.
 
 For example:
 
-| Interface/Type name       | File name                    |
-| ------------------------- | ---------------------------- |
-| `ICursorPaginationResult` | `ICursorPaginationResult`.ts |
-| `ICursorResult`           | `ICursorResult`.ts           |
-| `IPageInfo`               | `IPageInfo`.ts               |
-| `UniqueID`                | `UniqueID`.ts                |
-| `Maybe`                   | `Maybe`.ts                   |
+| Interface/Type name   | File name                |
+| --------------------- | ------------------------ |
+| `IAccessTokenPayload` | `IAccessTokenPayload`.ts |
+| `IContext`            | `IContext`.ts            |
+| `UniqueID`            | `UniqueID`.ts            |
+| `Maybe`               | `Maybe`.ts               |
 
 ## Deployment
 
@@ -459,7 +411,7 @@ There are a few ways to go about this and can vary based on your setup.
 
 ### Docker Way
 
-Simply build the image from your local machine (or let your CI tool do it) with the syntax below.
+Simply build the image from your local machine (or let your CI tool do it) with the command below.
 
 ```bash
 # The dot on the end is important.
@@ -469,7 +421,7 @@ docker build -f <docker_file> -t <image_name>[:<image_tag>] .
 docker build -f Dockerfile -t graphql-starter:latest .
 ```
 
-Then push the image you just built from your local machine (or from your CI tool) to your docker image repository (e.g. Docker Hub, AWS ECR).
+Then push the image you just built from your local machine (or from your CI tool) to your docker image repository (e.g. Docker Hub, AWS ECR, GitHub Container Registry).
 
 ```bash
 docker push <typically_a_url_to_your_docker_image_repository>
@@ -513,26 +465,18 @@ If you're not using Docker, you can still get your hands on the build files. Nor
 Build the project:
 
 ```bash
-npm run build:prod
+pnpm build:prod
 ```
 
 This will create a `build` folder in the project directory which you can deploy.
 
 **Note:** You might need to manually install the dependencies yourself if you're using a VPS. Otherwise, your cloud provider's NodeJS container will typically just need a `package.json` from the root folder and they'll do the installation on every deploy.
 
-## Future Plans
-
-- More examples for GitHub Actions
-  - Build a Docker Image and pushing to a Docker Image Repository (such as Docker Hub or AWS ECR)
-  - Deploy to a target environment (such as AWS Elastic Beanstalk or a VPS)
-- Migrate from bcrypt to argon2
-- Tests with Jest
-
 ## Pro Tips
 
 - When resolver types are generated by GraphQL Code Generator, the type of the 1st parameter of a **field resolver** is the parent type by default. This is not always true because at runtime, what the parent resolver returns is the actual type/object that will arrive in the field resolver 1st (parent) parameter. In cases like this, you'd need to type assert the parent. See `full-name.query.ts`.
 
-  - Another example for this is let's say we have a `pets` table and a pet has an `ownerId` but in your GraphQL Schema, what you expose is `owner` and not `ownerId`. You won't have access to the `ownerId` in your resolver because GraphQL Code Generator generated what you defined in the schema. You'll have then to type assert in your resolver the type you know you returned.
+  - Another example for this is let's say we have a `pets` table and a pet has an `ownerId` but in your GraphQL Schema, what you expose is `owner` and not `ownerId`. You won't have access to the `ownerId` in your resolver because GraphQL Code Generator generates what you defined in the schema. You'll have then to type assert in your resolver the type you know you returned.
 
 - If you want to rename a field in your GraphQL Schema:
 
@@ -568,7 +512,6 @@ If something is unclear, confusing, or needs to be refactored, please let me kno
 It might not look good to list it here but I think it's important for you to be aware of the issues currently being worked on (and hopefully get a fix from their respective authors/maintainers soon) as you'd still end up with these issues if you were to implement these yourself and use the same dependencies.
 
 - Wrong TypeScript types from Apollo's `graphql-subscriptions` vs `graphql-codegen`. [More info.](https://github.com/cerino-ligutom/GraphQL-Starter/issues/20#issuecomment-978072791)
-- Protocol differences between `subscriptions-transport-ws` (old and not maintained) vs `graphql-ws` (took over and is actively maintained). [More info.](https://github.com/cerino-ligutom/GraphQL-Starter/issues/20#issuecomment-978192577)
 
 ## License
 

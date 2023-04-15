@@ -1,0 +1,11 @@
+diff --git a/dist/pubsub-engine.d.ts b/dist/pubsub-engine.d.ts
+index 58fa1b1d43427edadded1337532dac0123101400..37ae4cfa614374c02886deff0c51348898af70b4 100644
+--- a/dist/pubsub-engine.d.ts
++++ b/dist/pubsub-engine.d.ts
+@@ -2,5 +2,5 @@ export declare abstract class PubSubEngine {
+     abstract publish(triggerName: string, payload: any): Promise<void>;
+     abstract subscribe(triggerName: string, onMessage: Function, options: Object): Promise<number>;
+     abstract unsubscribe(subId: number): any;
+-    asyncIterator<T>(triggers: string | string[]): AsyncIterator<T>;
++    asyncIterator<T>(triggers: string | string[]): AsyncIterable<T>;
+ }

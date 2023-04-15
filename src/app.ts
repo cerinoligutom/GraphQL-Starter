@@ -1,8 +1,8 @@
 import { env } from '@/config/environment.js';
 
-import { verifySession } from 'supertokens-node/recipe/session/framework/express';
-import { middleware as superTokensMiddleware, errorHandler as superTokensErrorHandler } from 'supertokens-node/framework/express';
-import '@/supertokens';
+import { verifySession } from 'supertokens-node/recipe/session/framework/express/index.js';
+import { middleware as superTokensMiddleware, errorHandler as superTokensErrorHandler } from 'supertokens-node/framework/express/index.js';
+import '@/supertokens/index.js';
 
 import { errorMiddleware, corsMiddleware, createContextMiddleware } from '@/middlewares/index.js';
 import { initApolloGraphqlServer } from '@/graphql/index.js';

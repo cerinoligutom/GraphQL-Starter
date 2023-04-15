@@ -18,6 +18,10 @@ if (!env.isProduction) {
   router.get(
     '/api/v1/auth/login/superadmin',
     asyncHandler(async (req, res) => {
+      // As of v13, this needs to be set. The Frontend SDK will automatically set this by default.
+      // Since this is a workaround and is meant for local development, we'll have to set this here.
+      req.headers['st-auth-mode'] = 'cookie';
+
       await loginUseCase(
         {
           email: 'superadmin@app.com',

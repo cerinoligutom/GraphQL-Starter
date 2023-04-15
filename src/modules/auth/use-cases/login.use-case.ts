@@ -30,10 +30,6 @@ export async function loginUseCase(dto: LoginDTO, ctx: IContext): Promise<LoginU
         throw new InternalServerError('[User] Login - `req` or `res` object does not exist');
       }
 
-      // As of v13, this needs to be set. The Frontend SDK will automatically set this by default.
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      ctx.req!.headers['st-auth-mode'] = 'cookie';
-
       // IMPORTANT:
       // If you need to store session data, read more from the link below:
       // https://supertokens.io/docs/session/common-customizations/sessions/new-session#storing-session-information

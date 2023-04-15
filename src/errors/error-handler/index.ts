@@ -4,6 +4,7 @@ import { ErrorHandler } from '@/shared/types';
 import { DatabaseError } from '../database.error';
 import { env } from '@/config/environment';
 import { unwrapResolverError } from '@apollo/server/errors';
+import { pgErrorHandler } from './pg.error-handler';
 
 /**
  * Handles the error and normalizes it to the application's `BaseError`.
@@ -26,8 +27,9 @@ export function handleError(unknownError: Error): BaseError {
     // Only pass custom error handlers here to keep this file clean
     // and maintain single responsibility. Do not handle unknown
     // errors on your custom error handlers. Instead, return "null"
-    // so that it gets inside our custom InternalServerError class.
-    const errorHandlers: ErrorHandler[] = [];
+    // so that it gets normalized into our custom InternalServerError
+    // class after this step.
+    const errorHandlers: ErrorHandler[] = [pgErrorHandler];
 
     for (const errorHandler of errorHandlers) {
       const normalizedError = errorHandler(error);
@@ -51,6 +53,7 @@ export function handleError(unknownError: Error): BaseError {
     // Such as obscuring Database Errors on production
     if (error instanceof DatabaseError) {
       error.message = 'Oops! Something went wrong in the database.';
+      error.payload = undefined;
     }
 
     // Not returning the stacktrace

@@ -39,9 +39,9 @@ export interface IBaseErrorConstructorArgs {
 export class BaseError extends Error {
   readonly errorId: string;
   readonly httpStatusCode: number;
-  readonly payload: Readonly<IDefaultPayload> & Record<string, any>;
   readonly errorCodename: string;
   readonly originalError?: Error;
+  payload?: Readonly<IDefaultPayload> & Record<string, any>;
 
   constructor(args: IBaseErrorConstructorArgs) {
     super(args.message);

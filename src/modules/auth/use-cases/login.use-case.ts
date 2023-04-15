@@ -26,7 +26,7 @@ export async function loginUseCase(dto: LoginDTO, ctx: IContext): Promise<LoginU
     const isValidPassword = await bcryptUtil.verify(password, user.hashedPassword);
 
     if (isValidPassword) {
-      if (!ctx.res && !ctx.req) {
+      if (!ctx.res || !ctx.req) {
         throw new InternalServerError('[User] Login - `req` or `res` object does not exist');
       }
 

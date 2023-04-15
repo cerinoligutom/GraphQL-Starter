@@ -2,7 +2,7 @@ import { InternalServerError, UnauthenticatedError } from '@/errors/index.js';
 import { IContext, IAccessTokenPayload } from '@/shared/interfaces/index.js';
 import { bcryptUtil } from '@/utils/index.js';
 import { z } from 'zod';
-import Session from 'supertokens-node/recipe/session/index.js';
+import Session from 'supertokens-node/recipe/session';
 import { UserSchema } from '@/db/schema/index.js';
 import { db } from '@/db/index.js';
 import { Selectable } from 'kysely';

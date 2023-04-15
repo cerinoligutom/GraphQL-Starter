@@ -1,7 +1,5 @@
-import { UUIDv4 } from '@/shared/types';
-
 export type ResponseUserFull = {
-  id: UUIDv4;
+  id: string;
   firstName: string;
   middleName: string | null;
   lastName: string;
@@ -11,5 +9,5 @@ export type ResponseUserFull = {
 };
 
 export type ResponseUserSimple = {
-  id: UUIDv4;
+  id: string;
 };

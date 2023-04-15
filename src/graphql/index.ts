@@ -12,7 +12,6 @@ import { initLoaders } from './init-loaders';
 import { handleError } from '@/errors';
 import type { Server } from 'http';
 import { IContext } from '@/shared/interfaces';
-import { UUIDv4 } from '@/shared/types';
 import Session, { SessionInformation } from 'supertokens-node/recipe/session';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
@@ -27,7 +26,7 @@ export interface IGraphQLContext extends IContext {
 }
 
 export interface IGraphQLSubscriptionContext extends Pick<IContext, 'userId'> {
-  readonly userId: UUIDv4 | null;
+  readonly userId: string | null;
 }
 
 interface IGraphQLSubscriptionConnectionParams {
@@ -59,7 +58,7 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
         // https://www.apollographql.com/docs/apollo-server/data/subscriptions/#example-authentication-with-apollo-client
         const connectionParams = (ctx.connectionParams ?? {}) as IGraphQLSubscriptionConnectionParams;
 
-        let userId: UUIDv4 | null = null;
+        let userId: string | null = null;
         if (connectionParams.sessionHandle) {
           const sessionHandle = connectionParams.sessionHandle as string;
 

@@ -96,5 +96,8 @@
       "graphql-redis-subscriptions@2.6.0": "patches/graphql-redis-subscriptions@2.6.0.patch",
       "graphql-subscriptions@2.0.0": "patches/graphql-subscriptions@2.0.0.patch"
     }
+  },
+  "prisma": {
+    "seed": "ts-node --transpile-only -r tsconfig-paths/register prisma/seed.ts"
   }
 }

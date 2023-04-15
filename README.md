@@ -175,7 +175,7 @@ If first time setting up:
 NODE_ENV=
 
 # If you want to change the app port. Defaults to 8080.
-APP_PORT=
+PORT=
 
 # DB Connection URLs
 POSTGRES_CONNECTION_URL=

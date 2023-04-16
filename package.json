@@ -14,8 +14,8 @@
     "generate:gql-types": "graphql-codegen"
   },
   "dependencies": {
-    "@apollo/server": "^4.6.0",
-    "@godaddy/terminus": "^4.11.2",
+    "@apollo/server": "4.6.0",
+    "@godaddy/terminus": "4.11.2",
     "@graphql-tools/load-files": "6.6.1",
     "@graphql-tools/merge": "8.4.1",
     "@graphql-tools/schema": "9.0.18",
@@ -73,7 +73,7 @@
     "rimraf": "5.0.0",
     "ts-node": "10.9.1",
     "tsc-alias": "1.8.5",
-    "tsx": "^3.12.6",
+    "tsx": "3.12.6",
     "typescript": "5.0.4"
   },
   "pnpm": {

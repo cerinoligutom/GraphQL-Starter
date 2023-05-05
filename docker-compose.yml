@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     user: node
-    command: npm start
+    command: pnpm start
     restart: always
     volumes:
       - ./:/usr/src/app

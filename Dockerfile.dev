@@ -20,4 +20,4 @@ RUN pnpm build
 
 RUN ls -al
 
-CMD [ "npm", "start" ]
+CMD [ "pnpm", "start" ]

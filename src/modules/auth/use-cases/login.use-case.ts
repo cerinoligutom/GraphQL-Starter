@@ -1,6 +1,6 @@
 import { InternalServerError, UnauthenticatedError } from '@/errors/index.js';
 import { IContext, IAccessTokenPayload } from '@/shared/interfaces/index.js';
-import { bcryptUtil } from '@/utils/index.js';
+import { bcryptUtil, createSchemaValidator } from '@/utils/index.js';
 import { z } from 'zod';
 import Session from 'supertokens-node/recipe/session/index.js';
 import { UserSchema } from '@/db/schema/index.js';
@@ -12,13 +12,14 @@ const dtoSchema = z.object({
   email: UserSchema.shape.email,
   password: UserSchema.shape.password,
 });
+const validateDTO = createSchemaValidator(dtoSchema);
 export type LoginDTO = z.infer<typeof dtoSchema>;
 
 type LoginUseCaseResult = {
   user: Selectable<User>;
 };
 export async function loginUseCase(dto: LoginDTO, ctx: IContext): Promise<LoginUseCaseResult> {
-  const { email, password } = await dtoSchema.parse(dto);
+  const { email, password } = await validateDTO(dto);
 
   const user = await db.selectFrom('users').selectAll().where('email', '=', email).executeTakeFirst();
 

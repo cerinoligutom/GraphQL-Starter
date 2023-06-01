@@ -5,10 +5,12 @@ import { userService } from '../services/user.service.js';
 import { Selectable } from 'kysely';
 import type { User } from '@/db/types.js';
 import { UserSchema } from '@/db/schema/index.js';
+import { createSchemaValidator } from '@/utils/index.js';
 
 const dtoSchema = z.object({
   userId: UserSchema.shape.id,
 });
+const validateDTO = createSchemaValidator(dtoSchema);
 type GetUserDTO = z.infer<typeof dtoSchema>;
 
 type GetUserUseCaseResult = {
@@ -17,7 +19,7 @@ type GetUserUseCaseResult = {
 export async function getUserUseCase(dto: GetUserDTO, ctx: IContext): Promise<GetUserUseCaseResult> {
   await checkAuthentication(ctx);
 
-  const { userId } = await dtoSchema.parse(dto);
+  const { userId } = await validateDTO(dto);
 
   const user = await userService.findByIdOrThrow(userId);
 

@@ -3,7 +3,7 @@ import { UserSchema } from '@/db/schema/index.js';
 import { User } from '@/db/types.js';
 import { BadInputError, InternalServerError } from '@/errors/index.js';
 import { IContext } from '@/shared/interfaces/index.js';
-import { bcryptUtil } from '@/utils/index.js';
+import { bcryptUtil, createSchemaValidator } from '@/utils/index.js';
 import { Selectable } from 'kysely';
 import { z } from 'zod';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,13 +15,14 @@ const dtoSchema = z.object({
   email: UserSchema.shape.email,
   password: UserSchema.shape.password,
 });
+const validateDTO = createSchemaValidator(dtoSchema);
 type RegisterDTO = z.infer<typeof dtoSchema>;
 
 type RegisterUseCaseResult = {
   user: Selectable<User>;
 };
 export async function registerUseCase(dto: RegisterDTO, ctx: IContext): Promise<RegisterUseCaseResult> {
-  const { firstName, middleName, lastName, email, password } = await dtoSchema.parse(dto);
+  const { firstName, middleName, lastName, email, password } = await validateDTO(dto);
 
   const hash = await bcryptUtil.generateHash(password);
 

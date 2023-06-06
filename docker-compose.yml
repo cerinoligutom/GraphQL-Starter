@@ -64,7 +64,7 @@ services:
       - REDIS_HOSTS=local:redis:6379
 
   supertokens:
-    image: supertokens/supertokens-postgresql:4.6
+    image: supertokens/supertokens-postgresql:5.0
     user: root
     restart: always
     environment:

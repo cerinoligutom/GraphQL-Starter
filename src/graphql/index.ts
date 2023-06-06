@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { Express } from 'express';
-import { ApolloServer } from '@apollo/server';
+import { ApolloServer, BaseContext } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import depthLimit from 'graphql-depth-limit';
 import { initializeSchema } from './schema.js';
@@ -21,7 +21,7 @@ import {
 } from '@apollo/server/plugin/landingPage/default';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 
-export interface IGraphQLContext extends IContext {
+export interface IGraphQLContext extends IContext, BaseContext {
   loaders: ReturnType<typeof initLoaders>;
 }
 
@@ -127,7 +127,7 @@ export const initApolloGraphqlServer = async (app: Express, httpServer: Server):
       },
       // GraphQL endpoint landing page.
       env.isProduction
-        ? ApolloServerPluginLandingPageProductionDefault()
+        ? ApolloServerPluginLandingPageProductionDefault({ includeCookies: true })
         : ApolloServerPluginLandingPageLocalDefault({ includeCookies: true }),
     ],
 

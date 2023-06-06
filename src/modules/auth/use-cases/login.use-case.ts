@@ -1,5 +1,5 @@
 import { InternalServerError, UnauthenticatedError } from '@/errors/index.js';
-import { IContext, IAccessTokenPayload } from '@/shared/interfaces/index.js';
+import { IContext } from '@/shared/interfaces/index.js';
 import { bcryptUtil, createSchemaValidator } from '@/utils/index.js';
 import { z } from 'zod';
 import Session from 'supertokens-node/recipe/session/index.js';
@@ -34,13 +34,13 @@ export async function loginUseCase(dto: LoginDTO, ctx: IContext): Promise<LoginU
       // IMPORTANT:
       // If you need to store session data, read more from the link below:
       // https://supertokens.io/docs/session/common-customizations/sessions/new-session#storing-session-information
-      const session = await Session.createNewSession(ctx.req, ctx.res, user.id);
+      await Session.createNewSession(ctx.req, ctx.res, user.id);
 
-      // We'll store the session handle in the Access Token payload. When making graphql subscription requests,
-      // make sure to pass this variable in the `connectionParams` of the subscription client.
+      // When making graphql subscription requests, make sure to pass the sessionHandle in the `connectionParams` of the subscription client.
       // https://github.com/apollographql/subscriptions-transport-ws#constructorurl-options-websocketimpl
-      const accessTokenPayload: IAccessTokenPayload = { sessionHandle: session.getHandle() };
-      await session.mergeIntoAccessTokenPayload(accessTokenPayload);
+      // You can get the sessionHandle from the frontend (with the Vanilla JS SDK) by invoking this method:
+      // https://supertokens.com/docs/web-js/modules/recipe_session.html#getAccessTokenPayloadSecurely-1
+      // Something like `(await Session.getAccessTokenPayloadSecurely()).sessionHandle` should work.
 
       return {
         user,

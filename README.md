@@ -195,7 +195,7 @@ See files inside `src/config/*` that uses `process.env`. Those are the environme
 
 ### Update your database models in the Prisma Schema
 
-If your feature requires modifications to the database, update the Prisma Schema accordingly then run `pnpx prisma migrate dev`.
+If your feature requires modifications to the database, update the Prisma Schema accordingly then run `pnpm exec prisma migrate dev`.
 
 See [docs](https://www.prisma.io/docs/concepts/components/prisma-migrate/migrate-development-production) if you're unfamiliar with this command.
 
@@ -315,7 +315,7 @@ Once inside the container, you can run your prisma commands.
 ### To create a migration and/or run migrations
 
 ```bash
-pnpx prisma migrate dev
+pnpm exec prisma migrate dev
 ```
 
 This will run database migrations. If there are changes in the Prisma Schema before you run this command, it will create a migration file and you will be prompted for a name for the migration. Make sure to double check the output.
@@ -366,7 +366,7 @@ This is because you're trying to request a resource that requires authentication
 
 You can hit the `/api/v1/auth/login/superadmin` endpoint to login as superadmin and get a session cookie to make requests on the playground. Your access token might expire after some time so you'll need to refresh it. Under normal circumstances, the frontend SDK of Supertokens will handle this for you but since we're working purely on the backend side for this boilerplate, you'll have to clear the cookies manually and then hit the endpoint again.
 
-If sessions with cookies is not an option for you, Supertokens also supports header-based sessions (basically token-based). See [this link](https://supertokens.com/docs/session/common-customizations/sessions/token-transfer-method) for specifics.
+If sessions with cookies is not an option for you, Supertokens also supports header-based sessions (basically token-based). See [this link](https://supertokens.com/docs/session/common-customizations/sessions/token-transfer-method) for specifics. In the scenario that you're not using any of the Frontend SDK of Supertokens, then refer [here](https://supertokens.com/docs/session/quick-setup/handling-session-tokens#if-not-using-our-frontend-sdk).
 
 **Note:** If you're not using Docker to run this app or prefer using Supertokens' Managed Service, make sure to configure the environment variables. See `src/config/supertokens.ts`.
 

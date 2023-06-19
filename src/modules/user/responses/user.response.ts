@@ -13,8 +13,8 @@ export const ResponseUserFullSchema = z
   })
   .extend({
     // We need the date objects to be serialized but in valid datetime format.
-    createdAt: z.coerce.date(),
-    updatedAt: z.coerce.date(),
+    createdAt: z.coerce.date().transform((arg) => arg.toISOString()),
+    updatedAt: z.coerce.date().transform((arg) => arg.toISOString()),
   });
 export type ResponseUserFull = z.infer<typeof ResponseUserFullSchema>;
 

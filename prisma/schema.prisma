@@ -6,12 +6,10 @@ datasource db {
   // SuperTokens server migrations as a drift when in fact it's not. SuperTokens manages its own schema so we shouldn't be concerned about it here.
   // Locally, the SuperTokens' Docker image config's db schema is set to "supertokens" in the docker-compose file. Do be mindful however of this
   // when self-hosting.
-  schemas  = ["public"]
 }
 
 generator kysely {
-  provider        = "prisma-kysely"
-  previewFeatures = ["multiSchema"]
+  provider = "prisma-kysely"
 
   // Optionally provide a destination directory for the generated file
   // and a filename of your choice
@@ -34,7 +32,6 @@ model User {
   UserSystemRoles UserSystemRoles[]
 
   @@map("users")
-  @@schema("public")
 }
 
 model SystemRole {
@@ -44,7 +41,6 @@ model SystemRole {
   UserSystemRoles UserSystemRoles[]
 
   @@map("system_roles")
-  @@schema("public")
 }
 
 // We need an explicit join model here for prisma-kysely to generate and Kysely to consume
@@ -58,5 +54,4 @@ model UserSystemRoles {
 
   @@id([userId, systemRoleId])
   @@map("user_system_roles")
-  @@schema("public")
 }

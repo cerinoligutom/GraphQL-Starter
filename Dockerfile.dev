@@ -1,6 +1,6 @@
 # https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md
 
-FROM node:18-alpine
+FROM node:20-alpine
 
 EXPOSE 8080
 

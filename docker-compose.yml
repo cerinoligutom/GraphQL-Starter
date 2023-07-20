@@ -19,6 +19,9 @@ services:
       - '8080:8080'
       - '9229:9229'
     tty: true
+    environment:
+      POSTGRES_CONNECTION_URL: postgresql://postgres:password@db:5432/db
+      REDIS_CONNECTION_URL: redis://redis
 
   db:
     image: postgres:15-alpine
@@ -34,7 +37,7 @@ services:
 
   # https://www.pgadmin.org/docs/pgadmin4/6.5/container_deployment.html
   pgadmin:
-    image: dpage/pgadmin4:6
+    image: dpage/pgadmin4:7.4
     user: root
     restart: always
     ports:
@@ -64,7 +67,7 @@ services:
       - REDIS_HOSTS=local:redis:6379
 
   supertokens:
-    image: supertokens/supertokens-postgresql:5.0
+    image: supertokens/supertokens-postgresql:6.0
     user: root
     restart: always
     environment:

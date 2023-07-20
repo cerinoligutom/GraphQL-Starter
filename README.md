@@ -86,6 +86,8 @@ docker-compose up -d
 docker-compose logs -f api
 ```
 
+Then refer to [Database Migrations and Seeding](#database-migrations-and-seeding) to setup the database.
+
 **Note:** You might be prompted to share your drive with Docker if you haven't done so previously. The drive letter you need to share in this case would be the drive letter of where this repository resides.
 
 ---
@@ -320,9 +322,21 @@ pnpm exec prisma migrate dev
 
 This will run database migrations. If there are changes in the Prisma Schema before you run this command, it will create a migration file and you will be prompted for a name for the migration. Make sure to double check the output.
 
-**Note:** This executes the seeding process every time you run this command. You can pass the `--skip-seed` flag to skip the seeding process.
-
 **Important:** If you're not using Docker to run this app, you need to configure the connection strings of the database servers (e.g. Redis, PostgreSQL) via the environment variables.
+
+### To seed the database
+
+```bash
+pnpm exec prisma db seed
+```
+
+**Important:** Make sure to write idempotent seed scripts!
+
+Resetting the database also runs the seed automatically.
+
+```bash
+pnpm exec prisma migrate reset
+```
 
 ## Session Management with Supertokens
 

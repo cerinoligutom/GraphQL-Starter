@@ -28,6 +28,6 @@ export type UserSystemRoles = {
 };
 export type DB = {
   system_roles: SystemRole;
-  users: User;
   user_system_roles: UserSystemRoles;
+  users: User;
 };

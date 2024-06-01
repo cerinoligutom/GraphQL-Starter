@@ -42,7 +42,7 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@eslint/js": "^9.4.0",
+    "@eslint/js": "9.4.0",
     "@graphql-codegen/add": "5.0.2",
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/introspection": "4.0.3",
@@ -51,7 +51,7 @@
     "@types/bcryptjs": "2.4.6",
     "@types/cookie-parser": "1.4.7",
     "@types/cors": "2.8.17",
-    "@types/eslint__js": "^8.42.3",
+    "@types/eslint__js": "8.42.3",
     "@types/express": "4.17.21",
     "@types/graphql-depth-limit": "1.1.6",
     "@types/gulp": "4.0.17",
@@ -74,7 +74,7 @@
     "tsc-alias": "1.8.10",
     "tsx": "4.11.0",
     "typescript": "5.4.5",
-    "typescript-eslint": "^7.11.0"
+    "typescript-eslint": "7.11.0"
   },
   "pnpm": {
     "patchedDependencies": {

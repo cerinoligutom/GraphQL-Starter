@@ -23,7 +23,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true
   },
-  "exclude": ["node_modules", "build", "gulpfile.js"],
+  "exclude": ["node_modules", "build", "docker-volumes", "gulpfile.js"],
 
   "ts-node": {
     "esm": true,

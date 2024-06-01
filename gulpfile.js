@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-env node */
 
 import gulp from 'gulp';
@@ -51,7 +49,7 @@ async function cleanBuildDir() {
 }
 
 async function lint() {
-  const command = 'eslint --cache ./src';
+  const command = 'eslint --cache .';
 
   return run(command)();
 }

@@ -62,7 +62,7 @@
     "eslint": "9.4.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.1",
-    "gulp": "4.0.2",
+    "gulp": "5.0.0",
     "gulp-run-command": "0.0.10",
     "husky": "9.0.11",
     "lint-staged": "15.2.5",

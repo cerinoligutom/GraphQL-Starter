@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-env node */
 
 import gulp from 'gulp';
@@ -55,7 +56,7 @@ async function lint() {
 }
 
 async function copyConfigFiles() {
-  return src(PATHS.configFiles, { base: '.' }).pipe(dest(PATHS.destinationDir));
+  return src(PATHS.configFiles, { base: '.', dot: true }).pipe(dest(PATHS.destinationDir));
 }
 
 async function copyNonTypeScriptFiles() {
@@ -93,7 +94,7 @@ export default dev;
 
 export async function build() {
   await cleanBuildDir();
-  await copyConfigFiles();
+  // await copyConfigFiles();
 
   await lint();
   await generateGqlTsFiles();

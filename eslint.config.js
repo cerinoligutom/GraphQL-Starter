@@ -45,7 +45,7 @@ export default tseslint.config(
   // Global ignores
   // https://eslint.org/docs/latest/use/configure/configuration-files#globally-ignoring-files-with-ignores
   {
-    ignores: ['**/node_modules', 'build', 'docker-volumes', 'src/db/**/*.d.ts'],
+    ignores: ['**/node_modules', 'build', 'docker-volumes', '.husky', 'src/db/**/*.d.ts'],
   },
   {
     languageOptions: {

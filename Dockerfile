@@ -40,10 +40,6 @@ COPY --chown=node:node --from=builder /usr/src/app/build .
 
 RUN npm install -g pnpm
 
-# On npm@9, `npm set-script` has been removed: https://github.blog/changelog/2022-10-24-npm-v9-0-0-released/
-# This is mainly for disabling Husky on Docker and CI.
-RUN npm pkg set scripts.prepare=" "
-
 COPY pnpm-lock.yaml ./
 COPY patches ./patches
 # Install production dependencies only

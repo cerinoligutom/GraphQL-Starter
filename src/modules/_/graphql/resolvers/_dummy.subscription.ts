@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/naming-convention */
 
 import { GQL_SubscriptionResolvers, GQL_DummySubscriptionPayload } from '@/generated/graphql/index.js';
 import { IGraphQLSubscriptionContext } from '@/graphql/index.js';

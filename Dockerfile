@@ -9,6 +9,7 @@ WORKDIR /usr/src/app
 
 RUN npm install -g pnpm
 
+COPY .husky/install.mjs .husky/install.mjs
 COPY package.json ./
 COPY pnpm-lock.yaml ./
 COPY patches ./patches
@@ -36,13 +37,10 @@ EXPOSE 8080
 WORKDIR /usr/src/app
 
 # Copy the necessary files from the builder stage to this stage
+COPY .husky/install.mjs .husky/install.mjs
 COPY --chown=node:node --from=builder /usr/src/app/build .
 
 RUN npm install -g pnpm
-
-# On npm@9, `npm set-script` has been removed: https://github.blog/changelog/2022-10-24-npm-v9-0-0-released/
-# This is mainly for disabling Husky on Docker and CI.
-RUN npm pkg set scripts.prepare=" "
 
 COPY pnpm-lock.yaml ./
 COPY patches ./patches

@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-env node */
-
 import gulp from 'gulp';
 // Read Gulp@4 support: https://www.npmjs.com/package/gulp-run-command#faq
 import gulpRunCommand from 'gulp-run-command';
@@ -17,7 +14,7 @@ const PATHS = {
   ],
   srcGraphqlFiles: ['src/**/*.graphql'],
   srcNonTsFiles: ['src/**', '!src/**/*.ts'],
-  configFiles: ['package*.json', '.env*', 'LICENSE'],
+  configFiles: ['package.json', 'pnpm-lock.yaml', '.env', 'LICENSE'],
   destinationDir: 'build',
 };
 
@@ -56,11 +53,11 @@ async function lint() {
 }
 
 async function copyConfigFiles() {
-  return src(PATHS.configFiles, { base: '.', dot: true }).pipe(dest(PATHS.destinationDir));
+  return src(PATHS.configFiles, { base: '.', dot: true, allowEmpty: true }).pipe(dest(PATHS.destinationDir));
 }
 
 async function copyNonTypeScriptFiles() {
-  return src(PATHS.srcNonTsFiles, { base: '.' }).pipe(dest(PATHS.destinationDir));
+  return src(PATHS.srcNonTsFiles, { base: '.', dot: true }).pipe(dest(PATHS.destinationDir));
 }
 
 async function generateGqlTsFiles() {
@@ -94,7 +91,7 @@ export default dev;
 
 export async function build() {
   await cleanBuildDir();
-  // await copyConfigFiles();
+  await copyConfigFiles();
 
   await lint();
   await generateGqlTsFiles();

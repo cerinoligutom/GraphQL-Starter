@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 
 RUN npm install -g pnpm
 
+COPY .husky/install.mjs .husky/install.mjs
 COPY package.json ./
 COPY pnpm-lock.yaml ./
 COPY patches ./patches

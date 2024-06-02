@@ -35,7 +35,7 @@
     "ioredis": "5.4.1",
     "kysely": "0.27.3",
     "pg": "8.11.5",
-    "supertokens-node": "15.0.2",
+    "supertokens-node": "18.0.0",
     "tsconfig-paths": "4.2.0",
     "uuid": "9.0.1",
     "ws": "8.17.0",

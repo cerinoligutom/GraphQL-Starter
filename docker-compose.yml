@@ -23,7 +23,7 @@ services:
       REDIS_CONNECTION_URL: redis://redis
 
   db:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     user: root
     restart: always
     ports:
@@ -36,7 +36,7 @@ services:
 
   # https://www.pgadmin.org/docs/pgadmin4/6.5/container_deployment.html
   pgadmin:
-    image: dpage/pgadmin4:7.4
+    image: dpage/pgadmin4:latest
     user: root
     restart: always
     ports:
@@ -66,7 +66,7 @@ services:
       - REDIS_HOSTS=local:redis:6379
 
   supertokens:
-    image: supertokens/supertokens-postgresql:6.0
+    image: supertokens/supertokens-postgresql:9.0
     user: root
     restart: always
     environment:

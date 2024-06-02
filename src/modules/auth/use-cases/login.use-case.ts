@@ -7,6 +7,7 @@ import { UserSchema } from '@/db/schema/index.js';
 import { db } from '@/db/index.js';
 import { Selectable } from 'kysely';
 import { User } from '@/db/types.js';
+import supertokens from 'supertokens-node';
 
 const dtoSchema = z.object({
   email: UserSchema.shape.email,
@@ -34,7 +35,7 @@ export async function loginUseCase(dto: LoginDTO, ctx: IContext): Promise<LoginU
       // IMPORTANT:
       // If you need to store session data, read more from the link below:
       // https://supertokens.io/docs/session/common-customizations/sessions/new-session#storing-session-information
-      await Session.createNewSession(ctx.req, ctx.res, 'public', user.id);
+      await Session.createNewSession(ctx.req, ctx.res, 'public', supertokens.convertToRecipeUserId(user.id));
 
       // When making graphql subscription requests, make sure to pass the sessionHandle in the `connectionParams` of the subscription client.
       // https://github.com/apollographql/subscriptions-transport-ws#constructorurl-options-websocketimpl

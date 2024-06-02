@@ -5,9 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  graphql-redis-subscriptions@2.6.0:
-    hash: c56hsoihfvxw5b3dauzu7hmpb4
-    path: patches/graphql-redis-subscriptions@2.6.0.patch
+  graphql-redis-subscriptions@2.6.1:
+    hash: 2vjwcmyctqjnhhponqnqttyqse
+    path: patches/graphql-redis-subscriptions@2.6.1.patch
   graphql-subscriptions@2.0.0:
     hash: hfx72ylqf2ra6qcgwajzfccw4i
     path: patches/graphql-subscriptions@2.0.0.patch
@@ -56,8 +56,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(graphql@16.8.1)
       graphql-redis-subscriptions:
-        specifier: 2.6.0
-        version: 2.6.0(patch_hash=c56hsoihfvxw5b3dauzu7hmpb4)(graphql-subscriptions@2.0.0(patch_hash=hfx72ylqf2ra6qcgwajzfccw4i)(graphql@16.8.1))
+        specifier: 2.6.1
+        version: 2.6.1(patch_hash=2vjwcmyctqjnhhponqnqttyqse)(graphql-subscriptions@2.0.0(patch_hash=hfx72ylqf2ra6qcgwajzfccw4i)(graphql@16.8.1))
       graphql-scalars:
         specifier: 1.23.0
         version: 1.23.0(graphql@16.8.1)
@@ -2522,8 +2522,8 @@ packages:
     peerDependencies:
       graphql: '*'
 
-  graphql-redis-subscriptions@2.6.0:
-    resolution: {integrity: sha512-hWAPkCNSFKpEOJBMLAcbpGl/gv+s1Yho2JIwP9MK2RlvqlWiqhAYqjA/HVRK86nkYsRkBwGgqvaNxtV1fAexBQ==}
+  graphql-redis-subscriptions@2.6.1:
+    resolution: {integrity: sha512-ssTviFZFB4P7nvZEPpIsP0gvBMJe5IcgR80Mjit/UFUk0snbkxG/gtNZoglQGtN+kvDx8H6MfALBSG0bm11KCA==}
     peerDependencies:
       graphql-subscriptions: ^1.0.0 || ^2.0.0
 
@@ -7650,7 +7650,7 @@ snapshots:
       arrify: 1.0.1
       graphql: 16.8.1
 
-  graphql-redis-subscriptions@2.6.0(patch_hash=c56hsoihfvxw5b3dauzu7hmpb4)(graphql-subscriptions@2.0.0(patch_hash=hfx72ylqf2ra6qcgwajzfccw4i)(graphql@16.8.1)):
+  graphql-redis-subscriptions@2.6.1(patch_hash=2vjwcmyctqjnhhponqnqttyqse)(graphql-subscriptions@2.0.0(patch_hash=hfx72ylqf2ra6qcgwajzfccw4i)(graphql@16.8.1)):
     dependencies:
       graphql-subscriptions: 2.0.0(patch_hash=hfx72ylqf2ra6qcgwajzfccw4i)(graphql@16.8.1)
     optionalDependencies:

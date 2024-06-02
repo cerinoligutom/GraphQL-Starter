@@ -27,7 +27,7 @@
     "express": "4.19.2",
     "graphql": "16.8.1",
     "graphql-depth-limit": "1.1.0",
-    "graphql-redis-subscriptions": "2.6.0",
+    "graphql-redis-subscriptions": "2.6.1",
     "graphql-scalars": "1.23.0",
     "graphql-subscriptions": "2.0.0",
     "graphql-ws": "5.16.0",
@@ -78,8 +78,8 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "graphql-redis-subscriptions@2.6.0": "patches/graphql-redis-subscriptions@2.6.0.patch",
-      "graphql-subscriptions@2.0.0": "patches/graphql-subscriptions@2.0.0.patch"
+      "graphql-subscriptions@2.0.0": "patches/graphql-subscriptions@2.0.0.patch",
+      "graphql-redis-subscriptions@2.6.1": "patches/graphql-redis-subscriptions@2.6.1.patch"
     }
   },
   "prisma": {

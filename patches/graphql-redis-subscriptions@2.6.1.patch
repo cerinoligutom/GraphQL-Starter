@@ -1,5 +1,5 @@
 diff --git a/dist/redis-pubsub.d.ts b/dist/redis-pubsub.d.ts
-index 4fe658b1ec4afb1a69d702c0981a165e44f26f34..89b32e589a5813f647219615d496fb687242dfe0 100644
+index 4bdc1abe0102c8dd505adc6cac10edb9cda3a9c0..ce7c74ba3b421f5ee8ec8edc402f87fd8474698e 100644
 --- a/dist/redis-pubsub.d.ts
 +++ b/dist/redis-pubsub.d.ts
 @@ -24,7 +24,7 @@ export declare class RedisPubSub implements PubSubEngine {

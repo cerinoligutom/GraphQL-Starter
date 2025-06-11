@@ -6,10 +6,10 @@ settings:
 
 patchedDependencies:
   graphql-redis-subscriptions@2.6.1:
-    hash: 2vjwcmyctqjnhhponqnqttyqse
+    hash: 7b4332a97fcf705c41c2e1e48a543c8b0845b6abb3049fc4f5b27df02f0d6f2d
     path: patches/graphql-redis-subscriptions@2.6.1.patch
   graphql-subscriptions@2.0.0:
-    hash: hfx72ylqf2ra6qcgwajzfccw4i
+    hash: 42fb8664e69f4aa93dd1c435496a04a684bbd8b0090f465dad09da52ce44109f
     path: patches/graphql-subscriptions@2.0.0.patch
 
 importers:
@@ -57,13 +57,13 @@ importers:
         version: 1.1.0(graphql@16.8.1)
       graphql-redis-subscriptions:
         specifier: 2.6.1
-        version: 2.6.1(patch_hash=2vjwcmyctqjnhhponqnqttyqse)(graphql-subscriptions@2.0.0(patch_hash=hfx72ylqf2ra6qcgwajzfccw4i)(graphql@16.8.1))
+        version: 2.6.1(patch_hash=7b4332a97fcf705c41c2e1e48a543c8b0845b6abb3049fc4f5b27df02f0d6f2d)(graphql-subscriptions@2.0.0(patch_hash=42fb8664e69f4aa93dd1c435496a04a684bbd8b0090f465dad09da52ce44109f)(graphql@16.8.1))
       graphql-scalars:
         specifier: 1.23.0
         version: 1.23.0(graphql@16.8.1)
       graphql-subscriptions:
         specifier: 2.0.0
-        version: 2.0.0(patch_hash=hfx72ylqf2ra6qcgwajzfccw4i)(graphql@16.8.1)
+        version: 2.0.0(patch_hash=42fb8664e69f4aa93dd1c435496a04a684bbd8b0090f465dad09da52ce44109f)(graphql@16.8.1)
       graphql-ws:
         specifier: 5.16.0
         version: 5.16.0(graphql@16.8.1)
@@ -2459,6 +2459,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
@@ -2564,6 +2565,7 @@ packages:
   graphql@14.7.0:
     resolution: {integrity: sha512-l0xWZpoPKpppFzMfvVyFmp9vLN7w/ZZJPefUicMCepfJeQ8sMcztloGYY9DfjVPo6tIUDzU5Hw3MUbIjj9AVVA==}
     engines: {node: '>= 6.x'}
+    deprecated: 'No longer supported; please update to a newer version. Details: https://github.com/graphql/graphql-js#version-support'
 
   graphql@16.8.1:
     resolution: {integrity: sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==}
@@ -2731,6 +2733,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -7650,9 +7653,9 @@ snapshots:
       arrify: 1.0.1
       graphql: 16.8.1
 
-  graphql-redis-subscriptions@2.6.1(patch_hash=2vjwcmyctqjnhhponqnqttyqse)(graphql-subscriptions@2.0.0(patch_hash=hfx72ylqf2ra6qcgwajzfccw4i)(graphql@16.8.1)):
+  graphql-redis-subscriptions@2.6.1(patch_hash=7b4332a97fcf705c41c2e1e48a543c8b0845b6abb3049fc4f5b27df02f0d6f2d)(graphql-subscriptions@2.0.0(patch_hash=42fb8664e69f4aa93dd1c435496a04a684bbd8b0090f465dad09da52ce44109f)(graphql@16.8.1)):
     dependencies:
-      graphql-subscriptions: 2.0.0(patch_hash=hfx72ylqf2ra6qcgwajzfccw4i)(graphql@16.8.1)
+      graphql-subscriptions: 2.0.0(patch_hash=42fb8664e69f4aa93dd1c435496a04a684bbd8b0090f465dad09da52ce44109f)(graphql@16.8.1)
     optionalDependencies:
       ioredis: 5.4.1
     transitivePeerDependencies:
@@ -7671,7 +7674,7 @@ snapshots:
       graphql: 16.8.1
       tslib: 2.5.0
 
-  graphql-subscriptions@2.0.0(patch_hash=hfx72ylqf2ra6qcgwajzfccw4i)(graphql@16.8.1):
+  graphql-subscriptions@2.0.0(patch_hash=42fb8664e69f4aa93dd1c435496a04a684bbd8b0090f465dad09da52ce44109f)(graphql@16.8.1):
     dependencies:
       graphql: 16.8.1
       iterall: 1.3.0
